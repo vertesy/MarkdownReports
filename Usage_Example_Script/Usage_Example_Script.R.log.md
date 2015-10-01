@@ -1,4 +1,6 @@
-                   Modified: Mon Sep  7 15:38:09 2015
+                   Modified: Mon Sep  7 17:22:23 2015
+
+[Look, what have you done!](https://github.com/vertesy/MarkDownLogs/blob/master/YourOutput/ExampleLog.log.md)
 
 ####  Settings
 
@@ -55,8 +57,3 @@ I do not have save_and_log plotting functions  for every plot you might want, so
 
 `wplot_save_this(plotname = "DreamMap", mdlink = T)`
 
-`heatmap(matrix(Data, ncol=3,nrow = 5))
-
-hist(Data, add=T)
-
-wplot_save_this(plotname = "DreamMap", mdlink = T)`
