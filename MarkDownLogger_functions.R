@@ -86,7 +86,12 @@ MarkDown_ImgLink_formatter <-  function (...) { # insert a link to a pdf image
 MarkDown_Img_Logger_PDF_and_PNG <-  function (fname_wo_ext) { # insert 2 links, one for PDF, one for PNG version of the same image (png files are needed for web or email sharing!!!)
 	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
 	log_it(kollapse ('![', fn, ']', '(', fname_wo_ext,'.pdf)',  print=F))
-	log_it(kollapse ('![', fn, ']', '(', fname_wo_ext,'.png)',  print=F))
+	# log_it(kollapse ('![', fn, ']', '(', fname_wo_ext,'.png)',  print=F))
+}
+
+MarkDown_Img_Logger_4GitHub <-  function (fname_wo_ext) { # insert 2 links, one for PDF, one for PNG version of the same image (png files are needed for web or email sharing!!!)
+	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
+	log_it(kollapse ('![', fn, ']', '(',fn ,'.png)',  print=F))
 }
 
 # Write out pretty tables to your markdown file ------------------------------------------------------------------------------------------------------------
@@ -132,7 +137,7 @@ MarkDown_Table_writer_NamedVector <- function (NamedVector, FnP=Log_PnF, percent
 }
 
 # Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
-wplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = substitute(variable), mdlink =F) {
+wplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = substitute(variable), mdlink =F, log4GitHuB = F) {
 	fname = kollapse (plotname, '.plot')
 	plot (variable, ..., main=plotname, col=col)
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
@@ -140,7 +145,7 @@ wplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = substitute
 }
 
 whist <-  function(variable, col ="gold1", w=7, h=7, plotname = substitute(variable), breaks = 20,
-	main=kollapse("Histogram of ", substitute(variable)) , mdlink =F, ... ) {
+	main=kollapse("Histogram of ", substitute(variable)) , mdlink =F, log4GitHuB = F, ... ) {
 	# name the file  by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]
 	if ( length (variable) > 0 ) {
 		fname = kollapse (plotname, '.hist')
@@ -156,7 +161,7 @@ whist <-  function(variable, col ="gold1", w=7, h=7, plotname = substitute(varia
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wbarplot <-  function(variable, col ="gold1", w=7, h=7, sub = F, ..., plotname = substitute(variable), main =substitute(variable), mdlink =F) {
+wbarplot <-  function(variable, col ="gold1", w=7, h=7, sub = F, ..., plotname = substitute(variable), main =substitute(variable), mdlink =F, log4GitHuB = F) {
 	# in ... you can pass on ANY plotting parameter exc SUB, MAIN!!!!
 	fname = kollapse (plotname, '.barplot')
 		cexNsize = 0.7/abs (log10 (length(variable)) ); cexNsize = min (cexNsize, 1)
@@ -168,7 +173,7 @@ wbarplot <-  function(variable, col ="gold1", w=7, h=7, sub = F, ..., plotname =
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wboxplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = as.character (substitute(variable)), sub=F, mdlink =F) {
+wboxplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = as.character (substitute(variable)), sub=F, mdlink =F, log4GitHuB = F) {
 	# in ... you can pass on ANY plotting parameter!!!!
 	fname = kollapse (plotname, '.boxplot')
 	boxplot (variable, ..., main=plotname, col=col, las=2)
@@ -176,7 +181,7 @@ wboxplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = as.char
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wpie <-  function(variable, percentage =T, ..., w=7, h=7, plotname = substitute(variable), mdlink =F) {
+wpie <-  function(variable, percentage =T, ..., w=7, h=7, plotname = substitute(variable), mdlink =F, log4GitHuB = F) {
 	# if (!is.vector(variable)) {any_print ("The input is not a vector, but coverted! Dim:", dim (variable)); cc = variable[,2]; names (cc) = variable[,1]; variable =cc}
 	fname = kollapse (plotname, '.pie')
 	subt = kollapse ("Total = ",sum(variable), print=F)
@@ -188,11 +193,13 @@ wpie <-  function(variable, percentage =T, ..., w=7, h=7, plotname = substitute(
 	pie (variable, ..., main=plotname, sub = subt, clockwise = T, labels = labs)
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
+	if (log4GitHuB) {MarkDown_Img_Logger_4GitHub (fname_wo_ext = fname)}
 }
 
 # save only the currenlty active graphic device (for compliacted plots)
-wplot_save_this <-  function(plotname = date(), col ="gold1", ..., w=7, h=7, mdlink =F, ManualName = F) {
+wplot_save_this <-  function(plotname = date(), col ="gold1", ..., w=7, h=7, mdlink =F, log4GitHuB = F, ManualName = F) {
 	fname = kollapse (plotname, '.plot'); if (ManualName) {fname = plotname}
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
+	if (log4GitHuB) {MarkDown_Img_Logger_4GitHub (fname_wo_ext = fname)}
 }
