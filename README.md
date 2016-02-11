@@ -47,5 +47,11 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 - Checkout some cool markdown editors, like [MOU](http://25.io/mou/), or [markdownpad](http://markdownpad.com/).
 
 
-    <br/> <br/> <br/> <br/> <br/>
+ <br/><br/>
+#### Cite it via its Digital Object Identifier (DOI): 
+[![DOI](https://zenodo.org/badge/20391/vertesy/MarkDownLogs.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkDownLogs)
+
+
+
+ <br/> <br/> <br/> <br/> <br/>
 [*edit the website*](https://github.com/vertesy/MarkDownLogs/generated_pages/new)
