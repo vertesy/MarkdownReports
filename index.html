@@ -38,18 +38,45 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h3>
-<a id="markdownlogs" class="anchor" href="#markdownlogs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MarkDownLogs</h3>
+        <h2>
+<a id="what-is-markdownlogs" class="anchor" href="#what-is-markdownlogs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is MarkDownLogs</h2>
 
-<p>Document &amp; Share your findings in an easy and digestable way.</p>
-
-<p>MarkDownLogs is a set of <strong>R</strong> functions that allows you to generate summaries what you discovered with your source code. It will allow you:</p>
+<p>MarkDownLogs is a set of <strong>R</strong> functions that allows you to generate summaries what you discovered with your source code. It helps you to:</p>
 
 <ol>
-<li>Write down your findings in nicely formatted, date-versioned colorful log / report file.</li>
+<li>Write down your findings in an easy, clear and nicely formatted way.</li>
 <li>Support your findings with quick &amp; pretty figures saved along your report</li>
-<li>Link (and show) these in your markdown or html document</li>
+<li>Link and show these in your markdown or html document</li>
+<li>Share your findings</li>
 </ol>
+
+<h2>
+<a id="why-did-i-make-it-why-you-might-like-it" class="anchor" href="#why-did-i-make-it-why-you-might-like-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why did I make it, why you might like it?</h2>
+
+<p>I do exploratory data analysis as daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. I often ...</p>
+
+<ol>
+<li>...have to write emails summarizing the results (text accompanied by figures) of the last few days.</li>
+<li>...find back results a couple of month back, with all tiny details (parameters used, etc)</li>
+<li>...assemble each step I did that day into a logical story line, that others can follow right as they see it, e.g.: <em>I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
+</li>
+</ol>
+
+<p>For all of the above, my solution is MarkDownLogs. I think its better than other solutions I found, like  that combine source code with results. Most of people I interact with are not interested in the source code, but are very keen on seeing all kind of validations.</p>
+
+<h4>
+<a id="it-is-better-than-existing-report-generators" class="anchor" href="#it-is-better-than-existing-report-generators" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>It is better than existing report generators</h4>
+
+<ul>
+<li>Pure Markdown output, Simple and Elegant layout.</li>
+<li>Integration with figures (linked to an external file &amp; displayed: makes manual tailoring easy)</li>
+<li>Easy generation of accurate figures (axis labels, etc) that are saved as a vector graphic (pdf): scalable for presentations, posters, etc</li>
+<li>Named as source file + date: relate to the script, but avoid overwriting.</li>
+<li>Does not spam your report with code, but its linked to it via its name, so you can look it up of if needed. (iPython notebook, KnittR)</li>
+<li>Usable on GitHub Wiki's (although GitHub at the moment cannot)</li>
+<li>Native export of tables from R to Markdown</li>
+<li>Its all achieved in ~ 100 lines of well commented code.</li>
+</ul>
       </section>
 
     </div>
