@@ -1,91 +1,75 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>MarkDownLogs by vertesy</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/vertesy/MarkDownLogs">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/vertesy/MarkDownLogs/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/vertesy/MarkDownLogs/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    <section class="page-header">
+      <h1 class="project-name">MarkDownLogs</h1>
+      <h2 class="project-tagline">An R function library to generate (scientific) reports easily</h2>
+      <a href="https://github.com/vertesy/MarkDownLogs" class="btn">View on GitHub</a>
+      <a href="https://github.com/vertesy/MarkDownLogs/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/vertesy/MarkDownLogs/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div class="wrapper">
+    <section class="main-content">
+      <h2>
+<a id="what-is-markdownlogs" class="anchor" href="#what-is-markdownlogs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <strong><em>MarkDownLogs</em></strong>?</h2>
 
-      <section>
-        <div id="title">
-          <h1>MarkDownLogs</h1>
-          <p>An R function library to generate (scientific) reports easily</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/vertesy">vertesy</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
-        <h2>
-<a id="what-is-markdownlogs" class="anchor" href="#what-is-markdownlogs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is MarkDownLogs</h2>
-
-<p>MarkDownLogs is a set of <strong>R</strong> functions that allows you to generate summaries what you discovered with your source code. It helps you to:</p>
+<p>MarkDownLogs is a set of <strong>R</strong> functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:</p>
 
 <ol>
-<li>Write down your findings in an easy, clear and nicely formatted way.</li>
+<li>Write down your findings easily in a clear and nicely formatted way.</li>
 <li>Support your findings with quick &amp; pretty figures saved along your report</li>
-<li>Link and show these in your markdown or html document</li>
-<li>Share your findings</li>
+<li>Link and show these in your markdown or html document, <em>at the right spot</em>.</li>
+<li>Share your findings with others via email, github or a personal website.</li>
 </ol>
 
 <h2>
-<a id="why-did-i-make-it-why-you-might-like-it" class="anchor" href="#why-did-i-make-it-why-you-might-like-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why did I make it, why you might like it?</h2>
+<a id="why-did-i-make-it--why-might-you-like-it" class="anchor" href="#why-did-i-make-it--why-might-you-like-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why did I make it &amp; why might you like it?</h2>
 
-<p>I do exploratory data analysis as daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. I often ...</p>
+<p>I do exploratory data analysis as a daily routine and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. </p>
+
+<p>I often have to...</p>
 
 <ol>
-<li>...have to write emails summarizing the results (text accompanied by figures) of the last few days.</li>
+<li>... write emails summarizing the results (text accompanied by figures) of the last few days.</li>
 <li>...find back results a couple of month back, with all tiny details (parameters used, etc)</li>
 <li>...assemble each step I did that day into a logical story line, that others can follow right as they see it, e.g.: <em>I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
 </li>
 </ol>
 
-<p>For all of the above, my solution is MarkDownLogs. I think its better than other solutions I found, like  that combine source code with results. Most of people I interact with are not interested in the source code, but are very keen on seeing all kind of validations.</p>
+<p>For all of the above, my solution is MarkDownLogs. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.</p>
 
-<h4>
-<a id="it-is-better-than-existing-report-generators" class="anchor" href="#it-is-better-than-existing-report-generators" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>It is better than existing report generators</h4>
+<h3>
+<a id="where-does-markdownlogs-stand-out" class="anchor" href="#where-does-markdownlogs-stand-out" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where does <strong><em>MarkDownLogs</em></strong> stand out?</h3>
 
 <ul>
-<li>Pure Markdown output, Simple and Elegant layout.</li>
-<li>Integration with figures (linked to an external file &amp; displayed: makes manual tailoring easy)</li>
-<li>Easy generation of accurate figures (axis labels, etc) that are saved as a vector graphic (pdf): scalable for presentations, posters, etc</li>
-<li>Named as source file + date: relate to the script, but avoid overwriting.</li>
-<li>Does not spam your report with code, but its linked to it via its name, so you can look it up of if needed. (iPython notebook, KnittR)</li>
-<li>Usable on GitHub Wiki's (although GitHub at the moment cannot)</li>
-<li>Native export of tables from R to Markdown</li>
-<li>Its all achieved in ~ 100 lines of well commented code.</li>
+<li>Pure markdown output, simple and elegant layout.</li>
+<li>Handy integration of text with figures (linked to an external file &amp; displayed: makes manual tailoring easy)</li>
+<li>Easy generation of precise figures (axis labels, etc) that are saved as a vector graphic (pdf), making it scalable for presentations, posters, etc</li>
+<li>The report file can easily be named after the source file with date &amp; time: it is linked to the source code, but avoids overwriting.</li>
+<li>It does not spam your report with code, but it shares the name, so you can look it up fast if needed. </li>
+<li>It is usable on GitHub Wiki's (you need to <a href="https://stackoverflow.com/questions/28657992/automator-apple-script-to-convert-jpeg-image">create</a> .png versions of .pdf - a current limitation of GitHub)</li>
+<li>It natively exports tables from R to Markdown</li>
+<li>It is all achieved in ~ 200 lines of well commented code.</li>
 </ul>
 
 <h2>
-<a id="discover" class="anchor" href="#discover" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Discover</h2>
+<a id="discover-4-yourself" class="anchor" href="#discover-4-yourself" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Discover 4 Yourself!</h2>
 
 <ul>
-<li><p>See it working: Check out a dummy <a href="https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R">R script</a> 
+<li> See it working: Check out a dummy <a href="https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R">R script</a> 
 and the <a href="https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md">MarkDown report</a> 
-it generates inside this <a href="https://github.com/vertesy/MarkDownLogs">GitHub Repo</a>.</p></li>
-<li><p>Check the function documentation in the <a href="https://github.com/vertesy/MarkDownLogs/wiki">wiki</a></p></li>
+it generates inside this <a href="https://github.com/vertesy/MarkDownLogs">GitHub Repo</a>.</li>
+<li>Check the function documentation in the <a href="https://github.com/vertesy/MarkDownLogs/wiki">wiki</a>
+</li>
 <li>Visit the <a href="https://vertesy.github.io/MarkDownLogs/">project's webpage</a>
 </li>
 </ul>
@@ -103,10 +87,15 @@ it generates inside this <a href="https://github.com/vertesy/MarkDownLogs">GitHu
 <a href="https://github.com/vertesy/MarkDownLogs/generated_pages/new"><em>edit the website</em></a></p>
 </li>
 </ul>
-      </section>
 
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/vertesy/MarkDownLogs">MarkDownLogs</a> is maintained by <a href="https://github.com/vertesy">vertesy</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
