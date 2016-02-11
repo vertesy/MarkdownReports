@@ -30,8 +30,21 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 - Its all achieved in ~ 100 lines of well commented code.
 
 
-## The markdown format
+## Discover
 
-See the power and simplicity of markdown format explained on [MOU](http://25.io/mou/)
+-  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R) 
+ and the [MarkDown report](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
+ it generates inside this [GitHub Repo](https://github.com/vertesy/MarkDownLogs).
+ 
+- Check the function documentation in the [wiki](https://github.com/vertesy/MarkDownLogs/wiki)
+- Visit the [project's webpage](https://vertesy.github.io/MarkDownLogs/)
 
-![image](http://25.io/mou/img/1@2x.png)
+
+### Learn about the markdown format
+
+- [Markdown explained on Github](https://guides.github.com/features/mastering-markdown)
+- See the power and simplicity of markdown format explained on [MOU](http://25.io/mou/)
+
+
+    <br/> <br/> <br/> <br/> <br/>
+[*edit the website*](https://github.com/vertesy/MarkDownLogs/generated_pages/new)
