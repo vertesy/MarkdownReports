@@ -35,7 +35,6 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 -  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R) 
  and the [MarkDown report](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
  it generates inside this [GitHub Repo](https://github.com/vertesy/MarkDownLogs).
- 
 - Check the function documentation in the [wiki](https://github.com/vertesy/MarkDownLogs/wiki)
 - Visit the [project's webpage](https://vertesy.github.io/MarkDownLogs/)
 

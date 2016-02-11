@@ -27,4 +27,14 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 - Does not spam your report with code, but its linked to it via its name, so you can look it up of if needed. (iPython notebook, KnittR)
 - Usable on GitHub Wiki's (although GitHub at the moment cannot)
 - Native export of tables from R to Markdown
-- Its all achieved in ~ 100 lines of well commented code.
+- Its all achieved in ~ 200 lines of well commented code.
+
+## Discover
+
+-  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R) 
+ and the [MarkDown report](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
+ it generates inside this [GitHub Repo](https://github.com/vertesy/MarkDownLogs).
+ - Check the function documentation in the [wiki](https://github.com/vertesy/MarkDownLogs/wiki)
+
+    <br/> <br/> <br/> <br/> <br/>
+[*edit the website*](https://github.com/vertesy/MarkDownLogs/generated_pages/new)
