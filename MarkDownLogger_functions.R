@@ -4,7 +4,7 @@
 # source ("/Users/abelvertesy/MarkDownLogs/MarkDownLogger_functions.R")
 # Use MOU or alternatives to view and edit your reports
 
-# Auxiliary fun -------------------------------------------------------------------------------------------------
+## Auxiliary functions -------------------------------------------------------------------------------------------------
 kollapse <- function(...,print =T) { # parses (and prints) flexibly anything you pass on to it into a string
 	if (print==T) {print (paste(c(...), sep="",collapse="")) }
 	paste(c(...), sep="",collapse="")
@@ -25,7 +25,7 @@ percentage_formatter <- function(x, digitz=3) {
 	return(a)
 }
 
-# Setup Logging -------------------------------------------------------------------------------------------------
+## Setup Logging -------------------------------------------------------------------------------------------------
 create_set_OutDir <- function (...) {
 	OutDir = kollapse(..., print=F)
 	print (OutDir)
@@ -52,7 +52,7 @@ continue_logging_markdown  <- function  (fname) { # continue writing to an exist
 	return (OutImg)
 }
 
-# Log into your markdown files -------------------------------------------------------------------------------------------------
+## Write into your markdown log file -------------------------------------------------------------------------------------------------
 log_settings_MarkDown <- function(...) { # log your parameter settings into a tabular format
 	call <- match.call();
 	namez = sapply(as.list(call[-1]), deparse)
@@ -91,10 +91,10 @@ MarkDown_Img_Logger_PDF_and_PNG <-  function (fname_wo_ext) { # insert 2 links, 
 
 MarkDown_Img_Logger_4GitHub <-  function (fname_wo_ext) { # insert 2 links, one for PDF, one for PNG version of the same image (png files are needed for web or email sharing!!!)
 	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
-	log_it(kollapse ('![', fn, ']', '(',fn ,'.png)',  print=F))
+	log_it(kollapse ('![', fn, ']', '(Reports/',fn ,'.png)',  print=F))
 }
 
-# Write out pretty tables to your markdown file ------------------------------------------------------------------------------------------------------------
+## Write out pretty tables to your markdown file ------------------------------------------------------------------------------------------------------------
 MarkDown_Table_writer_DF_RowColNames <-  function (df, FnP=Log_PnF, percentify =F, title_of_table = NA) {
 	if (is.na(title_of_table)) { t = substitute(df) } else {t = title_of_table} 			# Format title of table
 	title_of_table = paste("\n#### ", t)
@@ -136,7 +136,7 @@ MarkDown_Table_writer_NamedVector <- function (NamedVector, FnP=Log_PnF, percent
 	} else {		print("NOT LOGGED: Log path and filename is not defined in Log_PnF")	} # if cannot print
 }
 
-# Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
+## Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
 wplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = substitute(variable), mdlink =F, log4GitHuB = F) {
 	fname = kollapse (plotname, '.plot')
 	plot (variable, ..., main=plotname, col=col)
