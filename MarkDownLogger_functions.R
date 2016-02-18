@@ -1,7 +1,7 @@
 ######################################################################
 # Funcitons to Generate Markdown (html) Reports with R
 ######################################################################
-# source ("/Users/abelvertesy/MarkDownLogs/MarkDownLogger_functions.R")
+# source ("/Users/abelvertesy/MarkDownLogs/MarkDownLogg.R")
 # Use MOU or alternatives to view and edit your reports
 
 ## Auxiliary functions -------------------------------------------------------------------------------------------------
@@ -208,9 +208,18 @@ MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percenti
 
 
 ## Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
-wplot <-  function(variable, col ="gold1", ..., w=7, h=7,  plotname = substitute(variable), mdlink =F, log4GitHuB = F) {
+wplot <-  function(df_2columns, col =1, pch = 18, ...,
+				   w=7, h=7,  plotname = substitute(df_2columns), mdlink =F, log4GitHuB = F,
+				   errorbar = F, upper = 0, lower=upper, left = 0, right = left,  width=0.1, arrow_lwd =1) {
+	x = df_2columns[ ,1]; y = df_2columns[ ,2];
 	fname = kollapse (plotname, '.plot')
-	plot (variable, ..., main=plotname, col=col)
+	if (errorbar) { # increase plot boundaries so that error bars fit
+		ylim= range(c(0, (y+upper+abs(.1*y) ), (y-lower-abs(.1*y) ) ) )
+		xlim= range(c(0, (x+right+abs(.1*x) ), (1.1*x-left-abs(.1*x) ) ) ) } else { 	ylim = range (y); xlim = range (x) }
+	plot (df_2columns, ..., main=plotname, col=col, pch = pch, ylim = ylim, xlim = xlim)
+	if (errorbar) {
+		arrows( x0 = x, y0 = y+upper, x1 = x, y1 = y-lower, angle=90, code=3, length=width, lwd = arrow_lwd)  # vertical error bars
+		arrows( x0 = x+left, y0 = y, x1 = x-right, y1 = y, angle=90, code=3, length=width, lwd = arrow_lwd) } # horizontal error bars
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
@@ -268,7 +277,7 @@ wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitut
 
 	if (hline & filtercol == 1 ) { col = (variable>=hline)+2 } # change color, if horizontal threshold is defined. (vertical threshold makes only sense in a histogram)
 	if (hline & filtercol == -1) { col = (variable <hline)+2 }
-	if (errorbar) { ylim= range(c(0, (1.1*variable+upper), variable-lower)) }  else { ylim = range (0,variable)} # increase ylim so that error bars fit
+	if (errorbar) { ylim= range(c(0, (variable+upper+abs(.1*variable)), variable-lower-abs(.1*variable))) }  else { ylim = range (0,variable)} # increase ylim so that error bars fit
 	if (tilted_text) { labello = "" } else { labello= names (variable) }
 
 	x= barplot (variable, ..., names.arg = labello, main=main, sub = subtitle, col=col, las=2, cex.names = cexNsize, ylim=ylim	) # xaxt="n",

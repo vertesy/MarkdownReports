@@ -1,7 +1,7 @@
 ######################################################################
 # Funcitons to Generate Markdown (html) Reports with R
 ######################################################################
-# source ("/Users/abelvertesy/MarkDownLogs/MarkDownLogger_functions.R")
+# source ("/Users/abelvertesy/MarkDownLogs/Simple.MarkDownLogg.R")
 # Use MOU or alternatives to view and edit your reports
 
 ## Auxiliary functions -------------------------------------------------------------------------------------------------
