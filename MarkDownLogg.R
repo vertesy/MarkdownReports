@@ -264,6 +264,7 @@ whist <-  function(variable, col ="gold1", w=7, h=7, plotname = substitute(varia
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
+
 wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitute(variable), main =substitute(variable),
 					  w=7, h=7, incrBottMarginBy = 0, mdlink =F, tilted_text =F,
 					  hline=F, vline=F, filtercol=1,lty =1, lwd =2, lcol =2,
@@ -278,9 +279,9 @@ wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitut
 	if (hline & filtercol == 1 ) { col = (variable>=hline)+2 } # change color, if horizontal threshold is defined. (vertical threshold makes only sense in a histogram)
 	if (hline & filtercol == -1) { col = (variable <hline)+2 }
 	if (errorbar) { ylim= range(c(0, (variable+upper+abs(.1*variable)), variable-lower-abs(.1*variable))) }  else { ylim = range (0,variable)} # increase ylim so that error bars fit
-	if (tilted_text) { labello = "" } else { labello= names (variable) }
+	if (tilted_text) { xlb = NA } else { xlb= names (variable) }
 
-	x= barplot (variable, ..., names.arg = labello, main=main, sub = subtitle, col=col, las=2, cex.names = cexNsize, ylim=ylim	) # xaxt="n",
+	x= barplot (variable, ..., names.arg = xlb, main=main, sub = subtitle, col=col, las=2, cex.names = cexNsize, ylim=ylim	) # xaxt="n",
 	if (hline) { abline (h = hline, lty =lty, lwd = lwd, col = lcol) }
 	if (vline) { abline (v = vline, lty =lty, lwd = lwd, col = lcol) }
 	if (errorbar) {  	arrows(x, variable+upper, x, variable-lower, angle=90, code=3, length=width, lwd = arrow_lwd, ...) }
@@ -292,18 +293,22 @@ wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitut
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-
 wboxplot <-  function(variable, ...,  col ="gold1", plotname = as.character (substitute(variable)), sub=FALSE,
-					  incrBottMarginBy = 0, w=7, h=7, mdlink =F) {
+					  incrBottMarginBy = 0, tilted_text =F, w=7, h=7, mdlink =F) {
 	# in ... you can pass on ANY plotting parameter!!!!
 	fname = kollapse (plotname, '.boxplot')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
-	boxplot (variable, ..., main=plotname, col=col, las=2)
+	if (tilted_text) { xlb = NA } else { xlb= names (variable) }
+
+	boxplot (variable, ..., names = xlb, main=plotname, col=col, las=2)
+	if (tilted_text) { text(x=1:l(variable), y=-max(nchar(names (variable))) / 2, labels = names (variable), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
 	par("mar" = .ParMarDefault)
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
+
 
 wpie <-  function(variable, ..., percentage =TRUE, plotname = substitute(variable), w=7, h=7, mdlink =F) {
 	# if (!is.vector(variable)) {any_print ("The input is not a vector, but coverted! Dim:", dim (variable)); cc = variable[,2]; names (cc) = variable[,1]; variable =cc}
@@ -319,20 +324,23 @@ wpie <-  function(variable, ..., percentage =TRUE, plotname = substitute(variabl
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-wstripchart <-   function(list, ..., plotname = as.character (substitute(list)), sub=FALSE, border=1, BoxPlotWithMean =F,
-						  pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", col ="black", metod = "jitter", jitter = 0.2, colorbyColumn=F,
-						  w=7, h=7, incrBottMarginBy = 0, mdlink =F) {
-	# in ... you can pass on ANY plotting parameter!!!!
-	# metod = "jitter" OR "stack"
+wstripchart <-   function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, border=1, BoxPlotWithMean =F,
+						  pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", col ="black", metod = "jitter", jitter = 0.2, colorbyColumn=F, # metod = "jitter" OR "stack"
+						  w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
-	cexNsize = 1/abs (log10 (length(list)) ); cexNsize = min (cexNsize, 1)
+	cexNsize = 1/abs (log10 (length(yalist)) ); cexNsize = min (cexNsize, 1)
 	fname = kollapse (plotname, '.stripchart')
-	a =boxplot(list, plot=F)
+	a =boxplot(yalist, plot=F)
 	if (colorbyColumn) { pchlwd =5; pchcex=.5	}
-	if (BoxPlotWithMean){		a$stats[3,] = unlist(lapply(list, mean)) }						# Replace mean with median
-	bxp(a, xlab ="", ..., main =plotname, border=border, outpch = NA, las=2, outline=T, cex.axis = cexNsize)
-	stripchart(list, vertical = TRUE, add = TRUE, method = metod, jitter =jitter
+	if (BoxPlotWithMean){		a$stats[3,] = unlist(lapply(yalist, mean)) }						# Replace mean with median
+	if (tilted_text) { xlb = F } else { xlb= T }
+
+	bxp(a, xlab ="", show.names = xlb, ..., main =plotname, border=border, outpch = NA, las=2, outline=T, cex.axis = cexNsize)
+	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter =jitter
 			   , pch=pch, bg=bg, col=col, lwd =pchlwd, cex=pchcex)
+
+	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -341,37 +349,41 @@ wstripchart <-   function(list, ..., plotname = as.character (substitute(list)),
 
 # here you can define everything
 wstripchart_list <-   function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, ylb = NULL, xlab =NULL, border=1, bxpcol =0,
-								pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", coll ="black", metod = "jitter", jitter = 0.2,
-								w=7, h=7, incrBottMarginBy = 0, mdlink =F) {
-	# in ... you can pass on ANY plotting parameter!!!!
-	# metod = "jitter" OR "stack"
+							   pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", coll ="black", metod = "jitter", jitter = 0.2, # metod = "jitter" OR "stack"
+							   w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
 	fname = kollapse (plotname, '.stripchart')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = 1/abs (log10 (length(list)) ); cexNsize = min (cexNsize, 1)
-	boxplot (yalist, ..., main=plotname, border=border, outline=FALSE, las=2, col=bxpcol, cex.axis = cexNsize)
+	if (tilted_text) { xlb = F } else { xlb= T }
+
+	boxplot (yalist, ..., show.names = xlb, main=plotname, border=border, outline=FALSE, las=2, col=bxpcol, cex.axis = cexNsize)
 	for (i in 1:length(yalist)) {
 		j=k=i
 		if (length(coll) < length(yalist)) {j=1}
 		if (length(bg) < length(yalist)) {k=1}
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter =jitter, pch =pch, bg = bg[[k]], col=coll[[j]], lwd =pchlwd, cex=pchcex)
 	}
+	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-
 wvioplot_list <-   function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:length(yalist)), incrBottMarginBy = 0,
-							w=7, h=7, plotname = as.character (substitute(yalist)), mdlink =F ) {
+							w=7, h=7, plotname = as.character (substitute(yalist)), tilted_text =F, mdlink =F ) {
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	l_list = length(yalist)
-	if (length(coll) < l_list) { coll = rep (coll, l_list)}
 	fname = kollapse (plotname, '.vioplot')
+	if (length(coll) < l_list) { coll = rep (coll, l_list)}
+	if (tilted_text) { xlb = NA } else { xlb= names (yalist) }
+
 	plot(0,0, type="n", xlim= c(.5, (l_list +.5)), ylim=range (unlist(yalist)),  xaxt = 'n', xlab ="", ylab = ylb, main = plotname)
 	for (i in 1:l_list) { vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i] ) }
 	axis(side=1,at=1:l_list,labels=xlb, las=2)
+	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
@@ -381,13 +393,15 @@ wvioplot_list <-   function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(
 
 wviostripchart_list <-   function(yalist, ..., pch=23, viocoll = 0, vioborder =1, ylb ="", plotname = as.character (substitute(yalist)), sub=F,
 								  bg=0, coll ="black", metod = "jitter", jitter = 0.1,
-								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) {
+								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) { # , tilted_text =F
 	# in ... you can pass on ANY plotting parameter!!!!
 	# metod = "jitter" OR "stack"
 	fname = kollapse (plotname, '.VioStripchart')
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	l_list = length(yalist)
+	# if (tilted_text) { xlb = NA } else { xlb= names (yalist) }
+
 	plot(0,0, type="n", xlim= c(.5, (l_list +.5)), ylim=range (unlist(yalist)),  xaxt = 'n', xlab ="", ylab = ylb, main = plotname)
 	for (i in 1:l_list) { vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border =vioborder[i] ) }
 	for (i in 1:length(yalist)) {
@@ -396,6 +410,8 @@ wviostripchart_list <-   function(yalist, ..., pch=23, viocoll = 0, vioborder =1
 		if (length(bg) < length(yalist)) {k=1}
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter =jitter, pch =pch, bg = bg[[k]], col=coll[[j]])
 	}
+	# if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
