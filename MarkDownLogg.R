@@ -265,6 +265,7 @@ whist <-  function(variable, col ="gold1", w=7, h=7, plotname = substitute(varia
 }
 
 
+
 wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitute(variable), main =substitute(variable),
 					  w=7, h=7, incrBottMarginBy = 0, mdlink =F, tilted_text =F,
 					  hline=F, vline=F, filtercol=1,lty =1, lwd =2, lcol =2,
@@ -278,14 +279,14 @@ wbarplot <-  function(variable, ..., col ="gold1", sub = F, plotname = substitut
 
 	if (hline & filtercol == 1 ) { col = (variable>=hline)+2 } # change color, if horizontal threshold is defined. (vertical threshold makes only sense in a histogram)
 	if (hline & filtercol == -1) { col = (variable <hline)+2 }
-	if (errorbar) { ylim= range(c(0, (variable+upper+abs(.1*variable)), variable-lower-abs(.1*variable))) }  else { ylim = range (0,variable)} # increase ylim so that error bars fit
+	if (errorbar) { ylim= range(c(0, (variable+upper+abs(.1*variable)), variable-lower-abs(.1*variable)), na.rm = T) }  else { ylim = range (0,variable)} # increase ylim so that error bars fit
 	if (tilted_text) { xlb = NA } else { xlb= names (variable) }
 
 	x= barplot (variable, ..., names.arg = xlb, main=main, sub = subtitle, col=col, las=2, cex.names = cexNsize, ylim=ylim	) # xaxt="n",
 	if (hline) { abline (h = hline, lty =lty, lwd = lwd, col = lcol) }
 	if (vline) { abline (v = vline, lty =lty, lwd = lwd, col = lcol) }
 	if (errorbar) {  	arrows(x, variable+upper, x, variable-lower, angle=90, code=3, length=width, lwd = arrow_lwd, ...) }
-	if (tilted_text) { text(cex=cexNsize, x=x-.25, y=-max(nchar(names(variable))) / 3, labels = names(variable), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	if (tilted_text) { text(x=x-.25, y=-max(nchar(names(variable))) / 5, labels = names(variable), xpd=TRUE, srt=45, cex=cexNsize) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file= FnP_parser (fname, 'pdf'), width=w, height=h)
 	par("mar" = .ParMarDefault)
