@@ -208,6 +208,7 @@ MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percenti
 
 
 ## Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
+"Cannot define xlim now"
 wplot <-  function(df_2columns, col =1, pch = 18, ...,
 				   w=7, h=7,  plotname = substitute(df_2columns), mdlink =F, log4GitHuB = F,
 				   errorbar = F, upper = 0, lower=upper, left = 0, right = left,  width=0.1, arrow_lwd =1) {

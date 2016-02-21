@@ -1,4 +1,7 @@
-[![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownLogger.svg)](https://zenodo.org/badge/
+
+
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
+
 
 ## What is ***MarkdownLogger***?
 
@@ -51,7 +54,10 @@ For all of the above, my solution is MarkdownLogger. I think its better than oth
 
  <br/><br/>
 #### Cite it via its Digital Object Identifier (DOI): 
-[![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownLogger.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownLogger)
+
+
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
+
 
 
 
