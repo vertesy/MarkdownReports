@@ -1,6 +1,8 @@
-## What is ***MarkDownLogs***?
+[![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownLogger.svg)](https://zenodo.org/badge/
 
-MarkDownLogs is a set of **R** functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:
+## What is ***MarkdownLogger***?
+
+MarkdownLogger is a set of **R** functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:
 
 1. Write down your findings easily in a clear and nicely formatted way.
 - Support your findings with quick & pretty figures saved along your report
@@ -18,9 +20,9 @@ I often have to...
 2. ...find back results a couple of month back, with all tiny details (parameters used, etc)
 3. ...assemble each step I did that day into a logical story line, that others can follow right as they see it, e.g.: *I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
 	
-For all of the above, my solution is MarkDownLogs. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
+For all of the above, my solution is MarkdownLogger. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
 
-### Where does ***MarkDownLogs*** stand out?
+### Where does ***MarkdownLogger*** stand out?
 
 - Pure markdown output, simple and elegant layout.
 - Handy integration of text with figures (linked to an external file & displayed: makes manual tailoring easy)
@@ -34,11 +36,11 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 
 ## Discover 4 Yourself!
 
--  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script.R) 
- and the [MarkDown report](https://github.com/vertesy/MarkDownLogs/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
- it generates inside this [GitHub Repo](https://github.com/vertesy/MarkDownLogs).
-- Check the function documentation in the [wiki](https://github.com/vertesy/MarkDownLogs/wiki)
-- Visit the [project's webpage](https://vertesy.github.io/MarkDownLogs/)
+-  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownLogger/blob/master/Usage_Example_Script.R) 
+ and the [MarkDown report](https://github.com/vertesy/MarkdownLogger/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
+ it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownLogger).
+- Check the function documentation in the [wiki](https://github.com/vertesy/MarkdownLogger/wiki)
+- Visit the [project's webpage](https://vertesy.github.io/MarkdownLogger/)
 
 
 ### Learn about the markdown format
@@ -49,9 +51,9 @@ For all of the above, my solution is MarkDownLogs. I think its better than other
 
  <br/><br/>
 #### Cite it via its Digital Object Identifier (DOI): 
-[![DOI](https://zenodo.org/badge/20391/vertesy/MarkDownLogs.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkDownLogs)
+[![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownLogger.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownLogger)
 
 
 
  <br/> <br/> <br/> <br/> <br/>
-[*edit the website*](https://github.com/vertesy/MarkDownLogs/generated_pages/new)
+[*edit the website*](https://github.com/vertesy/MarkdownLogger/generated_pages/new)
