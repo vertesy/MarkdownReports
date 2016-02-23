@@ -98,7 +98,7 @@ MarkDown_Img_Logger_PDF_and_PNG <-  function (fname_wo_ext) {
 	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
 	llogit(kollapse ('![]', '(', fname_wo_ext,'.pdf)',  print=F))
 	if (exists("png4Github") & png4Github ==T ) { 	dirnm = strsplit(OutDir, split = "/")[[1]];dirnm = dirnm[length(dirnm)]
-													llogit(kollapse ('![]', '(' ,dirnm,'/', fname_wo_ext,'.png)',  print=F))	# link to a png file to use locally
+													llogit(kollapse ('![]', '(Reports/' ,dirnm,'/', fname_wo_ext,'.png)',  print=F))	# link to a png file to use locally
 	} else { 	llogit(kollapse ('![', fn, ']', '(', fname_wo_ext,'.png)',  print=F))} 					# link to png 4 local use
 }
 
