@@ -3,9 +3,9 @@
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
 
 
-## What is ***MarkdownLogger***?
+## What is ***MarkdownReports***?
 
-MarkdownLogger is a set of **R** functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:
+MarkdownReports is a set of **R** functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:
 
 1. Write down your findings easily in a clear and nicely formatted way.
 - Support your findings with quick & pretty figures saved along your report
@@ -23,9 +23,9 @@ I often have to...
 2. ...find back results a couple of month back, with all tiny details (parameters used, etc)
 3. ...assemble each step I did that day into a logical story line, that others can follow right as they see it, e.g.: *I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
 	
-For all of the above, my solution is MarkdownLogger. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
+For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
 
-### Where does ***MarkdownLogger*** stand out?
+### Where does ***MarkdownReports*** stand out?
 
 - Pure markdown output, simple and elegant layout.
 - Handy integration of text with figures (linked to an external file & displayed: makes manual tailoring easy)
@@ -39,11 +39,11 @@ For all of the above, my solution is MarkdownLogger. I think its better than oth
 
 ## Discover 4 Yourself!
 
--  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownLogger/blob/master/Usage_Example_Script.R) 
- and the [MarkDown report](https://github.com/vertesy/MarkdownLogger/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
- it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownLogger).
-- Check the function documentation in the [wiki](https://github.com/vertesy/MarkdownLogger/wiki)
-- Visit the [project's webpage](https://vertesy.github.io/MarkdownLogger/)
+-  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script.R) 
+ and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
+ it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
+- Check the function documentation in the [wiki](https://github.com/vertesy/MarkdownReports/wiki)
+- Visit the [project's webpage](https://vertesy.github.io/MarkdownReports/)
 
 
 ### Learn about the markdown format
@@ -62,4 +62,4 @@ For all of the above, my solution is MarkdownLogger. I think its better than oth
 
 
  <br/> <br/> <br/> <br/> <br/>
-[*edit the website*](https://github.com/vertesy/MarkdownLogger/generated_pages/new)
+[*edit the website*](https://github.com/vertesy/MarkdownReports/generated_pages/new)
