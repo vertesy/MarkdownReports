@@ -1,7 +1,7 @@
 ######################################################################
 #  Usage_Example_Script
 ######################################################################
-# source ("/Users/abelvertesy/MarkDownLogs/Usage_Example_Script.R")
+# source ("/Users/abelvertesy/MarkdownReports/Usage_Example_Script.R")
 
 print("Use MOU or any other Markdown editor to see resutls")
 
@@ -9,7 +9,7 @@ print("Use MOU or any other Markdown editor to see resutls")
 Par1 =33
 Par3 =3
 
-OutDir = create_set_OutDir("/Users/abelvertesy/MarkDownLogs/Usage_Example_Script");
+OutDir = create_set_OutDir("/Users/abelvertesy/MarkdownReports/Usage_Example_Script");
 setup_logging_markdown ("Usage_Example_Script.R", append = F)
 
 # Start logging ----------------------------
@@ -74,7 +74,7 @@ llprint(" - an extra link to that image in the markdown file. ")
 llprint('     - This is already in place, unless you set the "png4Github" parameter to FALSE in the `setup_logging_markdown()` function.')
 llprint("     - *GitHub takes relative path from the wiki folder, MOU takes it from the .md files location*")
 
-llprint("Take a look at the [code](https://github.com/vertesy/MarkDownLogs/blob/master/MarkDownLogger_functions.R) (MarkDownLogger_functions.R) for further explanation. It is very short :-).")
+llprint("Take a look at the [code](https://github.com/vertesy/MarkdownReports/blob/master/MarkDownLogger_functions.R) (MarkDownLogger_functions.R) for further explanation. It is very short :-).")
 
 
-llprint("#### You probably can already decide if MarkDownLogs can help you or not. Thanks for reading!")
+llprint("#### You probably can already decide if MarkdownReports can help you or not. Thanks for reading!")
