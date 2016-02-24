@@ -1,5 +1,5 @@
 #  Usage_Example_Script.R Report
-        Modified: 11/02/2016 | 21:32 | by: Usage_Example_Script.R
+        Modified: 24/02/2016 | 15:35 | by: Usage_Example_Script.R
 
 ## Start logging
 
@@ -25,7 +25,7 @@ A peculiar feature of R is rounding: `round(1.5) = 2`, just like `round(2.5) = 2
 
  - [This link shows you more of the MarkDown Syntax]("https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet")
 
-# Table handling
+## Table handling
 
 Save your script parameters in the report (you might need it to exactly reproduce a plot a month later)
 
@@ -75,6 +75,6 @@ To upload and correctly display figures on GitHub, you need
 
      - *GitHub takes relative path from the wiki folder, MOU takes it from the .md files location*
 
-Take a look at the [code](https://github.com/vertesy/MarkDownLogs/blob/master/MarkDownLogger_functions.R) (MarkDownLogger_functions.R) for further explanation. It is very short :-).
+Take a look at the [code](https://github.com/vertesy/MarkdownReports/blob/master/MarkDownLogger_functions.R) (MarkDownLogger_functions.R) for further explanation. It is very short :-).
 
-#### You probably can already decide if MarkDownLogs can help you or not. Thanks for reading!
+#### You probably can already decide if MarkdownReports can help you or not. Thanks for reading!
