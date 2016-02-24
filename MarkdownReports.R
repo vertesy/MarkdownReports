@@ -5,7 +5,7 @@
 # Use MOU or alternatives to view and edit your reports
 
 ## Auxiliary functions -------------------------------------------------------------------------------------------------
-kollapse <- function(..., print =T) {
+kollapse <- function(..., print =T) { # paste0 values and string to one string. It also prints the results (good for a quick check)
 	if (print==T) {print (paste0(c(...), collapse = "")) }
 	paste0(c(...), collapse = "")
 }
