@@ -67,7 +67,6 @@ log_settings_MarkDown <- function(...) { # Log the parameters & settings used in
 }
 
 llprint <- function(...) { # Collapse by white spaces a sentence from any variable passed on to the function. Print the sentence to the screen and write it to your markdown report file, if the "Log_PnF" variable is defined.
-Log a sentence from any varia to markdown file and print to screen
 	argument_list <- c(...)
 	LogEntry = print ( 		paste( argument_list, collapse=" ")  	)
 	if (exists("Log_PnF") ) {		write ( kollapse ("\n", LogEntry, print=F), Log_PnF, append=T) 	}
