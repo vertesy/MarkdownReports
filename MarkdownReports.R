@@ -5,36 +5,37 @@
 # Use MOU or alternatives to view and edit your reports
 
 ## Auxiliary functions -------------------------------------------------------------------------------------------------
-kollapse <- function(..., print =T) { # paste0 values and string to one string. It also prints the results (good for a quick check)
+kollapse <- function(..., print =T) { # Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 	if (print==T) {print (paste0(c(...), collapse = "")) }
 	paste0(c(...), collapse = "")
 }
 
-any_print <- function(...) { # more flexible printing fun
+any_print <- function(...) { # A more flexible printing function that collapses any variable passed to it by white spaces.
 	argument_list <- c(...)
 	print (
 		paste( argument_list, collapse=" ")
 	)
 } # any_print (1,2,"macska")
 
-iround <- function(x, digz = 3) {signif (x, digits=digz)}
+iround <- function(x, digz = 3) { # Rounds a value to the significant amount of digits. Its a wrapper for signif().
+	signif (x, digits=digz)}
 
-percentage_formatter <- function(x, digitz=3) {
+percentage_formatter <- function(x, digitz=3) { # Parse a string of 0-100% from a number between 0 and 1.
 	a = paste (100*iround(x, digitz),"%", sep = " ")
 	a[a == "NaN %"] = NaN; 	a[a == "NA %"] = NA
 	return(a)
 }
 
 ## Setup Logging -------------------------------------------------------------------------------------------------
-create_set_OutDir <- function(...) {
+create_set_OutDir <- function(...) { # Create or set the output directory of the script, and set the "OutDir" variable that is used by all ~wplot functions.
 	OutDir = kollapse(..., print=F)
 	print (OutDir)
 	if ( !exists (OutDir) ) {dir.create(OutDir)}
 	assign ("OutDir", OutDir, envir = .GlobalEnv)
 }
 
-# setup_logging file, path and modification date
-setup_logging_markdown <- function(fname, title="", append=T, png4Github = T) {
+
+setup_logging_markdown <- function(fname, title="", append=T, png4Github = T) { # Setup the markdown report file, create a subdir in "OutDir". Its name is stamped with the script name and the modification time. Create the "Log_PnF" variable used by all log-writing and ~wplot functions.
 	if ( exists('OutDir') ) { path = OutDir } else { path = getwd() ; any_print ("OutDir not defined !!!") }
 	Log_PnF <- kollapse (path,'/',fname,'.log.md')
 	if (nchar(title)) { write (paste("# ", title), Log_PnF , append=append)
@@ -46,7 +47,7 @@ setup_logging_markdown <- function(fname, title="", append=T, png4Github = T) {
 	assign ("png4Github",png4Github, envir = .GlobalEnv)
 }
 
-continue_logging_markdown <- function(fname) {
+continue_logging_markdown <- function(fname) { # Continue writing to an existing report file.
 	if ( exists('OutDir') ) { path = OutDir } else { path = getwd() ; any_print ("OutDir not defined !!!") }
 	Log_PnF <- kollapse (path,'/',fname,'.log.md', print = F)
 	return (Log_PnF)
@@ -56,7 +57,7 @@ continue_logging_markdown <- function(fname) {
 }
 
 ## Write into your markdown log file -------------------------------------------------------------------------------------------------
-log_settings_MarkDown <- function(...) { # log your parameter settings into a tabular format
+log_settings_MarkDown <- function(...) { # Log the parameters & settings used in the script in a table format.
 	call <- match.call();
 	namez = sapply(as.list(call[-1]), deparse)
 	value = c(...)
@@ -65,14 +66,15 @@ log_settings_MarkDown <- function(...) { # log your parameter settings into a ta
 	MarkDown_Table_writer_DF_RowColNames((value), title_of_table = "Settings")
 }
 
-llprint <- function(...) { # log to markdown file and print to screen
+llprint <- function(...) { # Collapse by white spaces a sentence from any variable passed on to the function. Print the sentence to the screen and write it to your markdown report file, if the "Log_PnF" variable is defined.
+Log a sentence from any varia to markdown file and print to screen
 	argument_list <- c(...)
 	LogEntry = print ( 		paste( argument_list, collapse=" ")  	)
 	if (exists("Log_PnF") ) {		write ( kollapse ("\n", LogEntry, print=F), Log_PnF, append=T) 	}
 	else {		print("NOT LOGGED: Log path and filename is not defined in Log_PnF")	} # if cannot print
 }
 
-llogit <- function(...) { # log to markdown file, do not print
+llogit <- function(...) { # Collapse by white spaces a sentence from any variable passed on to the function. llogit() writes it to your markdown report file, if the "Log_PnF" variable is defined. It does not print the sentence to the screen.
 	argument_list <- c(...)
 	LogEntry = paste( argument_list, collapse=" ") 			# collapse by space
 	LogEntry = gsub('^ +| +$', "", LogEntry) 				# remove trailing spaces
@@ -80,13 +82,13 @@ llogit <- function(...) { # log to markdown file, do not print
 	write ( kollapse ("\n", LogEntry, print=F), Log_PnF, append=T)
 }
 
-MarkDown_ImgLink_formatter <- function(...) { # insert a link to a pdf image
+MarkDown_ImgLink_formatter <- function(...) { # Format a markdown image reference (link) from the file path to the file. It can parse the file path, if you pass it in separate variables and strings. E.g. MarkDown_ImgLink_formatter(Directory, "MyImage.png").
 	FnP =kollapse(..., print=F)
 	splt = strsplit(FnP,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
 	kollapse ('![', fn, ']', '(', FnP,')',  print=F)
 }
 
-MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext) {
+MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext) { # Format a markdown image reference (link) to a .pdf and .png versions of graph, and insert both links to the markdown report, set by "Log_PnF". If the "png4Github" variable is set, the .png-link is set up such, that you can upload the whole report with the .png image into your GitHub repo's wiki, under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest directory name in the "OutDir" variable. See create_set_OutDir() function.). This function is called by the ~wplot functions.
 	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
 	llogit(kollapse ('![]', '(', fname_wo_ext,'.pdf)',  print=F))
 	if (exists("png4Github") & png4Github ==T ) { 	dirnm = strsplit(OutDir, split = "/")[[1]];dirnm = dirnm[length(dirnm)]
@@ -95,11 +97,11 @@ MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext) {
 }
 
 ## Write out pretty tables to your markdown file ------------------------------------------------------------------------------------------------------------
-MarkDown_Table_writer_DF_RowColNames <- function(df, FnP=Log_PnF, percentify =F, title_of_table = NA) {
+MarkDown_Table_writer_DF_RowColNames <- function(df, FnP=Log_PnF, percentify =F, title_of_table = NA) { # Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "Log_PnF".
 	if (is.na(title_of_table)) { t = substitute(df) } else {t = title_of_table} 			# Format title of table
 	title_of_table = paste("\n#### ", t)
 	write ( title_of_table, Log_PnF, append=T)
-	h =	paste(colnames(df), collapse = " \t| ") 			# Format header
+	h =	paste(colnames(df), collapse = " \t| ") 		# Format header
 	h = paste ("\n| |", h, " |",collapse = "")
 	ncolz = dim(df)[2]+1; nrows = dim(df)[1]
 	rn =  rownames (df)
@@ -117,7 +119,7 @@ MarkDown_Table_writer_DF_RowColNames <- function(df, FnP=Log_PnF, percentify =F,
 	else {		print("NOT LOGGED: Log path and filename is not defined in Log_PnF")	} # if cannot print
 }
 
-MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percentify =F, title_of_table = NA) {
+MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percentify =F, title_of_table = NA) { # Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "Log_PnF".
 	if (is.na(title_of_table)) { t = substitute(NamedVector) } else {t = title_of_table} 			# Format title of table
 	title_of_table = paste("\n#### ", t)
 	write ( title_of_table, Log_PnF, append=T)
@@ -141,8 +143,7 @@ MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percenti
 wplot <- function(df_2columns, col =1, pch = 18, ...,
 				  w=7, h=7,  plotname = substitute(df_2columns), mdlink =F, log4GitHuB = F,
 				  errorbar = F, upper = 0, lower=upper, left = 0, right = left,  width=0.1, arrow_lwd =1,
-				  abline = F, a = F, b =F, lty =1, lwd =1, lcol =1 ) { # Create and save scatter plots, add error bars or lines (ablines) to your plot.
-	# abline = F, "h", "v", "ab"
+				  abline = F, a = F, b =F, lty =1, lwd =1, lcol =1 ) { # Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
 	x = df_2columns[ ,1]; y = df_2columns[ ,2];
 	fname = kollapse (plotname, '.plot')
 	if (errorbar) { # increase plot boundaries so that error bars fit
@@ -153,18 +154,15 @@ wplot <- function(df_2columns, col =1, pch = 18, ...,
 	if (errorbar) {
 		arrows( x0 = x, y0 = y+upper, x1 = x, y1 = y-lower, angle=90, code=3, length=width, lwd = arrow_lwd)  # vertical error bars
 		arrows( x0 = x+left, y0 = y, x1 = x-right, y1 = y, angle=90, code=3, length=width, lwd = arrow_lwd) } # horizontal error bars
-
 	if (abline == "h")  { abline(h=a, lty = lty, lwd = lwd, col = lcol)}
 	if (abline == "v")  { abline(v=a, lty = lty, lwd = lwd, col = lcol)}
 	if (abline == "ab") { abline(a = a, b = b, lty = lty, lwd = lwd, col = lcol)}
-
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-## Save the currenlty active graphic device (for compliacted plots)
-wplot_save_this <- function(plotname = date(), col ="gold1", ..., w=7, h=7, mdlink =FALSE, ManualName = FALSE) {
+wplot_save_this <- function(plotname = date(), col ="gold1", ..., w=7, h=7, mdlink =FALSE, ManualName = FALSE) { # Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "Log_PnF". Name the file by naming the variable!
 	if (plotname == plotnameLastPlot) { ManualName = T }
 	fname = kollapse (plotname, '.plot'); if (ManualName) {fname = plotname}
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
@@ -173,9 +171,7 @@ wplot_save_this <- function(plotname = date(), col ="gold1", ..., w=7, h=7, mdli
 
 whist <- function(variable, col ="gold1", w=7, h=7, plotname = substitute(variable), breaks = 20,
 				   main=kollapse("Histogram of ", substitute(variable)), xlabel =substitute(variable), mdlink =FALSE, log4GitHuB = TRUE,
-				   hline=F, vline=F,lty =2, lwd =3, lcol =2, filtercol = 0,...) {
-	# name the file  by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]
-	# filtercol assumes  >= coloring!
+				   hline=F, vline=F,lty =2, lwd =3, lcol =2, filtercol = 0,...) { # Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 	xtra =  list (...)
 	if ( length (variable) > 0 ) {
 		fname = kollapse (plotname, '.hist')
@@ -204,7 +200,7 @@ whist <- function(variable, col ="gold1", w=7, h=7, plotname = substitute(variab
 wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute(variable), main =substitute(variable),
 					  w=7, h=7, incrBottMarginBy = 0, mdlink =F, tilted_text =F,
 					  hline=F, vline=F, filtercol=1,lty =1, lwd =2, lcol =2,
-					  errorbar = F, upper = 0, lower=upper, width=0.1, arrow_lwd =1 ) {
+					  errorbar = F, upper = 0, lower=upper, width=0.1, arrow_lwd =1 ) { # Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	fname = kollapse (plotname, '.barplot')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = .8/abs (log10 (length(variable)) ); cexNsize = min (cexNsize, 1)
@@ -230,8 +226,7 @@ wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute
 }
 
 wboxplot <- function(variable, ...,  col ="gold1", plotname = as.character (substitute(variable)), sub=FALSE,
-					  incrBottMarginBy = 0, tilted_text =F, w=7, h=7, mdlink =F) {
-	# in ... you can pass on ANY plotting parameter!!!!
+					  incrBottMarginBy = 0, tilted_text =F, w=7, h=7, mdlink =F) { # Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	fname = kollapse (plotname, '.boxplot')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	if (tilted_text) { xlb = NA } else { xlb= names (variable) }
@@ -245,7 +240,7 @@ wboxplot <- function(variable, ...,  col ="gold1", plotname = as.character (subs
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wpie <- function(variable, ..., percentage =TRUE, plotname = substitute(variable), w=7, h=7, mdlink =F) {
+wpie <- function(variable, ..., percentage =TRUE, plotname = substitute(variable), w=7, h=7, mdlink =F) { # Create and save pie charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	# if (!is.vector(variable)) {any_print ("The input is not a vector, but coverted! Dim:", dim (variable)); cc = variable[,2]; names (cc) = variable[,1]; variable =cc}
 	fname = kollapse (plotname, '.pie')
 	subt = kollapse ("Total = ",sum(variable), print=F)
@@ -259,9 +254,9 @@ wpie <- function(variable, ..., percentage =TRUE, plotname = substitute(variable
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-wstripchart <-  function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, border=1, BoxPlotWithMean =F,
+wstripchart <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, border=1, BoxPlotWithMean =F,
 						  pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", col ="black", metod = "jitter", jitter = 0.2, colorbyColumn=F, # metod = "jitter" OR "stack"
-						  w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
+						  w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) { # Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = 1/abs (log10 (length(yalist)) ); cexNsize = min (cexNsize, 1)
 	fname = kollapse (plotname, '.stripchart')
@@ -282,10 +277,9 @@ wstripchart <-  function(yalist, ..., plotname = as.character (substitute(yalist
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-# here you can define everything
-wstripchart_list <-  function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, ylb = NULL, xlab =NULL, border=1, bxpcol =0,
+wstripchart_list <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, ylb = NULL, xlab =NULL, border=1, bxpcol =0,
 							   pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", coll ="black", metod = "jitter", jitter = 0.2, # metod = "jitter" OR "stack"
-							   w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
+							   w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) { # Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual coloring of each data point, by a color-list of the same dimension. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	fname = kollapse (plotname, '.stripchart')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = 1/abs (log10 (length(list)) ); cexNsize = min (cexNsize, 1)
@@ -303,11 +297,11 @@ wstripchart_list <-  function(yalist, ..., plotname = as.character (substitute(y
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
+	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-wvioplot_list <-  function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:length(yalist)), incrBottMarginBy = 0,
-							w=7, h=7, plotname = as.character (substitute(yalist)), tilted_text =F, mdlink =F ) {
+wvioplot_list <- function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:length(yalist)), incrBottMarginBy = 0,
+							w=7, h=7, plotname = as.character (substitute(yalist)), tilted_text =F, mdlink =F ) { # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	l_list = length(yalist)
@@ -326,11 +320,9 @@ wvioplot_list <-  function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wviostripchart_list <-  function(yalist, ..., pch=23, viocoll = 0, vioborder =1, ylb ="", plotname = as.character (substitute(yalist)), sub=F,
+wviostripchart_list <- function(yalist, ..., pch=23, viocoll = 0, vioborder =1, ylb ="", plotname = as.character (substitute(yalist)), sub=F,
 								  bg=0, coll ="black", metod = "jitter", jitter = 0.1,
-								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) { # , tilted_text =F
-	# in ... you can pass on ANY plotting parameter!!!!
-	# metod = "jitter" OR "stack"
+								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) { # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	fname = kollapse (plotname, '.VioStripchart')
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
@@ -352,4 +344,5 @@ wviostripchart_list <-  function(yalist, ..., pch=23, viocoll = 0, vioborder =1,
 	assign ("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
+
 
