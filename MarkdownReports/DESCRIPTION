@@ -1,0 +1,11 @@
+Package: MarkdownReports
+Title: Generate Scientific Figures and Reports Easily
+Version: 0.0.0.9000
+Authors@R: person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role = c("aut", "cre"))
+Description: An R function library to create scientific figures and reports
+    easily.
+Depends:
+    R (>= 3.2.2)
+License: GNU GPL 3
+LazyData: true
+RoxygenNote: 5.0.1
