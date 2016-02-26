@@ -43,30 +43,31 @@
 <h2>
 <a id="what-is-markdownreports" class="anchor" href="#what-is-markdownreports" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <strong><em>MarkdownReports</em></strong>?</h2>
 
-<p>MarkdownReports is a set of <strong>R</strong> functions that allows you to generate neat reports / summaries what you discovered with your script. It helps you to:</p>
+<p>MarkdownReports is a set of <strong>R</strong> functions that allows you to generate precise figures easily, and create clean reports about what you just discovered with your analysis script. It helps you to:</p>
 
 <ol>
-<li>Write down your findings easily in a clear and nicely formatted way.</li>
-<li>Support your findings with quick &amp; pretty figures saved along your report</li>
-<li>Link and show these in your markdown or html document, <em>at the right spot</em>.</li>
-<li>Share your findings with others via email, github or a personal website.</li>
+<li>Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.</li>
+<li>Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.</li>
+<li>Link &amp; display your figures automatically inside your report, right there where they are needed.</li>
+<li>Version your findings, annotating which parameters were used to reach certain results.</li>
+<li>Share your report with others via email, Github or a personal website.</li>
 </ol>
 
 <h2>
 <a id="why-did-i-make-it--why-might-you-like-it" class="anchor" href="#why-did-i-make-it--why-might-you-like-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why did I make it &amp; why might you like it?</h2>
 
-<p>I do exploratory data analysis as a daily routine and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. </p>
+<p>I do exploratory data analysis as a daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. </p>
 
 <p>I often have to...</p>
 
 <ol>
-<li>... write emails summarizing the results (text accompanied by figures) of the last few days.</li>
-<li>...find back results a couple of month back, with all tiny details (parameters used, etc)</li>
-<li>...assemble each step I did that day into a logical story line, that others can follow right as they see it, e.g.: <em>I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
+<li>...write emails summarizing the results (text &amp; figures) of the last few days.</li>
+<li>...find back results a couple of month back, with all tiny details (parameters used, etc).</li>
+<li>...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: <em>I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
 </li>
 </ol>
 
-<p>For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.</p>
+<p>For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.</p>
 
 <h3>
 <a id="where-does-markdownreports-stand-out" class="anchor" href="#where-does-markdownreports-stand-out" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where does <strong><em>MarkdownReports</em></strong> stand out?</h3>
@@ -75,12 +76,29 @@
 <li>Pure markdown output, simple and elegant layout.</li>
 <li>Handy integration of text with figures (linked to an external file &amp; displayed: makes manual tailoring easy)</li>
 <li>Easy generation of precise figures (axis labels, etc) that are saved as a vector graphic (pdf), making it scalable for presentations, posters, etc</li>
-<li>The report file can easily be named after the source file with date &amp; time: it is linked to the source code, but avoids overwriting.</li>
-<li>It does not spam your report with code, but it shares the name, so you can look it up fast if needed. </li>
-<li>It is usable on GitHub Wiki's (you need to <a href="https://stackoverflow.com/questions/28657992/automator-apple-script-to-convert-jpeg-image">create</a> .png versions of .pdf - a current limitation of GitHub)</li>
+<li>The report file is automatically named after the R-script, so that it is linked to the source code that generated it.</li>
+<li>A timestamped subdirectory is created that you can backup once satisfied with your results.</li>
+<li>The generated report is easy to <a href="https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration">share on a GitHub wiki</a>.</li>
 <li>It natively exports tables from R to Markdown</li>
-<li>It is all achieved in ~ 200 lines of well commented code.</li>
+<li>It is all achieved in ~ 400 lines of well commented code.</li>
 </ul>
+
+<p><br><br></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install directly from <strong>GitHub</strong> via <strong>devtools</strong> with one R command:</p>
+
+<pre><code>devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
+</code></pre>
+
+<p>...then simply load the package:</p>
+
+<pre><code>require("MarkdownReports")
+</code></pre>
+
+<p><br><br></p>
 
 <h2>
 <a id="discover-4-yourself" class="anchor" href="#discover-4-yourself" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Discover 4 Yourself!</h2>
@@ -89,10 +107,9 @@
 <li> See it working: Check out a dummy <a href="https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script.R">R script</a> 
 and the <a href="https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md">MarkDown report</a> 
 it generates inside this <a href="https://github.com/vertesy/MarkdownReports">GitHub Repo</a>.</li>
-<li>Check the function documentation in the <a href="https://github.com/vertesy/MarkdownReports/wiki">wiki</a>
+<li>Check out the <a href="https://github.com/vertesy/MarkdownReports/wiki">wiki</a> and the <a href="https://github.com/vertesy/MarkdownReports/wiki/Function-Overview">list of functions in the package.</a>
 </li>
-<li>Visit the <a href="https://vertesy.github.io/MarkdownReports/">project's webpage</a>
-</li>
+<li><a href="https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R">Browse the code of the functions.</a></li>
 </ul>
 
 <h3>
@@ -112,6 +129,9 @@ it generates inside this <a href="https://github.com/vertesy/MarkdownReports">Gi
 </ul>
 
 <p><a href="http://dx.doi.org/10.5281/zenodo.45945"><img src="https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg" alt="DOI"></a></p>
+
+<p><br>
+<strong>MarkdownReports</strong> is a project of <a href="https://github.com/vertesy" class="user-mention">@vertesy</a>.</p>
 
 <p><br> <br> <br> <br> <br>
 <a href="https://github.com/vertesy/MarkdownReports/generated_pages/new"><em>edit the website</em></a></p>
