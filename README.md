@@ -14,7 +14,7 @@ MarkdownReports is a set of **R** functions that allows you to generate precise 
 - Share your report with others via email, Github or a personal website.
 
  
-## Why did I make it & why might you like it?
+## Why did I make it & why you might like it too?
 
 I do exploratory data analysis as a daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. 
 
