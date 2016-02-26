@@ -36,14 +36,25 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
 - It natively exports tables from R to Markdown
 - It is all achieved in ~ 200 lines of well commented code.
 
+<br><br>
+## Installation
 
+Install directly from **GitHub** via **devtools** with one R command:
+
+    devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
+    
+...then simply load the package:
+
+    require("MarkdownReports")
+
+<br><br>
 ## Discover 4 Yourself!
 
 -  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script.R) 
  and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
  it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
-- Check the function documentation in the [wiki](https://github.com/vertesy/MarkdownReports/wiki)
-- Visit the [project's webpage](https://vertesy.github.io/MarkdownReports/)
+- Check out the [list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
+- [Browse the code of the functions](https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R)
 
 
 ### Learn about the markdown format
@@ -59,7 +70,8 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
 
 
-
+<br>
+**MarkdownReports** is a project of @vertesy.
 
  <br/> <br/> <br/> <br/> <br/>
 [*edit the website*](https://github.com/vertesy/MarkdownReports/generated_pages/new)
