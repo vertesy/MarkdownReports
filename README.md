@@ -49,14 +49,21 @@ Install directly from **GitHub** via **devtools** with one R command:
 ...then simply load the package:
 
     require("MarkdownReports")
+    
+Alternatively, you simply source it from the web. 
+*This way function help will not work, and you will have no local copy of the code on your hard drive.*
+
+    source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/MarkdownReports/R/MarkdownReports.R")
 
 <br><br>
 ## Discover 4 Yourself!
 
--  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script.R) 
- and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Usage_Example_Script/Usage_Example_Script.R.log.md) 
+-  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script.R) 
+ and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md) 
  it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
+
 - Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki) and the [list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
+
 - [Browse the code of the functions.](https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R)
 
 
