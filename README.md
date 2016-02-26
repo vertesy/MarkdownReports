@@ -1,8 +1,5 @@
 
 
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
-
-
 ## What is ***MarkdownReports***?
 
 MarkdownReports is a set of **R** functions that allows you to generate precise figures easily, and create clean reports about what you just discovered with your analysis script. It helps you to:
@@ -76,8 +73,6 @@ Alternatively, you simply source it from the web.
  <br/><br/>
 #### Cite it via its Digital Object Identifier (DOI): 
 
-
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45945.svg)](http://dx.doi.org/10.5281/zenodo.45945)
 
 
 <br>
