@@ -35,7 +35,7 @@ create_set_OutDir <- function(...) { # Create or set the output directory of the
 }
 
 
-setup_logging_markdown <- function(fname, title="", append=T, png4Github = T) { # Setup the markdown report file, create a subdir in "OutDir". Its name is stamped with the script name and the modification time. Create the "Log_PnF" variable used by all log-writing and ~wplot functions.
+setup_logging_markdown <- function(fname, title="", append=T, png4Github = T) { # Setup the markdown report file, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "Log_PnF" variable used by all log-writing and ~wplot functions.
 	if ( exists('OutDir') ) { path = OutDir } else { path = getwd() ; any_print ("OutDir not defined !!!") }
 	Log_PnF <- kollapse (path,'/',fname,'.log.md')
 	if (nchar(title)) { write (paste("# ", title), Log_PnF , append=append)
@@ -139,10 +139,10 @@ MarkDown_Table_writer_NamedVector <- function(NamedVector, FnP=Log_PnF, percenti
 
 ## Generate and save plots into pdf and insert a diplay-link into your markdown file -------------------------------------------------------------------------------------------------
 "Known issue: Cannot define xlim with error.bars"
-wplot <- function(df_2columns, col =1, pch = 18, ...,
+wplot <- function(df_2columns, col =1, pch = 18, ...,  # Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
 				  w=7, h=7,  plotname = substitute(df_2columns), mdlink =F, log4GitHuB = F,
 				  errorbar = F, upper = 0, lower=upper, left = 0, right = left,  width=0.1, arrow_lwd =1,
-				  abline = F, a = F, b =F, lty =1, lwd =1, lcol =1 ) { # Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
+				  abline = F, a = F, b =F, lty =1, lwd =1, lcol =1 ) {
 	x = df_2columns[ ,1]; y = df_2columns[ ,2];
 	fname = kollapse (plotname, '.plot')
 	if (errorbar) { # increase plot boundaries so that error bars fit
@@ -168,9 +168,9 @@ wplot_save_this <- function(plotname = date(), col ="gold1", ..., w=7, h=7, mdli
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-whist <- function(variable, col ="gold1", w=7, h=7, plotname = substitute(variable), breaks = 20,
+whist <- function(variable, col ="gold1", w=7, h=7, plotname = substitute(variable), breaks = 20,  # Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 				   main=kollapse("Histogram of ", substitute(variable)), xlabel =substitute(variable), mdlink =FALSE, log4GitHuB = TRUE,
-				   hline=F, vline=F,lty =2, lwd =3, lcol =2, filtercol = 0,...) { # Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
+				   hline=F, vline=F,lty =2, lwd =3, lcol =2, filtercol = 0,...) {
 	xtra =  list (...)
 	if ( length (variable) > 0 ) {
 		fname = kollapse (plotname, '.hist')
@@ -196,10 +196,10 @@ whist <- function(variable, col ="gold1", w=7, h=7, plotname = substitute(variab
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute(variable), main =substitute(variable),
+wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute(variable), main =substitute(variable), # Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 					  w=7, h=7, incrBottMarginBy = 0, mdlink =F, tilted_text =F,
 					  hline=F, vline=F, filtercol=1,lty =1, lwd =2, lcol =2,
-					  errorbar = F, upper = 0, lower=upper, width=0.1, arrow_lwd =1 ) { # Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+					  errorbar = F, upper = 0, lower=upper, width=0.1, arrow_lwd =1 ) {
 	fname = kollapse (plotname, '.barplot')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = .8/abs (log10 (length(variable)) ); cexNsize = min (cexNsize, 1)
@@ -224,8 +224,7 @@ wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wboxplot <- function(variable, ...,  col ="gold1", plotname = as.character (substitute(variable)), sub=FALSE,
-					  incrBottMarginBy = 0, tilted_text =F, w=7, h=7, mdlink =F) { # Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+wboxplot <- function(variable, ...,  col ="gold1", plotname = as.character (substitute(variable)), sub=FALSE, incrBottMarginBy = 0, tilted_text =F, w=7, h=7, mdlink =F) { # Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 	fname = kollapse (plotname, '.boxplot')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	if (tilted_text) { xlb = NA } else { xlb= names (variable) }
@@ -253,9 +252,9 @@ wpie <- function(variable, ..., percentage =TRUE, plotname = substitute(variable
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-wstripchart <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, border=1, BoxPlotWithMean =F,
-						  pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", col ="black", metod = "jitter", jitter = 0.2, colorbyColumn=F, # metod = "jitter" OR "stack"
-						  w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) { # Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+wstripchart <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, border=1, BoxPlotWithMean =F, # Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+						  pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", col ="black", metod = "jitter", jitter = 0.2, colorbyColumn=F,
+						w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = 1/abs (log10 (length(yalist)) ); cexNsize = min (cexNsize, 1)
 	fname = kollapse (plotname, '.stripchart')
@@ -276,9 +275,9 @@ wstripchart <- function(yalist, ..., plotname = as.character (substitute(yalist)
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wstripchart_list <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, ylb = NULL, xlab =NULL, border=1, bxpcol =0,
+wstripchart_list <- function(yalist, ..., plotname = as.character (substitute(yalist)), sub=FALSE, ylb = "NULL", xlab ="NULL", border=1, bxpcol =0, # Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual coloring of each data point, by a color-list of the same dimension. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 							   pch=23, pchlwd =1, pchcex=1.5, bg="chartreuse2", coll ="black", metod = "jitter", jitter = 0.2, # metod = "jitter" OR "stack"
-							   w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) { # Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual coloring of each data point, by a color-list of the same dimension. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+							   w=7, h=7, incrBottMarginBy = 0, tilted_text =F, mdlink =F) {
 	fname = kollapse (plotname, '.stripchart')
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	cexNsize = 1/abs (log10 (length(list)) ); cexNsize = min (cexNsize, 1)
@@ -299,8 +298,8 @@ wstripchart_list <- function(yalist, ..., plotname = as.character (substitute(ya
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) } # put a markdown image link if the log file exists
 }
 
-wvioplot_list <- function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:length(yalist)), incrBottMarginBy = 0,
-							w=7, h=7, plotname = as.character (substitute(yalist)), tilted_text =F, mdlink =F ) { # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+wvioplot_list <- function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:length(yalist)), incrBottMarginBy = 0, # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+							w=7, h=7, plotname = as.character (substitute(yalist)), tilted_text =F, mdlink =F ) {
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
 	l_list = length(yalist)
@@ -319,9 +318,9 @@ wvioplot_list <- function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:
 	if (mdlink) { 	MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext = fname) }# put a markdown image link if the log file exists
 }
 
-wviostripchart_list <- function(yalist, ..., pch=23, viocoll = 0, vioborder =1, ylb ="", plotname = as.character (substitute(yalist)), sub=F,
+wviostripchart_list <- function(yalist, ..., pch=23, viocoll = 0, vioborder =1, ylb ="", plotname = as.character (substitute(yalist)), sub=F, # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 								  bg=0, coll ="black", metod = "jitter", jitter = 0.1,
-								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) { # Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+								  w=7, h=7, incrBottMarginBy = 0, mdlink =F) {
 	fname = kollapse (plotname, '.VioStripchart')
 	require(vioplot)
 	.ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) 	# Tune the margin
@@ -345,3 +344,63 @@ wviostripchart_list <- function(yalist, ..., pch=23, viocoll = 0, vioborder =1, 
 }
 
 
+whist_dfCol <- function(df, colName, col ="gold", ..., w=7, h=7) { 	# Use this version of whist() if you iterate over columns  or rows of a data frame. You can name the file by naming the variable. Cannot be used with dynamically called variables [e.g. call vectors within a loop]
+	stopifnot(colName %in% colnames(df))
+	variable = unlist(df[,colName])
+	stopifnot(length (variable) >1 )
+	plotname =  paste(substitute(df),'__', colName, sep="")
+	FnP = FnP_parser (plotname, 'hist.pdf')
+	if ( !is.numeric(variable)) { variable = table (variable) ;
+	cexNsize = 0.7/abs (log10 (length(variable)) ); cexNsize = min (cexNsize, 1)
+	barplot (variable, ..., main=plotname, col=col, las=2, cex.names = cexNsize,
+			 sub = paste ("mean:", iround(mean(variable, na.rm=T)),  "CV:", percentage_formatter(cv(variable)) ) )
+	} else {
+		zz=hist (variable, ..., plot=F)
+		hist (variable, ..., main=plotname, col=col, las=2,
+			  sub = paste ("mean:", iround(mean(zz$counts)),  "median:", iround(median(zz$counts)) ) )
+	} # if is.numeric
+	dev.copy2pdf (file=FnP, width=w, height=h )
+}
+
+wbarplot_dfCol <- function(df,colName, col ="gold1", w=7, h=7, ...) { # wbarplot for a column of a data frame.
+	stopifnot(colName %in% colnames(df))
+	variable = unlist(df[,colName])
+	stopifnot(length (variable) >1 )
+	plotname =  paste(substitute(df),'__', colName, sep="")
+	FnP = FnP_parser (plotname, 'barplot.pdf')
+	cexNsize = 0.7/abs (log10 (length(variable)) ); cexNsize = min (cexNsize, 1)
+	barplot (variable, ..., main=plotname, col=col, las=2, cex.names = cexNsize,
+			 sub = paste ("mean:", iround(mean(variable, na.rm=T)),  "CV:", percentage_formatter(cv(variable)) ) )
+	dev.copy2pdf (file=FnP, width=w, height=h )
+}
+
+val2col<-function(z, zlim, col = rev(heat.colors(12)), breaks){ # Convert numeric values to a scaled color gradient. Source: https://stackoverflow.com/questions/8717669/heat-map-colors-corresponding-to-data-in-r
+	if(!missing(breaks)){
+		if(length(breaks) != (length(col)+1)){stop("must have one more break than color")}
+	}
+	if(missing(breaks) & !missing(zlim)){
+		breaks <- seq(zlim[1], zlim[2], length.out=(length(col)+1))
+	}
+	if(missing(breaks) & missing(zlim)){
+		zlim <- range(z, na.rm=TRUE)
+		zlim[2] <- zlim[2]+c(zlim[2]-zlim[1])*(1E-3)#adds a bit to the range in both directions
+		zlim[1] <- zlim[1]-c(zlim[2]-zlim[1])*(1E-3)
+		breaks <- seq(zlim[1], zlim[2], length.out=(length(col)+1))
+	}
+	colorlevels <- col[((as.vector(z)-breaks[1])/(range(breaks)[2]-range(breaks)[1]))*(length(breaks)-1)+1] # assign colors to heights for each point
+	colorlevels
+}
+
+error.bar <- function(x, y, upper, lower=upper, length=0.1,...){ # Put error bars on top of your bar plots. This functionality is now integrated into MarkdownReporter's wbarplot() function
+	stopifnot (length(x) == length(y) & length(y) ==length(lower) & length(lower) == length(upper))
+	if (l(dim(y)) > 1 ) { 	arrows(as.vector(x),as.vector(y+upper), as.vector(x), as.vector(y-lower), angle=90, code=3, length=length, ...)   # if a matrix
+	} else { 				arrows(x,y+upper, x, y-lower, angle=90, code=3, length=length, ...)	}
+}
+
+barplot.label <- function(x, y, labels, bottom = F, relpos_top =.9, relpos_bottom =.1 ,...){ # Add extra labels to your bar plots at the top or the base.
+	stopifnot (length(x) == length(y))
+	if (bottom) { y = rep (relpos_bottom * max(y, na.rm=T), length(x))} # if put labels at the foot
+	if (l(dim(x)) > 1 ) { # if a matrix
+		text(as.vector(x),as.vector(y * relpos_top), labels = as.vector(labels), ...)
+	} else if (l(dim(x)) == 1) { 	text( (x), (y), labels = (labels), ...) }
+}
