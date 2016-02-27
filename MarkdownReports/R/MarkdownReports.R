@@ -562,7 +562,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 			   ...)
 	}
 	if (tilted_text) {
-		text(x = x - 0.25, y = -max(nchar(names(variable)))/5, labels = names(variable), xpd = TRUE,
+		text(x = x - 0.25, y = min(variable)-(max(nchar(names(variable)))/5), labels = names(variable), xpd = TRUE,
 			 srt = 45, cex = cexNsize)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
@@ -603,7 +603,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	}
 	boxplot(variable, ..., names = xlb, main = plotname, col = col, las = 2)
 	if (tilted_text) {
-		text(x = 1:l(variable), y = -max(nchar(names(variable)))/2, labels = names(variable), xpd = TRUE,
+		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE,
 			 srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
@@ -698,7 +698,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
 			   col = col, lwd = pchlwd, cex = pchcex)
 	if (tilted_text) {
-		text(x = 1:l(yalist), y = -max(nchar(names(yalist)))/2, labels = names(yalist), xpd = TRUE, srt = 45)
+		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	par(mar = .ParMarDefault)
@@ -763,7 +763,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 				   pch = pch, bg = bg[[k]], col = coll[[j]], lwd = pchlwd, cex = pchcex)
 	}
 	if (tilted_text) {
-		text(x = 1:l(yalist), y = -max(nchar(names(yalist)))/2, labels = names(yalist), xpd = TRUE, srt = 45)
+		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	par(mar = .ParMarDefault)
@@ -814,7 +814,7 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	}
 	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
 	if (tilted_text) {
-		text(x = 1:l(yalist), y = -max(nchar(names(yalist)))/2, labels = names(yalist), xpd = TRUE, srt = 45)
+		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	par(mar = .ParMarDefault)
