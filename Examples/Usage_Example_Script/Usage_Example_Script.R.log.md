@@ -56,7 +56,7 @@ The `whist(data)` creates a plot and saves it as pdf.
 
 <!--The link below is parsed manual. The github integration is designed for the wiki, while this site is not there!-->
 
-![](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/Usage_Example_Script/data.hist.png)
+![](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/Examples/Usage_Example_Script/data.hist.png)
 
 The `whist(data, mdlink = T)` creates a plot and saves it as pdf, and displays.
 
@@ -69,8 +69,7 @@ There might be no 'save&log' plotting functions for every kind of plot you might
 
 <!--The link below is parsed manual. The github integration is designed for the wiki, while this site is not there!-->
 
-![](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/Usage_Example_Script/DreamMap.plot.png)
-
+![](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/Examples/Usage_Example_Script/DreamMap.plot.png)
 
 ## GitHub Integration
 
