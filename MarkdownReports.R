@@ -216,7 +216,7 @@ wbarplot <- function(variable, ..., col ="gold1", sub = F, plotname = substitute
 	if (hline) { abline (h = hline, lty =lty, lwd = lwd, col = lcol) }
 	if (vline) { abline (v = vline, lty =lty, lwd = lwd, col = lcol) }
 	if (errorbar) {  	arrows(x, variable+upper, x, variable-lower, angle=90, code=3, length=width, lwd = arrow_lwd, ...) }
-	if (tilted_text) { text(x=x-.25, y=-max(nchar(names(variable))) / 5, labels = names(variable), xpd=TRUE, srt=45, cex=cexNsize) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	if (tilted_text) { text(x=x-.25, y=min(variable)-(max(nchar(names(variable))) / 5), labels = names(variable), xpd=TRUE, srt=45, cex=cexNsize) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file= FnP_parser (fname, 'pdf'), width=w, height=h)
 	par("mar" = .ParMarDefault)
@@ -267,7 +267,7 @@ wstripchart <- function(yalist, ..., plotname = as.character (substitute(yalist)
 	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter =jitter
 			   , pch=pch, bg=bg, col=col, lwd =pchlwd, cex=pchcex)
 
-	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	if (tilted_text) { text(x=1:l(yalist), y=min(unlist(yalist))-(max(nchar(names (yalist))) / 2), labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
@@ -290,7 +290,7 @@ wstripchart_list <- function(yalist, ..., plotname = as.character (substitute(ya
 		if (length(bg) < length(yalist)) {k=1}
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter =jitter, pch =pch, bg = bg[[k]], col=coll[[j]], lwd =pchlwd, cex=pchcex)
 	}
-	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	if (tilted_text) { text(x=1:l(yalist), y=min(unlist(yalist))-(max(nchar(names (yalist))) / 2), labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
@@ -310,7 +310,7 @@ wvioplot_list <- function(yalist, ..., xlb = names(yalist), ylb ="", coll = c(1:
 	plot(0,0, type="n", xlim= c(.5, (l_list +.5)), ylim=range (unlist(yalist)),  xaxt = 'n', xlab ="", ylab = ylb, main = plotname)
 	for (i in 1:l_list) { vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i] ) }
 	axis(side=1,at=1:l_list,labels=xlb, las=2)
-	if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	if (tilted_text) { text(x=1:l(yalist), y=min(unlist(yalist))-(max(nchar(names (yalist))) / 2), labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)
@@ -335,7 +335,7 @@ wviostripchart_list <- function(yalist, ..., pch=23, viocoll = 0, vioborder =1, 
 		if (length(bg) < length(yalist)) {k=1}
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter =jitter, pch =pch, bg = bg[[k]], col=coll[[j]])
 	}
-	# if (tilted_text) { text(x=1:l(yalist), y=-max(nchar(names (yalist))) / 2, labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
+	# if (tilted_text) { text(x=1:l(yalist), y=min(unlist(yalist))-(max(nchar(names (yalist))) / 2), labels = names (yalist), xpd=TRUE, srt=45) } # 45 degree labels; y determines the -offset based on the nr of characters in the label
 
 	dev.copy2pdf (file=FnP_parser (fname, 'pdf'), width=w, height=h )
 	par("mar" = .ParMarDefault)

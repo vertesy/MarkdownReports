@@ -21,7 +21,7 @@ I do exploratory data analysis as a daily routine, and I have constant interacti
 I often have to...
 
 1. ...write emails summarizing the results (text & figures) of the last few days.
-2. ...find back results a couple of month back, with all tiny details (parameters used, etc).
+2. ...find results from a couple of month back, with all tiny details (parameters used, etc).
 3. ...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: *I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
 	
 For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
