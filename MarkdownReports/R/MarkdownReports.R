@@ -525,12 +525,11 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 	if (errorbar) {	ylim = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } else {	ylim = range(0, variable)	}
 	if (tilted_text) {	xlb = NA	}	else {		xlb = names(variable)	}
 
-	x = barplot(variable, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize,
-				ylim = ylim)
+	x = barplot(variable, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize, ylim = ylim)
 	if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol)	}
 	if (vline) { abline(v = vline, lty = lty, lwd = lwd, col = lcol)	}
 	if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, ...)	}
-	if (tilted_text) { text(x = x - 0.25, y = -(max(nchar(names(variable)))/1.5), labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize)	}
+	if (tilted_text) { text(x = x - 0.25, y = -(max(nchar(names(variable)))/3), labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize)	}
 
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -923,9 +922,36 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 		zlim[1] <- zlim[1] - c(zlim[2] - zlim[1]) * (0.001)
 		breaks <- seq(zlim[1], zlim[2], length.out = (length(col) + 1))
 	}
-	colorlevels <- col[((as.vector(yourdata) - breaks[1])/(range(breaks)[2] - range(breaks)[1])) * (length(breaks) -
-																										1) + 1]
+	colorlevels <- col[((as.vector(yourdata) - breaks[1])/(range(breaks)[2] - range(breaks)[1])) * (length(breaks) - 1) + 1]
 	colorlevels
+}
+
+
+#' vvenn
+#'
+#' Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, abnd does not use dev.copy2pdf()
+#' @param yalist The variable to plot.
+#' @param imagetype Image format, png by default.
+#' @param alpha Transparency, .5 by default.
+#' @param ...
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".
+#' @examples vvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
+#' @export
+
+vvenn <- function (yalist, imagetype = "png", alpha = .5,
+				   ..., w = 7, h = 7, mdlink = F) {
+	require("VennDiagram")
+	fill = 1:l(yalist)
+	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
+	filename = kollapse(OutDir,"/", fname, print = F)
+	subt = kollapse("Total = ", l(unique(unlist(yalist))), " elements in total.", print = F)
+	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
+	if (mdlink) {
+		llogit(MarkDown_ImgLink_formatter(fname))
+		if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
+	}
 }
 
 
