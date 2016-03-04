@@ -753,7 +753,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 #' @export
 
 wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1:length(yalist)), incrBottMarginBy = 0, 	w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F) {
-	require(vioplot)
+	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
 	fname = kollapse(plotname, ".vioplot")
@@ -942,7 +942,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 
 vvenn <- function (yalist, imagetype = "png", alpha = .5,
 				   ..., w = 7, h = 7, mdlink = F) {
-	require("VennDiagram")
+	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
 	fill = 1:l(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
 	filename = kollapse(OutDir,"/", fname, print = F)
