@@ -359,14 +359,13 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @export
 
 wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
-				  abline = F, a = F, b = F, lty = 1, lwd = 1, lcol = 1)
-{
+				  abline = F, a = F, b = F, lty = 1, lwd = 1, lcol = 1) {
 	x = df_2columns[, 1]
 	y = df_2columns[, 2]
 	fname = kollapse(plotname, ".plot")
 	if (errorbar) {
-		ylim = range(c(0, (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))))
-		xlim = range(c(0, (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))))
+		ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))))
+		xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))))
 	}
 	else {
 		ylim = range(y)
@@ -374,19 +373,12 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = 
 	}
 	plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim)
 	if (errorbar) {
-		arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width,
-			   lwd = arrow_lwd)
+		arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd)
 		arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd)
 	}
-	if (abline == "h") {
-		abline(h = a, lty = lty, lwd = lwd, col = lcol)
-	}
-	if (abline == "v") {
-		abline(v = a, lty = lty, lwd = lwd, col = lcol)
-	}
-	if (abline == "ab") {
-		abline(a = a, b = b, lty = lty, lwd = lwd, col = lcol)
-	}
+	if (abline == "h") {	abline(h = a, lty = lty, lwd = lwd, col = lcol)	}
+	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = lcol)	}
+	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = lcol)	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -452,33 +444,21 @@ whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(v
 			cexNsize = min(cexNsize, 1)
 			barplot(variable, ..., main = main, xlab = xlb, col = col, las = 2, cex.names = cexNsize,
 					sub = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-		}
-		else {
+		} else {
 			histdata = hist(variable, breaks = breaks, plot = F)
-			if (filtercol == 1) {
-				col = (histdata$breaks >= vline) + 2
-			}
-			else if (filtercol == -1) {
-				col = (histdata$breaks < vline) + 2
-			}
+			if (filtercol == 1) {	col = (histdata$breaks >= vline) + 2
+			} else if (filtercol == -1) {	col = (histdata$breaks < vline) + 2	}
+
 			hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
 		}
-		if (hline) {
-			abline(h = hline, lty = lty, lwd = lwd, col = lcol)
-		}
+		if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
 		if (vline & !l(xtra$xlim)) {
-			PozOfvline = mean(histdata$mids[c(max(which(histdata$breaks < vline)), min(which(histdata$breaks >=
-																							 	vline)))])
+			PozOfvline = mean(histdata$mids[c(max(which(histdata$breaks < vline)), min(which(histdata$breaks >= vline)))])
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = 1)
 		}
-		else if (vline & l(xtra$xlim)) {
-			abline(v = vline, lty = lty, lwd = lwd, col = 1)
-		}
+		else if (vline & l(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
 		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
-	}
-	else {
-		any_print(variable, " IS EMPTY")
-	}
+	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
@@ -560,16 +540,10 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 {
 	fname = kollapse(plotname, ".boxplot")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	if (tilted_text) {
-		xlb = NA
-	}
-	else {
-		xlb = names(variable)
-	}
+	if (tilted_text) { 	xlb = NA } else {	xlb = names(variable) }
 	boxplot(variable, ..., names = xlb, main = plotname, col = col, las = 2)
 	if (tilted_text) {
-		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE,
-			 srt = 45)
+		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -594,13 +568,8 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F) {
 	fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
-	if (percentage) {
-		labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),
-					  sep = "")
-	}
-	else {
-		labs <- paste("(", names(variable), ")", "\n", variable, sep = "")
-	}
+	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
+	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(l(variable)))
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -735,15 +704,8 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
 	fname = kollapse(plotname, ".vioplot")
-	if (length(coll) < l_list) {
-		coll = rep(coll, l_list)
-	}
-	if (tilted_text) {
-		xlb = NA
-	}
-	else {
-		xlb = names(yalist)
-	}
+	if (length(coll) < l_list) { coll = rep(coll, l_list) }
+	if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
 	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
 		 ylab = ylb, main = plotname)
 	for (i in 1:l_list) {
@@ -795,12 +757,8 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 	}
 	for (i in 1:length(yalist)) {
 		j = k = i
-		if (length(coll) < length(yalist)) {
-			j = 1
-		}
-		if (length(bg) < length(yalist)) {
-			k = 1
-		}
+		if (length(coll) < length(yalist)) {	j = 1	}
+		if (length(bg) < length(yalist)) { k = 1 }
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
 				   pch = pch, bg = bg[[k]], col = coll[[j]])
 	}
