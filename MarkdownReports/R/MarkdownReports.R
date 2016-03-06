@@ -74,13 +74,13 @@ setup_MarkdownReports <-function (OutDir = getwd(), fname =  basename(OutDir), t
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
-	path_of_report <- kollapse(path, "/", fname, ".log.md")
+	path_of_report <- paste0(OutDir, "/", fname, ".log.md")
 	assign("path_of_report", path_of_report, envir = .GlobalEnv)
 	any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
 	if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
 	} else {			write(paste("# ", fname, "Report"), path_of_report, append = append) }
-	write(kollapse("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname), path_of_report, append = T)
+	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname), path_of_report, append = T)
 	BackupDir = kollapse(OutDir, "/", substr(fname, 1, nchar(fname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
 	if (!exists(BackupDir)) {
 		dir.create(BackupDir)
@@ -1010,5 +1010,65 @@ barplot.label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 		text((x), (y), labels = (labels), ...)
 	}
 }
+
+#' filter_HP
+#'
+#' Filter values that fall between above high-pass-threshold (X >).
+#' @param numeric_vector Values to be filtered.
+#' @param threshold A numeric value above which "numeric_vector" passes.
+#' @param prepend Text prepended to the results.
+#' @param return_survival_ratio
+#' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
+#' @export
+
+filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall between above high-pass-threshold (X >).
+	survivors = numeric_vector>threshold
+	pc = percentage_formatter(sum(survivors)/length(survivors))
+	if (file.exists(path_of_report) ) {	llprint (prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", threshold)
+	} else { any_print  (pc, " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", threshold, "NOT LOGGED") }
+	if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
+}
+
+
+#' filter_LP
+#'
+#' Filter values that fall below the low-pass threshold (X <).
+#' @param numeric_vector Values to be filtered.
+#' @param threshold A numeric value below which "numeric_vector" passes.
+#' @param prepend Text prepended to the results.
+#' @param return_survival_ratio
+#' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
+#' @export
+
+filter_LP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall below the low-pass threshold (X <).
+	survivors = numeric_vector<threshold
+	pc = percentage_formatter(sum(survivors)/length(survivors))
+	if (file.exists(path_of_report) ) {	llprint (prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall below a threshold value of: ", threshold )
+	} else { any_print  (pc, " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall below a threshold value of: ", threshold, "NOT LOGGED") }
+	if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
+}
+
+#' filter_MidPass
+#'
+#' Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
+#' @param numeric_vector Values to be filtered.
+#' @param HP_threshold Lower threshold value. (>=)
+#' @param LP_threshold Upper threshold value. (<)
+#' @param prepend Text prepended to the results.
+#' @param return_survival_ratio
+#' @param EdgePass If TRUE, it reverses the filter: everything passes except between the two thresholds.
+#' @examples filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
+#' @export
+
+filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend ="", return_survival_ratio=FALSE, EdgePass = F) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
+	survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
+	if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
+	pc = percentage_formatter(sum(survivors)/length(survivors))
+	Texxt = kollapse(pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall ", keyword, " the thresholds: ", HP_threshold, relation, LP_threshold, print = F)
+	if (file.exists(path_of_report) ) {	llprint (prepend, Texxt)
+	} else { any_print  (Texxt, "NOT LOGGED") }
+	if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
+}
+
 
 
