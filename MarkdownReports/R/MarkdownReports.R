@@ -389,24 +389,15 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = 
 #'
 #' Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "path_of_report". Name the file by naming the variable!
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param col Color of the plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
-#' @param ManualName Define the plot's file name manually.
 #' @examples wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = 7, mdlink = FALSE, ManualName = FALSE)
 #' @export
 
-wplot_save_this <-function (plotname = date(), col = "gold1", ..., w = 7, h = 7, mdlink = FALSE, ManualName = FALSE) {
-	if (plotname == plotnameLastPlot) {
-		ManualName = T
-	}
-	fname = kollapse(plotname, ".plot")
-	if (ManualName) {
-		fname = plotname
-	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -492,6 +483,7 @@ whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(v
 #' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1)
 #' @export
 
+### ylim cannot be defined !!!
 wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), 	w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1,
 					 lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1) {
 	fname = kollapse(plotname, ".barplot")
