@@ -501,8 +501,8 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 	if (vline) { abline(v = vline, lty = lty, lwd = lwd, col = lcol)	}
 	if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, ...)	}
 	if (tilted_text) {
-		yy = (max(nchar(names(variable)))/3)
-		text(x = x - 0.25, y = -yy, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
+		# yy = (max(nchar(names(variable)))/3)
+		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
 	}
 
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
@@ -608,9 +608,9 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
 			   col = col, lwd = pchlwd, cex = pchcex)
 	if (tilted_text) {
-		xx= min(unlist(yalist))
-		yy = (max(nchar(names(yalist)))/2)
-		text(x = 1:l(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+		# xx= min(unlist(yalist))
+		# yy = (max(nchar(names(yalist)))/2)
+		text(x = 1:l(yalist), y=0, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
