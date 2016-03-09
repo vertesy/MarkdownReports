@@ -42,3 +42,23 @@ The code:
 The code:
 #  MarkdownReports_in_Action.r Report
 		Modified: 09/03/2016 | 13:27 | by: MarkdownReports_in_Action.r
+
+![](SnowflakeSizes.stripchart.pdf)
+
+![](Reports/MarkdownReports_in_Action/SnowflakeSizes.stripchart.png)
+
+![](SnowflakeSizes.stripchart.pdf)
+
+![](Reports/MarkdownReports_in_Action/SnowflakeSizes.stripchart.png)
+
+![](SnowflakeSizes.stripchart.pdf)
+
+![](Reports/MarkdownReports_in_Action/SnowflakeSizes.stripchart.png)
+
+![](SnowflakeSizes.stripchart.pdf)
+
+![](Reports/MarkdownReports_in_Action/SnowflakeSizes.stripchart.png)
+
+![](SnowflakeSizes_colored_by_temp.stripchart.pdf)
+
+![](Reports/MarkdownReports_in_Action/SnowflakeSizes_colored_by_temp.stripchart.png)
