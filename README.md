@@ -61,7 +61,9 @@ Alternatively, you simply source it from the web.
  and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md) 
  it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
 
-- Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki) and the [list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
+- Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki) 
+	- See [how easy it is to make customized figures](https://github.com/vertesy/MarkdownReports/wiki/MarkdownReports_in_Action.r.log)
+	- See [the list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
 
 - [Browse the code of the functions.](https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R)
 
