@@ -608,9 +608,9 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
 			   col = col, lwd = pchlwd, cex = pchcex)
 	if (tilted_text) {
-		# xx= min(unlist(yalist))
+		xx= min(unlist(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
-		text(x = 1:l(yalist), y=0, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+		text(x = 1:l(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -664,7 +664,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 				   pch = pch, bg = bg[[k]], col = coll[[j]], lwd = pchlwd, cex = pchcex)	}
 	if (tilted_text) {
 		xx= min(unlist(yalist))
-		yy = (max(nchar(names(yalist)))/2)
+		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:l(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
