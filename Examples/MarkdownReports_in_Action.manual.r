@@ -10,7 +10,7 @@ try (source ('/Users/abelvertesy/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 # library(stringr)
 
 # Setup ------------------------
-setup_MarkdownReports(OutDir = "/Users/abelvertesy/MarkdownReports/MarkdownReports_in_Action", fname = "MarkdownReports_in_Action.r", append = F)
+setup_MarkdownReports(OutDir = "/Users/abelvertesy/MarkdownReports/Examples/MarkdownReports_in_Action", fname = "MarkdownReports_in_Action.r", append = F)
 # create_set_OutDir("/Users/abelvertesy/Google_Drive/X_react_Data/Abelz/X_react_2016")
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
 
@@ -31,27 +31,35 @@ SnowflakeSizes =  list (
 )
 
 # Parameters ------------------------
-thresholdX = 10
+thresholdX = 10 # % bias is accepted
 
 
 # GO ------------------------
 
 llprint("### Hey Snowflake collector, welcome back from Reykjavik! How big are the snowflakes over there?")
 
+llprint("Take a look at the raw numbers:")
+MarkDown_Table_writer_NamedVector(SnowflakeSizes_Reykjavik)
+llogit("The code:")
+
+
+llprint("Let's visualize them:")
 wbarplot(SnowflakeSizes_Reykjavik, mdlink = T)
+llogit("The code:")
+
 
 llprint("### At first we would like to throw away every  measurement where the measurement bias (reported by your snowflake collecting machine) is above 10%:")
 wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1, mdlink = T)
 
 pass = filter_LP(Measurement_Bias, threshold = thresholdX) # report the actual numbers
-llprint("The code:")
+llogit("The code:")
 
 # --------------------------------------------------------------------------------
 llprint("### Let's see how it compares with snow flakes from other cities?")
 SnowflakeSizes$Reykjavik = SnowflakeSizes_Reykjavik[pass]
 
 wstripchart(SnowflakeSizes, tilted_text = T, mdlink = T)
-
+llogit("The code:")
 
 
 # --------------------------------------------------------------------------------
@@ -66,7 +74,7 @@ SnowflakeTemperature = list( c(-13.3, -13.1, -11.4, -15, -15, -6.28, -9.02),
 colore = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
 SnowflakeSizes_colored_by_temp = SnowflakeSizes
 wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colore, mdlink = T)
-llprint("The code:")
+llogit("The code:")
 
 Snowflakes = cbind(
 	"Temperature" = unlist(SnowflakeTemperature),
@@ -90,4 +98,4 @@ legend("topleft", legend = rownames(Mean_Snowflake_Size_and_Temp), fill = 3:5, b
 wplot_save_this(plotname = plotnameLastPlot, mdlink = T)
 
 
-llprint("The code:")
+llogit("The code:")
