@@ -425,7 +425,7 @@ wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE
 #' @export
 
 whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable), mdlink = FALSE, hline = F,
-				  vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ...) {
+				  vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0, ...) {
 	xtra = list(...)
 	if (length(variable) > 0) {
 		fname = kollapse(plotname, ".hist")
@@ -442,10 +442,10 @@ whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(v
 
 			hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
 		}
-		if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
+		# if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
 		if (vline & !l(xtra$xlim)) {
 			PozOfvline = mean(histdata$mids[c(max(which(histdata$breaks < vline)), min(which(histdata$breaks >= vline)))])
-			abline(v = PozOfvline, lty = lty, lwd = lwd, col = 1)
+			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & l(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
 		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
