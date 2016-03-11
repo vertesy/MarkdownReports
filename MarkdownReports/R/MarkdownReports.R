@@ -380,7 +380,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = 
 	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = lcol)	}
 	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = lcol)	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -397,7 +397,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = 
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = plotname)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
 
@@ -448,7 +448,7 @@ whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(v
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & l(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -505,7 +505,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
 	}
 
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
@@ -537,7 +537,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (tilted_text) {
 		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -563,7 +563,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(l(variable)))
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -612,7 +612,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:l(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -667,7 +667,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:l(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -707,7 +707,7 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	if (tilted_text) {
 		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -754,7 +754,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
 				   pch = pch, bg = bg[[k]], col = coll[[j]])
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
