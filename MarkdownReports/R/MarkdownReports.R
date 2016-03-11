@@ -243,7 +243,7 @@ MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 #' Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param df Input data frame to be plotted
 #' @param FullPath Full path to the file.
-#' @param percentify Format numbers [0,1] to percentages 1-100%.
+#' @param percentify Format numbers [0,1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
 #' @examples MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 #' @export
@@ -292,7 +292,7 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 #' Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param NamedVector A vector for the table body, with names as table header.
 #' @param FullPath Full path to the file.
-#' @param percentify Format numbers [0,1] to percentages 1-100%.
+#' @param percentify Format numbers [0,1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
 #' @examples MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 #' @export
