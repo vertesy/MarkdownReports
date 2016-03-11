@@ -74,7 +74,7 @@ Alternatively, you simply source it from the web.
 - Checkout some cool markdown editors, like [MOU](http://25.io/mou/), or [markdownpad](http://markdownpad.com/).
 - See how these markdown reports are rendered:
 
-![SNP filter and code.png](SNP filter and code.png)
+![SNP filter and code.png](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/SNP%20filter%20and%20code.png)
 
 
 
