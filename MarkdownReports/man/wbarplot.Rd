@@ -29,7 +29,7 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
@@ -56,7 +56,7 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 \item{w}{Width of the saved pdf image, in inches.idth}
 }
 \description{
-Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
 wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1)

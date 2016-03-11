@@ -45,12 +45,12 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{col}{Color of the plot.orbyColumn}
 }
 \description{
-Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
 wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)

@@ -38,12 +38,12 @@ wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{col}{Color of the plot.l}
 }
 \description{
-Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
 wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)

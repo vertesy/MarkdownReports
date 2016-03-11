@@ -27,10 +27,10 @@ wboxplot(variable, ..., col = "gold1",
 
 \item{h}{Height of the saved pdf image, in inches.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 }
 \description{
-Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions.
+Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
 wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)

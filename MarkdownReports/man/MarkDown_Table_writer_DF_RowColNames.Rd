@@ -4,8 +4,8 @@
 \alias{MarkDown_Table_writer_DF_RowColNames}
 \title{MarkDown_Table_writer_DF_RowColNames}
 \usage{
-MarkDown_Table_writer_DF_RowColNames(df, FullPath = Log_PnF, percentify = F,
-  title_of_table = NA)
+MarkDown_Table_writer_DF_RowColNames(df, FullPath = path_of_report,
+  percentify = F, title_of_table = NA)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
@@ -17,9 +17,9 @@ MarkDown_Table_writer_DF_RowColNames(df, FullPath = Log_PnF, percentify = F,
 \item{title_of_table}{Title above the table (in the markdown report).}
 }
 \description{
-Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "Log_PnF".
+Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 }
 \examples{
-MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = Log_PnF, percentify = F, title_of_table = NA)
+MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 }
 

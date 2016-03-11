@@ -857,21 +857,21 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 #' @param yalist The variable to plot.
 #' @param imagetype Image format, png by default.
 #' @param alpha Transparency, .5 by default.
-#' @param ...
+#' @param ... Pass any other parameter of the corresponding venn.diagram() function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples vvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
 #' @export
 
-vvenn <- function (yalist, imagetype = "png", alpha = .5,
-				   ..., w = 7, h = 7, mdlink = F) {
+vvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
 	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
 	fill = 1:l(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
 	filename = kollapse(OutDir,"/", fname, print = F)
 	subt = kollapse("Total = ", l(unique(unlist(yalist))), " elements in total.", print = F)
-	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
+	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),
+				 , ... , sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
 	if (mdlink) {
 		llogit(MarkDown_ImgLink_formatter(fname))
 		if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
@@ -935,7 +935,7 @@ barplot.label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value above which "numeric_vector" passes.
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
@@ -954,7 +954,7 @@ filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ra
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value below which "numeric_vector" passes.
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
@@ -973,7 +973,7 @@ filter_LP <- function(numeric_vector, threshold, prepend ="", return_survival_ra
 #' @param HP_threshold Lower threshold value. (>=)
 #' @param LP_threshold Upper threshold value. (<)
 #' @param prepend Text prepended to the results.
-#' @param return_survival_ratio
+#' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @param EdgePass If TRUE, it reverses the filter: everything passes except between the two thresholds.
 #' @examples filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
 #' @export

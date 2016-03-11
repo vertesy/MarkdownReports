@@ -8,7 +8,7 @@ whist(variable, col = "gold1", w = 7, h = 7,
   plotname = substitute(variable), breaks = 20,
   main = kollapse("Histogram of ", substitute(variable)),
   xlb = substitute(variable), mdlink = FALSE, hline = F, vline = F,
-  lty = 2, lwd = 3, lcol = 2, filtercol = 0, ...)
+  lty = 2, lwd = 3, lcol = 1, filtercol = 0, ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -27,7 +27,7 @@ whist(variable, col = "gold1", w = 7, h = 7,
 
 \item{xlb}{X-axis label.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{vline}{Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.}
 
@@ -44,7 +44,7 @@ whist(variable, col = "gold1", w = 7, h = 7,
 \item{h}{Height of the saved pdf image, in inches.line}
 }
 \description{
-Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "Log_PnF". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
+Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 }
 \examples{
 whist (variable =  , col = gold1, w = 7, h = 7, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = FALSE, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )

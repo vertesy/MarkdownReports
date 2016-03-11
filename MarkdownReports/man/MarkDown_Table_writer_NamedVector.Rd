@@ -4,7 +4,7 @@
 \alias{MarkDown_Table_writer_NamedVector}
 \title{MarkDown_Table_writer_NamedVector}
 \usage{
-MarkDown_Table_writer_NamedVector(NamedVector, FullPath = Log_PnF,
+MarkDown_Table_writer_NamedVector(NamedVector, FullPath = path_of_report,
   percentify = F, title_of_table = NA)
 }
 \arguments{
@@ -17,9 +17,9 @@ MarkDown_Table_writer_NamedVector(NamedVector, FullPath = Log_PnF,
 \item{title_of_table}{Title above the table (in the markdown report).}
 }
 \description{
-Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "Log_PnF".
+Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 }
 \examples{
-MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = Log_PnF, percentify = F, title_of_table = NA)
+MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 }
 

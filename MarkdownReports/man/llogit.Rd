@@ -10,7 +10,7 @@ llogit(...)
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
 }
 \description{
-Collapse by white spaces a sentence from any variable passed on to the function. llogit() writes it to your markdown report file, if the "Log_PnF" variable is defined. It does not print the sentence to the screen.
+Collapse by white spaces a sentence from any variable passed on to the function. llogit() writes it to your markdown report file, if the "path_of_report" variable is defined. It does not print the sentence to the screen.
 }
 \examples{
 llogit (... =  )

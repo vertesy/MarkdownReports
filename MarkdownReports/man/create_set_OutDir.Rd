@@ -2,7 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{create_set_OutDir}
 \alias{create_set_OutDir}
-\title{create_set_OutDir}
+\title{create_set_OutDir (deprecated, use with setup_logging_markdown)}
 \usage{
 create_set_OutDir(...)
 }

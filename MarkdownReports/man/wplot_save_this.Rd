@@ -4,13 +4,10 @@
 \alias{wplot_save_this}
 \title{wplot_save_this}
 \usage{
-wplot_save_this(plotname = date(), col = "gold1", ..., w = 7, h = 7,
-  mdlink = FALSE, ManualName = FALSE)
+wplot_save_this(plotname = date(), ..., w = 7, h = 7, mdlink = FALSE)
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{col}{Color of the plot.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
@@ -18,12 +15,10 @@ wplot_save_this(plotname = date(), col = "gold1", ..., w = 7, h = 7,
 
 \item{h}{Height of the saved pdf image, in inches.}
 
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "Log_PnF".}
-
-\item{ManualName}{Define the plot's file name manually.}
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 }
 \description{
-Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "Log_PnF". Name the file by naming the variable!
+Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "path_of_report". Name the file by naming the variable!
 }
 \examples{
 wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = 7, mdlink = FALSE, ManualName = FALSE)
