@@ -1,4 +1,6 @@
 ## MarkdownReports.R
+# author Abel Vertesy
+# date: 22-03-2016
 
 #' kollapse
 #'
