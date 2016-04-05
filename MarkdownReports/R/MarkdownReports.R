@@ -466,28 +466,32 @@ whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(v
 #' @param sub Subtitle for the plot.
 #' @param plotname The name of the file saved.
 #' @param main The title of the plot.
-#' @param w Width of the saved pdf image, in inches.
-#' @param h Height of the saved pdf image, in inches.
-#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
-#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
+#' @param ylimits Defines the Y axis range. Replacement for the standard "ylim" argument.
 #' @param hline Draw a horizontal line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.
 #' @param vline Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.
 #' @param filtercol Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "hline" is defined.
 #' @param lty Linetype, defined by numbers 1-6.
-#' @param lwd Line width. Set to 2 by default.
+#' @param lwd Linewidth. Set to 2 by default.
 #' @param lcol Color of the line.
 #' @param errorbar Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".
 #' @param upper Size of the upper error bar.
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
-#' @param w Width of the saved pdf image, in inches.idth
-#' @param arrow_lwd Line width for the error bar arrow.
-#' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1)
+#' @param arrow_width Width of the arrow head.
+#' @param arrow_lwd Line width for the error bars.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 #' @export
 
 ### ylim cannot be defined !!!
-wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), 	w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1,
-					 lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1) {
+wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), tilted_text = F, ylimits = NULL,
+					 hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
+					 errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
+					 w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
+
 	fname = kollapse(plotname, ".barplot")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	cexNsize = 0.8/abs(log10(length(variable)))
@@ -495,15 +499,14 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 	if (sub == T) {	subtitle = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable)))	} else if (sub == F) { subtitle = "" } else { subtitle = sub }
 	if (hline & filtercol == 1) { col = (variable >= hline) + 2	}
 	if (hline & filtercol == -1) { col = (variable < hline) + 2	}
-	if (errorbar) {	ylim = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } else {	ylim = range(0, variable)	}
+	if (errorbar & is.null(ylimits)) {	ylimits = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } # else {	ylimits = range(0, variable)	}
 	if (tilted_text) {	xlb = NA	}	else {		xlb = names(variable)	}
 
-	x = barplot(variable, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize, ylim = ylim)
+	x = barplot(variable, ylim = ylimits, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize)
 	if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol)	}
-	if (vline) { abline(v = vline, lty = lty, lwd = lwd, col = lcol)	}
-	if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, ...)	}
+	if (vline[1]) { abline(v = x[vline], lty = lty, lwd = lwd, col = lcol)	}
+	if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = arrow_width, lwd = arrow_lwd, ...)	}
 	if (tilted_text) {
-		# yy = (max(nchar(names(variable)))/3)
 		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
 	}
 
@@ -512,6 +515,8 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
 }
+
+
 
 
 #' wboxplot
