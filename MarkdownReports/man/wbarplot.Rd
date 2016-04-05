@@ -5,10 +5,11 @@
 \title{wbarplot}
 \usage{
 wbarplot(variable, ..., col = "gold1", sub = F,
-  plotname = substitute(variable), main = substitute(variable), w = 7,
-  h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F,
-  vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
-  errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1)
+  plotname = substitute(variable), main = substitute(variable),
+  tilted_text = F, ylimits = NULL, hline = F, vline = F,
+  filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F,
+  upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1, w = 7,
+  h = 7, incrBottMarginBy = 0, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -23,15 +24,9 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 
 \item{main}{The title of the plot.}
 
-\item{w}{Width of the saved pdf image, in inches.}
-
-\item{h}{Height of the saved pdf image, in inches.}
-
-\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
-
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
-
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
+
+\item{ylimits}{Defines the Y axis range. Replacement for the standard "ylim" argument.}
 
 \item{hline}{Draw a horizontal line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.}
 
@@ -41,7 +36,7 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 
 \item{lty}{Linetype, defined by numbers 1-6.}
 
-\item{lwd}{Line width. Set to 2 by default.}
+\item{lwd}{Linewidth. Set to 2 by default.}
 
 \item{lcol}{Color of the line.}
 
@@ -51,14 +46,22 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 
 \item{lower}{Size of the lower error bar. By default, it equals the upper error bar.}
 
-\item{arrow_lwd}{Line width for the error bar arrow.}
+\item{arrow_width}{Width of the arrow head.}
 
-\item{w}{Width of the saved pdf image, in inches.idth}
+\item{arrow_lwd}{Line width for the error bars.}
+
+\item{w}{Width of the saved pdf image, in inches.}
+
+\item{h}{Height of the saved pdf image, in inches.}
+
+\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
+
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 }
 \description{
 Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, width = 0.1, arrow_lwd = 1)
+wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 }
 

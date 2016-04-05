@@ -7,14 +7,14 @@ try(dev.off())
 
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('/Users/abelvertesy/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+try (source ('/Users/abelvertesy/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 require(devtools)
 require(roxygen2)
 require("stringr")
 
 # Setup ------------------------
 
-RepositoryDir = 	"/Users/abelvertesy/MarkdownReports/"
+RepositoryDir = 	"/Users/abelvertesy/Github_repos/MarkdownReports/"
 PackageName = 	"MarkdownReports"
 fname = 	kollapse(PackageName,".R")
 

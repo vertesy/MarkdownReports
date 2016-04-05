@@ -4,11 +4,11 @@
 \alias{wplot}
 \title{wplot}
 \usage{
-wplot(df_2columns, col = 1, pch = 18, ..., w = 7, h = 7,
-  plotname = substitute(df_2columns), mdlink = F, errorbar = F,
-  upper = 0, lower = upper, left = 0, right = left, width = 0.1,
-  arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1,
-  lcol = 1)
+wplot(df_2columns, col = 1, pch = 18, ...,
+  plotname = substitute(df_2columns), errorbar = F, upper = 0,
+  lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
+  col_errorbar = 1, abline = F, a = F, b = F, lty = 1, lwd = 1,
+  col_abline = 1, mdlink = F, w = 7, h = 7)
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -17,13 +17,7 @@ wplot(df_2columns, col = 1, pch = 18, ..., w = 7, h = 7,
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
-\item{w}{Width of the saved pdf image, in inches.}
-
-\item{h}{Height of the saved pdf image, in inches.}
-
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{errorbar}{Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".}
 
@@ -37,6 +31,8 @@ wplot(df_2columns, col = 1, pch = 18, ..., w = 7, h = 7,
 
 \item{arrow_lwd}{Line width for the error bar arrow. Line width for the error bar arrow.}
 
+\item{col_errorbar}{Color of the error bar arrow.}
+
 \item{abline}{Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.}
 
 \item{a}{X-offset for vertical lines, Y-offset for horizontal, and inclined lines.}
@@ -47,16 +43,22 @@ wplot(df_2columns, col = 1, pch = 18, ..., w = 7, h = 7,
 
 \item{lwd}{Line width. Set to 2 by default.}
 
-\item{lcol}{Color of the line.}
+\item{col_abline}{Color of the line.}
+
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{w}{Width of the saved pdf image, in inches.idth}
+
+\item{h}{Height of the saved pdf image, in inches.}
 
 \item{df}{Input data frame to be plotted_2columns}
 
-\item{w}{Width of the saved pdf image, in inches.idth}
+\item{w}{Width of the saved pdf image, in inches.}
 }
 \description{
 Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
 }
 \examples{
-wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, lcol = 1)
+wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 }
 
