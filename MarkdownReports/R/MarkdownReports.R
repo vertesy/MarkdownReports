@@ -340,10 +340,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param col Color of the plot.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param w Width of the saved pdf image, in inches.
-#' @param h Height of the saved pdf image, in inches.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param errorbar Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".
 #' @param upper Size of the upper error bar.
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
@@ -351,17 +348,23 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param right Size of the right error bar. By default, it equals the left error bar.
 #' @param w Width of the saved pdf image, in inches.idth
 #' @param arrow_lwd Line width for the error bar arrow. Line width for the error bar arrow.
+#' @param col_errorbar Color of the error bar arrow.
 #' @param abline Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.
 #' @param a X-offset for vertical lines, Y-offset for horizontal, and inclined lines.
 #' @param b Slope of an inclined line.
 #' @param lty Linetype, defined by numbers 1-6.
 #' @param lwd Line width. Set to 2 by default.
-#' @param lcol Color of the line.
-#' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, lcol = 1)
+#' @param col_abline Color of the line.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 #' @export
 
-wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
-				  abline = F, a = F, b = F, lty = 1, lwd = 1, lcol = 1) {
+wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2columns),
+				  errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1,
+				  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
+				  mdlink = F,  w = 7, h = 7) {
 	x = df_2columns[, 1]
 	y = df_2columns[, 2]
 	fname = kollapse(plotname, ".plot")
@@ -375,12 +378,12 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., w = 7, h = 7, plotname = 
 	}
 	plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim)
 	if (errorbar) {
-		arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd)
-		arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd)
+		arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
+		arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
 	}
-	if (abline == "h") {	abline(h = a, lty = lty, lwd = lwd, col = lcol)	}
-	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = lcol)	}
-	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = lcol)	}
+	if (abline == "h") {	abline(h = a, lty = lty, lwd = lwd, col = col_abline)	}
+	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
+	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -549,7 +552,6 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
-
 
 #' wpie
 #'
