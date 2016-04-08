@@ -411,26 +411,27 @@ wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE
 #'
 #' Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 #' @param variable The variable to plot.
-#' @param col Color of the plot.
-#' @param w Width of the saved pdf image, in inches.
-#' @param h Height of the saved pdf image, in inches.
-#' @param plotname The name of the file.
 #' @param breaks Number of bins.
+#' @param col Color of the plot.
+#' @param plotname The name of the file.
 #' @param main Title of the plot.
 #' @param xlb X-axis label.
-#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
-#' @param h Height of the saved pdf image, in inches.line
 #' @param vline Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.
 #' @param lty Linetype, defined by numbers 1-6.
 #' @param lwd Line width. Set to 2 by default.
 #' @param lcol Color of the line.
 #' @param filtercol Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "vline" is defined.
+#' @param h Height of the saved pdf image, in inches.line
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @examples whist (variable =  , col = gold1, w = 7, h = 7, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = FALSE, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 #' @export
 
-whist <-function (variable, col = "gold1", w = 7, h = 7, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable), mdlink = FALSE, hline = F,
-				  vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0, ...) {
+whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable),
+				  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
+				  w = 7, h = 7, mdlink = FALSE, ...) {
 	xtra = list(...)
 	if (length(variable) > 0) {
 		fname = kollapse(plotname, ".hist")
