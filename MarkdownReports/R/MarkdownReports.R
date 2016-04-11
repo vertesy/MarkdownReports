@@ -65,30 +65,31 @@ percentage_formatter <-function (x, digitz = 3) {
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param OutDir The output directory (absolute / full path).
-#' @param fname Name of the report file.
+#' @param scriptname Name of the script (file) generating the report. "scriptname" is assigned to the global environment and used in pdf's title field to denote which script generated the file.
 #' @param title Title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report.
 #' @param png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
-#' @examples setup_logging_markdown (fname =  , title =  , append = T, png4Github = T)
+#' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), fname =  basename(OutDir), title = "", append = T, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = T, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
-	path_of_report <- paste0(OutDir, "/", fname, ".log.md")
+	path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
 	assign("path_of_report", path_of_report, envir = .GlobalEnv)
 	any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
 	if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
-	} else {			write(paste("# ", fname, "Report"), path_of_report, append = append) }
-	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname), path_of_report, append = T)
-	BackupDir = kollapse(OutDir, "/", substr(fname, 1, nchar(fname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+	} else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
+	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
+	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
 	if (!exists(BackupDir)) {
 		dir.create(BackupDir)
 		assign("BackupDir", BackupDir, envir = .GlobalEnv)
 	}
 	assign("png4Github", png4Github, envir = .GlobalEnv)
+	assign("scriptname", scriptname, envir = .GlobalEnv)
 }
 
 #' create_set_OutDir (deprecated, use with setup_logging_markdown)
@@ -385,7 +386,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
 	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -456,7 +457,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & l(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -516,7 +517,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
 	}
 
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
@@ -550,7 +551,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (tilted_text) {
 		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -575,7 +576,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(l(variable)))
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -624,7 +625,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:l(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -679,7 +680,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:l(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -719,7 +720,7 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	if (tilted_text) {
 		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -766,7 +767,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
 				   pch = pch, bg = bg[[k]], col = coll[[j]])
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = fname)
+	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -803,7 +804,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., w = 7, h = 7) {
 		hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
 																			 "median:", iround(median(zz$counts))))
 	}
-	dev.copy2pdf(file = FullPath, width = w, height = h)
+	dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 }
 
 
@@ -829,7 +830,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", w = 7, h = 7, ...) {
 	cexNsize = min(cexNsize, 1)
 	barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
 																								  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-	dev.copy2pdf(file = FullPath, width = w, height = h)
+	dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 }
 
 
@@ -863,9 +864,9 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 }
 
 
-#' vvenn
+#' wvenn
 #'
-#' Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, abnd does not use dev.copy2pdf()
+#' Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, and it does not use the dev.copy2pdf() function.
 #' @param yalist The variable to plot.
 #' @param imagetype Image format, png by default.
 #' @param alpha Transparency, .5 by default.
@@ -873,10 +874,10 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
-#' @examples vvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
+#' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
 #' @export
 
-vvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
+wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
 	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
 	fill = 1:l(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
