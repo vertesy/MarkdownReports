@@ -253,7 +253,7 @@ MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 
 MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, percentify = F, title_of_table = NA) {
 	if (is.na(title_of_table)) {
-		t = substitute(df)
+		t = paste0(substitute(df), collapse = " ")
 	}
 	else {
 		t = title_of_table
@@ -302,7 +302,7 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 
 MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA) {
 	if (is.na(title_of_table)) {
-		t = substitute(NamedVector)
+		t = paste0(substitute(NamedVector), collapse = " ")
 	}
 	else {
 		t = title_of_table
