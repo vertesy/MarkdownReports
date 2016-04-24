@@ -4,13 +4,13 @@
 \alias{setup_MarkdownReports}
 \title{setup_MarkdownReports}
 \usage{
-setup_MarkdownReports(OutDir = getwd(), fname = basename(OutDir),
+setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
   title = "", append = T, png4Github = T)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}
 
-\item{fname}{Name of the report file.}
+\item{scriptname}{Name of the script (file) generating the report. "scriptname" is assigned to the global environment and used in pdf's title field to denote which script generated the file.}
 
 \item{title}{Title of the report.}
 
@@ -22,6 +22,6 @@ setup_MarkdownReports(OutDir = getwd(), fname = basename(OutDir),
 Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 }
 \examples{
-setup_logging_markdown (fname =  , title =  , append = T, png4Github = T)
+setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 }
 

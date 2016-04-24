@@ -4,30 +4,24 @@
 \alias{whist}
 \title{whist}
 \usage{
-whist(variable, col = "gold1", w = 7, h = 7,
-  plotname = substitute(variable), breaks = 20,
-  main = kollapse("Histogram of ", substitute(variable)),
-  xlb = substitute(variable), mdlink = FALSE, hline = F, vline = F,
-  lty = 2, lwd = 3, lcol = 1, filtercol = 0, ...)
+whist(variable, breaks = 20, col = "gold1",
+  plotname = substitute(variable), main = kollapse("Histogram of ",
+  substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
+  lty = 2, lwd = 3, lcol = 1, filtercol = 0, w = 7, h = 7,
+  mdlink = FALSE, ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}
 
+\item{breaks}{Number of bins.}
+
 \item{col}{Color of the plot.}
 
-\item{w}{Width of the saved pdf image, in inches.}
-
-\item{h}{Height of the saved pdf image, in inches.}
-
 \item{plotname}{The name of the file.}
-
-\item{breaks}{Number of bins.}
 
 \item{main}{Title of the plot.}
 
 \item{xlb}{X-axis label.}
-
-\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{vline}{Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.}
 
@@ -39,9 +33,15 @@ whist(variable, col = "gold1", w = 7, h = 7,
 
 \item{filtercol}{Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "vline" is defined.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+\item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.line}
+
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+
+\item{h}{Height of the saved pdf image, in inches.}
 }
 \description{
 Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
