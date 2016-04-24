@@ -892,7 +892,7 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdl
 }
 
 
-#' error.bar
+#' error_bar
 #'
 #' Put error bars on top of your bar plots. This functionality is now integrated into MarkdownReporter's wbarplot() function
 #' @param x X-position on the plot.
@@ -901,10 +901,10 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdl
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
 #' @param width Width of the erro bar whisker.
 #' @param ... Pass any other parameter of the corresponding arrows function (most of them should work).
-#' @examples error.bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
+#' @examples error_bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
 #' @export
 
-error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
+error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 	stopifnot(length(x) == length(y) & length(y) == length(lower) & length(lower) == length(upper))
 	if (l(dim(y)) > 1) {
 		arrows(as.vector(x), as.vector(y + upper), as.vector(x), as.vector(y - lower), angle = 90, code = 3,
@@ -916,7 +916,7 @@ error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 }
 
 
-#' barplot.label
+#' barplot_label
 #'
 #' Add extra labels to your bar plots at the top or the base.
 #' @param x X-position of the label.
@@ -926,10 +926,10 @@ error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param relpos_top Relative offset.
 #' @param relpos_bottom Relative offset.
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
-#' @examples barplot.label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
+#' @examples barplot_label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
 #' @export
 
-barplot.label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ...) {
+barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ...) {
 	stopifnot(length(x) == length(y))
 	if (bottom) {
 		y = rep(relpos_bottom * max(y, na.rm = T), length(x))
