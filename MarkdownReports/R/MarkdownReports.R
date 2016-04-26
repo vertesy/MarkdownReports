@@ -67,12 +67,12 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param OutDir The output directory (absolute / full path).
 #' @param scriptname Name of the script (file) generating the report. "scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
 #' @param title Manually set the title of the report.
-#' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report.
-#' @param png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
+#' @param png4Github A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = T, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
@@ -402,7 +402,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(plotname, " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
 
