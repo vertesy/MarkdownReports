@@ -65,8 +65,8 @@ percentage_formatter <-function (x, digitz = 3) {
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param OutDir The output directory (absolute / full path).
-#' @param scriptname Name of the script (file) generating the report. "scriptname" is assigned to the global environment and used in pdf's title field to denote which script generated the file.
-#' @param title Title of the report.
+#' @param scriptname Name of the script (file) generating the report. "scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
+#' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report.
 #' @param png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
@@ -142,12 +142,12 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 #' @examples continue_logging_markdown (fname =  )
 #' @export
 
-continue_logging_markdown <-function (fname) {
+continue_logging_markdown <-function (scriptname) {
 	if (exists("OutDir")) {	path = OutDir
 	} else {	path = getwd(); any_print("OutDir not defined !!!") }
-	path_of_report <- kollapse(path, "/", fname, ".log.md", print = F)
+	path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
 	return(path_of_report)
-	BackupDir = kollapse(OutDir, "/", substr(fname, 1, (nchar(fname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
 	if (!exists(BackupDir)) {
 		dir.create(BackupDir)
 		assign("BackupDir", BackupDir, envir = .GlobalEnv)
@@ -171,7 +171,6 @@ log_settings_MarkDown <-function (...) {
 	rownames(value) = namez
 	MarkDown_Table_writer_DF_RowColNames((value), title_of_table = "Settings")
 }
-
 
 #' llprint
 #'
@@ -403,7 +402,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = plotname)
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
 
