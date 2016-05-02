@@ -302,16 +302,12 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA) {
 	if (is.na(title_of_table)) {
 		t = paste0(substitute(NamedVector), collapse = " ")
-	}
-	else {
-		t = title_of_table
-	}
+	}	else {		t = title_of_table	}
 	title_of_table = paste("\n#### ", t)
 	write(title_of_table, path_of_report, append = T)
 	if (!is.table(NamedVector)) {
-		if (is.numeric(NamedVector)) {
-			NamedVector = iround(NamedVector)
-		}
+	  if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
+		if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
 	}
 	h = paste(names(NamedVector), collapse = " \t| ")
 	h = paste("\n| ", h, " |", collapse = "")
