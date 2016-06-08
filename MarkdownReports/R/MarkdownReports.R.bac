@@ -65,14 +65,14 @@ percentage_formatter <-function (x, digitz = 3) {
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param OutDir The output directory (absolute / full path).
-#' @param scriptname Name of the script (file) generating the report. "scriptname" is assigned to the global environment and used in pdf's title field to denote which script generated the file.
-#' @param title Title of the report.
-#' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report.
-#' @param png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param scriptname Name of the script (file) generating the report. "scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
+#' @param title Manually set the title of the report.
+#' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
+#' @param png4Github A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = T, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
@@ -142,12 +142,12 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 #' @examples continue_logging_markdown (fname =  )
 #' @export
 
-continue_logging_markdown <-function (fname) {
+continue_logging_markdown <-function (scriptname) {
 	if (exists("OutDir")) {	path = OutDir
 	} else {	path = getwd(); any_print("OutDir not defined !!!") }
-	path_of_report <- kollapse(path, "/", fname, ".log.md", print = F)
+	path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
 	return(path_of_report)
-	BackupDir = kollapse(OutDir, "/", substr(fname, 1, (nchar(fname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
 	if (!exists(BackupDir)) {
 		dir.create(BackupDir)
 		assign("BackupDir", BackupDir, envir = .GlobalEnv)
@@ -171,7 +171,6 @@ log_settings_MarkDown <-function (...) {
 	rownames(value) = namez
 	MarkDown_Table_writer_DF_RowColNames((value), title_of_table = "Settings")
 }
-
 
 #' llprint
 #'
@@ -303,16 +302,12 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA) {
 	if (is.na(title_of_table)) {
 		t = paste0(substitute(NamedVector), collapse = " ")
-	}
-	else {
-		t = title_of_table
-	}
+	}	else {		t = title_of_table	}
 	title_of_table = paste("\n#### ", t)
 	write(title_of_table, path_of_report, append = T)
 	if (!is.table(NamedVector)) {
-		if (is.numeric(NamedVector)) {
-			NamedVector = iround(NamedVector)
-		}
+	  if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
+		if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
 	}
 	h = paste(names(NamedVector), collapse = " \t| ")
 	h = paste("\n| ", h, " |", collapse = "")
@@ -403,7 +398,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = plotname)
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(plotname, " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
 
@@ -892,7 +887,7 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdl
 }
 
 
-#' error.bar
+#' error_bar
 #'
 #' Put error bars on top of your bar plots. This functionality is now integrated into MarkdownReporter's wbarplot() function
 #' @param x X-position on the plot.
@@ -901,10 +896,10 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdl
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
 #' @param width Width of the erro bar whisker.
 #' @param ... Pass any other parameter of the corresponding arrows function (most of them should work).
-#' @examples error.bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
+#' @examples error_bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
 #' @export
 
-error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
+error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 	stopifnot(length(x) == length(y) & length(y) == length(lower) & length(lower) == length(upper))
 	if (l(dim(y)) > 1) {
 		arrows(as.vector(x), as.vector(y + upper), as.vector(x), as.vector(y - lower), angle = 90, code = 3,
@@ -916,7 +911,7 @@ error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 }
 
 
-#' barplot.label
+#' barplot_label
 #'
 #' Add extra labels to your bar plots at the top or the base.
 #' @param x X-position of the label.
@@ -926,10 +921,10 @@ error.bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param relpos_top Relative offset.
 #' @param relpos_bottom Relative offset.
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
-#' @examples barplot.label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
+#' @examples barplot_label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
 #' @export
 
-barplot.label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ...) {
+barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ...) {
 	stopifnot(length(x) == length(y))
 	if (bottom) {
 		y = rep(relpos_bottom * max(y, na.rm = T), length(x))
@@ -947,15 +942,15 @@ barplot.label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 #' Filter values that fall between above high-pass-threshold (X >).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value above which "numeric_vector" passes.
+#' @param passequal Pass if a value is larger, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
-filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall between above high-pass-threshold (X >).
-	survivors = numeric_vector>threshold
+filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F) { # Filter values that fall between above high-pass-threshold (X >).
+  survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
 	pc = percentage_formatter(sum(survivors)/length(survivors))
-
 	conclusion = paste0(prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", iround(threshold))
 	if (file.exists(path_of_report) ) {	llprint (conclusion)
 	} else { any_print  (conclusion, "NOT LOGGED") }
@@ -968,15 +963,15 @@ filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ra
 #' Filter values that fall below the low-pass threshold (X <).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value below which "numeric_vector" passes.
+#' @param passequal Pass if a value is smaller, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
-filter_LP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall below the low-pass threshold (X <).
-	survivors = numeric_vector<threshold
+filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F) { # Filter values that fall below the low-pass threshold (X <).
+  survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
 	pc = percentage_formatter(sum(survivors)/length(survivors))
-
 	conclusion = paste0(prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall below a threshold value of: ", iround(threshold))
 	if (file.exists(path_of_report) ) {	llprint (conclusion)
 	} else { any_print  (conclusion, "NOT LOGGED") }

@@ -4,13 +4,15 @@
 \alias{filter_LP}
 \title{filter_LP}
 \usage{
-filter_LP(numeric_vector, threshold, prepend = "",
+filter_LP(numeric_vector, threshold, passequal = F, prepend = "",
   return_survival_ratio = F)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}
 
 \item{threshold}{A numeric value below which "numeric_vector" passes.}
+
+\item{passequal}{Pass if a value is smaller, or equal than the threshold. FALSE by default.}
 
 \item{prepend}{Text prepended to the results.}
 

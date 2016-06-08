@@ -942,15 +942,15 @@ barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 #' Filter values that fall between above high-pass-threshold (X >).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value above which "numeric_vector" passes.
+#' @param passequal Pass if a value is larger, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
-filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall between above high-pass-threshold (X >).
-	survivors = numeric_vector>threshold
+filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F) { # Filter values that fall between above high-pass-threshold (X >).
+  survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
 	pc = percentage_formatter(sum(survivors)/length(survivors))
-
 	conclusion = paste0(prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", iround(threshold))
 	if (file.exists(path_of_report) ) {	llprint (conclusion)
 	} else { any_print  (conclusion, "NOT LOGGED") }
@@ -963,15 +963,15 @@ filter_HP <- function(numeric_vector, threshold, prepend ="", return_survival_ra
 #' Filter values that fall below the low-pass threshold (X <).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value below which "numeric_vector" passes.
+#' @param passequal Pass if a value is smaller, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 #' @export
 
-filter_LP <- function(numeric_vector, threshold, prepend ="", return_survival_ratio=F) { # Filter values that fall below the low-pass threshold (X <).
-	survivors = numeric_vector<threshold
+filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F) { # Filter values that fall below the low-pass threshold (X <).
+  survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
 	pc = percentage_formatter(sum(survivors)/length(survivors))
-
 	conclusion = paste0(prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall below a threshold value of: ", iround(threshold))
 	if (file.exists(path_of_report) ) {	llprint (conclusion)
 	} else { any_print  (conclusion, "NOT LOGGED") }

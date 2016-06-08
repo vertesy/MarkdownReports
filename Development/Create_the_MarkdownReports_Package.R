@@ -8,9 +8,19 @@ try(dev.off())
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 try (source ('/Users/abelvertesy/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+
 require(devtools)
+# install.packages("roxygen2")
 require(roxygen2)
 require("stringr")
+
+
+kollapse <-function (..., print = T) {
+  if (print == T) {
+    print(paste0(c(...), collapse = ""))
+  }
+  paste0(c(...), collapse = "")
+}
 
 # Setup ------------------------
 
@@ -30,7 +40,7 @@ setwd(RepositoryDir)
 if ( !dir.exists(PackageName) ) { create(PackageName, description = DESCRIPTION) }
 
 # go and write fun's ------------------------------------------------------------------------
-file.edit(Package_FnP)
+# file.edit(Package_FnP)
 
 # Create Roxygen Skeletons ------------------------
 # RoxygenReady(Package_FnP)
@@ -42,7 +52,7 @@ file.copy(from = Package_FnP, to = BackupOldFile, overwrite = T)
 file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = T)
 
 # Manual editing of descriptors ------------------------------------------------
-file.edit(Package_FnP)
+# file.edit(Package_FnP)
 
 # Compile a package ------------------------------------------------
 setwd(PackageName)
@@ -63,8 +73,8 @@ devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 require("MarkdownReports")
 
 # Clean up if not needed anymore ------------------------------------------------
-# installed.packages()
-remove.packages("MarkdownReports")
+# View(installed.packages())
+# remove.packages("MarkdownReports")
 
 
 

@@ -4,13 +4,15 @@
 \alias{filter_HP}
 \title{filter_HP}
 \usage{
-filter_HP(numeric_vector, threshold, prepend = "",
+filter_HP(numeric_vector, threshold, passequal = F, prepend = "",
   return_survival_ratio = F)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}
 
 \item{threshold}{A numeric value above which "numeric_vector" passes.}
+
+\item{passequal}{Pass if a value is larger, or equal than the threshold. FALSE by default.}
 
 \item{prepend}{Text prepended to the results.}
 
