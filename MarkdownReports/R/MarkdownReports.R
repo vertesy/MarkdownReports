@@ -213,7 +213,7 @@ llogit <-function (...) {
 MarkDown_ImgLink_formatter <-function (...) {
 	FullPath = kollapse(..., print = F)
 	splt = strsplit(FullPath, "/")
-	fn = splt[[1]][l(splt[[1]])]
+	fn = splt[[1]][length(splt[[1]])]
 	kollapse("![", fn, "]", "(", FullPath, ")", print = F)
 }
 
@@ -227,7 +227,7 @@ MarkDown_ImgLink_formatter <-function (...) {
 
 MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 	splt = strsplit(fname_wo_ext, "/")
-	fn = splt[[1]][l(splt[[1]])]
+	fn = splt[[1]][length(splt[[1]])]
 	llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
 	if (exists("png4Github") & png4Github == T) {
 		dirnm = strsplit(OutDir, split = "/")[[1]]
@@ -311,7 +311,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 	}
 	h = paste(names(NamedVector), collapse = " \t| ")
 	h = paste("\n| ", h, " |", collapse = "")
-	ncolz = l(NamedVector)
+	ncolz = length(NamedVector)
 	sep = kollapse(rep("| ---", ncolz), " |", print = F)
 	if (exists("path_of_report")) {
 		write(h, path_of_report, append = T)
@@ -445,13 +445,13 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 			hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
 		}
 		# if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
-		if (vline & !l(xtra$xlim)) { PozOfvline = NULL;
-			for (l in 1:l(vline)) {
+		if (vline & !length(xtra$xlim)) { PozOfvline = NULL;
+			for (l in 1:length(vline)) {
 				PozOfvline[l] = mean(histdata$mids[c(max(which(histdata$breaks < vline[l])), min(which(histdata$breaks >= vline[l])))])
 			}
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
-		else if (vline & l(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
+		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
 		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -544,7 +544,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (tilted_text) { 	xlb = NA } else {	xlb = names(variable) }
 	boxplot(variable, ..., names = xlb, main = plotname, col = col, las = 2)
 	if (tilted_text) {
-		text(x = 1:l(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
+		text(x = 1:length(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -570,7 +570,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
-	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(l(variable)))
+	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(length(variable)))
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
@@ -618,7 +618,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 	if (tilted_text) {
 		xx= min(unlist(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
-		text(x = 1:l(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+		text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -673,7 +673,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 	if (tilted_text) {
 		xx= min(unlist(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
-		text(x = 1:l(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+		text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -713,7 +713,7 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	}
 	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
 	if (tilted_text) {
-		text(x = 1:l(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+		text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
 	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -874,10 +874,10 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 
 wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
 	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
-	fill = 1:l(yalist)
+	fill = 1:length(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
 	filename = kollapse(OutDir,"/", fname, print = F)
-	subt = kollapse("Total = ", l(unique(unlist(yalist))), " elements in total.", print = F)
+	subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
 	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),
 				 , ... , sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
 	if (mdlink) {
@@ -901,7 +901,7 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdl
 
 error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 	stopifnot(length(x) == length(y) & length(y) == length(lower) & length(lower) == length(upper))
-	if (l(dim(y)) > 1) {
+	if (length(dim(y)) > 1) {
 		arrows(as.vector(x), as.vector(y + upper), as.vector(x), as.vector(y - lower), angle = 90, code = 3,
 			   length = width , ...)
 	}
@@ -929,10 +929,10 @@ barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 	if (bottom) {
 		y = rep(relpos_bottom * max(y, na.rm = T), length(x))
 	}
-	if (l(dim(x)) > 1) {
+	if (length(dim(x)) > 1) {
 		text(as.vector(x), as.vector(y * relpos_top), labels = as.vector(labels), ...)
 	}
-	else if (l(dim(x)) == 1) {
+	else if (length(dim(x)) == 1) {
 		text((x), (y), labels = (labels), ...)
 	}
 }
