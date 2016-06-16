@@ -72,7 +72,7 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), setDir=T, scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
@@ -84,6 +84,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
 	} else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
 	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
 	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+	if (setDir) {	setwd(OutDir)}
 	if (!exists(BackupDir)) {
 		dir.create(BackupDir)
 		assign("BackupDir", BackupDir, envir = .GlobalEnv)
@@ -99,10 +100,11 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
 #' @examples create_set_OutDir (... =  )
 #' @export
 
-create_set_OutDir <-function (...) {
+create_set_OutDir <-function (..., setDir=T) {
 	OutDir = kollapse(..., print = F)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
+	if (setDir) {	setwd(OutDir)}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 }
 
