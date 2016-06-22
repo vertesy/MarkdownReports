@@ -784,25 +784,26 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 #' @export
 
 whist_dfCol <-function (df, colName, col = "gold", ..., w = 7, h = 7) {
-	stopifnot(colName %in% colnames(df))
-	variable = unlist(df[, colName])
-	stopifnot(length(variable) > 1)
-	plotname = paste(substitute(df), "__", colName, sep = "")
-	FullPath = FnP_parser(plotname, "hist.pdf")
-	if (!is.numeric(variable)) {
-		variable = table(variable)
-		cexNsize = 0.7/abs(log10(length(variable)))
-		cexNsize = min(cexNsize, 1)
-		barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
-																									  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-	}
-	else {
-		zz = hist(variable, ..., plot = F)
-		hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
-																			 "median:", iround(median(zz$counts))))
-	}
-	dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+  stopifnot(colName %in% colnames(df))
+  variable = unlist(df[, colName])
+  stopifnot(length(variable) > 1)
+  plotname = paste(substitute(df), "__", colName, sep = "")
+  fname = FnP_parser(plotname, "hist.pdf")
+  if (!is.numeric(variable)) {
+    variable = table(variable)
+    cexNsize = 0.7/abs(log10(length(variable)))
+    cexNsize = min(cexNsize, 1)
+    barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
+                                                                                                  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
+  }
+  else {
+    zz = hist(variable, ..., plot = F)
+    hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
+                                                                         "median:", iround(median(zz$counts))))
+  }
+  dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
 }
+
 
 
 #' wbarplot_dfCol
