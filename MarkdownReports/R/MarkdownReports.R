@@ -467,7 +467,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 #' @param variable The variable to plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param col Color of the plot.
-#' @param sub Subtitle for the plot.
+#' @param sub Subtitle below the plot.
 #' @param plotname The name of the file saved.
 #' @param main The title of the plot.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
@@ -530,7 +530,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param col Color of the plot.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param sub Subtitle for the plot.
+#' @param sub Subtitle below the plot.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param w Width of the saved pdf image, in inches.
@@ -584,7 +584,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 #' @param yalist Input list to be plotted.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param sub Subtitle for the plot.
+#' @param sub Subtitle below the plot.
 #' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
 #' @param BoxPlotWithMean Display the mean instead of the median in a boxplot. This is non-standard use of a boxplot, report it.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
@@ -603,7 +603,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 #' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, 	pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", metod = "jitter", jitter = 0.2,
+wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL, border = 1, BoxPlotWithMean = F, 	pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", metod = "jitter", jitter = 0.2,
 						colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F) {
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	cexNsize = 1/abs(log10(length(yalist)))
@@ -613,7 +613,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 	if (colorbyColumn) {	pchlwd = 5; pchcex = 0.5 }
 	if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
 	if (tilted_text) {	xlb = F } else { xlb = T }
-	bxp(a, xlab = "", show.names = xlb, ..., main = plotname, border = border, outpch = NA, las = 2,
+	bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
 		outline = T, cex.axis = cexNsize)
 	stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
 			   col = col, lwd = pchlwd, cex = pchcex)
@@ -635,7 +635,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @param yalist Input list to be plotted.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param sub Subtitle for the plot.
+#' @param sub Subtitle below the plot.
 #' @param ylb Y-axis label.
 #' @param xlb X-axis label.
 #' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
@@ -655,8 +655,9 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = FALSE, ylb = "NULL", xlab = "NULL", 	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter",
-							 jitter = 0.2, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2, 
+                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", 
+							                w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 {
 	fname = kollapse(plotname, ".stripchart")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -664,7 +665,7 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 	cexNsize = min(cexNsize, 1)
 	if (tilted_text) {	xlb = F	} else {	xlb = T	}
 
-	boxplot(yalist, ..., show.names = xlb, main = plotname, border = border, outline = FALSE, las = 2,
+	boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outline = FALSE, las = 2,
 			col = bxpcol, cex.axis = cexNsize)
 	for (i in 1:length(yalist)) {
 		j = k = i
@@ -689,19 +690,22 @@ wstripchart_list <-function (yalist, ..., plotname = as.character(substitute(yal
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 #' @param yalist Input list to be plotted.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param xlb X-axis label.
-#' @param ylb Y-axis label.
 #' @param col Color of the plot.l
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param sub Subtitle below the plot.
+#' @param xlb X-axis label.
+#' @param ylb Y-axis label.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 #' @export
 
-wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1:length(yalist)), incrBottMarginBy = 0, 	w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F) {
+wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)), 
+                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", 
+                          incrBottMarginBy = 0, w = 7, h = 7, tilted_text = F, mdlink = F) {
 	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
@@ -709,7 +713,7 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 	if (length(coll) < l_list) { coll = rep(coll, l_list) }
 	if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
 	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
-		 ylab = ylb, main = plotname)
+		 ylab = ylb, main = plotname, sub = sub)
 	for (i in 1:l_list) {
 		vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
 	}
@@ -732,13 +736,13 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param viocoll Background color of each individual violing plot.
 #' @param vioborder Border color of each individual violing plot.
-#' @param ylb Y-axis label.
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
-#' @param sub Subtitle for the plot.
 #' @param bg Background color.
 #' @param col Color of the plot.l
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
+#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param sub Subtitle below the plot.
+#' @param ylb Y-axis label.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
@@ -746,14 +750,15 @@ wvioplot_list <-function (yalist, ..., xlb = names(yalist), ylb = "", coll = c(1
 #' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
 #' @export
 
-wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, ylb = "", plotname = as.character(substitute(yalist)), 	sub = F, bg = 0, coll = "black", metod = "jitter", jitter = 0.1, w = 7, h = 7, incrBottMarginBy = 0,
-								mdlink = F) {
+wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1, 
+                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", 
+                                w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
 	fname = kollapse(plotname, ".VioStripchart")
 	require(vioplot)
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
 	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
-		 ylab = ylb, main = plotname)
+		 ylab = ylb, main = plotname, sub = sub)
 	for (i in 1:l_list) {
 		vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = vioborder[i])
 	}
