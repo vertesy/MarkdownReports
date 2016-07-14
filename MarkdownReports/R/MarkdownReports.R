@@ -945,6 +945,32 @@ barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bot
 	}
 }
 
+#' subscript_in_plots
+#'
+#' @param prefix String before the subscript.
+#' @param subscr Subscripted text.
+#' @param quantity String in brackets after the subscript, eg.: log2(read count).
+#' @export
+#'
+#' @examples plot (1, 1, xlab =subscript_in_plots(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
+
+subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+  formatted_string = bquote(.(prefix)[.(subscr)]*'('*.(quantity)*')')
+}
+
+#' superscript_in_plots
+#'
+#' @param prefix String before the superscript.
+#' @param sup Superscripted text.
+#' @param suffix String after the subscript.
+#' @export
+#'
+#' @examples plot (1, 1, main =superscript_in_plots())
+
+superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+  formatted_string = bquote(.(prefix)^.(sup)*.(suffix))
+}
+
 #' filter_HP
 #'
 #' Filter values that fall between above high-pass-threshold (X >).
