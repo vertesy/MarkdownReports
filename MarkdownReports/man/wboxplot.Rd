@@ -17,7 +17,7 @@ wboxplot(variable, ..., col = "gold1",
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
-\item{sub}{Subtitle for the plot.}
+\item{sub}{Subtitle below the plot.}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 

@@ -18,7 +18,7 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 
 \item{col}{Color of the plot.}
 
-\item{sub}{Subtitle for the plot.}
+\item{sub}{Subtitle below the plot.}
 
 \item{plotname}{The name of the file saved.}
 

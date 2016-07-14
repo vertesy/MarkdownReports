@@ -5,9 +5,9 @@
 \title{wviostripchart_list}
 \usage{
 wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
-  ylb = "", plotname = as.character(substitute(yalist)), sub = F,
-  bg = 0, coll = "black", metod = "jitter", jitter = 0.1, w = 7,
-  h = 7, incrBottMarginBy = 0, mdlink = F)
+  bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
+  plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
+  w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -20,17 +20,17 @@ wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{vioborder}{Border color of each individual violing plot.}
 
-\item{ylb}{Y-axis label.}
-
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{sub}{Subtitle for the plot.}
-
 \item{bg}{Background color.}
 
 \item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid overlaps).}
+
+\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{sub}{Subtitle below the plot.}
+
+\item{ylb}{Y-axis label.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

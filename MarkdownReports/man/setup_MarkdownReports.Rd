@@ -4,8 +4,8 @@
 \alias{setup_MarkdownReports}
 \title{setup_MarkdownReports}
 \usage{
-setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", append = F, png4Github = T)
+setup_MarkdownReports(OutDir = getwd(), setDir = T,
+  scriptname = basename(OutDir), title = "", append = F, png4Github = T)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}

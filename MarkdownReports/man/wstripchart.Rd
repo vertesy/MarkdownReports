@@ -5,7 +5,7 @@
 \title{wstripchart}
 \usage{
 wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
-  sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1,
+  sub = NULL, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1,
   pchcex = 1.5, bg = "chartreuse2", col = "black", metod = "jitter",
   jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0,
   tilted_text = F, mdlink = F)
@@ -17,7 +17,7 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
-\item{sub}{Subtitle for the plot.}
+\item{sub}{Subtitle below the plot.}
 
 \item{border}{An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.}
 

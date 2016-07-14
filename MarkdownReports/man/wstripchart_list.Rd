@@ -4,22 +4,17 @@
 \alias{wstripchart_list}
 \title{wstripchart_list}
 \usage{
-wstripchart_list(yalist, ..., plotname = as.character(substitute(yalist)),
-  sub = FALSE, ylb = "NULL", xlab = "NULL", border = 1, bxpcol = 0,
-  pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2",
-  coll = "black", metod = "jitter", jitter = 0.2, w = 7, h = 7,
-  incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 23,
+  pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black",
+  metod = "jitter", jitter = 0.2,
+  plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
+  xlab = "", w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F,
+  mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
-
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{sub}{Subtitle for the plot.}
-
-\item{ylb}{Y-axis label.}
 
 \item{border}{An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.}
 
@@ -36,6 +31,12 @@ wstripchart_list(yalist, ..., plotname = as.character(substitute(yalist)),
 \item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid overlaps).}
+
+\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{sub}{Subtitle below the plot.}
+
+\item{ylb}{Y-axis label.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

@@ -4,15 +4,19 @@
 \alias{wvioplot_list}
 \title{wvioplot_list}
 \usage{
-wvioplot_list(yalist, ..., xlb = names(yalist), ylb = "",
-  coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7,
-  plotname = as.character(substitute(yalist)), tilted_text = F,
-  mdlink = F)
+wvioplot_list(yalist, ..., coll = c(1:length(yalist)),
+  plotname = as.character(substitute(yalist)), sub = NULL,
+  xlb = names(yalist), ylb = "", incrBottMarginBy = 0, w = 7, h = 7,
+  tilted_text = F, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+
+\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{sub}{Subtitle below the plot.}
 
 \item{xlb}{X-axis label.}
 
@@ -23,8 +27,6 @@ wvioplot_list(yalist, ..., xlb = names(yalist), ylb = "",
 \item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
-
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 

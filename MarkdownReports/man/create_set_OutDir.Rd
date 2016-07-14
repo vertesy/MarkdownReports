@@ -4,7 +4,7 @@
 \alias{create_set_OutDir}
 \title{create_set_OutDir (deprecated, use with setup_logging_markdown)}
 \usage{
-create_set_OutDir(...)
+create_set_OutDir(..., setDir = T)
 }
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
