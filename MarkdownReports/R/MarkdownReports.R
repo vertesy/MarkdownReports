@@ -93,7 +93,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), setDir=T, scriptname = basen
 	assign("scriptname", scriptname, envir = .GlobalEnv)
 }
 
-#' create_set_OutDir (deprecated, use with setup_logging_markdown)
+#' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
 #'
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by all ~wplot functions.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
@@ -109,7 +109,7 @@ create_set_OutDir <-function (..., setDir=T) {
 }
 
 
-#' setup_logging_markdown (deprecated, use with create_set_OutDir)
+#' setup_logging_markdown (deprecated, use with create_set_OutDir, will be removed from V3)
 #'
 #' Setup the markdown report file, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param fname Name of the report file.
@@ -135,7 +135,6 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 	assign("path_of_report", path_of_report, envir = .GlobalEnv)
 	assign("png4Github", png4Github, envir = .GlobalEnv)
 }
-
 
 #' continue_logging_markdown
 #'
@@ -715,7 +714,7 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
 		 ylab = ylb, main = plotname, sub = sub)
 	for (i in 1:l_list) {
-		vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+	  vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
 	}
 	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
 	if (tilted_text) {
@@ -754,13 +753,13 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", 
                                 w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
 	fname = kollapse(plotname, ".VioStripchart")
-	require(vioplot)
+	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
 	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
 		 ylab = ylb, main = plotname, sub = sub)
 	for (i in 1:l_list) {
-		vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = vioborder[i])
+	  vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = vioborder[i])
 	}
 	for (i in 1:length(yalist)) {
 		j = k = i

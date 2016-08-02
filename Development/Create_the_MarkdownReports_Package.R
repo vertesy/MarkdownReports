@@ -30,10 +30,17 @@ fname = 	kollapse(PackageName,".R")
 
 PackageDir = kollapse(RepositoryDir, PackageName)
 Package_FnP = 	kollapse(PackageDir, "/R/", fname)
+
+# devtools::use_package("vioplot")
 DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
-					"Authors@R" = person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role = c("aut", "cre")),
-					"Description" = "An R function library to create scientific figures and reports easily.",
-					"License" = "GNU GPL 3"
+    "Authors@R" = person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role = c("aut", "cre")),
+    "Description" = "MarkdownReports is a set of R functions that allows you to generate precise figures easily, and create clean reports about what you just discovered with your analysis script. It helps you to:
+    1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.
+    2. Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.
+    3. Link & display your figures automatically inside your report, right there where they are needed.
+    4. Version your findings, annotating which parameters were used to reach certain results.
+    5. Share your report with others via email, Github or a personal website.", "License" = "GNU GPL 3", 
+		"Version"= "2.5.1", "Imports" = "vioplot"
 )
 
 setwd(RepositoryDir)
