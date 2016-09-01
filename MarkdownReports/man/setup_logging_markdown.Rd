@@ -2,7 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{setup_logging_markdown}
 \alias{setup_logging_markdown}
-\title{setup_logging_markdown (deprecated, use with create_set_OutDir)}
+\title{setup_logging_markdown (deprecated, use with create_set_OutDir, will be removed from V3)}
 \usage{
 setup_logging_markdown(fname, title = "", append = T, png4Github = T)
 }

@@ -5,7 +5,7 @@
 \title{wpie}
 \usage{
 wpie(variable, ..., percentage = TRUE, plotname = substitute(variable),
-  w = 7, h = 7, mdlink = F)
+  savefile = T, w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -15,6 +15,8 @@ wpie(variable, ..., percentage = TRUE, plotname = substitute(variable),
 \item{percentage}{Display percentage instead of counts. TRUE by default.}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

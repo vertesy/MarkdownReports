@@ -4,7 +4,7 @@
 \alias{whist_dfCol}
 \title{whist_dfCol}
 \usage{
-whist_dfCol(df, colName, col = "gold", ..., w = 7, h = 7)
+whist_dfCol(df, colName, col = "gold", ..., savefile = T, w = 7, h = 7)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
@@ -12,6 +12,8 @@ whist_dfCol(df, colName, col = "gold", ..., w = 7, h = 7)
 \item{col}{Color of the plot.Name}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

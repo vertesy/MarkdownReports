@@ -1,13 +1,13 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
-# date: 22-03-2016
+# date: 01-09-2016
 
 #' kollapse
 #'
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param print Print the results to the terminal. TRUE by default.
-#' @examples kollapse("Hello ", "you ", 3, ", " , 11, " year old kids.")
+#' @examples kollapse("Hello ",LETTERS[24], ", the winning numbers are ", c(1,3,5,65,11), " . Yay!")
 #' @export
 
 kollapse <-function (..., print = T) {
@@ -352,6 +352,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param lty Linetype, defined by numbers 1-6.
 #' @param lwd Line width. Set to 2 by default.
 #' @param col_abline Color of the line.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
@@ -361,7 +362,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2columns),
 				  errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1,
 				  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
-				  mdlink = F,  w = 7, h = 7) {
+				  savefile = T, mdlink = F,  w = 7, h = 7) {
 	x = df_2columns[, 1]
 	y = df_2columns[, 2]
 	fname = kollapse(plotname, ".plot")
@@ -382,7 +383,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
 	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -418,7 +419,7 @@ wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE
 #' @param lwd Line width. Set to 2 by default.
 #' @param lcol Color of the line.
 #' @param filtercol Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "vline" is defined.
-#' @param h Height of the saved pdf image, in inches.line
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
@@ -428,7 +429,7 @@ wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE
 
 whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable),
 				  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-				  w = 7, h = 7, mdlink = FALSE, ...) {
+				  savefile = T, w = 7, h = 7, mdlink = FALSE, ...) {
 	xtra = list(...)
 	if (length(variable) > 0) {
 		fname = kollapse(plotname, ".hist")
@@ -453,7 +454,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -482,6 +483,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
 #' @param arrow_width Width of the arrow head.
 #' @param arrow_lwd Line width for the error bars.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
@@ -493,7 +495,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), tilted_text = F, ylimits = NULL,
 					 hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
 					 errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-					 w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
+					 savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
 
 	fname = kollapse(plotname, ".barplot")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -513,7 +515,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
 	}
 
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
@@ -532,13 +534,15 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @param sub Subtitle below the plot.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
 #' @export
 
-wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F, w = 7, h = 7, mdlink = F)
+wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F, 
+                     savefile = T, w = 7, h = 7, mdlink = F)
 {
 	fname = kollapse(plotname, ".boxplot")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -547,7 +551,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (tilted_text) {
 		text(x = 1:length(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -560,19 +564,20 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F)
 #' @export
 
-wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F) {
+wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variable), savefile = T, w = 7, h = 7, mdlink = F) {
 	fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(length(variable)))
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -594,6 +599,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
 #' @param col Color of the plot.orbyColumn
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
@@ -602,8 +608,10 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 #' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL, border = 1, BoxPlotWithMean = F, 	pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", metod = "jitter", jitter = 0.2,
-						colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F) {
+wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL, 
+                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.2,
+                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F,
+						            savefile = T, w = 7, h = 7, mdlink = F) {
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	cexNsize = 1/abs(log10(length(yalist)))
 	cexNsize = min(cexNsize, 1)
@@ -621,7 +629,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -646,6 +654,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @param col Color of the plot.l
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
@@ -655,8 +664,8 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @export
 
 wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2, 
-                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", 
-							                w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "",  incrBottMarginBy = 0, tilted_text = F,
+                              savefile = T, w = 7, h = 7, mdlink = F)
 {
 	fname = kollapse(plotname, ".stripchart")
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -677,7 +686,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 		# yy = (max(nchar(names(yalist)))/2)
 		text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -691,20 +700,21 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param col Color of the plot.l
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
-#' @param w Width of the saved pdf image, in inches.
-#' @param h Height of the saved pdf image, in inches.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
 #' @param xlb X-axis label.
 #' @param ylb Y-axis label.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 #' @export
 
 wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)), 
                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", 
-                          incrBottMarginBy = 0, w = 7, h = 7, tilted_text = F, mdlink = F) {
+                          incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
 	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 	l_list = length(yalist)
@@ -720,7 +730,7 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 	if (tilted_text) {
 		text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -742,16 +752,17 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
 #' @param ylb Y-axis label.
+#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
-#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
 #' @export
 
 wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1, 
-                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", 
-                                w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
+                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0, 
+                                savefile = T, w = 7, h = 7, mdlink = F) {
 	fname = kollapse(plotname, ".VioStripchart")
 	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -768,7 +779,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
 				   pch = pch, bg = bg[[k]], col = coll[[j]])
 	}
-	dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -782,12 +793,13 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 #' @param col Color of the plot.Name
 #' @param col Color of the plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @examples whist_dfCol (df =  , colName =  , col = gold, ... =  , w = 7, h = 7)
 #' @export
 
-whist_dfCol <-function (df, colName, col = "gold", ..., w = 7, h = 7) {
+whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h = 7) {
   stopifnot(colName %in% colnames(df))
   variable = unlist(df[, colName])
   stopifnot(length(variable) > 1)
@@ -805,7 +817,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., w = 7, h = 7) {
     hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
                                                                          "median:", iround(median(zz$counts))))
   }
-  dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+  if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 }
 
 
@@ -816,13 +828,14 @@ whist_dfCol <-function (df, colName, col = "gold", ..., w = 7, h = 7) {
 #' @param df Input data frame to be plotted
 #' @param col Color of the plot.Name
 #' @param col Color of the plot.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @examples wbarplot_dfCol (df =  , colName =  , col = gold1, w = 7, h = 7, ... =  )
 #' @export
 
-wbarplot_dfCol <-function (df, colName, col = "gold1", w = 7, h = 7, ...) {
+wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 7, ...) {
 	stopifnot(colName %in% colnames(df))
 	variable = unlist(df[, colName])
 	stopifnot(length(variable) > 1)
@@ -832,7 +845,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", w = 7, h = 7, ...) {
 	cexNsize = min(cexNsize, 1)
 	barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
 																								  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-	dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))
+	if (savefile) { dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", scriptname))	}
 }
 
 

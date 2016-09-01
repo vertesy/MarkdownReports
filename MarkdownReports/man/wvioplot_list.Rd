@@ -6,8 +6,8 @@
 \usage{
 wvioplot_list(yalist, ..., coll = c(1:length(yalist)),
   plotname = as.character(substitute(yalist)), sub = NULL,
-  xlb = names(yalist), ylb = "", incrBottMarginBy = 0, w = 7, h = 7,
-  tilted_text = F, mdlink = F)
+  xlb = names(yalist), ylb = "", incrBottMarginBy = 0, tilted_text = F,
+  savefile = T, w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -24,11 +24,13 @@ wvioplot_list(yalist, ..., coll = c(1:length(yalist)),
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
+\item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
+
 \item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
-
-\item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

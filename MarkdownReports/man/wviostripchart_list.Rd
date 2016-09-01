@@ -7,7 +7,7 @@
 wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
   bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
   plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
-  w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
+  incrBottMarginBy = 0, savefile = T, w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -32,11 +32,13 @@ wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{ylb}{Y-axis label.}
 
+\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
+
 \item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
-
-\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

@@ -6,7 +6,8 @@
 \usage{
 wboxplot(variable, ..., col = "gold1",
   plotname = as.character(substitute(variable)), sub = FALSE,
-  incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
+  incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7,
+  mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -22,6 +23,8 @@ wboxplot(variable, ..., col = "gold1",
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

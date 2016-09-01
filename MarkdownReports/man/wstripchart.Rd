@@ -5,10 +5,10 @@
 \title{wstripchart}
 \usage{
 wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
-  sub = NULL, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1,
-  pchcex = 1.5, bg = "chartreuse2", col = "black", metod = "jitter",
-  jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0,
-  tilted_text = F, mdlink = F)
+  sub = NULL, border = 1, incrBottMarginBy = 0, tilted_text = F,
+  BoxPlotWithMean = F, metod = "jitter", jitter = 0.2, pch = 23,
+  pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black",
+  colorbyColumn = F, savefile = T, w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -21,7 +21,15 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 
 \item{border}{An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.}
 
+\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
+
+\item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
+
 \item{BoxPlotWithMean}{Display the mean instead of the median in a boxplot. This is non-standard use of a boxplot, report it.}
+
+\item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
+
+\item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid overlaps).}
 
 \item{pch}{Define the symbol for each data point. A number [0-25] or any string between ""-s.}
 
@@ -33,17 +41,11 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 
 \item{col}{Color of the plot.}
 
-\item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
-
-\item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid overlaps).}
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
-
-\item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
-
-\item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

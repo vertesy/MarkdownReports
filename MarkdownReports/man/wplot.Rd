@@ -8,7 +8,7 @@ wplot(df_2columns, col = 1, pch = 18, ...,
   plotname = substitute(df_2columns), errorbar = F, upper = 0,
   lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
   col_errorbar = 1, abline = F, a = F, b = F, lty = 1, lwd = 1,
-  col_abline = 1, mdlink = F, w = 7, h = 7)
+  col_abline = 1, savefile = T, mdlink = F, w = 7, h = 7)
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -44,6 +44,8 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 \item{lwd}{Line width. Set to 2 by default.}
 
 \item{col_abline}{Color of the line.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

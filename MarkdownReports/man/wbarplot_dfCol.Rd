@@ -4,12 +4,15 @@
 \alias{wbarplot_dfCol}
 \title{wbarplot_dfCol}
 \usage{
-wbarplot_dfCol(df, colName, col = "gold1", w = 7, h = 7, ...)
+wbarplot_dfCol(df, colName, col = "gold1", savefile = T, w = 7, h = 7,
+  ...)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
 
 \item{col}{Color of the plot.Name}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

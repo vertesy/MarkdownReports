@@ -8,8 +8,8 @@ wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 23,
   pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black",
   metod = "jitter", jitter = 0.2,
   plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
-  xlab = "", w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F,
-  mdlink = F)
+  xlab = "", incrBottMarginBy = 0, tilted_text = F, savefile = T,
+  w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -38,13 +38,15 @@ wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 23,
 
 \item{ylb}{Y-axis label.}
 
-\item{w}{Width of the saved pdf image, in inches.}
-
-\item{h}{Height of the saved pdf image, in inches.}
-
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
+
+\item{w}{Width of the saved pdf image, in inches.}
+
+\item{h}{Height of the saved pdf image, in inches.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

@@ -8,8 +8,8 @@ wbarplot(variable, ..., col = "gold1", sub = F,
   plotname = substitute(variable), main = substitute(variable),
   tilted_text = F, ylimits = NULL, hline = F, vline = F,
   filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F,
-  upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1, w = 7,
-  h = 7, incrBottMarginBy = 0, mdlink = F)
+  upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
+  savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -49,6 +49,8 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 \item{arrow_width}{Width of the arrow head.}
 
 \item{arrow_lwd}{Line width for the error bars.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 

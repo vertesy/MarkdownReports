@@ -7,8 +7,8 @@
 whist(variable, breaks = 20, col = "gold1",
   plotname = substitute(variable), main = kollapse("Histogram of ",
   substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
-  lty = 2, lwd = 3, lcol = 1, filtercol = 0, w = 7, h = 7,
-  mdlink = FALSE, ...)
+  lty = 2, lwd = 3, lcol = 1, filtercol = 0, savefile = T, w = 7,
+  h = 7, mdlink = FALSE, ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -33,15 +33,15 @@ whist(variable, breaks = 20, col = "gold1",
 
 \item{filtercol}{Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "vline" is defined.}
 
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
+
 \item{w}{Width of the saved pdf image, in inches.}
 
-\item{h}{Height of the saved pdf image, in inches.line}
+\item{h}{Height of the saved pdf image, in inches.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
-
-\item{h}{Height of the saved pdf image, in inches.}
 }
 \description{
 Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
