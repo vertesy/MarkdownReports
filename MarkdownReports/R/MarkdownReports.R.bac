@@ -673,7 +673,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 	cexNsize = min(cexNsize, 1)
 	if (tilted_text) {	xlb = F	} else {	xlb = T	}
 
-	boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outline = FALSE, las = 2,
+	boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2,
 			col = bxpcol, cex.axis = cexNsize)
 	for (i in 1:length(yalist)) {
 		j = k = i
