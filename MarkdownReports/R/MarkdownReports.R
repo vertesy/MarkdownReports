@@ -144,16 +144,16 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 #' @export
 
 continue_logging_markdown <-function (scriptname) {
-	if (exists("OutDir")) {	path = OutDir
-	} else {	path = getwd(); any_print("OutDir not defined !!!") }
-	path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
-	return(path_of_report)
-	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
-	if (!exists(BackupDir)) {
-		dir.create(BackupDir)
-		assign("BackupDir", BackupDir, envir = .GlobalEnv)
-	}
-	return(BackupDir)
+  if (exists("OutDir")) {	path = OutDir } else {	path = getwd(); any_print("OutDir not defined !!! Saving in working directory.") }
+  path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
+  any_print("Writing report in:", path_of_report)
+  assign("path_of_report", path_of_report, envir = .GlobalEnv)
+  
+  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  if (!exists(BackupDir)) {
+    dir.create(BackupDir)
+    assign("BackupDir", BackupDir, envir = .GlobalEnv)
+  }
 }
 
 
