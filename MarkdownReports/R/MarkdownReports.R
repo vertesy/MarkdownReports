@@ -875,9 +875,11 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
 		breaks <- seq(zlim[1], zlim[2], length.out = (length(col) + 1))
 	}
 	colorlevels <- col[((as.vector(yourdata) - breaks[1])/(range(breaks)[2] - range(breaks)[1])) * (length(breaks) - 1) + 1]
+	if (length(names(yourdata))) {
+	  names(colorlevels) = yourdata
+	}
 	colorlevels
 }
-
 
 #' wvenn
 #'
