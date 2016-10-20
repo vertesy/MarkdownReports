@@ -543,21 +543,22 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
 #' @export
 
-wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
-                     savefile = T, w = 7, h = 7, mdlink = F)
-{
-	fname = kollapse(plotname, ".boxplot")
-	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	if (tilted_text) { 	xlb = NA } else {	xlb = names(variable) }
-	boxplot(variable, ..., names = xlb, main = plotname, col = col, las = 2)
-	if (tilted_text) {
-		text(x = 1:length(variable), y = min(unlist(variable), na.rm = T)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
-	}
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb, sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
+                     savefile = T, w = 7, h = 7, mdlink = F) {
+  fname = kollapse(plotname, ".boxplot")
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  if (tilted_text) { 	xlb = NA } else {	xlb = names(yalist) }
+  boxplot(yalist, ..., names = xlb, main = plotname, col = col, las = 2)
+  mtext(ylb, side = 2, line = 2)
+  if (tilted_text) {
+    text(x = 1:length(yalist), y = min(unlist(yalist), na.rm = T)-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+  }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
 
 #' wpie
 #'
@@ -612,7 +613,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.2,
-                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F,
+                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F, ylb="",
                         savefile = T, w = 7, h = 7, mdlink = F) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
@@ -623,9 +624,10 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
   if (tilted_text) {	xlb = F } else { xlb = T }
   bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
-      outline = T, cex.axis = cexNsize)
+      outline = T, cex.axis = cexNsize, ylab=NA)
   stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
              col = col, lwd = pchlwd, cex = pchcex)
+  mtext(ylb, side = 2, line = 2)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
     # yy = (max(nchar(names(yalist)))/2)
@@ -674,8 +676,9 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
   cexNsize = min(cexNsize, 1)
   if (tilted_text) {	xlb = F	} else {	xlb = T	}
 
-  boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2, ylab =ylb,
+  boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2, ylab =NA,
           col = bxpcol, cex.axis = cexNsize)
+  mtext(ylb, side = 2, line = 2)
   for (i in 1:length(yalist)) {
     if( l(na.omit.strip(yalist[[i]])) ){
       j = k = i
@@ -769,28 +772,31 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
                                 savefile = T, w = 7, h = 7, mdlink = F) {
-	fname = kollapse(plotname, ".VioStripchart")
-	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
-	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	l_list = length(yalist)
-	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
-		 ylab = ylb, main = plotname, sub = sub)
-	for (i in 1:l_list) {
-	  vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = vioborder[i])
-	}
-	for (i in 1:length(yalist)) {
-	  if( l(na.omit.strip(yalist[[i]])) ){
-  		j = k = i
-  		if (length(coll) < length(yalist)) {	j = 1	}
-  		if (length(bg) < length(yalist)) { k = 1 }
-  		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
-  				   pch = pch, bg = bg[[k]], col = coll[[j]])
-	  } #if
-	}
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
-	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  fname = kollapse(plotname, ".VioStripchart")
+  if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  l_list = length(yalist)
+  plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist), na.rm = T), xaxt = "n", xlab = "",
+       ylab = ylb, main = plotname, sub = sub)
+  for (i in 1:l_list) {
+    print(i)
+    if( l(na.omit.strip(yalist[[i]])) ){
+      vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = 1)
+    } #if
+  }
+  for (i in 1:length(yalist)) {
+    if( l(na.omit.strip(yalist[[i]])) ){
+      j = k = i
+      if (length(coll) < length(yalist)) {	j = 1	}
+      if (length(bg) < length(yalist)) { k = 1 }
+      stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
+                 pch = pch, bg = bg[[k]], col = coll[[j]])
+    } #if
+  }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
