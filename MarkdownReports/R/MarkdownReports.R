@@ -491,35 +491,37 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 #' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 #' @export
 
-### ylim cannot be defined !!!
 wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), tilted_text = F, ylimits = NULL,
-					 hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
-					 errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-					 savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
-
-	fname = kollapse(plotname, ".barplot")
-	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	cexNsize = 0.8/abs(log10(length(variable)))
-	cexNsize = min(cexNsize, 1)
-	if (sub == T) {	subtitle = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable)))	} else if (sub == F) { subtitle = "" } else { subtitle = sub }
-	if (hline & filtercol == 1) { col = (variable >= hline) + 2	}
-	if (hline & filtercol == -1) { col = (variable < hline) + 2	}
-	if (errorbar & is.null(ylimits)) {	ylimits = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } # else {	ylimits = range(0, variable)	}
-	if (tilted_text) {	xlb = NA	}	else {		xlb = names(variable)	}
-
-	x = barplot(variable, ylim = ylimits, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize)
-	if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol)	}
-	if (vline[1]) { abline(v = x[vline], lty = lty, lwd = lwd, col = lcol)	}
-	if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = arrow_width, lwd = arrow_lwd, ...)	}
-	if (tilted_text) {
-		text(x = x - 0.25, y = 0, labels = names(variable), xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
-	}
-
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
-	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+                     hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
+                     errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
+                     savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
+  NrBars = if (is.vector(variable)) l(variable) else if (is.matrix(variable) |   is.data.frame(variable)) ncol(variable)
+  BarNames = if (is.vector(variable)) names(variable) else if (is.matrix(variable) |   is.data.frame(variable)) colnames(variable)
+  
+  fname = kollapse(plotname, ".barplot")
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  cexNsize = 0.8/abs(log10(length(variable)))
+  cexNsize = min(cexNsize, 1)
+  if (sub == T) {	subtitle = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable)))	} else if (sub == F) { subtitle = "" } else { subtitle = sub }
+  if (hline & filtercol == 1) { col = (variable >= hline) + 2	}
+  if (hline & filtercol == -1) { col = (variable < hline) + 2	}
+  if (errorbar & is.null(ylimits)) {	ylimits = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } # else {	ylimits = range(0, variable)	}
+  if (tilted_text) {	xlb = rep(NA, NrBars)	}	else {		xlb = BarNames	}
+  
+  x = barplot(variable, ylim = ylimits, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize)
+  if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol)	}
+  if (vline[1]) { abline(v = x[vline], lty = lty, lwd = lwd, col = lcol)	}
+  if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = arrow_width, lwd = arrow_lwd, ...)	}
+  if (tilted_text) {
+    text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
+  }
+  
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
 }
+
 
 
 
