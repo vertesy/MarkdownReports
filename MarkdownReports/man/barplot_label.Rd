@@ -4,21 +4,19 @@
 \alias{barplot_label}
 \title{barplot_label}
 \usage{
-barplot_label(x, y, labels, bottom = F, relpos_top = 0.9,
+barplot_label(barplotted_variable, labels, bottom = F, TopOffset = 0.5,
   relpos_bottom = 0.1, ...)
 }
 \arguments{
-\item{x}{X-position of the label.}
-
-\item{y}{Y-position of the label.}
+\item{barplotted_variable}{The variable that you barplotted previously.}
 
 \item{labels}{Label text.}
 
 \item{bottom}{Put labels at the bottom of the bars.}
 
-\item{relpos_top}{Relative offset.}
+\item{TopOffset}{Absolute offset from top.}
 
-\item{relpos_bottom}{Relative offset.}
+\item{relpos_bottom}{Relative offset from bottom.}
 
 \item{...}{Pass any other parameter of the corresponding text function (most of them should work).}
 }
@@ -26,6 +24,6 @@ barplot_label(x, y, labels, bottom = F, relpos_top = 0.9,
 Add extra labels to your bar plots at the top or the base.
 }
 \examples{
-barplot_label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
+barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 }
 
