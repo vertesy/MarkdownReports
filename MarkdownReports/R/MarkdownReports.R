@@ -148,7 +148,7 @@ continue_logging_markdown <-function (scriptname) {
   path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
   any_print("Writing report in:", path_of_report)
   assign("path_of_report", path_of_report, envir = .GlobalEnv)
-  
+
   BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
     dir.create(BackupDir)
@@ -497,7 +497,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
                      savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F) {
   NrBars = if (is.vector(variable)) l(variable) else if (is.matrix(variable) |   is.data.frame(variable)) ncol(variable)
   BarNames = if (is.vector(variable)) names(variable) else if (is.matrix(variable) |   is.data.frame(variable)) colnames(variable)
-  
+
   fname = kollapse(plotname, ".barplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 0.8/abs(log10(length(variable)))
@@ -507,7 +507,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
   if (hline & filtercol == -1) { col = (variable < hline) + 2	}
   if (errorbar & is.null(ylimits)) {	ylimits = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } # else {	ylimits = range(0, variable)	}
   if (tilted_text) {	xlb = rep(NA, NrBars)	}	else {		xlb = BarNames	}
-  
+
   x = barplot(variable, ylim = ylimits, ..., names.arg = xlb, main = main, sub = subtitle, col = col, las = 2, cex.names = cexNsize)
   if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol)	}
   if (vline[1]) { abline(v = x[vline], lty = lty, lwd = lwd, col = lcol)	}
@@ -515,7 +515,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
   if (tilted_text) {
     text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
   }
-  
+
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -543,7 +543,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
 #' @export
 
-wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F, 
+wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
                      savefile = T, w = 7, h = 7, mdlink = F)
 {
 	fname = kollapse(plotname, ".boxplot")
@@ -551,7 +551,7 @@ wboxplot <-function (variable, ..., col = "gold1", plotname = as.character(subst
 	if (tilted_text) { 	xlb = NA } else {	xlb = names(variable) }
 	boxplot(variable, ..., names = xlb, main = plotname, col = col, las = 2)
 	if (tilted_text) {
-		text(x = 1:length(variable), y = min(variable)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
+		text(x = 1:length(variable), y = min(unlist(variable), na.rm = T)-(max(nchar(names(variable)))/2), labels = names(variable), xpd = TRUE, srt = 45)
 	}
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -610,7 +610,7 @@ wpie <-function (variable, ..., percentage = TRUE, plotname = substitute(variabl
 #' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL, 
+wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.2,
                         pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F,
                         savefile = T, w = 7, h = 7, mdlink = F) {
@@ -665,7 +665,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2, 
+wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "",  incrBottMarginBy = 0, tilted_text = F,
                               savefile = T, w = 7, h = 7, mdlink = F) {
   fname = kollapse(plotname, ".stripchart")
@@ -673,8 +673,8 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
   cexNsize = 1/abs(log10(length(list)))
   cexNsize = min(cexNsize, 1)
   if (tilted_text) {	xlb = F	} else {	xlb = T	}
-  
-  boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2,
+
+  boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2, ylab =ylb,
           col = bxpcol, cex.axis = cexNsize)
   for (i in 1:length(yalist)) {
     if( l(na.omit.strip(yalist[[i]])) ){
@@ -716,8 +716,8 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 #' @export
 
-wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)), 
-                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", 
+wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
+                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "",
                           incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
 	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
 	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -766,8 +766,8 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 #' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
 #' @export
 
-wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1, 
-                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0, 
+wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
+                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
                                 savefile = T, w = 7, h = 7, mdlink = F) {
 	fname = kollapse(plotname, ".VioStripchart")
 	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
@@ -980,6 +980,7 @@ subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units
   formatted_string = bquote(.(prefix)[.(subscr)]*'('*.(quantity)*')')
 }
 
+
 #' superscript_in_plots
 #'
 #' @param prefix String before the superscript.
@@ -992,6 +993,34 @@ subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units
 superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
   formatted_string = bquote(.(prefix)^.(sup)*.(suffix))
 }
+
+
+# #' subscript_in_plots2
+# #'
+# #' @param prefix String before the subscript. Use for boxplots, stripchart and co. Uses substitue() instead of bquote()
+# #' @param subscr Subscripted text.
+# #' @param quantity String in brackets after the subscript, eg.: log2(read count).
+# #' @export
+# #'
+# #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
+
+# subscript_in_plots2 <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+#   formatted_string = substitute(paste(prefix[subscr],"(",quantity,")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
+# }
+# #' superscript_in_plots2
+# #'
+# #' @param prefix String before the superscript.
+# #' @param sup Superscripted text.
+# #' @param suffix String after the subscript.
+# #' @export
+# #'
+# #' @examples plot (1, 1, main =superscript_in_plots2())
+
+# superscript_in_plots2 <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+#   formatted_string = substitute(paste(prefix^sup,quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
+# }
+
+
 
 #' filter_HP
 #'
