@@ -4,8 +4,9 @@
 \alias{wpie}
 \title{wpie}
 \usage{
-wpie(variable, ..., percentage = TRUE, plotname = substitute(variable),
-  savefile = T, w = 7, h = 7, mdlink = F)
+wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
+  plotname = substitute(variable), savefile = T, w = 7, h = 7,
+  mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -13,6 +14,8 @@ wpie(variable, ..., percentage = TRUE, plotname = substitute(variable),
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
 \item{percentage}{Display percentage instead of counts. TRUE by default.}
+
+\item{both_pc_and_value}{Report both percentage AND number.}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
