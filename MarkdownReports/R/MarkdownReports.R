@@ -725,10 +725,12 @@ wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
 	fname = kollapse(plotname, ".vioplot")
 	if (length(coll) < l_list) { coll = rep(coll, l_list) }
 	if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
-	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist)), xaxt = "n", xlab = "",
+	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist),na.rm = T), xaxt = "n", xlab = "",
 		 ylab = ylb, main = plotname, sub = sub)
 	for (i in 1:l_list) {
-	  vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+	  if( l(na.omit.strip(yalist[[i]])) ){
+	    vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+	  }
 	}
 	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
 	if (tilted_text) {
@@ -777,11 +779,13 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 	  vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = vioborder[i])
 	}
 	for (i in 1:length(yalist)) {
-		j = k = i
-		if (length(coll) < length(yalist)) {	j = 1	}
-		if (length(bg) < length(yalist)) { k = 1 }
-		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
-				   pch = pch, bg = bg[[k]], col = coll[[j]])
+	  if( l(na.omit.strip(yalist[[i]])) ){
+  		j = k = i
+  		if (length(coll) < length(yalist)) {	j = 1	}
+  		if (length(bg) < length(yalist)) { k = 1 }
+  		stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
+  				   pch = pch, bg = bg[[k]], col = coll[[j]])
+	  } #if
 	}
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", scriptname)) }
 	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
