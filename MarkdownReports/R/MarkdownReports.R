@@ -579,6 +579,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 	fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
+	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),"\n", variable , sep = "")}
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(length(variable)))
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
