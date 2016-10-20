@@ -957,21 +957,24 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param relpos_top Relative offset.
 #' @param relpos_bottom Relative offset.
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
-#' @examples barplot_label (x =  , y =  , labels =  , bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ... =  )
+#' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 #' @export
 
-barplot_label <-function (x, y, labels, bottom = F, relpos_top = 0.9, relpos_bottom = 0.1, ...) {
-	stopifnot(length(x) == length(y))
-	if (bottom) {
-		y = rep(relpos_bottom * max(y, na.rm = T), length(x))
-	}
-	if (length(dim(x)) > 1) {
-		text(as.vector(x), as.vector(y * relpos_top), labels = as.vector(labels), ...)
-	}
-	else if (length(dim(x)) == 1) {
-		text((x), (y), labels = (labels), ...)
-	}
+barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, ...) {
+  x = barplot(barplotted_variable, plot = F)
+  y = barplotted_variable
+  # stopifnot(length(x) == length(y))
+  if (bottom) {
+    y = rep(relpos_bottom * max(y, na.rm = T), length(x))
+  }
+  if (length(dim(x)) > 1) {
+    text(as.vector(x), as.vector(y -TopOffset), labels = as.vector(labels), ...)
+  }
+  else if (length(dim(x)) == 1) {
+    text((x), (y), labels = (labels), ...)
+  }
 }
+
 
 #' subscript_in_plots
 #'
