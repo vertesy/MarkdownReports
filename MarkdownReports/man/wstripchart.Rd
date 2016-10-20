@@ -8,7 +8,8 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
   sub = NULL, border = 1, incrBottMarginBy = 0, tilted_text = F,
   BoxPlotWithMean = F, metod = "jitter", jitter = 0.2, pch = 23,
   pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black",
-  colorbyColumn = F, savefile = T, w = 7, h = 7, mdlink = F)
+  colorbyColumn = F, ylb = "", savefile = T, w = 7, h = 7,
+  mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
