@@ -529,7 +529,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' wboxplot
 #'
 #' Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
-#' @param variable The variable to plot.
+#' @param yalist The variable to plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param col Color of the plot.
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
@@ -952,12 +952,11 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' barplot_label
 #'
 #' Add extra labels to your bar plots at the top or the base.
-#' @param x X-position of the label.
-#' @param y Y-position of the label.
+#' @param barplotted_variable The variable that you barplotted previously.
 #' @param labels Label text.
 #' @param bottom Put labels at the bottom of the bars.
-#' @param relpos_top Relative offset.
-#' @param relpos_bottom Relative offset.
+#' @param TopOffset Absolute offset from top.
+#' @param relpos_bottom Relative offset from bottom.
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
 #' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 #' @export
