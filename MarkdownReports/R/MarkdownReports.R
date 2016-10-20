@@ -543,7 +543,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
 #' @export
 
-wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb, sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
+wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
                      savefile = T, w = 7, h = 7, mdlink = F) {
   fname = kollapse(plotname, ".boxplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin

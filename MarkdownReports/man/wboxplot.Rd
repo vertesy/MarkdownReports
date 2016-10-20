@@ -4,13 +4,13 @@
 \alias{wboxplot}
 \title{wboxplot}
 \usage{
-wboxplot(variable, ..., col = "gold1",
-  plotname = as.character(substitute(variable)), sub = FALSE,
+wboxplot(yalist, ..., col = "gold1",
+  plotname = as.character(substitute(yalist)), ylb = "", sub = FALSE,
   incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7,
   mdlink = F)
 }
 \arguments{
-\item{variable}{The variable to plot.}
+\item{yalist}{The variable to plot.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
