@@ -875,8 +875,11 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 
 #' @examples val2col (yourdata =  , zlim =  , col = rev(heat.colors(12)), breaks =  )
 #' @export
 
-val2col <-function (yourdata, zlim, col = rev(heat.colors(12)), breaks) {
-	if (!missing(breaks)) {
+
+### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
+val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(yourdata)))) ), breaks) {
+
+    if (!missing(breaks)) {
 		if (length(breaks) != (length(col) + 1)) {
 			stop("must have one more break than color")
 		}
