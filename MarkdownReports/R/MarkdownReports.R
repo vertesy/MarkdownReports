@@ -1051,7 +1051,7 @@ filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
   pc = percentage_formatter(sum(survivors)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", iround(threshold))
   if (file.exists(path_of_report) ) {	llogit (conclusion)} else { print  ("NOT LOGGED") }
-  # if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
+  if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
 
