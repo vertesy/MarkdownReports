@@ -1097,3 +1097,17 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 
 
 
+#' Print a list, one element per line,  into your markdown report
+#'
+#' @param your list
+#' @examples llwrite_list(your_list)
+#' @export 
+#' 
+llwrite_list <- function(yalist) {
+  for (e in 1:l(yalist)) {
+    if (is.null( names(yalist) )) { llprint("#####",names(yalist)[e]) } else { llprint("#####", e)}
+    print(yalist[e]); llogit("`", yalist[e], "`")
+  }
+}
+
+
