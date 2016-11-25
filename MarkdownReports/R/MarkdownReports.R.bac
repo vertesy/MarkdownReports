@@ -356,37 +356,41 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @param ylimm manual Y-limits error bar
+#' @param xlimm manual X-limits error bar
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 #' @export
 
 wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2columns),
-				  errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1,
-				  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
-				  savefile = T, mdlink = F,  w = 7, h = 7) {
-	x = df_2columns[, 1]
-	y = df_2columns[, 2]
-	fname = kollapse(plotname, ".plot")
-	if (errorbar) {
-		ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))))
-		xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))))
-	}
-	else {
-		ylim = range(y)
-		xlim = range(x)
-	}
-	plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim)
-	if (errorbar) {
-		arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
-		arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
-	}
-	if (abline == "h") {	abline(h = a, lty = lty, lwd = lwd, col = col_abline)	}
-	if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
-	if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+                  errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
+                  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
+                  savefile = T, mdlink = F,  w = 7, h = 7) {
+  x = df_2columns[, 1]
+  y = df_2columns[, 2]
+  fname = kollapse(plotname, ".plot")
+  if (errorbar) {
+    ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))))
+    xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))))
+  }
+  else {
+    ylim = range(y)
+    xlim = range(x)
+  }
+  if (is.numeric(ylimm) & length(ylimm)==2) { ylim = ylimm } #overwrite if
+  if (is.numeric(xlimm) & length(xlimm)==2) { xlim = xlimm }
+  
+  plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim)
+  if (errorbar) {
+    arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
+    arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
+  }
+  if (abline == "h") {	abline(h = a, lty = lty, lwd = lwd, col = col_abline)	}
+  if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
+  if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
-
 
 #' wplot_save_this
 #'
@@ -1095,5 +1099,19 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 	if (return_survival_ratio) {return (sum(survivors)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
+
+
+#' Print a list, one element per line,  into your markdown report
+#'
+#' @param your list
+#' @examples llwrite_list(your_list)
+#' @export 
+#' 
+llwrite_list <- function(yalist) {
+  for (e in 1:l(yalist)) {
+    if (is.null( names(yalist) )) { llprint("#####",names(yalist)[e]) } else { llprint("#####", e)}
+    print(yalist[e]); llogit("`", yalist[e], "`")
+  }
+}
 
 

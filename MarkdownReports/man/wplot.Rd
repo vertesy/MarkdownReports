@@ -7,8 +7,9 @@
 wplot(df_2columns, col = 1, pch = 18, ...,
   plotname = substitute(df_2columns), errorbar = F, upper = 0,
   lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
-  col_errorbar = 1, abline = F, a = F, b = F, lty = 1, lwd = 1,
-  col_abline = 1, savefile = T, mdlink = F, w = 7, h = 7)
+  col_errorbar = 1, ylimm = F, xlimm = F, abline = F, a = F, b = F,
+  lty = 1, lwd = 1, col_abline = 1, savefile = T, mdlink = F, w = 7,
+  h = 7)
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -32,6 +33,10 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 \item{arrow_lwd}{Line width for the error bar arrow. Line width for the error bar arrow.}
 
 \item{col_errorbar}{Color of the error bar arrow.}
+
+\item{ylimm}{manual Y-limits error bar}
+
+\item{xlimm}{manual X-limits error bar}
 
 \item{abline}{Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.}
 
