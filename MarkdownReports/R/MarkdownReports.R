@@ -3,7 +3,7 @@
 # date: 01-09-2016
 
 ## Aliases
-try.dev.off <- try(dev.off(), silent = T)
+try.dev.off <- function () { try(dev.off(), silent = T) }
 
 
 #' kollapse
