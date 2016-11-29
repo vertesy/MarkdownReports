@@ -2,6 +2,10 @@
 # author: Abel Vertesy
 # date: 01-09-2016
 
+## Aliases
+try.dev.off <- try(dev.off(), silent = T)
+
+
 #' kollapse
 #'
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
@@ -72,7 +76,7 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), setDir=T, scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
@@ -721,34 +725,36 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
+#' @param ylimm Manual y axis limits
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 #' @export
 
-wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
-                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "",
+wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
+                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
                           incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
-	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
-	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	l_list = length(yalist)
-	fname = kollapse(plotname, ".vioplot")
-	if (length(coll) < l_list) { coll = rep(coll, l_list) }
-	if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
-	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist),na.rm = T), xaxt = "n", xlab = "",
-		 ylab = ylb, main = plotname, sub = sub)
-	for (i in 1:l_list) {
-	  if( l(na.omit.strip(yalist[[i]])) ){
-	    vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
-	  }
-	}
-	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
-	if (tilted_text) {
-		text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
-	}
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
-	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  l_list = length(yalist)
+  fname = kollapse(plotname, ".vioplot")
+  if (length(coll) < l_list) { coll = rep(coll, l_list) }
+  if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
+  if (! (is.numeric(ylimm) & length(ylimm)==2)) { ylimm = range(unlist(yalist),na.rm = T)}
+  plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = ylimm, xaxt = "n", xlab = "",
+       ylab = ylb, main = plotname, sub = sub)
+  for (i in 1:l_list) {
+    if( l(na.omit.strip(yalist[[i]])) ){
+      vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+    }
+  }
+  axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
+  if (tilted_text) {
+    text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+  }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 

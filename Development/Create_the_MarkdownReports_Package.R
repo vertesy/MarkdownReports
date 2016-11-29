@@ -2,7 +2,7 @@
 # Workflow_to_Create_an_R_Package.R
 ######################################################################################################
 # source("/Users/abelvertesy/MarkdownReports/Workflow_to_Create_an_R_Package.R")
-rm(list=ls(all.names = TRUE));
+# rm(list=ls(all.names = TRUE));
 try(dev.off())
 
 # Functions ------------------------
