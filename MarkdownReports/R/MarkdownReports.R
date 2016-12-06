@@ -827,25 +827,28 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 
 whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h = 7) {
   stopifnot(colName %in% colnames(df))
-  variable = unlist(df[, colName])
+  variable = as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
   plotname = paste(substitute(df), "__", colName, sep = "")
   fname = FnP_parser(plotname, "hist.pdf")
   if (!is.numeric(variable)) {
-    variable = table(variable)
-    cexNsize = 0.7/abs(log10(length(variable)))
+    table_of_var = table(variable)
+    cexNsize = 0.7/abs(log10(length(table_of_var)))
     cexNsize = min(cexNsize, 1)
-    barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
-                                                                                                  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
+    barplot(table_of_var, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, 
+            sub = paste("mean:", iround(mean(table_of_var, na.rm = T)), 
+                        "| median:", iround(mean(table_of_var, na.rm = T)), 
+                        "| mode:", iround(modus(table_of_var, na.rm = T)), 
+                        "| CV:", percentage_formatter(cv(table_of_var))))
   }
   else {
     zz = hist(variable, ..., plot = F)
-    hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
-                                                                         "median:", iround(median(zz$counts))))
+    hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(variable)),
+                                                                         "| median:", iround(median(variable)),
+                                                                         "| modus:", iround(modus(variable)))    )
   }
   if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
 }
-
 
 
 #' wbarplot_dfCol
