@@ -973,11 +973,12 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param bottom Put labels at the bottom of the bars.
 #' @param TopOffset Absolute offset from top.
 #' @param relpos_bottom Relative offset from bottom.
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
 #' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 #' @export
 
-barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, ...) {
+barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, OverwritePrevPDF = T, ...) {
   x = barplot(barplotted_variable, plot = F)
   y = barplotted_variable
   # stopifnot(length(x) == length(y))
@@ -990,6 +991,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
   else if (length(dim(x)) == 1) {
     text((x), (y), labels = (labels), ...)
   }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
 
 
@@ -1124,3 +1126,20 @@ llwrite_list <- function(yalist) {
 }
 
 
+
+
+#' Add a legend, and save the plot immediately
+#'
+#' @param x location of legend
+#' @param legend Text
+#' @param fill Color
+#' @param bty Background of legend, transparent by default
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param ... Pass any other parameter of the corresponding text function (most of them should work).
+#' @examples wlegend(...)
+#' @export 
+#' 
+wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  legend(x=x, ..., bty=bty)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
+}
