@@ -4,10 +4,10 @@
 \alias{wvioplot_list}
 \title{wvioplot_list}
 \usage{
-wvioplot_list(yalist, ..., coll = c(1:length(yalist)),
+wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
   plotname = as.character(substitute(yalist)), sub = NULL,
-  xlb = names(yalist), ylb = "", incrBottMarginBy = 0, tilted_text = F,
-  savefile = T, w = 7, h = 7, mdlink = F)
+  xlb = names(yalist), ylb = "", ylimm = F, incrBottMarginBy = 0,
+  tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -21,6 +21,8 @@ wvioplot_list(yalist, ..., coll = c(1:length(yalist)),
 \item{xlb}{X-axis label.}
 
 \item{ylb}{Y-axis label.}
+
+\item{ylimm}{Manual y axis limits}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 

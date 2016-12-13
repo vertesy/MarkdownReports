@@ -3,8 +3,9 @@
 ######################################################################################################
 # source("/Users/abelvertesy/MarkdownReports/Workflow_to_Create_an_R_Package.R")
 # rm(list=ls(all.names = TRUE));
-try(dev.off())
+try.dev.off()
 
+# install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 try (source ('/Users/abelvertesy/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)

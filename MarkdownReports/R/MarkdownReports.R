@@ -1139,7 +1139,8 @@ llwrite_list <- function(yalist) {
 #' @examples wlegend(...)
 #' @export 
 #' 
+
 wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  legend(x=x, ..., bty=bty)
+  legend(x=x,legend=legend,fill=fill, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }

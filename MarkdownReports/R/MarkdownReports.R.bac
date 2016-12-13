@@ -2,6 +2,10 @@
 # author: Abel Vertesy
 # date: 01-09-2016
 
+## Aliases
+try.dev.off <- function () { try(dev.off(), silent = T) }
+
+
 #' kollapse
 #'
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
@@ -72,7 +76,7 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), setDir=T, scriptname = basename(OutDir), title = "", append = F, png4Github = T) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
@@ -721,34 +725,36 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
+#' @param ylimm Manual y axis limits
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 #' @export
 
-wvioplot_list <-function (yalist, ..., coll = c(1:length(yalist)),
-                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "",
+wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
+                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
                           incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
-	if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
-	if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-	l_list = length(yalist)
-	fname = kollapse(plotname, ".vioplot")
-	if (length(coll) < l_list) { coll = rep(coll, l_list) }
-	if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
-	plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist),na.rm = T), xaxt = "n", xlab = "",
-		 ylab = ylb, main = plotname, sub = sub)
-	for (i in 1:l_list) {
-	  if( l(na.omit.strip(yalist[[i]])) ){
-	    vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
-	  }
-	}
-	axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
-	if (tilted_text) {
-		text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
-	}
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
-	if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  l_list = length(yalist)
+  fname = kollapse(plotname, ".vioplot")
+  if (length(coll) < l_list) { coll = rep(coll, l_list) }
+  if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
+  if (! (is.numeric(ylimm) & length(ylimm)==2)) { ylimm = range(unlist(yalist),na.rm = T)}
+  plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = ylimm, xaxt = "n", xlab = "",
+       ylab = ylb, main = plotname, sub = sub)
+  for (i in 1:l_list) {
+    if( l(na.omit.strip(yalist[[i]])) ){
+      vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+    }
+  }
+  axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
+  if (tilted_text) {
+    text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+  }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -821,25 +827,28 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 
 whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h = 7) {
   stopifnot(colName %in% colnames(df))
-  variable = unlist(df[, colName])
+  variable = as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
   plotname = paste(substitute(df), "__", colName, sep = "")
   fname = FnP_parser(plotname, "hist.pdf")
   if (!is.numeric(variable)) {
-    variable = table(variable)
-    cexNsize = 0.7/abs(log10(length(variable)))
+    table_of_var = table(variable)
+    cexNsize = 0.7/abs(log10(length(table_of_var)))
     cexNsize = min(cexNsize, 1)
-    barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
-                                                                                                  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
+    barplot(table_of_var, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, 
+            sub = paste("mean:", iround(mean(table_of_var, na.rm = T)), 
+                        "| median:", iround(mean(table_of_var, na.rm = T)), 
+                        "| mode:", iround(modus(table_of_var, na.rm = T)), 
+                        "| CV:", percentage_formatter(cv(table_of_var))))
   }
   else {
     zz = hist(variable, ..., plot = F)
-    hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(zz$counts)),
-                                                                         "median:", iround(median(zz$counts))))
+    hist(variable, ..., main = plotname, col = col, las = 2, sub = paste("mean:", iround(mean(variable)),
+                                                                         "| median:", iround(median(variable)),
+                                                                         "| modus:", iround(modus(variable)))    )
   }
   if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
 }
-
 
 
 #' wbarplot_dfCol
@@ -964,11 +973,12 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param bottom Put labels at the bottom of the bars.
 #' @param TopOffset Absolute offset from top.
 #' @param relpos_bottom Relative offset from bottom.
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
 #' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 #' @export
 
-barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, ...) {
+barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, OverwritePrevPDF = T, ...) {
   x = barplot(barplotted_variable, plot = F)
   y = barplotted_variable
   # stopifnot(length(x) == length(y))
@@ -981,6 +991,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
   else if (length(dim(x)) == 1) {
     text((x), (y), labels = (labels), ...)
   }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
 
 
@@ -1115,3 +1126,21 @@ llwrite_list <- function(yalist) {
 }
 
 
+
+
+#' Add a legend, and save the plot immediately
+#'
+#' @param x location of legend
+#' @param legend Text
+#' @param fill Color
+#' @param bty Background of legend, transparent by default
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param ... Pass any other parameter of the corresponding text function (most of them should work).
+#' @examples wlegend(...)
+#' @export 
+#' 
+
+wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  legend(x=x,legend=legend,fill=fill, ..., bty=bty)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
+}

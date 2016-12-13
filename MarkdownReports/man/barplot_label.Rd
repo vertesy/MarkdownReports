@@ -5,7 +5,7 @@
 \title{barplot_label}
 \usage{
 barplot_label(barplotted_variable, labels, bottom = F, TopOffset = 0.5,
-  relpos_bottom = 0.1, ...)
+  relpos_bottom = 0.1, OverwritePrevPDF = T, ...)
 }
 \arguments{
 \item{barplotted_variable}{The variable that you barplotted previously.}
@@ -17,6 +17,8 @@ barplot_label(barplotted_variable, labels, bottom = F, TopOffset = 0.5,
 \item{TopOffset}{Absolute offset from top.}
 
 \item{relpos_bottom}{Relative offset from bottom.}
+
+\item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 
 \item{...}{Pass any other parameter of the corresponding text function (most of them should work).}
 }
