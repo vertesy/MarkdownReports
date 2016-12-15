@@ -576,6 +576,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param both_pc_and_value Report both percentage AND number. 
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param col Fill color. Defined by rich colours by default
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -583,13 +584,14 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F)
 #' @export
 
-wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), savefile = T, w = 7, h = 7, mdlink = F) {
-	fname = kollapse(plotname, ".pie")
+wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = T, w = 7, h = 7, mdlink = F) {
+  if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
+  fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),"\n", variable , sep = "")}
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
-	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(length(variable)))
+	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
@@ -722,6 +724,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @param xlb X-axis label.
 #' @param ylb Y-axis label.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
+#' @param tilted_text Manual tuning of the Y-postion of the tilted text labels
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -732,7 +735,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 
 wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
-                          incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
+                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = T, w = 7, h = 7, mdlink = F) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
@@ -749,7 +752,7 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   }
   axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
   if (tilted_text) {
-    text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+    text(x = 1:length(yalist), y = min(unlist(yalist))+yoffset, labels = names(yalist), xpd = TRUE, srt = 45)
   }
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -919,6 +922,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @param yalist The variable to plot.
 #' @param imagetype Image format, png by default.
 #' @param alpha Transparency, .5 by default.
+#' @param fill Background color vec
 #' @param ... Pass any other parameter of the corresponding venn.diagram() function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -926,14 +930,13 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
 #' @export
 
-wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
+wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), ..., w = 7, h = 7, mdlink = F) {
 	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
-	fill = 1:length(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
 	filename = kollapse(OutDir,"/", fname, print = F)
 	subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
-	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),
-				 , ... , sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
+	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist), ... , 
+	             sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
 	if (mdlink) {
 		llogit(MarkDown_ImgLink_formatter(fname))
 		if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
@@ -1144,3 +1147,21 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
   legend(x=x,legend=legend,fill=fill, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
+
+
+
+# new function create se subdir
+#' create_set_SubDir
+#'
+#' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
+#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @examples create_set_NewOutDir (... =  )
+#' @export
+# 
+# create_set_SubDir <-function (..., setDir=T) {
+#   NewOutDir = kollapse(OutDir,"/", ..., print = F)
+#   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
+#   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
+#   if (setDir) {	setwd(NewOutDir)}
+#   assign("OutDir", NewOutDir, envir = .GlobalEnv)
+# }
