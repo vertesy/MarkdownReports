@@ -5,6 +5,13 @@
 ## Aliases
 try.dev.off <- function () { try(dev.off(), silent = T) }
 
+#' ttl_field
+#'
+#' @param flname Name of the plot
+#' @examples ttl_field()
+#' @export
+ttl_field <- function (flname = basename(fname) ) { paste0(flname, " by ", if (exists("scriptname")) scriptname else "Rscript") }
+
 
 #' kollapse
 #'
@@ -392,7 +399,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
   if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
   if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -462,7 +469,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -524,7 +531,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
     text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
   }
 
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
@@ -561,7 +568,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist), na.rm = T)-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -592,7 +599,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),"\n", variable , sep = "")}
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -632,7 +639,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   cexNsize = min(cexNsize, 1)
   fname = kollapse(plotname, ".stripchart")
   a = boxplot(yalist, plot = F)
-  if (colorbyColumn) {	pchlwd = 5; pchcex = 0.5; bg=NULL }
+  if (colorbyColumn) {bg=NULL }
   if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
   if (tilted_text) {	xlb = F } else { xlb = T }
   bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
@@ -644,11 +651,13 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
     xx= min(unlist(yalist), na.rm = T)
     text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field() ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
+
 
 
 #' wstripchart_list
@@ -704,7 +713,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
     # yy = (max(nchar(names(yalist)))/2)
     text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -753,7 +762,7 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist))+yoffset, labels = names(yalist), xpd = TRUE, srt = 45)
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -807,7 +816,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
                  pch = pch, bg = bg[[k]], col = coll[[j]])
     } #if
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -849,7 +858,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
                                                                          "| median:", iround(median(variable)),
                                                                          "| modus:", iround(modus(variable)))    )
   }
-  if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = ttl_field()) }
 }
 
 
@@ -876,7 +885,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 
 	cexNsize = min(cexNsize, 1)
 	barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
 																								  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-	if (savefile) { dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript"))	}
+	if (savefile) { dev.copy2pdf(file = FullPath, width = w, height = h, title = ttl_field())	}
 }
 
 
