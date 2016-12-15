@@ -624,15 +624,15 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 #' @export
 
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
-                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.2,
-                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F, ylb="",
+                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
+                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
                         savefile = T, w = 7, h = 7, mdlink = F) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
   fname = kollapse(plotname, ".stripchart")
   a = boxplot(yalist, plot = F)
-  if (colorbyColumn) {	pchlwd = 5; pchcex = 0.5 }
+  if (colorbyColumn) {	pchlwd = 5; pchcex = 0.5; bg=NULL }
   if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
   if (tilted_text) {	xlb = F } else { xlb = T }
   bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
@@ -642,7 +642,6 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   mtext(ylb, side = 2, line = 2)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
-    # yy = (max(nchar(names(yalist)))/2)
     text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
   }
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
