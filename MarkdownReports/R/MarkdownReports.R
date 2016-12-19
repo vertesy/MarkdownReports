@@ -1002,7 +1002,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
   else if (length(dim(x)) == 1) {
     text((x), (y), labels = (labels), ...)
   }
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, ...)  }
 }
 
 
