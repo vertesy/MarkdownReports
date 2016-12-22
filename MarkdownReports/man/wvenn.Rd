@@ -4,8 +4,8 @@
 \alias{wvenn}
 \title{wvenn}
 \usage{
-wvenn(yalist, imagetype = "png", alpha = 0.5, ..., w = 7, h = 7,
-  mdlink = F)
+wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
+  ..., w = 7, h = 7, mdlink = F)
 }
 \arguments{
 \item{yalist}{The variable to plot.}
@@ -13,6 +13,8 @@ wvenn(yalist, imagetype = "png", alpha = 0.5, ..., w = 7, h = 7,
 \item{imagetype}{Image format, png by default.}
 
 \item{alpha}{Transparency, .5 by default.}
+
+\item{fill}{Background color vec}
 
 \item{...}{Pass any other parameter of the corresponding venn.diagram() function (most of them should work).}
 

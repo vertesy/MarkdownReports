@@ -5,8 +5,9 @@
 \title{wpie}
 \usage{
 wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
-  plotname = substitute(variable), savefile = T, w = 7, h = 7,
-  mdlink = F)
+  plotname = substitute(variable),
+  col = gplots::rich.colors(length(variable)), savefile = T, w = 7,
+  h = 7, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -18,6 +19,8 @@ wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
 \item{both_pc_and_value}{Report both percentage AND number.}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{col}{Fill color. Defined by rich colours by default}
 
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 

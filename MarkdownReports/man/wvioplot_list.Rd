@@ -7,7 +7,8 @@
 wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
   plotname = as.character(substitute(yalist)), sub = NULL,
   xlb = names(yalist), ylb = "", ylimm = F, incrBottMarginBy = 0,
-  tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F)
+  tilted_text = F, yoffset = 0, savefile = T, w = 7, h = 7,
+  mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -37,6 +38,8 @@ wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{col}{Color of the plot.l}
+
+\item{tilted_text}{Manual tuning of the Y-postion of the tilted text labels}
 }
 \description{
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.

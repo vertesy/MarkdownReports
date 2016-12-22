@@ -10,6 +10,7 @@ try.dev.off <- function () { try(dev.off(), silent = T) }
 #' @param flname Name of the plot
 #' @examples ttl_field()
 #' @export
+
 ttl_field <- function (flname = basename(fname) ) { paste0(flname, " by ", if (exists("scriptname")) scriptname else "Rscript") }
 
 
@@ -415,10 +416,10 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(plotname, " by ", if (exists("scriptname")) scriptname else "Rscript"))
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title =  ttl_field(flname = plotname ) )
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
-
+# paste0(plotname, " by ", if (exists("scriptname")) scriptname else "Rscript")
 
 #' whist
 #'
@@ -762,11 +763,12 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist))+yoffset, labels = names(yalist), xpd = TRUE, srt = 45)
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field() ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
 
 
 #' wviostripchart_list

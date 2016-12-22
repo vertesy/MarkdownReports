@@ -5,6 +5,14 @@
 ## Aliases
 try.dev.off <- function () { try(dev.off(), silent = T) }
 
+#' ttl_field
+#'
+#' @param flname Name of the plot
+#' @examples ttl_field()
+#' @export
+
+ttl_field <- function (flname = basename(fname) ) { paste0(flname, " by ", if (exists("scriptname")) scriptname else "Rscript") }
+
 
 #' kollapse
 #'
@@ -392,7 +400,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
   if (abline == "v") {	abline(v = a, lty = lty, lwd = lwd, col = col_abline)	}
   if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -408,10 +416,10 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @export
 
 wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
-	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title = paste0(plotname, " by ", if (exists("scriptname")) scriptname else "Rscript"))
+	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title =  ttl_field(flname = plotname ) )
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
-
+# paste0(plotname, " by ", if (exists("scriptname")) scriptname else "Rscript")
 
 #' whist
 #'
@@ -462,7 +470,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
 		}
 		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
 	} else { any_print(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -524,7 +532,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
     text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
   }
 
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
@@ -561,7 +569,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist), na.rm = T)-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -576,6 +584,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param both_pc_and_value Report both percentage AND number. 
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param col Fill color. Defined by rich colours by default
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -583,14 +592,15 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F)
 #' @export
 
-wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), savefile = T, w = 7, h = 7, mdlink = F) {
-	fname = kollapse(plotname, ".pie")
+wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = T, w = 7, h = 7, mdlink = F) {
+  if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
+  fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
 	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),"\n", variable , sep = "")}
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
-	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = rainbow(length(variable)))
-	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
+	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
@@ -622,15 +632,15 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 #' @export
 
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
-                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.2,
-                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = "black", colorbyColumn = F, ylb="",
+                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
+                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
                         savefile = T, w = 7, h = 7, mdlink = F) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
   fname = kollapse(plotname, ".stripchart")
   a = boxplot(yalist, plot = F)
-  if (colorbyColumn) {	pchlwd = 5; pchcex = 0.5 }
+  if (colorbyColumn) {bg=NULL }
   if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
   if (tilted_text) {	xlb = F } else { xlb = T }
   bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
@@ -640,14 +650,15 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   mtext(ylb, side = 2, line = 2)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
-    # yy = (max(nchar(names(yalist)))/2)
     text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field() ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
+
 
 
 #' wstripchart_list
@@ -703,7 +714,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
     # yy = (max(nchar(names(yalist)))/2)
     text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -722,6 +733,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 #' @param xlb X-axis label.
 #' @param ylb Y-axis label.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
+#' @param tilted_text Manual tuning of the Y-postion of the tilted text labels
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -732,7 +744,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pch
 
 wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
-                          incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7, mdlink = F) {
+                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = T, w = 7, h = 7, mdlink = F) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
@@ -749,13 +761,14 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   }
   axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
   if (tilted_text) {
-    text(x = 1:length(yalist), y = min(unlist(yalist))-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
+    text(x = 1:length(yalist), y = min(unlist(yalist))+yoffset, labels = names(yalist), xpd = TRUE, srt = 45)
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field() ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
 
 
 #' wviostripchart_list
@@ -805,7 +818,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
                  pch = pch, bg = bg[[k]], col = coll[[j]])
     } #if
   }
-  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field()) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
@@ -847,7 +860,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
                                                                          "| median:", iround(median(variable)),
                                                                          "| modus:", iround(modus(variable)))    )
   }
-  if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript")) }
+  if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = ttl_field()) }
 }
 
 
@@ -874,7 +887,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 
 	cexNsize = min(cexNsize, 1)
 	barplot(variable, ..., main = plotname, col = col, las = 2, cex.names = cexNsize, sub = paste("mean:",
 																								  iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-	if (savefile) { dev.copy2pdf(file = FullPath, width = w, height = h, title = paste0(basename(fname), " by ", if (exists("scriptname")) scriptname else "Rscript"))	}
+	if (savefile) { dev.copy2pdf(file = FullPath, width = w, height = h, title = ttl_field())	}
 }
 
 
@@ -919,6 +932,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @param yalist The variable to plot.
 #' @param imagetype Image format, png by default.
 #' @param alpha Transparency, .5 by default.
+#' @param fill Background color vec
 #' @param ... Pass any other parameter of the corresponding venn.diagram() function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -926,14 +940,13 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
 #' @export
 
-wvenn <- function (yalist, imagetype = "png", alpha = .5, ..., w = 7, h = 7, mdlink = F) {
+wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), ..., w = 7, h = 7, mdlink = F) {
 	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
-	fill = 1:length(yalist)
 	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
 	filename = kollapse(OutDir,"/", fname, print = F)
 	subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
-	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist),
-				 , ... , sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
+	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist), ... , 
+	             sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
 	if (mdlink) {
 		llogit(MarkDown_ImgLink_formatter(fname))
 		if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
@@ -991,7 +1004,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
   else if (length(dim(x)) == 1) {
     text((x), (y), labels = (labels), ...)
   }
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, ...)  }
 }
 
 
@@ -1144,3 +1157,21 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
   legend(x=x,legend=legend,fill=fill, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
+
+
+
+# new function create se subdir
+#' create_set_SubDir
+#'
+#' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
+#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @examples create_set_NewOutDir (... =  )
+#' @export
+# 
+# create_set_SubDir <-function (..., setDir=T) {
+#   NewOutDir = kollapse(OutDir,"/", ..., print = F)
+#   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
+#   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
+#   if (setDir) {	setwd(NewOutDir)}
+#   assign("OutDir", NewOutDir, envir = .GlobalEnv)
+# }
