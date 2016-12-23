@@ -4,7 +4,7 @@
 \alias{ttl_field}
 \title{ttl_field}
 \usage{
-ttl_field(flname = basename(fname))
+ttl_field(flname = fname)
 }
 \arguments{
 \item{flname}{Name of the plot}
