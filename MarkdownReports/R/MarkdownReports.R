@@ -404,6 +404,20 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
+
+#' ww_autoPlotName
+#'
+#' An internal function to create automatic plot and file-names.
+#' @param name Manually name your plot
+#' @examples ww_autoPlotName()
+#' @export
+
+ww_autoPlotName <-function (name=NULL) {
+  if (is.null(name)) {    filename = if (exists("plotnameLastPlot")) {plotnameLastPlot} else {make.names(date())}
+  } else {                filename = name}
+  return(filename)
+}
+
 #' wplot_save_this
 #'
 #' Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "path_of_report". Name the file by naming the variable!
@@ -415,7 +429,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @examples wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = 7, mdlink = FALSE, ManualName = FALSE)
 #' @export
 
-wplot_save_this <-function (plotname = date(), ..., w = 7, h = 7, mdlink = FALSE) {
+wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = 7, mdlink = FALSE) {
 	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title =  ttl_field(flname = plotname ) )
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
@@ -937,22 +951,26 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @param plotname Manual plotname parameter
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = 7, mdlink = F)
 #' @export
 
-wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), ..., w = 7, h = 7, mdlink = F) {
-	if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
-	fname = kollapse(substitute(yalist), ".", imagetype, print = F)
-	filename = kollapse(OutDir,"/", fname, print = F)
-	subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
-	venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = substitute(yalist), ... , 
-	             sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
-	if (mdlink) {
-		llogit(MarkDown_ImgLink_formatter(fname))
-		if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
-	}
+wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), ..., w = 7, h = 7, mdlink = F, plotname = substitute(yalist)) {
+  if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
+  fname = kollapse(plotname, ".", imagetype, print = F)
+  LsLen = length(yalist)
+  if(length(names(yalist)) < LsLen) { names(yalist) =1:LsLen; print("List elements had no names.") }
+  print(names(yalist))
+  
+  filename = kollapse(OutDir,"/", fname, print = F)
+  subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
+  venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... , 
+               sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
+  if (mdlink) {
+    llogit(MarkDown_ImgLink_formatter(fname))
+    if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
+  }
 }
-
 
 #' error_bar
 #'
