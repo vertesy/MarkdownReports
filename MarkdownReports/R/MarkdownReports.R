@@ -1169,7 +1169,6 @@ llwrite_list <- function(yalist) {
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
 #' @examples wlegend(...)
 #' @export 
-#' 
 
 wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
   legend(x=x,legend=legend,fill=fill, ..., bty=bty)
@@ -1193,3 +1192,32 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
 #   if (setDir) {	setwd(NewOutDir)}
 #   assign("OutDir", NewOutDir, envir = .GlobalEnv)
 # }
+
+
+
+#' wLinRegression
+#'
+#' @param DF  The same dataframe as you provided to wplot() before you called this function 
+#' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.  
+#' @param textlocation where to put the legend?
+#' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
+#' @param ...  Additional parameters for the line to display.
+#' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
+#' @export
+
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function 
+  print(coeff)
+  regression <- lm(DF[,2] ~ DF[,1])
+  abline(regression, ...)
+  legendText = NULL
+  if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[,2], DF[,1], method = "pearson"))
+  legendText  =  c(legendText, paste0("Pearson c.c.: ", dispCoeff))  } 
+  if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[,2], DF[,1], method = "spearman"))
+  legendText = c(legendText, paste0("Spearman c.c.: ", dispCoeff))  }  
+  if ("r2" %in% coeff) {          r2 = iround(summary(regression)$r.squared) 
+  legendText = c(legendText, paste0("R^2: ", r2))  }
+  print(legendText)
+  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2",suffix = paste0(": ", r2)) , bty="n")
+  } else {                                    legend(textlocation, legend = legendText , bty="n") }
+  if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
+}
