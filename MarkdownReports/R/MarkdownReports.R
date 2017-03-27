@@ -1221,3 +1221,24 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
   } else {                                    legend(textlocation, legend = legendText , bty="n") }
   if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
 }
+
+
+
+#' parFlags
+#' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot. 
+#'
+#' @param ... Paramter variables
+#' @param pasteflg 
+#' @param collapsechar 
+#' @export
+#'
+#' @examples pearson = T; filtered =T; normalized = F; MyPlotname = parFlags(prefix = "MyPlot" ,pearson, filtered, normalized ); MyPlotname
+
+parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") { # Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot. 
+  namez=as.character(as.list(match.call())[-(1:2)])
+  val = c(...)
+  names(val) =namez
+  flg = which_names(val)
+  flg= if (pasteflg) paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))
+  return(flg)
+}
