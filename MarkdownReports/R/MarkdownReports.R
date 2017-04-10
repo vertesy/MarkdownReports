@@ -647,7 +647,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
-                        pch = 23, pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
+                        pch = 18, pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
                         savefile = T, w = 7, h = w, mdlink = F) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
@@ -702,7 +702,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
+wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "",  incrBottMarginBy = 0, tilted_text = F,
                               savefile = T, w = 7, h = w, mdlink = F) {
   fname = kollapse(plotname, ".stripchart")
