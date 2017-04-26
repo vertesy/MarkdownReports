@@ -1,17 +1,17 @@
 ######################################################################################################
 ## MarkdownReports in Action
 ######################################################################################################
-# source("/Users/abelvertesy/MarkdownReports.wiki/Reports/MarkdownReports_in_Action.r")
+# source("~/MarkdownReports.wiki/Reports/MarkdownReports_in_Action.r")
 
 
 
 # Functions ------------------------
-try (source ('/Users/abelvertesy/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+try (source ('~/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 # library(stringr)
 
 # Setup ------------------------
-setup_MarkdownReports(OutDir = "/Users/abelvertesy/MarkdownReports/Examples/MarkdownReports_in_Action", fname = "MarkdownReports_in_Action.r", append = F)
-# create_set_OutDir("/Users/abelvertesy/Google_Drive/X_react_Data/Abelz/X_react_2016")
+setup_MarkdownReports(OutDir = "~/MarkdownReports/Examples/MarkdownReports_in_Action", fname = "MarkdownReports_in_Action.r", append = F)
+# create_set_OutDir("~/Google_Drive/X_react_Data/Abelz/X_react_2016")
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
 
 OutDirOrig = OutDir

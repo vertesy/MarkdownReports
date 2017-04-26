@@ -1,14 +1,14 @@
 ######################################################################################################
 # Workflow_to_Create_an_R_Package.R
 ######################################################################################################
-# source("/Users/abelvertesy/MarkdownReports/Workflow_to_Create_an_R_Package.R")
+# source("~/MarkdownReports/Workflow_to_Create_an_R_Package.R")
 # rm(list=ls(all.names = TRUE));
 try.dev.off()
 
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('/Users/abelvertesy/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+try (source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 
 require(devtools)
 # install.packages("roxygen2")
@@ -25,7 +25,7 @@ kollapse <-function (..., print = T) {
 
 # Setup ------------------------
 
-RepositoryDir = 	"/Users/abelvertesy/Github_repos/MarkdownReports/"
+RepositoryDir = 	"~/Github_repos/MarkdownReports/"
 PackageName = 	"MarkdownReports"
 fname = 	kollapse(PackageName,".R")
 
@@ -40,7 +40,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
     2. Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.
     3. Link & display your figures automatically inside your report, right there where they are needed.
     4. Version your findings, annotating which parameters were used to reach certain results.
-    5. Share your report with others via email, Github or a personal website.", "License" = "GNU GPL 3", 
+    5. Share your report with others via email, Github or a personal website.", "License" = "GNU GPL 3",
 		"Version"= "2.6.1", "Imports" = "vioplot"
 )
 

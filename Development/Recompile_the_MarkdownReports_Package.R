@@ -1,20 +1,20 @@
 ######################################################################################################
 # Recompile_the_MarkdownReports_Package.R
 ######################################################################################################
-# source("/Users/abelvertesy/MarkdownReports/Development/Recompile_the_MarkdownReports_Package.R")
+# source("~/MarkdownReports/Development/Recompile_the_MarkdownReports_Package.R")
 rm(list=ls(all.names = TRUE));
 try(dev.off())
 
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('/Users/abelvertesy/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+try (source ('~/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 require(devtools)
 require(roxygen2)
 require("stringr")
 
 # Setup ------------------------
 
-RepositoryDir = 	"/Users/abelvertesy/MarkdownReports/"
+RepositoryDir = 	"~/MarkdownReports/"
 PackageName = 	"MarkdownReports"
 fname = 	kollapse(PackageName,".R")
 
@@ -28,7 +28,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
 
 
 # Compile a package ------------------------------------------------
-setwd("/Users/abelvertesy/MarkdownReports/MarkdownReports/")
+setwd("~/MarkdownReports/MarkdownReports/")
 getwd()
 document()
 

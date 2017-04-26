@@ -1,7 +1,7 @@
 ######################################################################
 #  Usage_Example_Script
 ######################################################################
-# source ("/Users/abelvertesy/MarkdownReports/Usage_Example_Script.R")
+# source ("~/MarkdownReports/Usage_Example_Script.R")
 
 print("Use MOU or any other Markdown editor to see resutls")
 
@@ -9,7 +9,7 @@ print("Use MOU or any other Markdown editor to see resutls")
 Par1 =33
 Par3 =3
 
-OutDir = create_set_OutDir("/Users/abelvertesy/MarkdownReports/Usage_Example_Script");
+OutDir = create_set_OutDir("~/MarkdownReports/Usage_Example_Script");
 setup_logging_markdown ("Usage_Example_Script.R", append = F)
 
 # Start logging ----------------------------
