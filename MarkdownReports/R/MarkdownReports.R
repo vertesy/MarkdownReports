@@ -647,7 +647,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
-                        pch = 18, pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
+                        pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
                         savefile = T, w = 7, h = w, mdlink = F) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
@@ -661,7 +661,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
       outline = T, cex.axis = cexNsize, ylab=NA)
   stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
              col = col, lwd = pchlwd, cex = pchcex)
-  mtext(ylb, side = 2, line = 2)
+  mtext(ylb, side = 2, line = 2, cex = cex.lab)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
     text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
@@ -671,7 +671,6 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
-
 
 
 
