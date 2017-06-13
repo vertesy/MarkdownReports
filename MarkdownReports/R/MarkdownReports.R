@@ -42,6 +42,8 @@ any_print <-function (...) {
 	print(paste(argument_list, collapse = " "))
 }
 
+iprint = any_print
+
 
 #' iround
 #'
