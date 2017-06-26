@@ -19,14 +19,15 @@ ttl_field <- function (flname = fname ) { paste0(basename(flname), " by ", if (e
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param print Print the results to the terminal. TRUE by default.
+#' @param print collapseby collapse elements into a string separated by this character
 #' @examples kollapse("Hello ",LETTERS[24], ", the winning numbers are ", c(1,3,5,65,11), " . Yay!")
 #' @export
 
-kollapse <-function (..., print = T) {
+kollapse <-function (..., collapseby = "", print = T) {
 	if (print == T) {
-		print(paste0(c(...), collapse = ""))
+		print(paste0(c(...), collapse = collapseby))
 	}
-	paste0(c(...), collapse = "")
+	paste0(c(...), collapse = collapseby = "")
 }
 
 
