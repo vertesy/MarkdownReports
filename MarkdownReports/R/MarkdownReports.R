@@ -27,23 +27,23 @@ kollapse <-function (..., collapseby = "", print = T) {
 	if (print == T) {
 		print(paste0(c(...), collapse = collapseby))
 	}
-	paste0(c(...), collapse = collapseby = "")
+	paste0(c(...), collapse = collapseby)
 }
 
 
-#' any_print
+#' iprint
 #'
-#' A more flexible printing function that collapses any variable passed to it by white spaces.
+#' A more intelligent printing function that collapses any variable passed to it by white spaces.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @examples any_print ("Hello ", "you ", 3, ", " , 11, " year old kids.")
 #' @export
 
-any_print <-function (...) {
+iprint <-function (...) {
 	argument_list <- c(...)
 	print(paste(argument_list, collapse = " "))
 }
 
-iprint = any_print
+any_print = iprint # for compatibility
 
 
 #' iround
@@ -978,6 +978,60 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
   if (savefile) { dev.copy2pdf(file = fname, width = w, height = h, title = ttl_field(fname)) }
 }
 
+#' whist.back2back
+#' Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.
+#'
+#' @param ListOf2 List of 2 numeric vectors
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param breaks1 break parameter for histogram function for the 2st list element.
+#' @param breaks2 break parameter for histogram function for the 2st list element. 
+#' @param colorz  Color of the 2 histograms
+#' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param plotname The name of the file saved.
+#' @param main_ The title of the plot.
+#' @param ylab Y-axis label
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @export
+#'
+#' @examples whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
+
+whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,  
+                            plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
+                            savefile = T, incrBottMarginBy = 0,  w = 7, h = w, mdlink = F) {
+  
+  fname = kollapse(plotname, ".hist.btb")
+  lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
+  
+  lng = length(ListOf2) 
+  if (lng != 2) { any_print("length(List): ", lng, " First two elements used" ) } #if
+  h1 = hist(ListOf2[[1]], plot=FALSE, breaks = breaks1)
+  h2 = hist(ListOf2[[2]], plot=FALSE, breaks = breaks2)
+  h2$counts = - h2$counts
+  hmax = max(h1$counts, na.rm =T)
+  hmin = min(h2$counts, na.rm =T)
+  xlimm =range(unlist(ListOf2), na.rm =T)
+  xlimm = c(1, max(l(h2$counts), l(h1$counts))+3)
+  
+  print(xlimm)
+  X = c(h1$breaks, h2$breaks)
+  barplot(h1$counts, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =h1$breaks[-1], las=3 ,main = main_, ylab=ylab,...)
+  barplot(h2$counts, col=colorz[2], add=T)
+  condition = F
+  
+  legend("topright",lsNm[1], bty="n")
+  legend("bottomright",lsNm[2], bty="n")
+  
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+}
 
 #' wbarplot_dfCol
 #'
@@ -1158,33 +1212,6 @@ superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a f
 }
 
 
-# #' subscript_in_plots2
-# #'
-# #' @param prefix String before the subscript. Use for boxplots, stripchart and co. Uses substitue() instead of bquote()
-# #' @param subscr Subscripted text.
-# #' @param quantity String in brackets after the subscript, eg.: log2(read count).
-# #' @export
-# #'
-# #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
-
-# subscript_in_plots2 <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
-#   formatted_string = substitute(paste(prefix[subscr],"(",quantity,")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
-# }
-# #' superscript_in_plots2
-# #'
-# #' @param prefix String before the superscript.
-# #' @param sup Superscripted text.
-# #' @param suffix String after the subscript.
-# #' @export
-# #'
-# #' @examples plot (1, 1, main =superscript_in_plots2())
-
-# superscript_in_plots2 <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
-#   formatted_string = substitute(paste(prefix^sup,quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
-# }
-
-
-
 #' filter_HP
 #'
 #' Filter values that fall between above high-pass-threshold (X >).
@@ -1253,7 +1280,7 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 #' @param yalist your list
 #' @examples llwrite_list(your_list)
 #' @export
-#'
+
 llwrite_list <- function(yalist) {
   for (e in 1:l(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####",names(yalist)[e]) } else { llprint("#####", e)}
@@ -1310,6 +1337,7 @@ wlegend2 <- function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w
 
 getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_categ_vec))] }
 
+
 #' qlegend
 #' # Quickly add a legend, and save the plot immediately
 #'
@@ -1320,9 +1348,9 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
-#' @export
+#' @export 
 #'
-#' @examples
+#' @examples ccc = as.factor.numeric(c(6,7,8,7,7,6,6,8))  ; qlegend(ccc) # Uses as.factor.numeric() from Github / Vertesy / TheCorvinas
 
 qlegend <- function(NamedColorVec, poz=3, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) {
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft","topright", "bottomright", "bottomleft"))
@@ -1330,8 +1358,6 @@ qlegend <- function(NamedColorVec, poz=3, ..., w_=7, h_=w_, bty = "n", Overwrite
   legend(x=pozz, legend=names(fill_), fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 }
-
-
 
 
 # create_set_SubDir
@@ -1407,3 +1433,36 @@ parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
   flg= if (pasteflg) paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))
   return(flg)
 }
+
+
+
+
+# ALTERNATIVE VERSIONS -------------
+
+
+# #' subscript_in_plots2
+# #' Like subscript_in_plots, but uses substitute() instead bquote()
+# #' 
+# #' @param prefix String before the subscript. Use for boxplots, stripchart and co. Uses substitue() instead of bquote()
+# #' @param subscr Subscripted text.
+# #' @param quantity String in brackets after the subscript, eg.: log2(read count).
+# #' @export
+# #'
+# #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
+
+# subscript_in_plots2 <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+#   formatted_string = substitute(paste(prefix[subscr],"(",quantity,")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
+# }
+# #' superscript_in_plots2
+# #' Like superscript_in_plots, but uses substitute() instead bquote()
+# #'
+# #' @param prefix String before the superscript.
+# #' @param sup Superscripted text.
+# #' @param suffix String after the subscript.
+# #' @export
+# #'
+# #' @examples plot (1, 1, main =superscript_in_plots2())
+
+# superscript_in_plots2 <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+#   formatted_string = substitute(paste(prefix^sup,quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
+# }
