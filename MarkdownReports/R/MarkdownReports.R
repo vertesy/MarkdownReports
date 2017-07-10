@@ -524,7 +524,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 #' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 #' @export
 
-wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = substitute(variable), tilted_text = F, ylimits = NULL,
+wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = plotname, tilted_text = F, ylimits = NULL,
                      hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
                      errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
                      savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = F) {
@@ -1148,9 +1148,10 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 
 
 
+#' llwrite_list
 #' Print a list, one element per line,  into your markdown report
 #'
-#' @param your list
+#' @param yalist your list
 #' @examples llwrite_list(your_list)
 #' @export
 #'
@@ -1162,13 +1163,12 @@ llwrite_list <- function(yalist) {
 }
 
 
-
-
+#' wlegend
 #' Add a legend, and save the plot immediately
 #'
 #' @param x location of legend
-#' @param legend Text
-#' @param fill Color
+#' @param legend Labels displayed (Text)
+#' @param fill Color of the boxes next to the text
 #' @param bty Background of legend, transparent by default
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
@@ -1181,24 +1181,86 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
 }
 
 
+#' wlegend2
+#'
+#' @param x 
+#' @param fill_ Color of the boxes next to the text
+#' @param legend Labels displayed (Text)
+#' @param ... Additional parameters for legend()
+#' @param w_ Width of the saved pdf image, in inches. 
+#' @param h_ Height of the saved pdf image, in inches.
+#' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @export
+#'
+#' @examples function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-# Create a sub-directory and set it.
+wlegend2 <- function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  legend(x=x,legend=legend,fill=fill_, ..., bty=bty)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
+}
+
+
+#' getCategories
+#' Extract unique entries with a corresponding name. 
+#'
+#' @param named_categ_vec A vector of categories with names. "Uniqueness" in the vector and its name should be the same!!!
+#' @export
+#'
+#' @examples function(named_categ_vec)
+
+getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_categ_vec))] }
+
+#' qlegend
+#' # Quickly add a legend, and save the plot immediately
+#'
+#' @param NamedColorVec 
+#' @param poz 1:4 corresponding to "topleft","topright", "bottomright", "bottomleft"
+#' @param ... Additional parameters for legend()
+#' @param w_ Width of the saved pdf image, in inches. 
+#' @param h_ Height of the saved pdf image, in inches.
+#' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @export
+#'
+#' @examples
+
+qlegend <- function(NamedColorVec, poz=3, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) {
+  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft","topright", "bottomright", "bottomleft"))
+  fill_ = getCategories(NamedColorVec)
+  legend(x=pozz, legend=names(fill_), fill=fill_, ..., bty=bty)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
+}
+
+
+
+
+# create_set_SubDir
 #'
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @examples create_set_NewOutDir (... =  )
+#' @param makeOutDirOrig Change the "OutDirOrig" variable to the current OutDir (before setting it to a subdir).
+#' @param setDir Change working directory to the newly defined subdirectory
+#' @examples create_set_NewOutDir (...)
 #' @export
-#
-# create_set_SubDir <-function (..., setDir=T) {
-#   NewOutDir = kollapse(OutDir,"/", ..., print = F)
-#   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
-#   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
-#   if (setDir) {	setwd(NewOutDir)}
-#   assign("OutDir", NewOutDir, envir = .GlobalEnv)
-# }
+
+create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
+  NewOutDir = kollapse(OutDir,"/", ..., print = F)
+  any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
+  if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
+  if (setDir) {	setwd(NewOutDir)}
+  if (makeOutDirOrig) {
+    if (exists("OutDirOrig")) any_print("OutDirOrig was defined as:",OutDirOrig)
+    any_print("OutDirOrig will be:", OutDir)
+    assign("OutDirOrig", OutDir, envir = .GlobalEnv)
+  } #if
+  
+  assign("OutDir", NewOutDir, envir = .GlobalEnv)
+}
 
 
 
+#'wLinRegression
 # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
 #'
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
@@ -1228,16 +1290,17 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
 
 
 
+#' parFlags
 #' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 #'
 #' @param ... Paramter variables
-#' @param pasteflg
-#' @param collapsechar
+#' @param pasteflg Boolean: paste the parameters-flags together?
+#' @param collapsechar Separating character between each parameters-flag
 #' @export
 #'
 #' @examples pearson = T; filtered =T; normalized = F; MyPlotname = parFlags(prefix = "MyPlot" ,pearson, filtered, normalized ); MyPlotname
 
-parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") { # Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
+parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
   namez=as.character(as.list(match.call())[-(1:2)])
   val = c(...)
   names(val) =namez
