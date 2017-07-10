@@ -4,7 +4,7 @@
 \alias{wbarplot_dfCol}
 \title{wbarplot_dfCol}
 \usage{
-wbarplot_dfCol(df, colName, col = "gold1", savefile = T, w = 7, h = 7,
+wbarplot_dfCol(df, colName, col = "gold1", savefile = T, w = 7, h = w,
   ...)
 }
 \arguments{
@@ -26,6 +26,5 @@ wbarplot_dfCol(df, colName, col = "gold1", savefile = T, w = 7, h = 7,
 wbarplot for a column of a data frame.
 }
 \examples{
-wbarplot_dfCol (df =  , colName =  , col = gold1, w = 7, h = 7, ... =  )
+wbarplot_dfCol (df =  , colName =  , col = gold1, w = 7, h = w, ... =  )
 }
-

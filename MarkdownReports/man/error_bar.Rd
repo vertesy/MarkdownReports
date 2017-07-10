@@ -25,4 +25,3 @@ Put error bars on top of your bar plots. This functionality is now integrated in
 \examples{
 error_bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
 }
-

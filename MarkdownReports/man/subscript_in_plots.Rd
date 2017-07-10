@@ -20,4 +20,3 @@ subscript_in_plots
 \examples{
 plot (1, 1, xlab =subscript_in_plots(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
 }
-

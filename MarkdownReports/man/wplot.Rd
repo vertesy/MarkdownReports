@@ -9,7 +9,7 @@ wplot(df_2columns, col = 1, pch = 18, ...,
   lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
   col_errorbar = 1, ylimm = F, xlimm = F, abline = F, a = F, b = F,
   lty = 1, lwd = 1, col_abline = 1, savefile = T, mdlink = F, w = 7,
-  h = 7)
+  h = w)
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -66,6 +66,5 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
 }
 \examples{
-wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = 7, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
+wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 }
-

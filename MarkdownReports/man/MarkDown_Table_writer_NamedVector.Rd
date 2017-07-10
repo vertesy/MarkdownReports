@@ -22,4 +22,3 @@ Take an R vector with names, parse a markdown table from it, and write it to the
 \examples{
 MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 }
-

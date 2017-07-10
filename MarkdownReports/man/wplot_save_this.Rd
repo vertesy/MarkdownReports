@@ -4,7 +4,8 @@
 \alias{wplot_save_this}
 \title{wplot_save_this}
 \usage{
-wplot_save_this(plotname = date(), ..., w = 7, h = 7, mdlink = FALSE)
+wplot_save_this(plotname = ww_autoPlotName(), ..., w = 7, h = w,
+  mdlink = FALSE)
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
@@ -21,6 +22,5 @@ wplot_save_this(plotname = date(), ..., w = 7, h = 7, mdlink = FALSE)
 Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "path_of_report". Name the file by naming the variable!
 }
 \examples{
-wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = 7, mdlink = FALSE, ManualName = FALSE)
+wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = w, mdlink = FALSE, ManualName = FALSE)
 }
-

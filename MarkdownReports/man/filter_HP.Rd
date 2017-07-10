@@ -24,4 +24,3 @@ Filter values that fall between above high-pass-threshold (X >).
 \examples{
 filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 }
-

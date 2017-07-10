@@ -17,4 +17,3 @@ Rounds a value to the significant amount of digits. Its a wrapper for signif().
 \examples{
 iround (x =  , digitz = 3)
 }
-

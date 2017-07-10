@@ -15,4 +15,3 @@ Format a markdown image reference (link) to a .pdf and .png versions of graph, a
 \examples{
 MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext =  )
 }
-

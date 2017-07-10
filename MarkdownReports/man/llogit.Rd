@@ -15,4 +15,3 @@ Collapse by white spaces a sentence from any variable passed on to the function.
 \examples{
 llogit (... =  )
 }
-

@@ -15,4 +15,3 @@ Format a markdown image reference (link) from the file path to the file. It can 
 \examples{
 MarkDown_ImgLink_formatter (... =  )
 }
-

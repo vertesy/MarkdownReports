@@ -24,4 +24,3 @@ Setup the markdown report file and the output directory, create a sub directory 
 \examples{
 setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 }
-

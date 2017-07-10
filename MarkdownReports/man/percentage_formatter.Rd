@@ -17,4 +17,3 @@ Parse a string of 0-100% from a number between 0 and 1.
 \examples{
 percentage_formatter (x =  , digitz = 3)
 }
-

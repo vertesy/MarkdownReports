@@ -2,17 +2,18 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{llwrite_list}
 \alias{llwrite_list}
-\title{Print a list, one element per line,  into your markdown report}
+\title{llwrite_list
+Print a list, one element per line,  into your markdown report}
 \usage{
 llwrite_list(yalist)
 }
 \arguments{
-\item{your}{list}
+\item{yalist}{your list}
 }
 \description{
+llwrite_list
 Print a list, one element per line,  into your markdown report
 }
 \examples{
 llwrite_list(your_list)
 }
-

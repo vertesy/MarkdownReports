@@ -22,4 +22,3 @@ Take an R data frame with row- and column- names, parse a markdown table from it
 \examples{
 MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 }
-

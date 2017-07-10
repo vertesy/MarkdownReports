@@ -2,7 +2,8 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{wlegend}
 \alias{wlegend}
-\title{Add a legend, and save the plot immediately}
+\title{wlegend
+Add a legend, and save the plot immediately}
 \usage{
 wlegend(x = "bottomleft", legend, fill = NULL, ..., bty = "n",
   OverwritePrevPDF = T)
@@ -10,9 +11,9 @@ wlegend(x = "bottomleft", legend, fill = NULL, ..., bty = "n",
 \arguments{
 \item{x}{location of legend}
 
-\item{legend}{Text}
+\item{legend}{Labels displayed (Text)}
 
-\item{fill}{Color}
+\item{fill}{Color of the boxes next to the text}
 
 \item{...}{Pass any other parameter of the corresponding text function (most of them should work).}
 
@@ -21,9 +22,9 @@ wlegend(x = "bottomleft", legend, fill = NULL, ..., bty = "n",
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 }
 \description{
+wlegend
 Add a legend, and save the plot immediately
 }
 \examples{
 wlegend(...)
 }
-

@@ -24,4 +24,3 @@ Filter values that fall below the low-pass threshold (X <).
 \examples{
 filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 }
-

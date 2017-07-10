@@ -5,7 +5,7 @@
 \title{val2col}
 \usage{
 val2col(yourdata, zlim, col = rev(heat.colors(max(12, 3 *
-  l(unique(yourdata))))), breaks)
+  l(unique(yourdata))))), breaks, rename = F)
 }
 \arguments{
 \item{yourdata}{The data, to what the colors will be scaled to.}
@@ -15,6 +15,8 @@ val2col(yourdata, zlim, col = rev(heat.colors(max(12, 3 *
 \item{col}{Color of the plot.}
 
 \item{breaks}{Number of bins.}
+
+\item{rename}{The returned color vector will be named with its previous values}
 }
 \description{
 This function converts a vector of values("yourdata") to a vector of color levels. One must define the number of colors. The limits of the color scale("zlim") or the break points for the color changes("breaks") can also be defined. when breaks and zlim are defined, breaks overrides zlim. Source: http://menugget.blogspot.nl/2011/09/converting-values-to-color-levels.html
@@ -22,4 +24,3 @@ This function converts a vector of values("yourdata") to a vector of color level
 \examples{
 val2col (yourdata =  , zlim =  , col = rev(heat.colors(12)), breaks =  )
 }
-

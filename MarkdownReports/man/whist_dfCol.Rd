@@ -4,7 +4,7 @@
 \alias{whist_dfCol}
 \title{whist_dfCol}
 \usage{
-whist_dfCol(df, colName, col = "gold", ..., savefile = T, w = 7, h = 7)
+whist_dfCol(df, colName, col = "gold", ..., savefile = T, w = 7, h = w)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
@@ -25,6 +25,5 @@ whist_dfCol(df, colName, col = "gold", ..., savefile = T, w = 7, h = 7)
 Use this version of whist() if you iterate over columns  or rows of a data frame. You can name the file by naming the variable. Cannot be used with dynamically called variables [e.g. call vectors within a loop]
 }
 \examples{
-whist_dfCol (df =  , colName =  , col = gold, ... =  , w = 7, h = 7)
+whist_dfCol (df =  , colName =  , col = gold, ... =  , w = 7, h = w)
 }
-

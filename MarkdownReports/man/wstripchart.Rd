@@ -6,10 +6,10 @@
 \usage{
 wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
   sub = NULL, border = 1, incrBottMarginBy = 0, tilted_text = F,
-  BoxPlotWithMean = F, metod = "jitter", jitter = 0.3, pch = 23,
-  pchlwd = 1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T,
-  col = if (colorbyColumn) 1:l(yalist) else 1, ylb = "", savefile = T,
-  w = 7, h = 7, mdlink = F)
+  BoxPlotWithMean = F, metod = "jitter", jitter = 0.3, pch = 18,
+  pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
+  colorbyColumn = T, col = if (colorbyColumn) 1:l(yalist) else 1,
+  ylb = "", savefile = T, w = 7, h = w, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -56,6 +56,5 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 }
-

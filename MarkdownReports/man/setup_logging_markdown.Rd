@@ -21,4 +21,3 @@ Setup the markdown report file, create a sub directory in "OutDir". Its name is 
 \examples{
 setup_logging_markdown (fname =  , title =  , append = T, png4Github = T)
 }
-

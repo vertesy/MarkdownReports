@@ -6,7 +6,7 @@
 \usage{
 wboxplot(yalist, ..., col = "gold1",
   plotname = as.character(substitute(yalist)), ylb = "", sub = FALSE,
-  incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = 7,
+  incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = w,
   mdlink = F)
 }
 \arguments{
@@ -36,6 +36,5 @@ wboxplot(yalist, ..., col = "gold1",
 Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = 7, mdlink = F)
+wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = w, mdlink = F)
 }
-

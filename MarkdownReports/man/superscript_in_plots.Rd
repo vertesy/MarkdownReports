@@ -19,4 +19,3 @@ superscript_in_plots
 \examples{
 plot (1, 1, main =superscript_in_plots())
 }
-

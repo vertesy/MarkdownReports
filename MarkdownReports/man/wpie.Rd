@@ -7,7 +7,7 @@
 wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
   plotname = substitute(variable),
   col = gplots::rich.colors(length(variable)), savefile = T, w = 7,
-  h = 7, mdlink = F)
+  h = w, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -34,6 +34,5 @@ wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
 Create and save pie charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = 7, mdlink = F)
+wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = w, mdlink = F)
 }
-

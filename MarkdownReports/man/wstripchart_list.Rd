@@ -4,12 +4,12 @@
 \alias{wstripchart_list}
 \title{wstripchart_list}
 \usage{
-wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 23,
+wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 18,
   pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black",
   metod = "jitter", jitter = 0.2,
   plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
   xlab = "", incrBottMarginBy = 0, tilted_text = F, savefile = T,
-  w = 7, h = 7, mdlink = F)
+  w = 7, h = w, mdlink = F)
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}
@@ -58,6 +58,5 @@ wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 23,
 Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual coloring of each data point, by a color-list of the same dimension. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = 7, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 }
-

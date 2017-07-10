@@ -28,4 +28,3 @@ Add extra labels to your bar plots at the top or the base.
 \examples{
 barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 }
-

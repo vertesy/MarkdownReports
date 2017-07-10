@@ -5,11 +5,11 @@
 \title{wbarplot}
 \usage{
 wbarplot(variable, ..., col = "gold1", sub = F,
-  plotname = substitute(variable), main = substitute(variable),
-  tilted_text = F, ylimits = NULL, hline = F, vline = F,
-  filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F,
-  upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-  savefile = T, w = 7, h = 7, incrBottMarginBy = 0, mdlink = F)
+  plotname = substitute(variable), main = plotname, tilted_text = F,
+  ylimits = NULL, hline = F, vline = F, filtercol = 1, lty = 1,
+  lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper,
+  arrow_width = 0.1, arrow_lwd = 1, savefile = T, w = 7, h = w,
+  incrBottMarginBy = 0, mdlink = F)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -64,6 +64,5 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = 7, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
+wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 }
-

@@ -15,4 +15,3 @@ Continue writing to an existing report file.
 \examples{
 continue_logging_markdown (fname =  )
 }
-

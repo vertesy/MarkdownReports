@@ -7,7 +7,7 @@
 wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
   plotname = as.character(substitute(yalist)), sub = NULL,
   xlb = names(yalist), ylb = "", ylimm = F, incrBottMarginBy = 0,
-  tilted_text = F, yoffset = 0, savefile = T, w = 7, h = 7,
+  tilted_text = F, yoffset = 0, savefile = T, w = 7, h = w,
   mdlink = F)
 }
 \arguments{
@@ -45,6 +45,5 @@ wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = 7, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
+wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 }
-
