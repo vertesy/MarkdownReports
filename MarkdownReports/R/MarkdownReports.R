@@ -358,7 +358,6 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
 #' @param left Size of the left error bar.
 #' @param right Size of the right error bar. By default, it equals the left error bar.
-#' @param w Width of the saved pdf image, in inches.idth
 #' @param arrow_lwd Line width for the error bar arrow. Line width for the error bar arrow.
 #' @param col_errorbar Color of the error bar arrow.
 #' @param abline Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.
@@ -1435,7 +1434,75 @@ parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
 }
 
 
+## A4 pdfs for multi-plots -------------------------------------------------------------------------------------------------
+#' pdfA4plot_on
+#' Create A4 PDFs to plot multiple subplots in one file
+#'
+#' @param pname Title of the plot (main parameter) and also the name of the file.
+#' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param rows Number of rows for subplots
+#' @param cols Number of columns for subplots
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @param title Manually set the title field of the PDF file
+#'
+#' @return
+#' @export
+#'
+#' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = 3, mdlink = FALSE,
+                          title = ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
+  try.dev.off()
+  assign("mfrow_default", par("mfrow"), fname, envir = .GlobalEnv)
+  fname = FnP_parser(pname, "pdf")
+  pdf(fname,width=w, height=h, title = title)
+  par(mfrow = c(rows, cols))
+  any_print(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+}
 
+
+#' pdfA4plot_on.layout
+#' Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row
+#'
+#' @param pname Title of the plot (main parameter) and also the name of the file.
+#' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param layout_mat A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @param title Manually set the title field of the PDF file
+#' @export
+#'
+#' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = FALSE,
+                                 title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
+  try.dev.off()
+  fname = FnP_parser(pname, "pdf")
+  pdf(fname,width=w, height=h, title = title)
+  layout(layout_mat)
+  # par(mar = c(3, 3, 0, 0))
+  print(layout_mat)
+  any_print(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+}
+
+
+#' pdfA4plot_off
+#' pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf. 
+#'
+#' @export
+#'
+#' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+pdfA4plot_off <- function () {
+  if (exists("mfrow_default")) {
+    x = mfrow_default
+  } else { x =  c(1,1)}
+  par(mfrow = x)
+  try(dev.off()) # close pdf
+  if(exists("OutDir")) {oo()}
+}
 
 # ALTERNATIVE VERSIONS -------------
 
