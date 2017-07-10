@@ -1446,8 +1446,6 @@ parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
 #' @param cols Number of columns for subplots
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param title Manually set the title field of the PDF file
-#'
-#' @return
 #' @export
 #'
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()

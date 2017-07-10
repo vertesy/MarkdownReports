@@ -54,13 +54,11 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{w}{Width of the saved pdf image, in inches.idth}
+\item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{df}{Input data frame to be plotted_2columns}
-
-\item{w}{Width of the saved pdf image, in inches.}
 }
 \description{
 Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
