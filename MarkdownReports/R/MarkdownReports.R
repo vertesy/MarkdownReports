@@ -408,6 +408,105 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 }
 
 
+
+#' wscatter.fill
+# A scatterplot with color gradient and color legend. Modified from: http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
+#'
+#' @param x X variable
+#' @param y Y variable
+#' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param color Filling color of the symbols 
+#' @param xlim Manually set the range of canvas in X dimension
+#' @param ylimManually set the range of canvas in Y dimension
+#' @param zlim  Manually set the range of colors numbers (Z dimension)
+#' @param nlevels Number of steps in the color gradient
+#' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
+#' @param cex Size of the symbols 
+#' @param plotname The name of the file saved.
+#' @param plot.title The title of the plot.
+#' @param axes  Draw axes and box
+#' @param plot.axes Draw axis ticks
+#' @param key.title ...
+#' @param key.axes ...
+#' @param asp numeric, giving the aspect ratio y/x. See help('plot.window').
+#' @param xaxs The style of axis interval calculation to be used for the X-axis. See help('par').
+#' @param yaxs The style of axis interval calculation to be used for the X-axis. See help('par').
+#' @param las numeric in {0,1,2,3}; the style of axis labels. See help('par').
+#' @param frame.plot 
+#' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
+#' @param savefile Save plot as pdf in OutDir, TRUE by default.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
+#' @export
+#'
+#' @examples wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21, xlab="The X Dimension. Wooaaahh")
+
+
+
+wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=range(color), 
+                           nlevels = 20, pch=21, cex=1, 
+                           plotname = substitute(variable), plot.title = plotname, xlb = substitute(x), ylb = substitute(y),
+                           plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1, 
+                           axes = TRUE, frame.plot = axes,
+                           savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = F ) {
+  
+  fname = kollapse(plotname, ".barplot")
+  if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
+  
+  mar.orig <- (par.orig <- par(c("mar", "las", "mfrow")))$mar
+  on.exit(par(par.orig))
+  w <- (3 + mar.orig[2L]) * par("csi") * 2.54
+  layout(matrix(c(2, 1), ncol = 2L), widths = c(1, lcm(w)))
+  par(las = las)
+  mar <- mar.orig
+  mar[4L] <- mar[2L]
+  mar[2L] <- 1
+  par(mar = mar)
+  
+  # choose colors to interpolate
+  levels <- seq(zlim[1], zlim[2], length.out = nlevels)
+  col <- colorRampPalette(c("red", "yellow", "dark green"))(nlevels)  
+  colz <- col[cut(color, nlevels)]  
+  
+  plot.new()
+  plot.window(xlim = c(0, 1), ylim = range(levels), xaxs = "i", yaxs = "i")
+  
+  rect(0, levels[-length(levels)], 1, levels[-1L], col=col, border=col) 
+  if (missing(key.axes)) { if (axes){axis(4)} }
+  else key.axes
+  box()
+  if (!missing(key.title)) key.title
+  mar <- mar.orig
+  mar[4L] <- 1
+  par(mar = mar)
+  
+  # points
+  plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n")
+  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch,...)
+  
+  ## options to make mapping more customizable
+  if (missing(plot.axes)) {
+    if (axes) {
+      title(main = "", xlab = "", ylab = "")
+      Axis(x, side = 1)
+      Axis(y, side = 2)
+    }
+  }
+  else plot.axes
+  if (frame.plot) box()
+  if (missing(plot.title)) title(...)
+  else plot.title
+  invisible()
+  
+  if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
+  if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+}
+
+
 #' ww_autoPlotName
 #'
 #' An internal function to create automatic plot and file-names.
