@@ -914,12 +914,13 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 
 #' @param zlim Limits.
 #' @param col Color of the plot.
 #' @param breaks Number of bins.
+#' @param rename The returned color vector will be named with its previous values
 #' @examples val2col (yourdata =  , zlim =  , col = rev(heat.colors(12)), breaks =  )
 #' @export
 
 
 ### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
-val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(yourdata)))) ), breaks) {
+val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(yourdata)))) ), breaks, rename=F) {
 
     if (!missing(breaks)) {
 		if (length(breaks) != (length(col) + 1)) {
@@ -939,6 +940,8 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 	if (length(names(yourdata))) {
 	  names(colorlevels) = yourdata
 	}
+	
+  if (rename) { names(colorlevels) = yourdata	} # works on vectors only
 	colorlevels
 }
 
