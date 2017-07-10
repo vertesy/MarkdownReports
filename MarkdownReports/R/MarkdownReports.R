@@ -1182,8 +1182,7 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
 
 
 
-# new function create se subdir
-#' create_set_SubDir
+# Create a sub-directory and set it.
 #'
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
@@ -1200,7 +1199,7 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
 
 
 
-#' wLinRegression
+# Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
 #'
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
 #' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
@@ -1229,7 +1228,6 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
 
 
 
-#' parFlags
 #' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 #'
 #' @param ... Paramter variables
