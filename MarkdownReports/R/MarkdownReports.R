@@ -1449,7 +1449,7 @@ parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
 #' @export
 #'
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
-pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = 3, mdlink = FALSE,
+pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = rows-1, mdlink = FALSE,
                           title = ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   try.dev.off()
   assign("mfrow_default", par("mfrow"), fname, envir = .GlobalEnv)
