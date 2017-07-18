@@ -1104,6 +1104,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @param imagetype Image format, png by default.
 #' @param alpha Transparency, .5 by default.
 #' @param fill Background color vec
+#' @param subt Subtitle
 #' @param ... Pass any other parameter of the corresponding venn.diagram() function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -1112,7 +1113,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
 #' @export
 
-wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), ..., w = 7, h = w, mdlink = F, plotname = substitute(yalist)) {
+wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), subt, ..., w = 7, h = w, mdlink = F, plotname = substitute(yalist)) {
   if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
   fname = kollapse(plotname, ".", imagetype, print = F)
   LsLen = length(yalist)
@@ -1120,7 +1121,7 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist
   print(names(yalist))
 
   filename = kollapse(OutDir,"/", fname, print = F)
-  subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)
+  if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)  } #if
   venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
   if (mdlink) {
