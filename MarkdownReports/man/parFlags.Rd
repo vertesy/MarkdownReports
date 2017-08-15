@@ -2,8 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{parFlags}
 \alias{parFlags}
-\title{parFlags
-Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.}
+\title{parFlags}
 \usage{
 parFlags(prefix = "", ..., pasteflg = T, collapsechar = ".")
 }
@@ -15,7 +14,6 @@ parFlags(prefix = "", ..., pasteflg = T, collapsechar = ".")
 \item{collapsechar}{Separating character between each parameters-flag}
 }
 \description{
-parFlags
 Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 }
 \examples{

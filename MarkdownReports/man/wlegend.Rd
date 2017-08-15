@@ -26,7 +26,7 @@ wlegend(x = c("topleft", "topright", "bottomright", "bottomleft")[4],
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 }
 \description{
-wlegend
+Quickly add a legend to an existing plot, and save the plot immediately.
 }
 \examples{
 function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)

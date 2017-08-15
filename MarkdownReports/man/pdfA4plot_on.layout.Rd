@@ -2,8 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{pdfA4plot_on.layout}
 \alias{pdfA4plot_on.layout}
-\title{pdfA4plot_on.layout
-Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row}
+\title{pdfA4plot_on.layout}
 \usage{
 pdfA4plot_on.layout(pname = date(), ..., w = 8.27, h = 11.69,
   layout_mat = rbind(1, c(2, 3), 4:5), mdlink = FALSE,
@@ -25,7 +24,6 @@ pdfA4plot_on.layout(pname = date(), ..., w = 8.27, h = 11.69,
 \item{title}{Manually set the title field of the PDF file}
 }
 \description{
-pdfA4plot_on.layout
 Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row
 }
 \examples{

@@ -7,6 +7,7 @@ try.dev.off <- function () { try(dev.off(), silent = T) }
 
 #' ttl_field
 #'
+#' Internal function. Creates the string written into the PDF files "Title' (metadata) field/
 #' @param flname Name of the plot
 #' @examples ttl_field()
 #' @export
@@ -418,8 +419,8 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 
 
 #' wscatter.fill
-# A scatterplot with color gradient and color legend. Modified from: http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
 #'
+# A scatterplot with color gradient and color legend. Modified from: http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
 #' @param x X variable
 #' @param y Y variable
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
@@ -517,7 +518,7 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
 
 #' ww_autoPlotName
 #'
-#' An internal function to create automatic plot and file-names.
+#' Internal function. Creates automatic plot and file-names.
 #' @param name Manually name your plot
 #' @examples ww_autoPlotName()
 #' @export
@@ -987,8 +988,8 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
 }
 
 #' whist.back2back
-#' Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.
 #'
+#' Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.
 #' @param ListOf2 List of 2 numeric vectors
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
@@ -1195,6 +1196,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
 
 #' subscript_in_plots
 #'
+#' Create an expression with subscript for axis labels. Parsed when provided to xlab or ylab of a function.
 #' @param prefix String before the subscript.
 #' @param subscr Subscripted text.
 #' @param quantity String in brackets after the subscript, eg.: log2(read count).
@@ -1209,6 +1211,7 @@ subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units
 
 #' superscript_in_plots
 #'
+#' Create an expression with superscript for axis labels. Parsed when provided to xlab or ylab of a function.
 #' @param prefix String before the superscript.
 #' @param sup Superscripted text.
 #' @param suffix String after the subscript.
@@ -1285,8 +1288,8 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 
 
 #' llwrite_list
-#' Print a list, one element per line,  into your markdown report
 #'
+#' Print a list, one element per line,  into your markdown report
 #' @param yalist your list
 #' @examples llwrite_list(your_list)
 #' @export
@@ -1301,6 +1304,7 @@ llwrite_list <- function(yalist) {
 
 #' wlegend
 #'
+#' Quickly add a legend to an existing plot, and save the plot immediately.
 #' @param x Position of the legend. Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param fill_ Color of the boxes next to the text
 #' @param legend Labels displayed (Text)
@@ -1321,8 +1325,8 @@ wlegend <- function(x=c("topleft", "topright", "bottomright", "bottomleft")[4],
 
 
 #' getCategories
-#' Extract unique entries with a corresponding name.
 #'
+#' Extract unique entries with a corresponding name.
 #' @param named_categ_vec A vector of categories with names. "Uniqueness" in the vector and its name should be the same!!!
 #' @export
 #'
@@ -1356,8 +1360,8 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 
 
 #'wLinRegression
-# Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
 #'
+# Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
 #' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
@@ -1386,8 +1390,8 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
 
 
 #' parFlags
-#' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 #'
+#' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 #' @param ... Paramter variables
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param collapsechar Separating character between each parameters-flag
@@ -1407,8 +1411,8 @@ parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
 
 ## A4 pdfs for multi-plots -------------------------------------------------------------------------------------------------
 #' pdfA4plot_on
-#' Create A4 PDFs to plot multiple subplots in one file
 #'
+#' Create A4 PDFs to plot multiple subplots in one file
 #' @param pname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param w Width of the saved pdf image, in inches.
@@ -1433,8 +1437,8 @@ pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, co
 
 
 #' pdfA4plot_on.layout
-#' Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row
 #'
+#' Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row
 #' @param pname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param layout_mat A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)
@@ -1445,6 +1449,7 @@ pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, co
 #' @export
 #'
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+
 pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = FALSE,
                                  title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   try.dev.off()
@@ -1459,8 +1464,8 @@ pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layou
 
 
 #' pdfA4plot_off
-#' pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
 #'
+#' pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
 #' @export
 #'
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()

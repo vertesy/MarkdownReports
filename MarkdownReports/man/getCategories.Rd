@@ -2,8 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{getCategories}
 \alias{getCategories}
-\title{getCategories
-Extract unique entries with a corresponding name.}
+\title{getCategories}
 \usage{
 getCategories(named_categ_vec)
 }
@@ -11,7 +10,6 @@ getCategories(named_categ_vec)
 \item{named_categ_vec}{A vector of categories with names. "Uniqueness" in the vector and its name should be the same!!!}
 }
 \description{
-getCategories
 Extract unique entries with a corresponding name.
 }
 \examples{

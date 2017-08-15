@@ -2,8 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{whist.back2back}
 \alias{whist.back2back}
-\title{whist.back2back
-Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.}
+\title{whist.back2back}
 \usage{
 whist.back2back(ListOf2 = list(A = rnorm(100), B = rnorm(100)),
   breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
@@ -44,7 +43,6 @@ whist.back2back(ListOf2 = list(A = rnorm(100), B = rnorm(100)),
 \item{h}{Height of the saved pdf image, in inches.}
 }
 \description{
-whist.back2back
 Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.
 }
 \examples{

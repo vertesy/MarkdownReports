@@ -14,7 +14,7 @@ superscript_in_plots(prefix = "n", sup = "k", suffix = "")
 \item{suffix}{String after the subscript.}
 }
 \description{
-superscript_in_plots
+Create an expression with superscript for axis labels. Parsed when provided to xlab or ylab of a function.
 }
 \examples{
 plot (1, 1, main =superscript_in_plots())

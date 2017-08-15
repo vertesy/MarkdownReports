@@ -2,13 +2,11 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{pdfA4plot_off}
 \alias{pdfA4plot_off}
-\title{pdfA4plot_off
-pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.}
+\title{pdfA4plot_off}
 \usage{
 pdfA4plot_off()
 }
 \description{
-pdfA4plot_off
 pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
 }
 \examples{
