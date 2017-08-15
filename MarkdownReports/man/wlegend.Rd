@@ -9,6 +9,8 @@ wlegend(x = c("topleft", "topright", "bottomright", "bottomleft")[4],
   bty = "n", OverwritePrevPDF = T)
 }
 \arguments{
+\item{x}{Position of the legend. Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".}
+
 \item{fill_}{Color of the boxes next to the text}
 
 \item{legend}{Labels displayed (Text)}

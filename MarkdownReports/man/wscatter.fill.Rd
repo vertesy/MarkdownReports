@@ -51,6 +51,8 @@ wscatter.fill(x, y, ..., color, xlim = range(x), ylim = range(y),
 
 \item{axes}{Draw axes and box}
 
+\item{frame.plot}{No description.}
+
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}

@@ -440,7 +440,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @param xaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param yaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param las numeric in {0,1,2,3}; the style of axis labels. See help('par').
-#' @param frame.plot
+#' @param frame.plot No description.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -1301,7 +1301,7 @@ llwrite_list <- function(yalist) {
 
 #' wlegend
 #'
-#' @param x
+#' @param x Position of the legend. Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param fill_ Color of the boxes next to the text
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
@@ -1329,29 +1329,6 @@ wlegend <- function(x=c("topleft", "topright", "bottomright", "bottomleft")[4],
 #' @examples function(named_categ_vec)
 
 getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_categ_vec))] }
-
-
-#' qlegend
-#' # Quickly add a legend, and save the plot immediately
-#'
-#' @param NamedColorVec
-#' @param poz 1:4 corresponding to "topleft","topright", "bottomright", "bottomleft"
-#' @param ... Additional parameters for legend()
-#' @param w_ Width of the saved pdf image, in inches.
-#' @param h_ Height of the saved pdf image, in inches.
-#' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
-#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
-#' @export
-#'
-#' @examples ccc = as.factor.numeric(c(6,7,8,7,7,6,6,8))  ; qlegend(ccc) # Uses as.factor.numeric() from Github / Vertesy / TheCorvinas
-
-qlegend <- function(NamedColorVec, poz=3, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) {
-  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft","topright", "bottomright", "bottomleft"))
-  fill_ = getCategories(NamedColorVec)
-  legend(x=pozz, legend=names(fill_), fill=fill_, ..., bty=bty)
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
-}
-
 
 # create_set_SubDir
 #'
