@@ -2,29 +2,30 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{wlegend}
 \alias{wlegend}
-\title{wlegend
-Add a legend, and save the plot immediately}
+\title{wlegend}
 \usage{
-wlegend(x = "bottomleft", legend, fill = NULL, ..., bty = "n",
-  OverwritePrevPDF = T)
+wlegend(x = c("topleft", "topright", "bottomright", "bottomleft")[4],
+  fill_ = NULL, legend = names(fill_), ..., w_ = 7, h_ = w_,
+  bty = "n", OverwritePrevPDF = T)
 }
 \arguments{
-\item{x}{location of legend}
+\item{fill_}{Color of the boxes next to the text}
 
 \item{legend}{Labels displayed (Text)}
 
-\item{fill}{Color of the boxes next to the text}
+\item{...}{Additional parameters for legend()}
 
-\item{...}{Pass any other parameter of the corresponding text function (most of them should work).}
+\item{w_}{Width of the saved pdf image, in inches.}
 
-\item{bty}{Background of legend, transparent by default}
+\item{h_}{Height of the saved pdf image, in inches.}
+
+\item{bty}{The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 }
 \description{
 wlegend
-Add a legend, and save the plot immediately
 }
 \examples{
-wlegend(...)
+function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 }

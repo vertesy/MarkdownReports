@@ -5,7 +5,7 @@
 \title{wvenn}
 \usage{
 wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
-  ..., w = 7, h = w, mdlink = F, plotname = substitute(yalist))
+  subt, ..., w = 7, h = w, mdlink = F, plotname = substitute(yalist))
 }
 \arguments{
 \item{yalist}{The variable to plot.}
@@ -15,6 +15,8 @@ wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
 \item{alpha}{Transparency, .5 by default.}
 
 \item{fill}{Background color vec}
+
+\item{subt}{Subtitle}
 
 \item{...}{Pass any other parameter of the corresponding venn.diagram() function (most of them should work).}
 

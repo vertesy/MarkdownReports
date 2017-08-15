@@ -263,10 +263,12 @@ MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 #' @param FullPath Full path to the file.
 #' @param percentify Format numbers [0,1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
+#' @param print2screen Print the markdown formatted table to the sceen.
+#' @param WriteOut Write the table into a TSV file.
 #' @examples MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 #' @export
 
-MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, percentify = F, title_of_table = NA) {
+MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut =F) {
 	if (is.na(title_of_table)) {
 		t = paste0(substitute(df), collapse = " ")
 	}
@@ -302,6 +304,8 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 	else {
 		print("NOT LOGGED: Log path and filename is not defined in path_of_report")
 	}
+	if (WriteOut) { write.simple.tsv(NamedVector) }
+	if (print2screen) { print(b) }
 }
 
 
@@ -312,10 +316,12 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 #' @param FullPath Full path to the file.
 #' @param percentify Format numbers [0,1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
+#' @param print2screen Print the markdown formatted table to the sceen.
+#' @param WriteOut Write the table into a TSV file.
 #' @examples MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 #' @export
 
-MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA) {
+MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut = FALSE) {
 	if (is.na(title_of_table)) {
 		t = paste0(substitute(NamedVector), collapse = " ")
 	}	else {		t = title_of_table	}
@@ -342,6 +348,8 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 	else {
 		print("NOT LOGGED: Log path and filename is not defined in path_of_report")
 	}
+	if (WriteOut) { write.simple.tsv(NamedVector) }
+	if (print2screen) { print(b) }
 }
 
 
@@ -414,13 +422,13 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @param x X variable
 #' @param y Y variable
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param color Filling color of the symbols 
+#' @param color Filling color of the symbols
 #' @param xlim Manually set the range of canvas in X dimension
 #' @param ylimManually set the range of canvas in Y dimension
 #' @param zlim  Manually set the range of colors numbers (Z dimension)
 #' @param nlevels Number of steps in the color gradient
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
-#' @param cex Size of the symbols 
+#' @param cex Size of the symbols
 #' @param plotname The name of the file saved.
 #' @param plot.title The title of the plot.
 #' @param axes  Draw axes and box
@@ -431,7 +439,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @param xaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param yaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param las numeric in {0,1,2,3}; the style of axis labels. See help('par').
-#' @param frame.plot 
+#' @param frame.plot
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -444,16 +452,16 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 
 
 
-wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=range(color), 
-                           nlevels = 20, pch=21, cex=1, 
+wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=range(color),
+                           nlevels = 20, pch=21, cex=1,
                            plotname = substitute(variable), plot.title = plotname, xlb = substitute(x), ylb = substitute(y),
-                           plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1, 
+                           plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
                            axes = TRUE, frame.plot = axes,
                            savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = F ) {
-  
+
   fname = kollapse(plotname, ".barplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
-  
+
   mar.orig <- (par.orig <- par(c("mar", "las", "mfrow")))$mar
   on.exit(par(par.orig))
   w <- (3 + mar.orig[2L]) * par("csi") * 2.54
@@ -463,16 +471,16 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
   mar[4L] <- mar[2L]
   mar[2L] <- 1
   par(mar = mar)
-  
+
   # choose colors to interpolate
   levels <- seq(zlim[1], zlim[2], length.out = nlevels)
-  col <- colorRampPalette(c("red", "yellow", "dark green"))(nlevels)  
-  colz <- col[cut(color, nlevels)]  
-  
+  col <- colorRampPalette(c("red", "yellow", "dark green"))(nlevels)
+  colz <- col[cut(color, nlevels)]
+
   plot.new()
   plot.window(xlim = c(0, 1), ylim = range(levels), xaxs = "i", yaxs = "i")
-  
-  rect(0, levels[-length(levels)], 1, levels[-1L], col=col, border=col) 
+
+  rect(0, levels[-length(levels)], 1, levels[-1L], col=col, border=col)
   if (missing(key.axes)) { if (axes){axis(4)} }
   else key.axes
   box()
@@ -480,11 +488,11 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
   mar <- mar.orig
   mar[4L] <- 1
   par(mar = mar)
-  
+
   # points
   plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n")
   points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch,...)
-  
+
   ## options to make mapping more customizable
   if (missing(plot.axes)) {
     if (axes) {
@@ -498,7 +506,7 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
   if (missing(plot.title)) title(...)
   else plot.title
   invisible()
-  
+
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -985,7 +993,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param breaks1 break parameter for histogram function for the 2st list element.
-#' @param breaks2 break parameter for histogram function for the 2st list element. 
+#' @param breaks2 break parameter for histogram function for the 2st list element.
 #' @param colorz  Color of the 2 histograms
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param plotname The name of the file saved.
@@ -1000,14 +1008,14 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
 #'
 #' @examples whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
 
-whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,  
+whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
                             plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
                             savefile = T, incrBottMarginBy = 0,  w = 7, h = w, mdlink = F) {
-  
+
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
-  
-  lng = length(ListOf2) 
+
+  lng = length(ListOf2)
   if (lng != 2) { any_print("length(List): ", lng, " First two elements used" ) } #if
   h1 = hist(ListOf2[[1]], plot=FALSE, breaks = breaks1)
   h2 = hist(ListOf2[[2]], plot=FALSE, breaks = breaks2)
@@ -1016,16 +1024,16 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
   hmin = min(h2$counts, na.rm =T)
   xlimm =range(unlist(ListOf2), na.rm =T)
   xlimm = c(1, max(l(h2$counts), l(h1$counts))+3)
-  
+
   print(xlimm)
   X = c(h1$breaks, h2$breaks)
   barplot(h1$counts, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =h1$breaks[-1], las=3 ,main = main_, ylab=ylab,...)
   barplot(h2$counts, col=colorz[2], add=T)
   condition = F
-  
+
   legend("topright",lsNm[1], bty="n")
   legend("bottomright",lsNm[2], bty="n")
-  
+
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
@@ -1092,7 +1100,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(you
 	if (length(names(yourdata))) {
 	  names(colorlevels) = yourdata
 	}
-	
+
   if (rename) { names(colorlevels) = yourdata	} # works on vectors only
 	colorlevels
 }
@@ -1291,30 +1299,12 @@ llwrite_list <- function(yalist) {
 
 
 #' wlegend
-#' Add a legend, and save the plot immediately
 #'
-#' @param x location of legend
-#' @param legend Labels displayed (Text)
-#' @param fill Color of the boxes next to the text
-#' @param bty Background of legend, transparent by default
-#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
-#' @param ... Pass any other parameter of the corresponding text function (most of them should work).
-#' @examples wlegend(...)
-#' @export
-
-wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  legend(x=x,legend=legend,fill=fill, ..., bty=bty)
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
-}
-
-
-#' wlegend2
-#'
-#' @param x 
+#' @param x
 #' @param fill_ Color of the boxes next to the text
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
-#' @param w_ Width of the saved pdf image, in inches. 
+#' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
@@ -1322,14 +1312,15 @@ wlegend <- function(x="bottomleft", legend, fill = NULL, ..., bty = "n", Overwri
 #'
 #' @examples function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend2 <- function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+wlegend <- function(x=c("topleft", "topright", "bottomright", "bottomleft")[4],
+                     fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
   legend(x=x,legend=legend,fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 }
 
 
 #' getCategories
-#' Extract unique entries with a corresponding name. 
+#' Extract unique entries with a corresponding name.
 #'
 #' @param named_categ_vec A vector of categories with names. "Uniqueness" in the vector and its name should be the same!!!
 #' @export
@@ -1342,14 +1333,14 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' qlegend
 #' # Quickly add a legend, and save the plot immediately
 #'
-#' @param NamedColorVec 
+#' @param NamedColorVec
 #' @param poz 1:4 corresponding to "topleft","topright", "bottomright", "bottomleft"
 #' @param ... Additional parameters for legend()
-#' @param w_ Width of the saved pdf image, in inches. 
+#' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
-#' @export 
+#' @export
 #'
 #' @examples ccc = as.factor.numeric(c(6,7,8,7,7,6,6,8))  ; qlegend(ccc) # Uses as.factor.numeric() from Github / Vertesy / TheCorvinas
 
@@ -1380,7 +1371,7 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
     any_print("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
-  
+
   assign("OutDir", NewOutDir, envir = .GlobalEnv)
 }
 
@@ -1490,7 +1481,7 @@ pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layou
 
 
 #' pdfA4plot_off
-#' pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf. 
+#' pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
 #'
 #' @export
 #'
@@ -1509,7 +1500,7 @@ pdfA4plot_off <- function () {
 
 # #' subscript_in_plots2
 # #' Like subscript_in_plots, but uses substitute() instead bquote()
-# #' 
+# #'
 # #' @param prefix String before the subscript. Use for boxplots, stripchart and co. Uses substitue() instead of bquote()
 # #' @param subscr Subscripted text.
 # #' @param quantity String in brackets after the subscript, eg.: log2(read count).

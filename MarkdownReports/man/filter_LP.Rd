@@ -5,7 +5,7 @@
 \title{filter_LP}
 \usage{
 filter_LP(numeric_vector, threshold, passequal = F, prepend = "",
-  return_survival_ratio = F)
+  return_survival_ratio = F, na_rm = T)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}

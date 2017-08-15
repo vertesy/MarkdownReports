@@ -5,7 +5,7 @@
 \title{filter_MidPass}
 \usage{
 filter_MidPass(numeric_vector, HP_threshold, LP_threshold, prepend = "",
-  return_survival_ratio = FALSE, EdgePass = F)
+  return_survival_ratio = FALSE, EdgePass = F, na_rm = T)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}

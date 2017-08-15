@@ -5,7 +5,7 @@
 \title{MarkDown_Table_writer_DF_RowColNames}
 \usage{
 MarkDown_Table_writer_DF_RowColNames(df, FullPath = path_of_report,
-  percentify = F, title_of_table = NA)
+  percentify = F, title_of_table = NA, print2screen = F, WriteOut = F)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
@@ -15,6 +15,10 @@ MarkDown_Table_writer_DF_RowColNames(df, FullPath = path_of_report,
 \item{percentify}{Format numbers [0,1] to percentages 0-100.}
 
 \item{title_of_table}{Title above the table (in the markdown report).}
+
+\item{print2screen}{Print the markdown formatted table to the sceen.}
+
+\item{WriteOut}{Write the table into a TSV file.}
 }
 \description{
 Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".

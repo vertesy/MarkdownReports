@@ -5,7 +5,8 @@
 \title{MarkDown_Table_writer_NamedVector}
 \usage{
 MarkDown_Table_writer_NamedVector(NamedVector, FullPath = path_of_report,
-  percentify = F, title_of_table = NA)
+  percentify = F, title_of_table = NA, print2screen = F,
+  WriteOut = FALSE)
 }
 \arguments{
 \item{NamedVector}{A vector for the table body, with names as table header.}
@@ -15,6 +16,10 @@ MarkDown_Table_writer_NamedVector(NamedVector, FullPath = path_of_report,
 \item{percentify}{Format numbers [0,1] to percentages 0-100.}
 
 \item{title_of_table}{Title above the table (in the markdown report).}
+
+\item{print2screen}{Print the markdown formatted table to the sceen.}
+
+\item{WriteOut}{Write the table into a TSV file.}
 }
 \description{
 Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".

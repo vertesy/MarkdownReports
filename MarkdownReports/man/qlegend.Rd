@@ -9,8 +9,6 @@ qlegend(NamedColorVec, poz = 3, ..., w_ = 7, h_ = w_, bty = "n",
   OverwritePrevPDF = T)
 }
 \arguments{
-\item{NamedColorVec}{}
-
 \item{poz}{1:4 corresponding to "topleft","topright", "bottomright", "bottomleft"}
 
 \item{...}{Additional parameters for legend()}

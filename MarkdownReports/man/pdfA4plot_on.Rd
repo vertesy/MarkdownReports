@@ -6,7 +6,7 @@
 Create A4 PDFs to plot multiple subplots in one file}
 \usage{
 pdfA4plot_on(pname = date(), ..., w = 8.27, h = 11.69, rows = 4,
-  cols = 3, mdlink = FALSE, title = ttl_field(pname))
+  cols = rows - 1, mdlink = FALSE, title = ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
