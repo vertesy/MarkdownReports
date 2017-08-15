@@ -1,6 +1,6 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
-# date: 01-09-2016
+# date: # 15 August 2017 (Tuesday) 12:38
 
 ## Aliases
 try.dev.off <- function () { try(dev.off(), silent = T) }
@@ -89,6 +89,7 @@ percentage_formatter <-function (x, digitz = 3) {
 
 setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
+  if ( ! substrRight(OutDir,1) == "/" )  OutDir = paste0(OutDir,"/")
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
 	path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
