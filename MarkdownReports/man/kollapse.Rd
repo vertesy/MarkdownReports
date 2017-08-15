@@ -17,5 +17,5 @@ kollapse(..., collapseby = "", print = T)
 Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 }
 \examples{
-kollapse("Hello ",LETTERS[24], ", the winning numbers are ", c(1,3,5,65,11), " . Yay!")
+kollapse("Hello ", LETTERS[24], ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
 }

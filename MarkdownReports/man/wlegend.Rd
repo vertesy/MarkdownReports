@@ -4,16 +4,17 @@
 \alias{wlegend}
 \title{wlegend}
 \usage{
-wlegend(x = c("topleft", "topright", "bottomright", "bottomleft")[4],
-  fill_ = NULL, legend = names(fill_), ..., w_ = 7, h_ = w_,
-  bty = "n", OverwritePrevPDF = T)
+wlegend(fill_ = NULL, poz = 4, legend = names(fill_), bty = "n", ...,
+  w_ = 7, h_ = w_, OverwritePrevPDF = T)
 }
 \arguments{
-\item{x}{Position of the legend. Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".}
-
 \item{fill_}{Color of the boxes next to the text}
 
+\item{poz}{Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".}
+
 \item{legend}{Labels displayed (Text)}
+
+\item{bty}{The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".}
 
 \item{...}{Additional parameters for legend()}
 
@@ -21,13 +22,11 @@ wlegend(x = c("topleft", "topright", "bottomright", "bottomleft")[4],
 
 \item{h_}{Height of the saved pdf image, in inches.}
 
-\item{bty}{The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".}
-
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 }
 \description{
 Quickly add a legend to an existing plot, and save the plot immediately.
 }
 \examples{
-function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 }

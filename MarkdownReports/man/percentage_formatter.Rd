@@ -7,7 +7,7 @@
 percentage_formatter(x, digitz = 3)
 }
 \arguments{
-\item{x}{A vector of numbers between [0,1]/}
+\item{x}{A vector of numbers between [0, 1]/}
 
 \item{digitz}{Number of digits to keep. 3 by default.}
 }

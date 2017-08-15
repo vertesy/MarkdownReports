@@ -21,7 +21,7 @@ ttl_field <- function (flname = fname ) { paste0(basename(flname), " by ", if (e
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param print Print the results to the terminal. TRUE by default.
 #' @param print collapseby collapse elements into a string separated by this character
-#' @examples kollapse("Hello ",LETTERS[24], ", the winning numbers are ", c(1,3,5,65,11), " . Yay!")
+#' @examples kollapse("Hello ", LETTERS[24], ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
 #' @export
 
 kollapse <-function (..., collapseby = "", print = T) {
@@ -63,7 +63,7 @@ iround <-function (x, digitz = 3) {
 #' percentage_formatter
 #'
 #' Parse a string of 0-100% from a number between 0 and 1.
-#' @param x A vector of numbers between [0,1]/
+#' @param x A vector of numbers between [0, 1]/
 #' @param digitz Number of digits to keep. 3 by default.
 #' @examples percentage_formatter (x =  , digitz = 3)
 #' @export
@@ -90,7 +90,7 @@ percentage_formatter <-function (x, digitz = 3) {
 
 setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
-  if ( ! substrRight(OutDir,1) == "/" )  OutDir = paste0(OutDir,"/")
+  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
 	assign("OutDir", OutDir, envir = .GlobalEnv)
 	any_print("All files will be saved under 'OutDir': ", OutDir)
 	path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
@@ -263,7 +263,7 @@ MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 #' Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param df Input data frame to be plotted
 #' @param FullPath Full path to the file.
-#' @param percentify Format numbers [0,1] to percentages 0-100.
+#' @param percentify Format numbers [0, 1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
@@ -316,7 +316,7 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 #' Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param NamedVector A vector for the table body, with names as table header.
 #' @param FullPath Full path to the file.
-#' @param percentify Format numbers [0,1] to percentages 0-100.
+#' @param percentify Format numbers [0, 1] to percentages 0-100.
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
@@ -385,7 +385,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 #' @export
 
-wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2columns),
+wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
                   abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
                   savefile = T, mdlink = F,  w = 7, h = w) {
@@ -440,7 +440,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ...,plotname = substitute(df_2
 #' @param asp numeric, giving the aspect ratio y/x. See help('plot.window').
 #' @param xaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param yaxs The style of axis interval calculation to be used for the X-axis. See help('par').
-#' @param las numeric in {0,1,2,3}; the style of axis labels. See help('par').
+#' @param las numeric in {0, 1, 2, 3}; the style of axis labels. See help('par').
 #' @param frame.plot No description.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param w Width of the saved pdf image, in inches.
@@ -493,7 +493,7 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
 
   # points
   plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n")
-  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch,...)
+  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch, ...)
 
   ## options to make mapping more customizable
   if (missing(plot.axes)) {
@@ -654,7 +654,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
   if (vline[1]) { abline(v = x[vline], lty = lty, lwd = lwd, col = lcol)	}
   if (errorbar) {	arrows(x, variable + upper, x, variable - lower, angle = 90, code = 3, length = arrow_width, lwd = arrow_lwd, ...)	}
   if (tilted_text) {
-    text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1,3))
+    text(x = x - 0.25, y = 0, labels = BarNames, xpd = TRUE, srt = 45, cex = cexNsize, adj = c(1, 3))
   }
 
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
@@ -722,7 +722,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
   fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
 	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
-	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)),"\n", variable , sep = "")}
+	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), "\n", variable , sep = "")}
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
@@ -775,7 +775,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   mtext(ylb, side = 2, line = 2, cex = cex.lab)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
-    text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+    text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1, 3))
   }
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname) ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -812,7 +812,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 #' @export
 
-wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
+wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "",  incrBottMarginBy = 0, tilted_text = F,
                               savefile = T, w = 7, h = w, mdlink = F) {
   fname = kollapse(plotname, ".stripchart")
@@ -836,7 +836,7 @@ wstripchart_list <-function ( yalist, ...,	border = 1, bxpcol = 0, pch = 18, pch
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
     # yy = (max(nchar(names(yalist)))/2)
-    text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1,3))
+    text(x = 1:length(yalist), y = xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1, 3))
   }
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -875,7 +875,7 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   fname = kollapse(plotname, ".vioplot")
   if (length(coll) < l_list) { coll = rep(coll, l_list) }
   if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
-  if (! (is.numeric(ylimm) & length(ylimm)==2)) { ylimm = range(unlist(yalist),na.rm = T)}
+  if (! (is.numeric(ylimm) & length(ylimm)==2)) { ylimm = range(unlist(yalist), na.rm = T)}
   plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = ylimm, xaxt = "n", xlab = "",
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
@@ -1029,12 +1029,12 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
 
   print(xlimm)
   X = c(h1$breaks, h2$breaks)
-  barplot(h1$counts, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =h1$breaks[-1], las=3 ,main = main_, ylab=ylab,...)
+  barplot(h1$counts, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =h1$breaks[-1], las=3 , main = main_, ylab=ylab, ...)
   barplot(h2$counts, col=colorz[2], add=T)
   condition = F
 
-  legend("topright",lsNm[1], bty="n")
-  legend("bottomright",lsNm[2], bty="n")
+  legend("topright", lsNm[1], bty="n")
+  legend("bottomright", lsNm[2], bty="n")
 
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
@@ -1082,7 +1082,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = 
 
 
 ### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
-val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12,3*l(unique(yourdata)))) ), breaks, rename=F) {
+val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yourdata)))) ), breaks, rename=F) {
 
     if (!missing(breaks)) {
 		if (length(breaks) != (length(col) + 1)) {
@@ -1130,7 +1130,7 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist
   if(length(names(yalist)) < LsLen) { names(yalist) =1:LsLen; print("List elements had no names.") }
   print(names(yalist))
 
-  filename = kollapse(OutDir,"/", fname, print = F)
+  filename = kollapse(OutDir, "/", fname, print = F)
   if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)  } #if
   venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
@@ -1202,7 +1202,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
 #' @param quantity String in brackets after the subscript, eg.: log2(read count).
 #' @export
 #'
-#' @examples plot (1, 1, xlab =subscript_in_plots(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
+#' @examples plot (1, 1, xlab =subscript_in_plots(subscr = 10, quantity = "read count"), ylab =subscript_in_plots())
 
 subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
   formatted_string = bquote(.(prefix)[.(subscr)]*'('*.(quantity)*')')
@@ -1238,7 +1238,7 @@ superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a f
 filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall between above high-pass-threshold (X >).
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall above a threshold value of: ", iround(threshold))
+  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
   if (file.exists(path_of_report) ) {	llogit (conclusion)} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
@@ -1258,7 +1258,7 @@ filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
 filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall below the low-pass threshold (X <).
   survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall below a threshold value of: ", iround(threshold))
+  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
   if (file.exists(path_of_report) ) {	llogit (conclusion)	} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
@@ -1280,7 +1280,7 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 	survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
 	if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
 	pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-	conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ",length(numeric_vector)," entries in ", substitute (numeric_vector)," fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
+	conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
 	if (file.exists(path_of_report) ) {	llprint (conclusion)	} else { print  ("NOT LOGGED") }
 	if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
@@ -1296,7 +1296,7 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 
 llwrite_list <- function(yalist) {
   for (e in 1:l(yalist)) {
-    if (is.null( names(yalist) )) { llprint("#####",names(yalist)[e]) } else { llprint("#####", e)}
+    if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
     print(yalist[e]); llogit("`", yalist[e], "`")
   }
 }
@@ -1305,8 +1305,8 @@ llwrite_list <- function(yalist) {
 #' wlegend
 #'
 #' Quickly add a legend to an existing plot, and save the plot immediately.
-#' @param x Position of the legend. Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param fill_ Color of the boxes next to the text
+#' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
 #' @param w_ Width of the saved pdf image, in inches.
@@ -1315,11 +1315,12 @@ llwrite_list <- function(yalist) {
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @export
 #'
-#' @examples function(x="bottomleft", fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+#' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(x=c("topleft", "topright", "bottomright", "bottomleft")[4],
-                     fill_ = NULL, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  legend(x=x,legend=legend,fill=fill_, ..., bty=bty)
+wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  stopif(is.null(names(fill_)), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+  legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 }
 
@@ -1344,12 +1345,12 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' @export
 
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
-  NewOutDir = kollapse(OutDir,"/", ..., print = F)
+  NewOutDir = kollapse(OutDir, "/", ..., print = F)
   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
   if (makeOutDirOrig) {
-    if (exists("OutDirOrig")) any_print("OutDirOrig was defined as:",OutDirOrig)
+    if (exists("OutDirOrig")) any_print("OutDirOrig was defined as:", OutDirOrig)
     any_print("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
@@ -1372,17 +1373,17 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 
 wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   print(coeff)
-  regression <- lm(DF[,2] ~ DF[,1])
+  regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
-  if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[,2], DF[,1], method = "pearson"))
+  if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
   legendText  =  c(legendText, paste0("Pearson c.c.: ", dispCoeff))  }
-  if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[,2], DF[,1], method = "spearman"))
+  if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "spearman"))
   legendText = c(legendText, paste0("Spearman c.c.: ", dispCoeff))  }
   if ("r2" %in% coeff) {          r2 = iround(summary(regression)$r.squared)
   legendText = c(legendText, paste0("R^2: ", r2))  }
   print(legendText)
-  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2",suffix = paste0(": ", r2)) , bty="n")
+  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n")
   } else {                                    legend(textlocation, legend = legendText , bty="n") }
   if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
 }
@@ -1397,9 +1398,9 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
 #' @param collapsechar Separating character between each parameters-flag
 #' @export
 #'
-#' @examples pearson = T; filtered =T; normalized = F; MyPlotname = parFlags(prefix = "MyPlot" ,pearson, filtered, normalized ); MyPlotname
+#' @examples pearson = T; filtered =T; normalized = F; MyPlotname = parFlags(prefix = "MyPlot" , pearson, filtered, normalized ); MyPlotname
 
-parFlags <- function(prefix="",..., pasteflg=T, collapsechar =".") {
+parFlags <- function(prefix="", ..., pasteflg=T, collapsechar =".") {
   namez=as.character(as.list(match.call())[-(1:2)])
   val = c(...)
   names(val) =namez
@@ -1429,7 +1430,7 @@ pdfA4plot_on <- function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, co
   try.dev.off()
   assign("mfrow_default", par("mfrow"), fname, envir = .GlobalEnv)
   fname = FnP_parser(pname, "pdf")
-  pdf(fname,width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title)
   par(mfrow = c(rows, cols))
   any_print(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
@@ -1454,7 +1455,7 @@ pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layou
                                  title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   try.dev.off()
   fname = FnP_parser(pname, "pdf")
-  pdf(fname,width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title)
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
@@ -1472,7 +1473,7 @@ pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layou
 pdfA4plot_off <- function () {
   if (exists("mfrow_default")) {
     x = mfrow_default
-  } else { x =  c(1,1)}
+  } else { x =  c(1, 1)}
   par(mfrow = x)
   try(dev.off()) # close pdf
   if(exists("OutDir")) {oo()}
@@ -1489,10 +1490,10 @@ pdfA4plot_off <- function () {
 # #' @param quantity String in brackets after the subscript, eg.: log2(read count).
 # #' @export
 # #'
-# #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10,quantity = "read count"), ylab =subscript_in_plots())
+# #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10, quantity = "read count"), ylab =subscript_in_plots())
 
 # subscript_in_plots2 <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
-#   formatted_string = substitute(paste(prefix[subscr],"(",quantity,")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
+#   formatted_string = substitute(paste(prefix[subscr], "(", quantity, ")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
 # }
 # #' superscript_in_plots2
 # #' Like superscript_in_plots, but uses substitute() instead bquote()
@@ -1505,5 +1506,5 @@ pdfA4plot_off <- function () {
 # #' @examples plot (1, 1, main =superscript_in_plots2())
 
 # superscript_in_plots2 <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
-#   formatted_string = substitute(paste(prefix^sup,quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
+#   formatted_string = substitute(paste(prefix^sup, quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
 # }

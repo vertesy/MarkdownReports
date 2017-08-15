@@ -47,7 +47,7 @@ wscatter.fill(x, y, ..., color, xlim = range(x), ylim = range(y),
 
 \item{yaxs}{The style of axis interval calculation to be used for the X-axis. See help('par').}
 
-\item{las}{numeric in {0,1,2,3}; the style of axis labels. See help('par').}
+\item{las}{numeric in {0, 1, 2, 3}; the style of axis labels. See help('par').}
 
 \item{axes}{Draw axes and box}
 

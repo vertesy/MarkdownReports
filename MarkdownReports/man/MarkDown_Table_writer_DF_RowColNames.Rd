@@ -12,7 +12,7 @@ MarkDown_Table_writer_DF_RowColNames(df, FullPath = path_of_report,
 
 \item{FullPath}{Full path to the file.}
 
-\item{percentify}{Format numbers [0,1] to percentages 0-100.}
+\item{percentify}{Format numbers [0, 1] to percentages 0-100.}
 
 \item{title_of_table}{Title above the table (in the markdown report).}
 
