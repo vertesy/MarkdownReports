@@ -1345,7 +1345,8 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' @export
 
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
-  NewOutDir = kollapse(OutDir, "/", ..., print = F)
+  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
+  NewOutDir = kollapse(OutDir, ..., print = F)
   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
@@ -1354,7 +1355,6 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
     any_print("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
-
   assign("OutDir", NewOutDir, envir = .GlobalEnv)
 }
 
