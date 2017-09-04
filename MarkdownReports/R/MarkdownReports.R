@@ -1291,10 +1291,12 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 #'
 #' Print a list, one element per line,  into your markdown report
 #' @param yalist your list
+#' @param printName print header level 4: the name of the list or a custom string
 #' @examples llwrite_list(your_list)
 #' @export
 
-llwrite_list <- function(yalist) {
+llwrite_list <- function(yalist, printName="self") {
+  if (printName == "self")  llprint("####",substitute(yalist))  else if (printName == F) { ""} else { llprint("####",printName) }  #  else do not print
   for (e in 1:l(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
     print(yalist[e]); llogit("`", yalist[e], "`")
@@ -1317,8 +1319,21 @@ llwrite_list <- function(yalist) {
 #'
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  stopif(is.null(names(fill_)), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+# wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+#   stopif(is.null(names(fill_) & 1), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+#   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+#   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
+#   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
+# }
+
+wlegend <- function(fill_ = "NULL", poz=4, legend, bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  stopif(is.null(fill_))
+  fNames = names(fill_)
+  if( !is.null(fNames ) ) legend = fNames
+  check_ =(  is.null(fNames) && missing(legend) )
+  stopif( check_, message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+  stopif( ( length(fill_)  != length(legend)), message = "fill and legend are not equally long.")
+
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
