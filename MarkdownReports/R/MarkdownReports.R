@@ -31,6 +31,18 @@ kollapse <-function (..., collapseby = "", print = T) {
 	paste0(c(...), collapse = collapseby)
 }
 
+#' substrRight
+#'
+#' Take the right substring of a string
+#' @param x a character vector.
+#' @param n integer. The number of elements on the right to be kept.
+#' @examples substrRight  ("Not cool", n=4)
+#' @export
+
+substrRight <- function (x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+
 
 #' iprint
 #'
@@ -1381,25 +1393,25 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
 #' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
+#' @param cexx font size; 1 by default
 #' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
 #' @param ...  Additional parameters for the line to display.
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 #' @export
 
-wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
-  print(coeff)
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
   if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
-  legendText  =  c(legendText, paste0("Pearson c.c.: ", dispCoeff))  }
+  legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))  }
   if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "spearman"))
-  legendText = c(legendText, paste0("Spearman c.c.: ", dispCoeff))  }
+  legendText = c(legendText, paste0("Spear.: ", dispCoeff))  }
   if ("r2" %in% coeff) {          r2 = iround(summary(regression)$r.squared)
   legendText = c(legendText, paste0("R^2: ", r2))  }
-  print(legendText)
-  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n")
-  } else {                                    legend(textlocation, legend = legendText , bty="n") }
+  # print(legendText)
+  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n", cex = cexx)
+  } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
   if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
 }
 
