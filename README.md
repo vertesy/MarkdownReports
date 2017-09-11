@@ -35,7 +35,7 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
 - A timestamped subdirectory is created that you can backup once satisfied with your results.
 - The generated report is easy to [share on a GitHub wiki](https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration).
 - It natively exports tables from R to Markdown
-- It is all achieved in ~ 400 lines of well commented code.
+- It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.
 
 
 <br><br>
