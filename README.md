@@ -85,9 +85,8 @@ Alternatively, you simply source it from the web.
 
 [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
-
-
 <br>
+  
 **MarkdownReports** is a project of @vertesy.
 
  <br/> <br/> <br/> <br/> <br/>
