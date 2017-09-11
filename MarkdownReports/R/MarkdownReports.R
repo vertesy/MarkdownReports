@@ -1,6 +1,6 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
-# date: # 15 August 2017 (Tuesday) 12:38
+# date: # 11 September 2017 (Monday) 12:58
 
 ## Aliases
 try.dev.off <- function () { try(dev.off(), silent = T) }

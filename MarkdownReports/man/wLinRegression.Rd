@@ -5,7 +5,7 @@
 \title{wLinRegression}
 \usage{
 wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
-  textlocation = "topleft", savefile = T, ...)
+  textlocation = "topleft", savefile = T, cexx = 1, ...)
 }
 \arguments{
 \item{DF}{The same dataframe as you provided to wplot() before you called this function}
@@ -15,6 +15,8 @@ wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
 \item{textlocation}{where to put the legend?}
 
 \item{savefile}{Shall it call wplot_save_this(plotname = plotnameLastPlot) ?}
+
+\item{cexx}{font size; 1 by default}
 
 \item{...}{Additional parameters for the line to display.}
 }

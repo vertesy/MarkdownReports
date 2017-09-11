@@ -4,10 +4,12 @@
 \alias{llwrite_list}
 \title{llwrite_list}
 \usage{
-llwrite_list(yalist)
+llwrite_list(yalist, printName = "self")
 }
 \arguments{
 \item{yalist}{your list}
+
+\item{printName}{print header level 4: the name of the list or a custom string}
 }
 \description{
 Print a list, one element per line,  into your markdown report

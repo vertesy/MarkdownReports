@@ -4,8 +4,8 @@
 \alias{wlegend}
 \title{wlegend}
 \usage{
-wlegend(fill_ = NULL, poz = 4, legend = names(fill_), bty = "n", ...,
-  w_ = 7, h_ = w_, OverwritePrevPDF = T)
+wlegend(fill_ = "NULL", poz = 4, legend, bty = "n", ..., w_ = 7,
+  h_ = w_, OverwritePrevPDF = T)
 }
 \arguments{
 \item{fill_}{Color of the boxes next to the text}

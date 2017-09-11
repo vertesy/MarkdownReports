@@ -5,7 +5,8 @@
 \title{setup_MarkdownReports}
 \usage{
 setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", setDir = T, append = F, png4Github = T)
+  title = "", setDir = T, append = F, png4Github = T,
+  addTableOfContents = F)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}
@@ -17,6 +18,8 @@ setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
 \item{append}{Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.}
 
 \item{png4Github}{A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.}
+
+\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.}
 }
 \description{
 Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.

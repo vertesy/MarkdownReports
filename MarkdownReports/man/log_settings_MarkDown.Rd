@@ -2,7 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{log_settings_MarkDown}
 \alias{log_settings_MarkDown}
-\title{log_settings_MarkDown}
+\title{log_settings_MarkDown (OLD)}
 \usage{
 log_settings_MarkDown(...)
 }

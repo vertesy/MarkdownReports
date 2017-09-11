@@ -1,6 +1,6 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
-# date: # 15 August 2017 (Tuesday) 12:38
+# date: # 11 September 2017 (Monday) 12:58
 
 ## Aliases
 try.dev.off <- function () { try(dev.off(), silent = T) }
@@ -29,6 +29,18 @@ kollapse <-function (..., collapseby = "", print = T) {
 		print(paste0(c(...), collapse = collapseby))
 	}
 	paste0(c(...), collapse = collapseby)
+}
+
+#' substrRight
+#'
+#' Take the right substring of a string
+#' @param x a character vector.
+#' @param n integer. The number of elements on the right to be kept.
+#' @examples substrRight  ("Not cool", n=4)
+#' @export
+
+substrRight <- function (x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
 }
 
 
@@ -85,29 +97,31 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
 #' @param png4Github A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
-	if (!exists(OutDir)) {	dir.create(OutDir)	}
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T, addTableOfContents=F) {
+  if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
-	assign("OutDir", OutDir, envir = .GlobalEnv)
-	any_print("All files will be saved under 'OutDir': ", OutDir)
-	path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
-	assign("path_of_report", path_of_report, envir = .GlobalEnv)
-	any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
+  assign("OutDir", OutDir, envir = .GlobalEnv)
+  any_print("All files will be saved under 'OutDir': ", OutDir)
+  path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
+  assign("path_of_report", path_of_report, envir = .GlobalEnv)
+  any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
-	if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
-	} else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
-	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
-	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
-	if (setDir) {	setwd(OutDir)}
-	if (!exists(BackupDir)) {
-		dir.create(BackupDir)
-		assign("BackupDir", BackupDir, envir = .GlobalEnv)
-	}
-	assign("png4Github", png4Github, envir = .GlobalEnv)
-	assign("scriptname", scriptname, envir = .GlobalEnv)
+  if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
+  } else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
+  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
+  if (addTableOfContents) write('[TOC]', path_of_report, append = append)
+  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  if (setDir) {	setwd(OutDir)}
+  if (!exists(BackupDir)) {
+    dir.create(BackupDir)
+    assign("BackupDir", BackupDir, envir = .GlobalEnv)
+  }
+  assign("png4Github", png4Github, envir = .GlobalEnv)
+  assign("scriptname", scriptname, envir = .GlobalEnv)
 }
 
 #' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
@@ -174,7 +188,27 @@ continue_logging_markdown <-function (scriptname) {
 }
 
 
-#' log_settings_MarkDown
+#' md.LogSettingsFromList
+#'
+#' Log the parameters & settings used in the script and stored in a list, in a table format in the report.
+#' @param parameterlist List of Paramters
+#' @maxlen Maximum length of entries in a parameter list element
+#' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
+#' @export
+
+md.LogSettingsFromList <-function (parameterlist=p, maxlen =20) {
+  LZ = unlapply(parameterlist, l) # collapse paramters with multiple entires
+  LNG = names(which(LZ>1))
+  for (i in LNG ) {
+    if (l(parameterlist[[LNG]]) > maxlen) parameterlist[[LNG]] = parameterlist[[LNG]][1:maxlen]
+    parameterlist[[LNG]] = paste(parameterlist[[LNG]], collapse = ", ")
+  } #for
+  DF = t(as.data.frame(parameterlist))
+  colnames(DF) = "Value"
+  MarkDown_Table_writer_DF_RowColNames(DF, title_of_table = "Script Parameters and Settings")
+}
+
+#' log_settings_MarkDown (OLD)
 #'
 #' Log the parameters & settings used in the script in a table format.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
@@ -1291,10 +1325,12 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 #'
 #' Print a list, one element per line,  into your markdown report
 #' @param yalist your list
+#' @param printName print header level 4: the name of the list or a custom string
 #' @examples llwrite_list(your_list)
 #' @export
 
-llwrite_list <- function(yalist) {
+llwrite_list <- function(yalist, printName="self") {
+  if (printName == "self")  llprint("####",substitute(yalist))  else if (printName == F) { ""} else { llprint("####",printName) }  #  else do not print
   for (e in 1:l(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
     print(yalist[e]); llogit("`", yalist[e], "`")
@@ -1317,8 +1353,21 @@ llwrite_list <- function(yalist) {
 #'
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  stopif(is.null(names(fill_)), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+# wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+#   stopif(is.null(names(fill_) & 1), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+#   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+#   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
+#   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
+# }
+
+wlegend <- function(fill_ = "NULL", poz=4, legend, bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+  stopif(is.null(fill_))
+  fNames = names(fill_)
+  if( !is.null(fNames ) ) legend = fNames
+  check_ =(  is.null(fNames) && missing(legend) )
+  stopif( check_, message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
+  stopif( ( length(fill_)  != length(legend)), message = "fill and legend are not equally long.")
+
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
@@ -1345,7 +1394,8 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' @export
 
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
-  NewOutDir = kollapse(OutDir, "/", ..., print = F)
+  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
+  NewOutDir = kollapse(OutDir, ..., print = F)
   any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
@@ -1354,7 +1404,6 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
     any_print("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
-
   assign("OutDir", NewOutDir, envir = .GlobalEnv)
 }
 
@@ -1366,25 +1415,25 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
 #' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
+#' @param cexx font size; 1 by default
 #' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
 #' @param ...  Additional parameters for the line to display.
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 #' @export
 
-wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
-  print(coeff)
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
   if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
-  legendText  =  c(legendText, paste0("Pearson c.c.: ", dispCoeff))  }
+  legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))  }
   if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "spearman"))
-  legendText = c(legendText, paste0("Spearman c.c.: ", dispCoeff))  }
+  legendText = c(legendText, paste0("Spear.: ", dispCoeff))  }
   if ("r2" %in% coeff) {          r2 = iround(summary(regression)$r.squared)
   legendText = c(legendText, paste0("R^2: ", r2))  }
-  print(legendText)
-  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n")
-  } else {                                    legend(textlocation, legend = legendText , bty="n") }
+  # print(legendText)
+  if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n", cex = cexx)
+  } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
   if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
 }
 
