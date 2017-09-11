@@ -12,7 +12,7 @@ llwrite_list(yalist, printName = "self")
 \item{printName}{print header level 4: the name of the list or a custom string}
 }
 \description{
-Print a list, one element per line,  into your markdown report
+Print a list, one element per line, into your markdown report
 }
 \examples{
 llwrite_list(your_list)

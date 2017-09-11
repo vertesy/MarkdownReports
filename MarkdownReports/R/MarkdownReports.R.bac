@@ -2,7 +2,21 @@
 # author: Abel Vertesy
 # date: # 11 September 2017 (Monday) 12:58
 
-## Aliases
+
+#' FnP_parser
+#'
+#' Internal Function. Parses the full path from the filename & location of the file.
+#' @param fname Name of the file
+#' @param ext_wo_dot File extension without separating dot.
+#' @examples FnP_parser(fname = 'myplot', ext_wo_dot = "jpg")
+#' @export
+
+FnP_parser <- function(fname, ext_wo_dot) {
+  path = if ( exists('OutDir') ) OutDir else paste0(getwd(), "/") ; any_print ("OutDir not defined !!!")
+  FnP = if (methods::hasArg(ext_wo_dot) ) kollapse (path, fname, ".", ext_wo_dot) else FnP = kollapse (path, "/", fname)
+}
+
+
 try.dev.off <- function () { try(dev.off(), silent = T) }
 
 #' ttl_field
@@ -58,7 +72,6 @@ iprint <-function (...) {
 
 any_print = iprint # for compatibility
 
-
 #' iround
 #'
 #' Rounds a value to the significant amount of digits. Its a wrapper for signif().
@@ -86,7 +99,6 @@ percentage_formatter <-function (x, digitz = 3) {
 	a[a == "NA %"] = NA
 	return(a)
 }
-
 
 
 #' setup_MarkdownReports
@@ -422,7 +434,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
                   abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
-                  savefile = T, mdlink = F,  w = 7, h = w) {
+                  savefile = T, mdlink = F, w = 7, h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
   fname = kollapse(plotname, ".plot")
@@ -488,13 +500,13 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
 
 
 
-wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[,1]), ylim=range(df2col[,2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
+wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[, 1]), ylim=range(df2col[, 2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
                            plotname = substitute(df2col), plot.title = plotname,
                            plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
                            axes = TRUE, frame.plot = axes, xlb, ylb,
                            savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = F ) {
-  x = df2col[,1]
-  y = df2col[,2]
+  x = df2col[, 1]
+  y = df2col[, 2]
   CNN = colnames(df2col)
   xlb = if(length(CNN) & missing(xlb)) CNN[1]
   ylb = if(length(CNN) & missing(ylb)) CNN[2]
@@ -531,7 +543,7 @@ wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., 
 
   # points
   plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n", xlab=xlb, ylab=ylb)
-  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch,...)
+  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch, ...)
 
   ## options to make mapping more customizable
   if (missing(plot.axes)) {
@@ -851,7 +863,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @export
 
 wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
-                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "",  incrBottMarginBy = 0, tilted_text = F,
+                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
                               savefile = T, w = 7, h = w, mdlink = F) {
   fname = kollapse(plotname, ".stripchart")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -1050,7 +1062,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
 
 whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
                             plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
-                            savefile = T, incrBottMarginBy = 0,  w = 7, h = w, mdlink = F) {
+                            savefile = T, incrBottMarginBy = 0, w = 7, h = w, mdlink = F) {
 
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
@@ -1327,14 +1339,14 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
 
 #' llwrite_list
 #'
-#' Print a list, one element per line,  into your markdown report
+#' Print a list, one element per line, into your markdown report
 #' @param yalist your list
 #' @param printName print header level 4: the name of the list or a custom string
 #' @examples llwrite_list(your_list)
 #' @export
 
 llwrite_list <- function(yalist, printName="self") {
-  if (printName == "self")  llprint("####",substitute(yalist))  else if (printName == F) { ""} else { llprint("####",printName) }  #  else do not print
+  if (printName == "self")  llprint("####", substitute(yalist))  else if (printName == F) { ""} else { llprint("####", printName) }  #  else do not print
   for (e in 1:l(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
     print(yalist[e]); llogit("`", yalist[e], "`")
@@ -1523,6 +1535,7 @@ pdfA4plot_on.layout <- function (pname = date(), ..., w = 8.27, h = 11.69, layou
 #' @export
 #'
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+
 pdfA4plot_off <- function () {
   if (exists("mfrow_default")) {
     x = mfrow_default
@@ -1531,6 +1544,41 @@ pdfA4plot_off <- function () {
   try(dev.off()) # close pdf
   if(exists("OutDir")) {oo()}
 }
+
+
+#' wcolorize
+#'
+#' Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
+#' @param vector A vector with categories, can be numbers or strings
+#' @param UseRColorBrewer Use RColorBrewer palettes. If so "set"  should be one of the legit RColorBrewer palettes. See its help
+#' @param ReturnCategoriesToo Return unique Categories. See example.
+#' @param show Show generated color palette
+#' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), any RColorBrewer::brewer.pal palette, eg: "Set1", or gplots::rich.colors.
+#' @export
+#'
+#' @examples
+
+wcolorize  <- function(vector=c(1,1,1:6), UseRColorBrewer=F, ReturnCategoriesToo=T, show=F,set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
+  NrCol = l(unique(vector))
+  condition = F
+  if (UseRColorBrewer) {
+    COLZ = RColorBrewer::brewer.pal(NrCol, name = set)[as.factor.numeric(vector)]
+  } else {
+    COLZ = as.factor.numeric(vector) # if basic numbers
+    if(set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
+    (set == "heat.colors") {        heat.colors(NrCol)[COLZ]} else if
+    (set == "terrain.colors") {     terrain.colors(NrCol)[COLZ]} else if
+    (set == "topo.colors") {        topo.colors(NrCol)[COLZ]} else if
+    (set == "rich") {               gplots::rich.colors(NrCol)[COLZ]}
+  }#if
+  names(COLZ) = vector
+  CATEG = unique.wNames(COLZ)
+  if(show) Color_Check(CATEG)
+  if (ReturnCategoriesToo) {COLZ = list("vec" = COLZ, "categ" = CATEG)}
+  COLZ
+}
+
+
 
 # ALTERNATIVE VERSIONS -------------
 
