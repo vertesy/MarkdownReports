@@ -10,7 +10,7 @@ ttl_field(flname = fname)
 \item{flname}{Name of the plot}
 }
 \description{
-Internal function. Creates the string written into the PDF files "Title' (metadata) field/
+Internal function. Creates the string written into the PDF files "Title' (metadata) field.
 }
 \examples{
 ttl_field()
