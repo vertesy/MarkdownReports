@@ -8,6 +8,8 @@ md.LogSettingsFromList(parameterlist = p, maxlen = 20)
 }
 \arguments{
 \item{parameterlist}{List of Paramters}
+
+\item{maxlen}{Maximum length of entries in a parameter list element}
 }
 \description{
 Log the parameters & settings used in the script and stored in a list, in a table format in the report.

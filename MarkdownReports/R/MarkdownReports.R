@@ -118,23 +118,23 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param b.png4Github A global variable defined here. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @export
-#' @examples setup_logging_markdown (b.scriptname =  , title =  , append = T, b.png4Github = T)
+#' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
-setup_MarkdownReports <-function (OutDir = getwd(), b.scriptname = basename(OutDir), title = "", setDir=T, append = F, b.usepng = F, b.png4Github = T, addTableOfContents=F) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, b.usepng = F, b.png4Github = T, addTableOfContents=F) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
   assign("OutDir", OutDir, envir = .GlobalEnv)
   iprint("All files will be saved under 'OutDir': ", OutDir)
-  path_of_report <- paste0(OutDir, "/", b.scriptname, ".log.md")
+  path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
   assign("path_of_report", path_of_report, envir = .GlobalEnv)
   iprint("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
   if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
-  } else {			write(paste("# ", b.scriptname, "Report"), path_of_report, append = append) }
-  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), b.scriptname), path_of_report, append = T)
+  } else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
+  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
 
   if (addTableOfContents) write('[TOC]', path_of_report, append = T)
-  BackupDir = kollapse(OutDir, "/", substr(b.scriptname, 1, nchar(b.scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (setDir) {	setwd(OutDir)}
   if (!exists(BackupDir)) {
     dir.create(BackupDir)
@@ -142,7 +142,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), b.scriptname = basename(OutD
   }
   assign("b.usepng", b.usepng, envir = .GlobalEnv)
   assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
-  assign("b.scriptname", b.scriptname, envir = .GlobalEnv)
+  assign("b.scriptname", scriptname, envir = .GlobalEnv)
 }
 
 #' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
@@ -1406,7 +1406,7 @@ getCategories <-function(named_categ_vec) { named_categ_vec[unique(names(named_c
 
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
-  NewOutDir = kollapse(OutDir, ..., print = F)
+  NewOutDir = kollapse(OutDir,  ..., "/", print = F)
   iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
