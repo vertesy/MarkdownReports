@@ -4,7 +4,7 @@
 ## What is ***MarkdownReports***?
 
 
-MarkdownReports is a set of **R** functions that allows you to generate precise figures easily, and create clean reports about what you just discovered with your analysis script. It helps you to:
+MarkdownReports is a set of **R** functions that allows you to generate precise figures easily, and create clean reports in markdown langage about what you just discovered with your analysis script. It helps you to:
 
 
 1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.
