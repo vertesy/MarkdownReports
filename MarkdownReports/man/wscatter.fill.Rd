@@ -4,19 +4,15 @@
 \alias{wscatter.fill}
 \title{wscatter.fill}
 \usage{
-wscatter.fill(x, y, ..., color, xlim = range(x), ylim = range(y),
+wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
+  xlim = range(df2col[, 1]), ylim = range(df2col[, 2]),
   zlim = range(color), nlevels = 20, pch = 21, cex = 1,
-  plotname = substitute(variable), plot.title = plotname,
-  xlb = substitute(x), ylb = substitute(y), plot.axes, key.title, key.axes,
-  asp = NA, xaxs = "i", yaxs = "i", las = 1, axes = TRUE,
-  frame.plot = axes, savefile = T, w = 7, h = w, incrBottMarginBy = 0,
-  mdlink = F)
+  plotname = substitute(df2col), plot.title = plotname, plot.axes,
+  key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
+  axes = TRUE, frame.plot = axes, xlb, ylb, savefile = T, w = 7,
+  h = w, incrBottMarginBy = 0, mdlink = F)
 }
 \arguments{
-\item{x}{X variable}
-
-\item{y}{Y variable}
-
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
 \item{color}{Filling color of the symbols}
@@ -62,6 +58,10 @@ wscatter.fill(x, y, ..., color, xlim = range(x), ylim = range(y),
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{x}{X variable}
+
+\item{y}{Y variable}
 
 \item{ylimManually}{set the range of canvas in Y dimension}
 }

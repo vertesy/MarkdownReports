@@ -488,20 +488,24 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
 
 
 
-wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=range(color),
-                           nlevels = 20, pch=21, cex=1,
-                           plotname = substitute(variable), plot.title = plotname, xlb = substitute(x), ylb = substitute(y),
+wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[,1]), ylim=range(df2col[,2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
+                           plotname = substitute(df2col), plot.title = plotname,
                            plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
-                           axes = TRUE, frame.plot = axes,
+                           axes = TRUE, frame.plot = axes, xlb, ylb,
                            savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = F ) {
+  x = df2col[,1]
+  y = df2col[,2]
+  CNN = colnames(df2col)
+  xlb = if(length(CNN) & missing(xlb)) CNN[1]
+  ylb = if(length(CNN) & missing(ylb)) CNN[2]
 
   fname = kollapse(plotname, ".barplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
 
   mar.orig <- (par.orig <- par(c("mar", "las", "mfrow")))$mar
   on.exit(par(par.orig))
-  w <- (3 + mar.orig[2L]) * par("csi") * 2.54
-  layout(matrix(c(2, 1), ncol = 2L), widths = c(1, lcm(w)))
+  WID <- (3 + mar.orig[2L]) * par("csi") * 2.54
+  layout(matrix(c(2, 1), ncol = 2L), widths = c(1, lcm(WID)))
   par(las = las)
   mar <- mar.orig
   mar[4L] <- mar[2L]
@@ -526,8 +530,8 @@ wscatter.fill <- function (x, y, ..., color, xlim=range(x), ylim=range(y), zlim=
   par(mar = mar)
 
   # points
-  plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n")
-  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch, ...)
+  plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n", xlab=xlb, ylab=ylb)
+  points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch,...)
 
   ## options to make mapping more customizable
   if (missing(plot.axes)) {
