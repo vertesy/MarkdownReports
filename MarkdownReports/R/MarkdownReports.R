@@ -1,6 +1,6 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
-# date: # 11 September 2017 (Monday) 12:58
+# date: # 11 September 2017 (Monday) 12:38
 
 
 #' FnP_parser
@@ -12,7 +12,7 @@
 #' @examples FnP_parser(fname = 'myplot', ext_wo_dot = "jpg")
 
 FnP_parser <-function(fname, ext_wo_dot) {
-  path = if ( exists('OutDir') ) OutDir else paste0(getwd(), "/") ; any_print ("OutDir not defined !!!")
+  path = if ( exists('OutDir') ) {OutDir} else {paste0(getwd(), "/") ; iprint ("ZZ OutDir not defined !!!")}
   FnP = if (methods::hasArg(ext_wo_dot) ) kollapse (path, fname, ".", ext_wo_dot) else FnP = kollapse (path, "/", fname)
 }
 
@@ -32,7 +32,7 @@ try.dev.off <-function () { try(dev.off(), silent = T) }
 #' @export
 #' @examples ttl_field()
 
-ttl_field <-function (flname = fname ) { paste0(basename(flname), " by ", if (exists("scriptname")) scriptname else "Rscript") }
+ttl_field <-function (flname = fname ) { paste0(basename(flname), " by ", if (exists("b.scriptname")) b.scriptname else "Rscript") }
 
 
 #' kollapse
@@ -69,14 +69,14 @@ substrRight <-function (x, n){
 #' A more intelligent printing function that collapses any variable passed to it by white spaces.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @export
-#' @examples any_print ("Hello ", "you ", 3, ", " , 11, " year old kids.")
+#' @examples iprint ("Hello ", "you ", 3, ", " , 11, " year old kids.")
 
 iprint <-function (...) {
 	argument_list <- c(...)
 	print(paste(argument_list, collapse = " "))
 }
 
-any_print = iprint # for compatibility
+iprint = iprint # for compatibility
 
 #' iround
 #'
@@ -111,35 +111,38 @@ percentage_formatter <-function (x, digitz = 3) {
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param OutDir The output directory (absolute / full path).
-#' @param scriptname Name of the script (file) generating the report. "scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
+#' @param b.scriptname Name of the script (file) generating the report. "b.scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
-#' @param png4Github A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param b.usepng A global variable defined here. It is used by the plotting functions. If TRUE, a link to the .png versions of images will be created.
+#' @param b.png4Github A global variable defined here. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @export
-#' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
+#' @examples setup_logging_markdown (b.scriptname =  , title =  , append = T, b.png4Github = T)
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T, addTableOfContents=F) {
+setup_MarkdownReports <-function (OutDir = getwd(), b.scriptname = basename(OutDir), title = "", setDir=T, append = F, b.usepng = F, b.png4Github = T, addTableOfContents=F) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
   assign("OutDir", OutDir, envir = .GlobalEnv)
-  any_print("All files will be saved under 'OutDir': ", OutDir)
-  path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
+  iprint("All files will be saved under 'OutDir': ", OutDir)
+  path_of_report <- paste0(OutDir, "/", b.scriptname, ".log.md")
   assign("path_of_report", path_of_report, envir = .GlobalEnv)
-  any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
+  iprint("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
   if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
-  } else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
-  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
-  if (addTableOfContents) write('[TOC]', path_of_report, append = append)
-  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  } else {			write(paste("# ", b.scriptname, "Report"), path_of_report, append = append) }
+  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), b.scriptname), path_of_report, append = T)
+
+  if (addTableOfContents) write('[TOC]', path_of_report, append = T)
+  BackupDir = kollapse(OutDir, "/", substr(b.scriptname, 1, nchar(b.scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (setDir) {	setwd(OutDir)}
   if (!exists(BackupDir)) {
     dir.create(BackupDir)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
-  assign("png4Github", png4Github, envir = .GlobalEnv)
-  assign("scriptname", scriptname, envir = .GlobalEnv)
+  assign("b.usepng", b.usepng, envir = .GlobalEnv)
+  assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
+  assign("b.scriptname", b.scriptname, envir = .GlobalEnv)
 }
 
 #' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
@@ -151,7 +154,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
 
 create_set_OutDir <-function (..., setDir=T) {
 	OutDir = kollapse(..., print = F)
-	any_print("All files will be saved under 'OutDir': ", OutDir)
+	iprint("All files will be saved under 'OutDir': ", OutDir)
 	if (!exists(OutDir)) {	dir.create(OutDir)	}
 	if (setDir) {	setwd(OutDir)}
 	assign("OutDir", OutDir, envir = .GlobalEnv)
@@ -164,13 +167,13 @@ create_set_OutDir <-function (..., setDir=T) {
 #' @param fname Name of the report file.
 #' @param title Title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report.
-#' @param png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param b.png4Github A global variable, defined by this and used by the other functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @export
-#' @examples setup_logging_markdown (fname =  , title =  , append = T, png4Github = T)
+#' @examples setup_logging_markdown (fname =  , title =  , append = T, b.png4Github = T)
 
-setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T) {
+setup_logging_markdown <-function (fname, title = "", append = T, b.png4Github = T) {
 	if (exists("OutDir")) {		path = OutDir
-	} else {					path = getwd(); any_print("OutDir not defined !!!")	}
+	} else {					path = getwd(); iprint("OutDir not defined !!!")	}
 	path_of_report <- kollapse(path, "/", fname, ".log.md")
 
 	if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
@@ -182,7 +185,7 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 		assign("BackupDir", BackupDir, envir = .GlobalEnv)
 	}
 	assign("path_of_report", path_of_report, envir = .GlobalEnv)
-	assign("png4Github", png4Github, envir = .GlobalEnv)
+	assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
 }
 
 #' continue_logging_markdown
@@ -192,13 +195,13 @@ setup_logging_markdown <-function (fname, title = "", append = T, png4Github = T
 #' @export
 #' @examples continue_logging_markdown (fname =  )
 
-continue_logging_markdown <-function (scriptname) {
-  if (exists("OutDir")) {	path = OutDir } else {	path = getwd(); any_print("OutDir not defined !!! Saving in working directory.") }
-  path_of_report <- kollapse(path, "/", scriptname, ".log.md", print = F)
-  any_print("Writing report in:", path_of_report)
+continue_logging_markdown <-function (b.scriptname) {
+  if (exists("OutDir")) {	path = OutDir } else {	path = getwd(); iprint("OutDir not defined !!! Saving in working directory.") }
+  path_of_report <- kollapse(path, "/", b.scriptname, ".log.md", print = F)
+  iprint("Writing report in:", path_of_report)
   assign("path_of_report", path_of_report, envir = .GlobalEnv)
 
-  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, (nchar(scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  BackupDir = kollapse(OutDir, "/", substr(b.scriptname, 1, (nchar(b.scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
     dir.create(BackupDir)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
@@ -210,7 +213,7 @@ continue_logging_markdown <-function (scriptname) {
 #'
 #' Log the parameters & settings used in the script and stored in a list, in a table format in the report.
 #' @param parameterlist List of Paramters
-#' @maxlen Maximum length of entries in a parameter list element
+#' @param maxlen Maximum length of entries in a parameter list element
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
 
@@ -290,7 +293,7 @@ MarkDown_ImgLink_formatter <-function (...) {
 
 #' MarkDown_Img_Logger_PDF_and_PNG
 #'
-#' Format a markdown image reference (link) to a .pdf and .png versions of graph, and insert both links to the markdown report, set by "path_of_report". If the "png4Github" variable is set, the .png-link is set up such, that you can upload the whole report with the .png image into your GitHub repo's wiki, under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest directory name in the "OutDir" variable. See create_set_OutDir() function.). This function is called by the ~wplot functions.
+#' Format a markdown image reference (link) to a .pdf and .png versions of graph, and insert both links to the markdown report, set by "path_of_report". If the "b.png4Github" variable is set, the .png-link is set up such, that you can upload the whole report with the .png image into your GitHub repo's wiki, under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest directory name in the "OutDir" variable. See create_set_OutDir() function.). This function is called by the ~wplot functions.
 #' @param fname_wo_ext Name of the image file where markdown links going to point to.
 #' @export
 #' @examples MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext =  )
@@ -299,14 +302,15 @@ MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 	splt = strsplit(fname_wo_ext, "/")
 	fn = splt[[1]][length(splt[[1]])]
 	llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
-	if (exists("png4Github") & png4Github == T) {
-		dirnm = strsplit(OutDir, split = "/")[[1]]
-		dirnm = dirnm[length(dirnm)]
-		llogit(kollapse("![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = F))
-	}
-	else {
-		llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F))
-	}
+	if (b.usepng) {
+  	if (b.png4Github == T) {
+  		dirnm = strsplit(OutDir, split = "/")[[1]]
+  		dirnm = dirnm[length(dirnm)]
+  		llogit(kollapse("![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = F))
+  	}	else {
+  	  llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F))
+  	}
+	} # if b.usepng
 }
 
 
@@ -597,7 +601,7 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title =  ttl_field(flname = plotname ) )
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
-# paste0(plotname, " by ", if (exists("scriptname")) scriptname else "Rscript")
+# paste0(plotname, " by ", if (exists("b.scriptname")) b.scriptname else "Rscript")
 
 #' whist
 #'
@@ -649,7 +653,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 		}
 		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
 		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
-	} else { any_print(variable, " IS EMPTY")	}
+	} else { iprint(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
@@ -1070,7 +1074,7 @@ whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), br
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
 
   lng = length(ListOf2)
-  if (lng != 2) { any_print("length(List): ", lng, " First two elements used" ) } #if
+  if (lng != 2) { iprint("length(List): ", lng, " First two elements used" ) } #if
   h1 = hist(ListOf2[[1]], plot=FALSE, breaks = breaks1)
   h2 = hist(ListOf2[[2]], plot=FALSE, breaks = breaks2)
   h2$counts = - h2$counts
@@ -1188,7 +1192,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
   if (mdlink) {
     llogit(MarkDown_ImgLink_formatter(fname))
-    if (exists("png4Github") & png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
+    if (b.usepng == T && b.png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
   }
 }
 
@@ -1403,12 +1407,12 @@ getCategories <-function(named_categ_vec) { named_categ_vec[unique(names(named_c
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
   NewOutDir = kollapse(OutDir, ..., print = F)
-  any_print("All files will be saved under 'NewOutDir': ", NewOutDir)
+  iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
   if (makeOutDirOrig) {
-    if (exists("OutDirOrig")) any_print("OutDirOrig was defined as:", OutDirOrig)
-    any_print("OutDirOrig will be:", OutDir)
+    if (exists("OutDirOrig")) iprint("OutDirOrig was defined as:", OutDirOrig)
+    iprint("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
   assign("OutDir", NewOutDir, envir = .GlobalEnv)
@@ -1487,7 +1491,7 @@ pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, col
   fname = FnP_parser(pname, "pdf")
   pdf(fname, width=w, height=h, title = title)
   par(mfrow = c(rows, cols))
-  any_print(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
+  iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
@@ -1513,7 +1517,7 @@ pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
-  any_print(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
+  iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
   if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 

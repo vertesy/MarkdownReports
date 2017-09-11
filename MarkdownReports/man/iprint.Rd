@@ -13,5 +13,5 @@ iprint(...)
 A more intelligent printing function that collapses any variable passed to it by white spaces.
 }
 \examples{
-any_print ("Hello ", "you ", 3, ", " , 11, " year old kids.")
+iprint ("Hello ", "you ", 3, ", " , 11, " year old kids.")
 }

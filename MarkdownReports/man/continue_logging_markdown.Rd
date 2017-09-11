@@ -4,7 +4,7 @@
 \alias{continue_logging_markdown}
 \title{continue_logging_markdown}
 \usage{
-continue_logging_markdown(scriptname)
+continue_logging_markdown(b.scriptname)
 }
 \arguments{
 \item{fname}{Name of the report file.}
