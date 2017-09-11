@@ -97,29 +97,31 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
 #' @param png4Github A global variable, defined by this and used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, png4Github = T)
 #' @export
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T) {
-	if (!exists(OutDir)) {	dir.create(OutDir)	}
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, png4Github = T, addTableOfContents=F) {
+  if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
-	assign("OutDir", OutDir, envir = .GlobalEnv)
-	any_print("All files will be saved under 'OutDir': ", OutDir)
-	path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
-	assign("path_of_report", path_of_report, envir = .GlobalEnv)
-	any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
+  assign("OutDir", OutDir, envir = .GlobalEnv)
+  any_print("All files will be saved under 'OutDir': ", OutDir)
+  path_of_report <- paste0(OutDir, "/", scriptname, ".log.md")
+  assign("path_of_report", path_of_report, envir = .GlobalEnv)
+  any_print("MarkdownReport location is stored in 'path_of_report': ", path_of_report)
 
-	if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
-	} else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
-	write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
-	BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
-	if (setDir) {	setwd(OutDir)}
-	if (!exists(BackupDir)) {
-		dir.create(BackupDir)
-		assign("BackupDir", BackupDir, envir = .GlobalEnv)
-	}
-	assign("png4Github", png4Github, envir = .GlobalEnv)
-	assign("scriptname", scriptname, envir = .GlobalEnv)
+  if (nchar(title)) {	write(paste("# ", title), path_of_report, append = append)
+  } else {			write(paste("# ", scriptname, "Report"), path_of_report, append = append) }
+  write(paste0("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), scriptname), path_of_report, append = T)
+  if (addTableOfContents) write('[TOC]', path_of_report, append = append)
+  BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
+  if (setDir) {	setwd(OutDir)}
+  if (!exists(BackupDir)) {
+    dir.create(BackupDir)
+    assign("BackupDir", BackupDir, envir = .GlobalEnv)
+  }
+  assign("png4Github", png4Github, envir = .GlobalEnv)
+  assign("scriptname", scriptname, envir = .GlobalEnv)
 }
 
 #' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
@@ -186,7 +188,27 @@ continue_logging_markdown <-function (scriptname) {
 }
 
 
-#' log_settings_MarkDown
+#' md.LogSettingsFromList
+#'
+#' Log the parameters & settings used in the script and stored in a list, in a table format in the report.
+#' @param parameterlist List of Paramters
+#' @maxlen Maximum length of entries in a parameter list element
+#' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
+#' @export
+
+md.LogSettingsFromList <-function (parameterlist=p, maxlen =20) {
+  LZ = unlapply(parameterlist, l) # collapse paramters with multiple entires
+  LNG = names(which(LZ>1))
+  for (i in LNG ) {
+    if (l(parameterlist[[LNG]]) > maxlen) parameterlist[[LNG]] = parameterlist[[LNG]][1:maxlen]
+    parameterlist[[LNG]] = paste(parameterlist[[LNG]], collapse = ", ")
+  } #for
+  DF = t(as.data.frame(parameterlist))
+  colnames(DF) = "Value"
+  MarkDown_Table_writer_DF_RowColNames(DF, title_of_table = "Script Parameters and Settings")
+}
+
+#' log_settings_MarkDown (OLD)
 #'
 #' Log the parameters & settings used in the script in a table format.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
