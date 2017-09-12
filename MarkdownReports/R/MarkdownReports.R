@@ -627,7 +627,7 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 #' @export
 #' @examples whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 
-whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable),
+whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
 				  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
 				  savefile = T, w = 7, h = w, mdlink = b.mdlink, ...) {
 	xtra = list(...)
@@ -1294,7 +1294,7 @@ superscript_in_plots <-function(prefix='n', sup='k', suffix='') { # Returns a fo
 filter_HP <-function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall between above high-pass-threshold (X >).
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-  conclusion = paste0(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
+  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
   if (file.exists(path_of_report) ) {	llogit (conclusion)} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
@@ -1314,8 +1314,8 @@ filter_HP <-function(numeric_vector, threshold, passequal = F, prepend ="", retu
 filter_LP <-function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall below the low-pass threshold (X <).
   survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-  conclusion = paste0(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
-  if (file.exists(path_of_report) ) {	llogit (conclusion)	} else { print  ("NOT LOGGED") }
+  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
+  if (file.exists(path_of_report) ) {	llogit (conclusion, )	} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
@@ -1333,12 +1333,12 @@ filter_LP <-function(numeric_vector, threshold, passequal = F, prepend ="", retu
 #' @examples filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
 
 filter_MidPass <-function(numeric_vector, HP_threshold, LP_threshold, prepend ="", return_survival_ratio=FALSE, EdgePass = F, na_rm = T) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
-	survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
-	if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
-	pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
-	conclusion = paste0(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
-	if (file.exists(path_of_report) ) {	llprint (conclusion)	} else { print  ("NOT LOGGED") }
-	if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
+  survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
+  if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
+  pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
+  conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
+  if (file.exists(path_of_report) ) {	llogit (conclusion)	} else { print  ("NOT LOGGED") }
+  if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
 
