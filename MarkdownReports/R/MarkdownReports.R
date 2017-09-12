@@ -1542,35 +1542,37 @@ pdfA4plot_off <-function () {
 #'
 #' Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
 #' @param vector A vector with categories, can be numbers or strings
-#' @param UseRColorBrewer Use RColorBrewer palettes. If so "set"  should be one of the legit RColorBrewer palettes. See its help
+#' @param UseRColorBrewer Use RColorBrewer palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help.
 #' @param ReturnCategoriesToo Return unique Categories. See example.
 #' @param show Show generated color palette
-#' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), any RColorBrewer::brewer.pal palette, eg: "Set1", or gplots::rich.colors.
+#' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), or gplots::rich.colors.
+#' @param randomize Randomize colors
 #' @export
-#' @examples wcolorize (vector=c(1,1,1:6), UseRColorBrewer=F, ReturnCategoriesToo=T, show=T)
+#' @examples wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
 
-wcolorize  <-function(vector=c(1,1,1:6), UseRColorBrewer=F, ReturnCategoriesToo=T, show=F,set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
+wcolorize  <-function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
   NrCol = l(unique(vector))
   condition = F
   COLZ = as.factor.numeric(vector) # if basic numbers
-  if (UseRColorBrewer) {
-    COLZ = RColorBrewer::brewer.pal(NrCol, name = set)[as.factor.numeric(vector)]
+  if(randomize) {COLZ = sample(COLZ)} # if randomise
+  if (RColorBrewerSet != F) {
+    COLZ = RColorBrewer::brewer.pal(NrCol, name = RColorBrewerSet)[as.factor.numeric(vector)]
   } else {
-    COLZ = if(set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
+    COLZ = if
+    (set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
     (set == "heat.colors") {        heat.colors(NrCol)[COLZ]} else if
     (set == "terrain.colors") {     terrain.colors(NrCol)[COLZ]} else if
     (set == "topo.colors") {        topo.colors(NrCol)[COLZ]} else if
     (set == "rich") {               gplots::rich.colors(NrCol)[COLZ]} else
       as.factor.numeric(vector) # if basic numbers
   }#if
-  print(COLZ)
+  COLZ=as.vector(COLZ)
   names(COLZ) = vector
   CATEG = unique.wNames(COLZ)
   if(show) Color_Check(CATEG)
   if (ReturnCategoriesToo) {COLZ = list("vec" = COLZ, "categ" = CATEG)}
-  COLZ
+  return(COLZ)
 }
-
 
 
 
