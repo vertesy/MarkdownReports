@@ -7,7 +7,7 @@
 wboxplot(yalist, ..., col = "gold1",
   plotname = as.character(substitute(yalist)), ylb = "", sub = FALSE,
   incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = w,
-  mdlink = F)
+  mdlink = b.mdlink)
 }
 \arguments{
 \item{yalist}{The variable to plot.}

@@ -10,7 +10,7 @@ wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
   plotname = substitute(df2col), plot.title = plotname, plot.axes,
   key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
   axes = TRUE, frame.plot = axes, xlb, ylb, savefile = T, w = 7,
-  h = w, incrBottMarginBy = 0, mdlink = F)
+  h = w, incrBottMarginBy = 0, mdlink = b.mdlink)
 }
 \arguments{
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}

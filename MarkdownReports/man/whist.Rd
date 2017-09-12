@@ -8,7 +8,7 @@ whist(variable, breaks = 20, col = "gold1",
   plotname = substitute(variable), main = kollapse("Histogram of ",
   substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
   lty = 2, lwd = 3, lcol = 1, filtercol = 0, savefile = T, w = 7,
-  h = w, mdlink = FALSE, ...)
+  h = w, mdlink = b.mdlink, ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -47,5 +47,5 @@ whist(variable, breaks = 20, col = "gold1",
 Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 }
 \examples{
-whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = FALSE, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
+whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 }

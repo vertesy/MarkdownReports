@@ -5,7 +5,7 @@
 \title{pdfA4plot_on.layout}
 \usage{
 pdfA4plot_on.layout(pname = date(), ..., w = 8.27, h = 11.69,
-  layout_mat = rbind(1, c(2, 3), 4:5), mdlink = FALSE,
+  layout_mat = rbind(1, c(2, 3), 4:5), mdlink = b.mdlink,
   title = ttl_field(pname))
 }
 \arguments{

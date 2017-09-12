@@ -5,7 +5,8 @@
 \title{wvenn}
 \usage{
 wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
-  subt, ..., w = 7, h = w, mdlink = F, plotname = substitute(yalist))
+  subt, ..., w = 7, h = w, mdlink = b.mdlink,
+  plotname = substitute(yalist))
 }
 \arguments{
 \item{yalist}{The variable to plot.}

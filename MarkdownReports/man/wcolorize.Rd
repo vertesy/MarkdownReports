@@ -4,24 +4,26 @@
 \alias{wcolorize}
 \title{wcolorize}
 \usage{
-wcolorize(vector = c(1, 1, 1:6), UseRColorBrewer = F,
-  ReturnCategoriesToo = T, show = F, set = c(F, "rich", "heat.colors",
-  "terrain.colors", "topo.colors", "rainbow")[1])
+wcolorize(vector = c(1, 1, 1:6), RColorBrewerSet = F,
+  ReturnCategoriesToo = F, show = F, randomize = F, set = c(F, "rich",
+  "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1])
 }
 \arguments{
 \item{vector}{A vector with categories, can be numbers or strings}
-
-\item{UseRColorBrewer}{Use RColorBrewer palettes. If so "set"  should be one of the legit RColorBrewer palettes. See its help}
 
 \item{ReturnCategoriesToo}{Return unique Categories. See example.}
 
 \item{show}{Show generated color palette}
 
-\item{set}{Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), any RColorBrewer::brewer.pal palette, eg: "Set1", or gplots::rich.colors.}
+\item{randomize}{Randomize colors}
+
+\item{set}{Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), or gplots::rich.colors.}
+
+\item{UseRColorBrewer}{Use RColorBrewer palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help.}
 }
 \description{
 Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
 }
 \examples{
-wcolorize (vector=c(1,1,1:6), UseRColorBrewer=F, ReturnCategoriesToo=T, show=T)
+wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
 }
