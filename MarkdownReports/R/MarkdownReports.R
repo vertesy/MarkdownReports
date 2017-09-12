@@ -650,7 +650,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
       hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
     }
     # if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
-    if (vline & !length(xtra$xlim)) { PozOfvline = NULL;
+    if (!missing(vline) & !length(xtra$xlim)) { PozOfvline = NULL;
     for (l in 1:length(vline)) {
       PozOfvline[l] = mean(histdata$mids[c(max(which(BRK < vline[l])), min(which(BRK >= vline[l])))])
     }

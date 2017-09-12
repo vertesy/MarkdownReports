@@ -627,37 +627,40 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 #' @export
 #' @examples whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 
-whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", 	substitute(variable)), xlb = substitute(variable),
-				  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-				  savefile = T, w = 7, h = w, mdlink = b.mdlink, ...) {
-	xtra = list(...)
-	if (length(variable) > 0) {
-		fname = kollapse(plotname, ".hist")
-		if (!is.numeric(variable)) {
-			variable = table(variable)
-			cexNsize = 0.7/abs(log10(length(variable)))
-			cexNsize = min(cexNsize, 1)
-			barplot(variable, ..., main = main, xlab = xlb, col = col, las = 2, cex.names = cexNsize,
-					sub = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
-		} else {
-			histdata = hist(variable, breaks = breaks, plot = F)
-			if (filtercol == 1) {	col = (histdata$breaks >= vline) + 2
-			} else if (filtercol == -1) {	col = (histdata$breaks < vline) + 2	}
-
-			hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
-		}
-		# if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
-		if (vline & !length(xtra$xlim)) { PozOfvline = NULL;
-			for (l in 1:length(vline)) {
-				PozOfvline[l] = mean(histdata$mids[c(max(which(histdata$breaks < vline[l])), min(which(histdata$breaks >= vline[l])))])
-			}
-			abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
-		}
-		else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
-		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
-	} else { iprint(variable, " IS EMPTY")	}
-	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
+                  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
+                  savefile = T, w = 7, h = w, mdlink = b.mdlink, ...) {
+  xtra = list(...)
+  if (length(variable) > 0) {
+    fname = kollapse(plotname, ".hist")
+    if (!is.numeric(variable)) {
+      variable = table(variable)
+      cexNsize = 0.7/abs(log10(length(variable)))
+      cexNsize = min(cexNsize, 1)
+      barplot(variable, ..., main = main, xlab = xlb, col = col, las = 2, cex.names = cexNsize,
+              sub = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable))))
+    } else {
+      histdata = hist(variable, breaks = breaks, plot = F)
+      BRK = histdata$breaks
+      NrThr = length(vline)
+      if (filtercol == 1  & NrThr ==1) { col =(BRK >= vline) + 2
+      } else if (filtercol == 1  & NrThr ==2) { col =(BRK >= vline[1] & BRK < vline[2]) + 2
+      } else if (filtercol == -1 & NrThr ==1) { col =(BRK < vline) + 2
+      } else if (filtercol == -1 & NrThr ==2) { col =(BRK < vline[1] | BRK >= vline[2]) + 2 }
+      hist(variable, ..., main = main, breaks = breaks, xlab = xlb, col = col, las = 2)
+    }
+    # if (hline) { abline(h = hline, lty = lty, lwd = lwd, col = lcol) }
+    if (vline & !length(xtra$xlim)) { PozOfvline = NULL;
+    for (l in 1:length(vline)) {
+      PozOfvline[l] = mean(histdata$mids[c(max(which(BRK < vline[l])), min(which(BRK >= vline[l])))])
+    }
+    abline(v = PozOfvline, lty = lty, lwd = lwd, col = lcol)
+    }
+    else if (vline & length(xtra$xlim)) { abline(v = vline, lty = lty, lwd = lwd, col = 1)	}
+    if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
+  } else { iprint(variable, " IS EMPTY")	}
+  assign("plotnameLastPlot", fname, envir = .GlobalEnv)
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
