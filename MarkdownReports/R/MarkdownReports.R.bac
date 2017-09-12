@@ -1552,22 +1552,25 @@ pdfA4plot_off <-function () {
 wcolorize  <-function(vector=c(1,1,1:6), UseRColorBrewer=F, ReturnCategoriesToo=T, show=F,set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
   NrCol = l(unique(vector))
   condition = F
+  COLZ = as.factor.numeric(vector) # if basic numbers
   if (UseRColorBrewer) {
     COLZ = RColorBrewer::brewer.pal(NrCol, name = set)[as.factor.numeric(vector)]
   } else {
-    COLZ = as.factor.numeric(vector) # if basic numbers
-    if(set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
+    COLZ = if(set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
     (set == "heat.colors") {        heat.colors(NrCol)[COLZ]} else if
     (set == "terrain.colors") {     terrain.colors(NrCol)[COLZ]} else if
     (set == "topo.colors") {        topo.colors(NrCol)[COLZ]} else if
-    (set == "rich") {               gplots::rich.colors(NrCol)[COLZ]}
+    (set == "rich") {               gplots::rich.colors(NrCol)[COLZ]} else
+      as.factor.numeric(vector) # if basic numbers
   }#if
+  print(COLZ)
   names(COLZ) = vector
   CATEG = unique.wNames(COLZ)
   if(show) Color_Check(CATEG)
   if (ReturnCategoriesToo) {COLZ = list("vec" = COLZ, "categ" = CATEG)}
   COLZ
 }
+
 
 
 
