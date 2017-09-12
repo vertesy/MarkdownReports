@@ -471,7 +471,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
   if (abline == "ab") {	abline(a = a, b = b, lty = lty, lwd = lwd, col = col_abline)	}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -571,7 +571,7 @@ wscatter.fill <-function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., c
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
 }
 
 
@@ -657,7 +657,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 		if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
 	} else { iprint(variable, " IS EMPTY")	}
 	assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+	if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -719,7 +719,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -756,7 +756,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -785,7 +785,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
 	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
 	if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
-	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+	if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -839,7 +839,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname) ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -900,7 +900,7 @@ wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pc
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -949,7 +949,7 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname) ) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -1004,7 +1004,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -1097,7 +1097,7 @@ whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), br
   if (savefile) { dev.copy2pdf(file = FnP_parser(fname, "pdf"), width = w, height = h, title = ttl_field(fname)) }
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
 }
 
 #' wbarplot_dfCol
@@ -1192,7 +1192,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
   if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)  } #if
   venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
-  if (mdlink) {
+  if (mdlink & savefile) {
     llogit(MarkDown_ImgLink_formatter(fname))
     if (b.usepng == T && b.png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
   }
@@ -1494,7 +1494,7 @@ pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, col
   pdf(fname, width=w, height=h, title = title)
   par(mfrow = c(rows, cols))
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
 
@@ -1520,7 +1520,7 @@ pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
-  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
 
