@@ -1487,14 +1487,15 @@ parFlags <-function(prefix="", ..., pasteflg=T, collapsechar =".") {
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = rows-1, mdlink = b.mdlink,
-                          title = ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
-  try.dev.off()
-  assign("mfrow_default", par("mfrow"), fname, envir = .GlobalEnv)
+                         title = ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   fname = FnP_parser(pname, "pdf")
+  try.dev.off()
+  assign("b.mfrow_def", par("mfrow"), fname, envir = .GlobalEnv)
+  assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   pdf(fname, width=w, height=h, title = title)
-  par(mfrow = c(rows, cols))
+  par(mfrow = c(rows, cols), bg ="white")
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
-  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
 
@@ -1512,15 +1513,16 @@ pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, col
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = b.mdlink,
-                                 title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
-  try.dev.off()
+                                title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = FnP_parser(pname, "pdf")
+  try.dev.off()
+  assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   pdf(fname, width=w, height=h, title = title)
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
-  if (mdlink & savefile) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
+  if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
 
@@ -1531,10 +1533,9 @@ pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_off <-function () {
-  if (exists("mfrow_default")) {
-    x = mfrow_default
-  } else { x =  c(1, 1)}
-  par(mfrow = x)
+  x =  if (exists("b.mfrow_def")) b.mfrow_def else c(1, 1)
+  y =  if (exists("b.bg_def")) b.bg_def else "white"
+  par(mfrow = x, bg = y)
   try(dev.off()) # close pdf
   if(exists("OutDir")) {oo()}
 }
