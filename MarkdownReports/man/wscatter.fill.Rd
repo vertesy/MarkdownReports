@@ -69,6 +69,5 @@ wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
 A scatterplot with color gradient and color legend. Modified from: http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
 }
 \examples{
-wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21, xlab="The X Dimension. Wooaaahh")
 }

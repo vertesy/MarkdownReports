@@ -505,7 +505,6 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
 #' @param h Height of the saved pdf image, in inches.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
-#' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 #' @export
 #' @examples wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21, xlab="The X Dimension. Wooaaahh")
 
@@ -698,16 +697,18 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
                      hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
                      errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
                      savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = b.mdlink) {
-  NrBars = if (is.vector(variable)) l(variable) else if (is.matrix(variable) |   is.data.frame(variable)) ncol(variable)
-  BarNames = if (is.vector(variable)) names(variable) else if (is.matrix(variable) |   is.data.frame(variable)) colnames(variable)
+  isVec = is.vector(variable) | is.table(variable)
+  isMat = is.matrix(variable) | is.data.frame(variable)
+  NrBars = if (isVec) l(variable) else if ( isMat ) ncol(variable) else l(variable)
+  BarNames = if (isVec) names(variable) else if ( isMat ) colnames(variable) else names(variable)
 
   fname = kollapse(plotname, ".barplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 0.8/abs(log10(length(variable)))
   cexNsize = min(cexNsize, 1)
   if (sub == T) {	subtitle = paste("mean:", iround(mean(variable, na.rm = T)), "CV:", percentage_formatter(cv(variable)))	} else if (sub == F) { subtitle = "" } else { subtitle = sub }
-  if (hline & filtercol == 1) { col = (variable >= hline) + 2	}
-  if (hline & filtercol == -1) { col = (variable < hline) + 2	}
+  if (hline & filtercol == 1) {  col = (variable >= hline) + 2	}
+  if (hline & filtercol == -1) { col = (variable <  hline) + 2	}
   if (errorbar & is.null(ylimits)) {	ylimits = range(c(0, (variable + upper + abs(0.1 * variable)), variable - lower - abs(0.1 * variable)), na.rm = T) } # else {	ylimits = range(0, variable)	}
   if (tilted_text) {	xlb = rep(NA, NrBars)	}	else {		xlb = BarNames	}
 
@@ -1195,7 +1196,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
   if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)  } #if
   venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
-  if (mdlink & savefile) {
+  if (mdlink) {
     llogit(MarkDown_ImgLink_formatter(fname))
     if (b.usepng == T && b.png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
   }
@@ -1429,7 +1430,7 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 #'
 #' Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
-#' @param coeff What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
+#' @param coeff What coefficient to display? Either "all", "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
 #' @param cexx font size; 1 by default
 #' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
@@ -1441,6 +1442,8 @@ wLinRegression <-function(DF, coeff = c("pearson", "spearman", "r2")[3], textloc
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
+  condition = F
+  if (coeff =="all") coeff = c("pearson", "spearman", "r2")
   if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
   legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))  }
   if ("spearman" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "spearman"))
