@@ -124,10 +124,10 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param b.scriptname Name of the script (file) generating the report. "b.scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
-#' @param b.usepng A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of images will be created.
-#' @param b.png4Github A global background variable. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
-#' @param b.mdlink A global background variable. It is used by the plotting functions. If TRUE (default) all plots will be linked into your report.
-#' @param b.save.wplots A global background variable. It is used by the plotting functions. If TRUE (default) plots will be saved to a pdf file
+#' @param b.usepng A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of the saved plot will be created. The .png file itself is not created.
+#' @param b.png4Github A global background variable. It is used by the plotting functions. If TRUE (default), the link to the .png versions of the saved plot will be created in a GitHub compatible format.  That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param b.mdlink A global background variable. It is used by the plotting functions. If TRUE (default), all saved (.pdf) plots will be linked into your report.
+#' @param b.save.wplots A global background variable. It is used by the plotting functions. If TRUE (default), plots will be saved to a .pdf file.
 #' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @export
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
