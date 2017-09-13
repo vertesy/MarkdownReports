@@ -434,6 +434,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 #' @param lty Linetype, defined by numbers 1-6.
 #' @param lwd Line width. Set to 2 by default.
 #' @param col_abline Color of the line.
+#' @param equal.axes Span of axes is set to equal (maximum range in either X or Y).
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -445,7 +446,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 
 wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
-                  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
+                  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
                   savefile = T, mdlink = b.mdlink, w = 7, h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
@@ -458,6 +459,7 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
     ylim = range(y)
     xlim = range(x)
   }
+  if (equal.axes) xlim = ylim = range(c(xlim,ylim))
   if (is.numeric(ylimm) & length(ylimm)==2) { ylim = ylimm } #overwrite if
   if (is.numeric(xlimm) & length(xlimm)==2) { xlim = xlimm }
 

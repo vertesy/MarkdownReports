@@ -10,7 +10,7 @@ wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
 \arguments{
 \item{DF}{The same dataframe as you provided to wplot() before you called this function}
 
-\item{coeff}{What coefficient to display? Either "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.}
+\item{coeff}{What coefficient to display? Either "all", "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.}
 
 \item{textlocation}{where to put the legend?}
 
