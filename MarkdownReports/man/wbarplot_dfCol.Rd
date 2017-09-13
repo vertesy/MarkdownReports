@@ -4,8 +4,8 @@
 \alias{wbarplot_dfCol}
 \title{wbarplot_dfCol}
 \usage{
-wbarplot_dfCol(df, colName, col = "gold1", savefile = T, w = 7, h = w,
-  ...)
+wbarplot_dfCol(df, colName, col = "gold1",
+  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, ...)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}

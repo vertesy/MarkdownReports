@@ -5,7 +5,7 @@
 \title{wplot_save_this}
 \usage{
 wplot_save_this(plotname = ww_autoPlotName(), ..., w = 7, h = w,
-  mdlink = b.mdlink)
+  mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}

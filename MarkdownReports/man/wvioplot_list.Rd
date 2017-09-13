@@ -7,8 +7,9 @@
 wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
   plotname = as.character(substitute(yalist)), sub = NULL,
   xlb = names(yalist), ylb = "", ylimm = F, incrBottMarginBy = 0,
-  tilted_text = F, yoffset = 0, savefile = T, w = 7, h = w,
-  mdlink = b.mdlink)
+  tilted_text = F, yoffset = 0,
+  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
+  mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}

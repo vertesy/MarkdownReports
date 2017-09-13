@@ -5,8 +5,8 @@
 \title{wvenn}
 \usage{
 wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
-  subt, ..., w = 7, h = w, mdlink = b.mdlink,
-  plotname = substitute(yalist))
+  subt, ..., w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink"),
+  plotname = substitute(yalist), LogFile = F)
 }
 \arguments{
 \item{yalist}{The variable to plot.}
@@ -28,6 +28,8 @@ wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{plotname}{Manual plotname parameter}
+
+\item{LogFile}{Allow logfiles.}
 }
 \description{
 Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, and it does not use the dev.copy2pdf() function.

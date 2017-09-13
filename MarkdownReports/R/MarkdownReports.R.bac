@@ -17,6 +17,16 @@ FnP_parser <-function(fname, ext_wo_dot) {
 }
 
 
+#' trueUnlessSpec
+#'
+#' Return TRUE unless the variable is defined. if defined, it returns the variable
+#' @param nameOfaBoolean Name of a possible defined variable to be tested.
+#' @export
+#' @examples trueUnlessSpec("xsadasf32"); B=F; trueUnlessSpec("F"); trueUnlessSpec("c")
+
+trueUnlessSpec <- function(nameOfaBoolean) {  if( exists(nameOfaBoolean) ) get(nameOfaBoolean)  else T }
+
+
 #' try.dev.off
 #'
 #' Tries to close R graphical devices without raising an error.
@@ -117,11 +127,13 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @param b.usepng A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of images will be created.
 #' @param b.png4Github A global background variable. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
 #' @param b.mdlink A global background variable. It is used by the plotting functions. If TRUE (default) all plots will be linked into your report.
+#' @param b.save.wplots A global background variable. It is used by the plotting functions. If TRUE (default) plots will be saved to a pdf file
 #' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
 #' @export
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, b.usepng = F, b.png4Github = T, b.mdlink=F, addTableOfContents=F) {
+setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
+                                  , b.usepng = F, b.png4Github = T, b.mdlink = F, b.save.wplots = T) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   assign("OutDir", OutDir, envir = .GlobalEnv)
@@ -142,6 +154,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
   assign("b.mdlink", b.mdlink, envir = .GlobalEnv)
+  assign("b.save.wplots", b.save.wplots, envir = .GlobalEnv)
   assign("b.usepng", b.usepng, envir = .GlobalEnv)
   assign("b.png4Github", b.png4Github, envir = .GlobalEnv)
   assign("b.scriptname", scriptname, envir = .GlobalEnv)
@@ -447,7 +460,7 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
                   abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
-                  savefile = T, mdlink = b.mdlink, w = 7, h = w) {
+                  savefile = trueUnlessSpec("b.save.wplots"), mdlink = trueUnlessSpec("b.mdlink"), w = 7, h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
   fname = kollapse(plotname, ".plot")
@@ -514,7 +527,7 @@ wscatter.fill <-function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., c
                            plotname = substitute(df2col), plot.title = plotname,
                            plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
                            axes = TRUE, frame.plot = axes, xlb, ylb,
-                           savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = b.mdlink ) {
+                           savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, incrBottMarginBy = 0, mdlink = trueUnlessSpec("b.mdlink") ) {
   x = df2col[, 1]
   y = df2col[, 2]
   CNN = colnames(df2col)
@@ -600,7 +613,7 @@ ww_autoPlotName <-function (name=NULL) {
 #' @export
 #' @examples wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = w, mdlink = F, ManualName = FALSE)
 
-wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdlink = b.mdlink) {
+wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
 	dev.copy2pdf(file = FnP_parser(plotname, "pdf"), width = w, height = h, title =  ttl_field(flname = plotname ) )
 	if (mdlink) { MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
@@ -630,7 +643,7 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 
 whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
                   hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-                  savefile = T, w = 7, h = w, mdlink = b.mdlink, ...) {
+                  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink"), ...) {
   xtra = list(...)
   if (length(variable) > 0) {
     fname = kollapse(plotname, ".hist")
@@ -698,7 +711,7 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = plotname, tilted_text = F, ylimits = NULL,
                      hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
                      errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-                     savefile = T, w = 7, h = w, incrBottMarginBy = 0, mdlink = b.mdlink) {
+                     savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, incrBottMarginBy = 0, mdlink = trueUnlessSpec("b.mdlink")) {
   isVec = is.vector(variable) | is.table(variable)
   isMat = is.matrix(variable) | is.data.frame(variable)
   NrBars = if (isVec) l(variable) else if ( isMat ) ncol(variable) else l(variable)
@@ -750,7 +763,7 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = w, mdlink = F)
 
 wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
-                     savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+                     savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   fname = kollapse(plotname, ".boxplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   if (tilted_text) { 	xlb = NA } else {	xlb = names(yalist) }
@@ -782,7 +795,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @export
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = w, mdlink = F)
 
-wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
   fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
@@ -824,7 +837,7 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
                         pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
-                        savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+                        savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
@@ -879,7 +892,7 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 
 wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
-                              savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+                              savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   fname = kollapse(plotname, ".stripchart")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(list)))
@@ -933,7 +946,7 @@ wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pc
 
 wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
-                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
@@ -985,7 +998,7 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
 
 wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
-                                savefile = T, w = 7, h = w, mdlink = b.mdlink) {
+                                savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
   fname = kollapse(plotname, ".VioStripchart")
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -1027,7 +1040,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 #' @export
 #' @examples whist_dfCol (df =  , colName =  , col = gold, ... =  , w = 7, h = w)
 
-whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h = w) {
+whist_dfCol <-function (df, colName, col = "gold", ..., savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w) {
   stopifnot(colName %in% colnames(df))
   variable = as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
@@ -1076,7 +1089,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = T, w = 7, h =
 
 whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
                             plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
-                            savefile = T, incrBottMarginBy = 0, w = 7, h = w, mdlink = b.mdlink) {
+                            savefile = trueUnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink")) {
 
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
@@ -1119,7 +1132,7 @@ whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), br
 #' @export
 #' @examples wbarplot_dfCol (df =  , colName =  , col = gold1, w = 7, h = w, ... =  )
 
-wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = T, w = 7, h = w, ...) {
+wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w, ...) {
 	stopifnot(colName %in% colnames(df))
 	variable = unlist(df[, colName])
 	stopifnot(length(variable) > 1)
@@ -1184,10 +1197,11 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yo
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param plotname Manual plotname parameter
+#' @param LogFile Allow logfiles.
 #' @export
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
 
-wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), subt, ..., w = 7, h = w, mdlink = b.mdlink, plotname = substitute(yalist)) {
+wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), subt, ..., w = 7, h = w, mdlink = trueUnlessSpec("b.mdlink"), plotname = substitute(yalist), LogFile=F) {
   if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
   fname = kollapse(plotname, ".", imagetype, print = F)
   LsLen = length(yalist)
@@ -1196,6 +1210,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
 
   filename = kollapse(OutDir, "/", fname, print = F)
   if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yalist))), " elements in total.", print = F)  } #if
+  if (!LogFile) futile.logger::flog.threshold(futile.logger::ERROR, name = "VennDiagramLogger") # suppress unless wamted
   venn.diagram(x = yalist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
   if (mdlink) {
@@ -1203,6 +1218,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
     if (b.usepng == T && b.png4Github == T) { llogit(MarkDown_ImgLink_formatter(paste0("Reports/", fname) ) )	}
   }
 }
+
 
 #' error_bar
 #'
@@ -1380,19 +1396,17 @@ llwrite_list <-function(yalist, printName="self") {
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <-function(fill_ = "NULL", poz=4, legend, bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
-  stopif(is.null(fill_))
+wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
-  if( !is.null(fNames ) ) legend = fNames
-  check_ =(  is.null(fNames) && missing(legend) )
-  stopif( check_, message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
-  stopif( ( length(fill_)  != length(legend)), message = "fill and legend are not equally long.")
-
+  LF = length(fill_)
+  LN = length(fNames)
+  stopif( ( LN != LF & missing(legend) ), message = "The color vector (fill_) has less names than entries / the variable 'legend' is not provided.")
+  stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
+  legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 }
-
 
 #' getCategories
 #'
@@ -1494,12 +1508,13 @@ parFlags <-function(prefix="", ..., pasteflg=T, collapsechar =".") {
 #' @export
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = rows-1, mdlink = b.mdlink,
+pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, cols = rows-1, mdlink = trueUnlessSpec("b.mdlink"),
                          title = ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   fname = FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.mfrow_def", par("mfrow"), fname, envir = .GlobalEnv)
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
+  assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
   pdf(fname, width=w, height=h, title = title)
   par(mfrow = c(rows, cols), bg ="white")
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
@@ -1520,11 +1535,12 @@ pdfA4plot_on <-function (pname = date(), ..., w = 8.27, h = 11.69, rows = 4, col
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = b.mdlink,
+pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = trueUnlessSpec("b.mdlink"),
                                 title = ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
+  assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
   pdf(fname, width=w, height=h, title = title)
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
@@ -1543,6 +1559,7 @@ pdfA4plot_on.layout <-function (pname = date(), ..., w = 8.27, h = 11.69, layout
 pdfA4plot_off <-function () {
   x =  if (exists("b.mfrow_def")) b.mfrow_def else c(1, 1)
   y =  if (exists("b.bg_def")) b.bg_def else "white"
+  if (exists("b.save.wplots")) assign("b.save.wplots", T, envir = .GlobalEnv) # switch back mdlink to its original value
   par(mfrow = x, bg = y)
   try(dev.off()) # close pdf
   if(exists("OutDir")) {oo()}

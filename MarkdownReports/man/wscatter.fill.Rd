@@ -9,8 +9,9 @@ wscatter.fill(df2col = cbind(A = rnorm(100), B = rnorm(100)), ..., color,
   zlim = range(color), nlevels = 20, pch = 21, cex = 1,
   plotname = substitute(df2col), plot.title = plotname, plot.axes,
   key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
-  axes = TRUE, frame.plot = axes, xlb, ylb, savefile = T, w = 7,
-  h = w, incrBottMarginBy = 0, mdlink = b.mdlink)
+  axes = TRUE, frame.plot = axes, xlb, ylb,
+  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
+  incrBottMarginBy = 0, mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}

@@ -6,8 +6,9 @@
 \usage{
 wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
   plotname = substitute(variable),
-  col = gplots::rich.colors(length(variable)), savefile = T, w = 7,
-  h = w, mdlink = b.mdlink)
+  col = gplots::rich.colors(length(variable)),
+  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
+  mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{variable}{The variable to plot.}

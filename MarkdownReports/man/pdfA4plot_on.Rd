@@ -5,7 +5,8 @@
 \title{pdfA4plot_on}
 \usage{
 pdfA4plot_on(pname = date(), ..., w = 8.27, h = 11.69, rows = 4,
-  cols = rows - 1, mdlink = b.mdlink, title = ttl_field(pname))
+  cols = rows - 1, mdlink = trueUnlessSpec("b.mdlink"),
+  title = ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}

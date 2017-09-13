@@ -7,7 +7,8 @@
 wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
   bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
   plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
-  incrBottMarginBy = 0, savefile = T, w = 7, h = w, mdlink = b.mdlink)
+  incrBottMarginBy = 0, savefile = trueUnlessSpec("b.save.wplots"), w = 7,
+  h = w, mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}

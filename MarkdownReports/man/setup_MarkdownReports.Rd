@@ -5,8 +5,8 @@
 \title{setup_MarkdownReports}
 \usage{
 setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
-  title = "", setDir = T, append = F, b.usepng = F, b.png4Github = T,
-  b.mdlink = F, addTableOfContents = F)
+  title = "", setDir = T, append = F, addTableOfContents = F,
+  b.usepng = F, b.png4Github = T, b.mdlink = F, b.save.wplots = T)
 }
 \arguments{
 \item{OutDir}{The output directory (absolute / full path).}
@@ -15,13 +15,15 @@ setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
 
 \item{append}{Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.}
 
+\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.}
+
 \item{b.usepng}{A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of images will be created.}
 
 \item{b.png4Github}{A global background variable. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.}
 
 \item{b.mdlink}{A global background variable. It is used by the plotting functions. If TRUE (default) all plots will be linked into your report.}
 
-\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.}
+\item{b.save.wplots}{A global background variable. It is used by the plotting functions. If TRUE (default) plots will be saved to a pdf file}
 
 \item{b.scriptname}{Name of the script (file) generating the report. "b.scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.}
 }

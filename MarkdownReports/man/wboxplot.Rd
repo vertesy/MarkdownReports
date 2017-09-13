@@ -6,8 +6,9 @@
 \usage{
 wboxplot(yalist, ..., col = "gold1",
   plotname = as.character(substitute(yalist)), ylb = "", sub = FALSE,
-  incrBottMarginBy = 0, tilted_text = F, savefile = T, w = 7, h = w,
-  mdlink = b.mdlink)
+  incrBottMarginBy = 0, tilted_text = F,
+  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
+  mdlink = trueUnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{yalist}{The variable to plot.}
