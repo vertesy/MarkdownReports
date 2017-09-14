@@ -988,13 +988,12 @@ wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, Overw
   LF = length(fill_)
   LN = length(fNames)
   stopif( ( LN != LF & missing(legend) ), message = "The color vector (fill_) has less names than entries / the variable 'legend' is not provided.")
-  stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
+  # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 }
-
 
 #' barplot_label
 #'
@@ -1237,6 +1236,22 @@ llwrite_list <-function(yalist, printName="self") {
   }
 }
 
+
+#' md.import
+#'
+#' Import and concatenated an external markdown or text file to the report
+#' @param from.file File to be appended at the (current) last line of the report
+#' @param to.file The report file. Defined as "path_of_report" by default, which is set by the "setup_MarkdownReports" function.
+#' @export
+#' @examples md.import("~/Downloads/yourfile.txt")
+
+md.import <- function(from.file, to.file = path_of_report) {
+  linez = readLines(md.filename)
+  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
+  for(LogEntry in linez) {
+    write(LogEntry, path_of_report, append = T)
+  }
+}
 
 # Writing markdown tables ------------------------------------------------------------------------------------------------
 
