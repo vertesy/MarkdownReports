@@ -1373,6 +1373,28 @@ MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_re
 }
 
 
+#' md.import.table
+#'
+#' Import a table (.csv, or tab seprated values, .tsv file) and write it in markdown format to the report.
+#' @param from.file.table  The *.tsv file to be appended  as table at the (current) last line of the report.
+#' @param title_of_table Title above the table (as header 4, in the markdown report).
+#' @param has.rownames If the first column contains (unique!) rownames.
+#' @param has.colnames If the first line of the file contains the header, or the column names.
+#' @param field.sep Field separator in table file. Tab's by default.
+#' @param to.file The report file. Defined as "path_of_report" by default, which is set by the "setup_MarkdownReports" function.
+#' @export
+#'
+#' @examples md.import.table("~/Downloads/yourfile.tsv")
+
+md.import.table <- function(from.file.table, title_of_table, has.rownames=T, has.colnames=T, field.sep = "\t", to.file = path_of_report) {
+  TTL = if(missing(title_of_table)) basename(from.file.table) else title_of_table
+  importedtable = if (has.rownames) { read.table( from.file.table , stringsAsFactors=FALSE, sep="\t", header=has.colnames, row.names = 1 )
+  } else if (!has.rownames) {          read.table( from.file.table , stringsAsFactors=FALSE, sep="\t", header=has.colnames) }
+  MarkDown_Table_writer_DF_RowColNames(importedtable, title_of_table = TTL)
+  iprint("The follwoing table is included in the markdown report:")
+  return(importedtable)
+}
+
 
 # Filtering Data ------------------------------------------------------------------------------------------------------------------------
 
