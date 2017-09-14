@@ -17,13 +17,13 @@ setup_MarkdownReports(OutDir = getwd(), scriptname = basename(OutDir),
 
 \item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.}
 
-\item{b.usepng}{A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of images will be created.}
+\item{b.usepng}{A global background variable/ It is used by the plotting functions. If TRUE, a link to the .png versions of the saved plot will be created. The .png file itself is not created.}
 
-\item{b.png4Github}{A global background variable. It is used by the plotting functions. If TRUE (default), any link to the .png versions of images will be created in a GitHub compatible format. That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.}
+\item{b.png4Github}{A global background variable. It is used by the plotting functions. If TRUE (default), the link to the .png versions of the saved plot will be created in a GitHub compatible format.  That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.}
 
-\item{b.mdlink}{A global background variable. It is used by the plotting functions. If TRUE (default) all plots will be linked into your report.}
+\item{b.mdlink}{A global background variable. It is used by the plotting functions. If TRUE (default), all saved (.pdf) plots will be linked into your report.}
 
-\item{b.save.wplots}{A global background variable. It is used by the plotting functions. If TRUE (default) plots will be saved to a pdf file}
+\item{b.save.wplots}{A global background variable. It is used by the plotting functions. If TRUE (default), plots will be saved to a .pdf file.}
 
 \item{b.scriptname}{Name of the script (file) generating the report. "b.scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.}
 }

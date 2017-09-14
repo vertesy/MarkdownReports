@@ -109,7 +109,7 @@ continue_logging_markdown <-function (b.scriptname) {
   }
 }
 
-#' create_set_OutDir (deprecated, use with setup_logging_markdown, will be removed from V3)
+#' create_set_OutDir
 #'
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by all ~wplot functions.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
@@ -870,6 +870,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = trueUnlessSpe
 }
 
 # A4 pdfs for multi-plots -------------------------------------------------------------------------------------------------
+
 #' pdfA4plot_on
 #'
 #' Create A4 PDFs to plot multiple subplots in one file
@@ -1091,8 +1092,6 @@ subscript_in_plots <-function(prefix="log", subscr=2, quantity="arbitrary units"
 superscript_in_plots <-function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
   formatted_string = bquote(.(prefix)^.(sup)*.(suffix))
 }
-
-
 
 
 

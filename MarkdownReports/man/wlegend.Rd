@@ -5,7 +5,7 @@
 \title{wlegend}
 \usage{
 wlegend(fill_ = NA, poz = 4, legend, bty = "n", ..., w_ = 7, h_ = w_,
-  OverwritePrevPDF = T)
+  OverwritePrevPDF = trueUnlessSpec("b.save.wplots"))
 }
 \arguments{
 \item{fill_}{Color of the boxes next to the text}
