@@ -1220,9 +1220,29 @@ llogit <-function (...) {
 }
 
 
+#' md.write.as.list
+#'
+#' Writes a vector as a (numbered) list into the report file.
+#' @param vector Vecot to be wirtten as a list
+#' @param h Level of header above tl list.
+#' @param numbered TRUE = Numbered list, FALSE = unordered list is written
+#' @param ... Additional parameters
+#' @export
+#' @examples md.write.as.list()
+
+md.write.as.list <-function (vector=1:3, h=4, numbered =F, ...) {
+  LogEntry = kollapse(rep("#",h)," ", substitute(vector), print = F)
+  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
+  write(kollapse("\n", LogEntry, print = F), path_of_report, ..., append = T)
+  LV = length(vector)
+  LN = if (numbered) p0(" ", 1:LV, ". ", vector) else p0(" - ", vector)
+  for (i in 1:LV ) write(LN[i], path_of_report, append = T)
+}
+
+
 #' llwrite_list
 #'
-#' Print a list, one element per line, into your markdown report
+#' Print a list object from R, one element per line, into your markdown report
 #' @param yalist your list
 #' @param printName print header level 4: the name of the list or a custom string
 #' @export
