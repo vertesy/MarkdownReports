@@ -1595,7 +1595,7 @@ trueUnlessSpec <- function(nameOfaBoolean) {  if( exists(nameOfaBoolean) ) get(n
 #' @examples FnP_parser(fname = 'myplot', ext_wo_dot = "jpg")
 
 FnP_parser <-function(fname, ext_wo_dot) {
-  path = if ( exists('OutDir') ) {OutDir} else {paste0(getwd(), "/") ; iprint ("ZZ OutDir not defined !!!")}
+  if ( exists('OutDir') ) {path = OutDir} else {path = paste0(getwd(), "/") ; iprint ("OutDir not defined !!!")}
   FnP = if (methods::hasArg(ext_wo_dot) ) kollapse (path, fname, ".", ext_wo_dot) else FnP = kollapse (path, "/", fname)
 }
 
