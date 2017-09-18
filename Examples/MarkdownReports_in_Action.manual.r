@@ -6,11 +6,12 @@
 
 
 # Functions ------------------------
-try (source ('~/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+# source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R')
+source("https://raw.githubusercontent.com/vertesy/TheCorvinas/master/R/CodeAndRoll.R")
 # library(stringr)
 
 # Setup ------------------------
-setup_MarkdownReports(OutDir = "~/MarkdownReports/Examples/MarkdownReports_in_Action", fname = "MarkdownReports_in_Action.r", append = F)
+setup_MarkdownReports(OutDir = "~/MarkdownReports/Examples/MarkdownReports_in_Action", scriptname =  "MarkdownReports_in_Action.r", append = F)
 # create_set_OutDir("~/Google_Drive/X_react_Data/Abelz/X_react_2016")
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
 
