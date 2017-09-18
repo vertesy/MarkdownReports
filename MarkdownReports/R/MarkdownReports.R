@@ -983,7 +983,7 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF = trueUnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
+wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = trueUnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -991,7 +991,7 @@ wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, Overw
   # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
-  legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
+  legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = F)  }
 }
 
