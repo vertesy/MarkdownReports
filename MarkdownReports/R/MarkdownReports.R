@@ -971,7 +971,7 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 
 #' wlegend
 #'
-#' Quickly add a legend to an existing plot, and save the plot immediately.
+#' Quickly add a legend to an existing plot, and save the plot immediately. Never inserts an mdlink.
 #' @param fill_ Color of the boxes next to the text
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
@@ -992,7 +992,7 @@ wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, Overw
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = F)  }
 }
 
 #' barplot_label
@@ -1003,7 +1003,7 @@ wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, Overw
 #' @param bottom Put labels at the bottom of the bars.
 #' @param TopOffset Absolute offset from top.
 #' @param relpos_bottom Relative offset from bottom.
-#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ... Pass any other parameter of the corresponding text function (most of them should work).
 #' @export
 #' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
@@ -1021,7 +1021,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
   else if (length(dim(x)) == 1) {
     text((x), (y), labels = (labels), ...)
   }
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, ...)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, mdlink = F, ...)  }
 }
 
 

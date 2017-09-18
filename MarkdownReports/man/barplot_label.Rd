@@ -19,7 +19,7 @@ barplot_label(barplotted_variable, labels, bottom = F, TopOffset = 0.5,
 
 \item{relpos_bottom}{Relative offset from bottom.}
 
-\item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
+\item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.}
 
 \item{...}{Pass any other parameter of the corresponding text function (most of them should work).}
 }
