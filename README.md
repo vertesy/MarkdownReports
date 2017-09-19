@@ -84,21 +84,20 @@ Alternatively, you simply source it from the web.
 <br><br>
 ## Discover 4 Yourself!
 
--  See it working: Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script.R) 
-   and the [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md) 
-    it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
-
--  Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki) 
-  - See [how easy it is to make customized figures](https://github.com/vertesy/MarkdownReports/wiki/MarkdownReports_in_Action.r.log)
-  - See [the list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
-
--  [Browse the code of the functions.](https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R)
+-  **Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki)!** 
+   - See [how easy it is to make customized figures](https://github.com/vertesy/MarkdownReports/wiki/MarkdownReports_in_Action.r.log).
+   - See [the list of functions in the package.](https://github.com/vertesy/MarkdownReports/wiki/Function-Overview)
+-  **Check the example**: 
+   -  Check out a dummy [R script](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script.R) and the 
+   -  [MarkDown report](https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md) it generates inside this [GitHub Repo](https://github.com/vertesy/MarkdownReports).
+-  [**Browse the list of functions**.](https://github.com/vertesy/MarkdownReports/wiki)
+-  [**Browse the code** of the functions.](https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R)
 
 
 ### Learn about the markdown format
 
 - See the power and simplicity of markdown format [explained on Github](https://guides.github.com/features/mastering-markdown)
-- Checkout some cool markdown editors, like [MOU](http://25.io/mou/), or [markdownpad](http://markdownpad.com/).
+- Checkout some cool markdown editors, like [MOU](http://25.io/mou/), [Typora](https://typora.io/), or [markdownpad](http://markdownpad.com/).
 - See how these markdown reports are rendered:
 
 ![SNP filter and code.png](https://raw.githubusercontent.com/vertesy/MarkdownReports/master/SNP%20filter%20and%20code.png)
