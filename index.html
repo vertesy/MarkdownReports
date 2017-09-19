@@ -38,117 +38,160 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <p><a href="https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports"><img src="https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg" alt="DOI"></a></p>
-
+        <p><em>cite via:</em> <a href="https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports"><img src="https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg" alt="DOI"></a></p>
 <h2>
-<a id="what-is-markdownreports" class="anchor" href="#what-is-markdownreports" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <strong><em>MarkdownReports</em></strong>?</h2>
-
-<p>MarkdownReports is a set of <strong>R</strong> functions that allows you to generate precise figures easily, and create clean reports about what you just discovered with your analysis script. It helps you to:</p>
-
+<a id="what-is-markdownreports" class="anchor" href="#what-is-markdownreports" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <em><strong>MarkdownReports</strong></em>?</h2>
+<p>MarkdownReports is a set of <strong>R</strong> functions that allows you to generate precise figures easily, and create clean reports in markdown language about what you just discovered with your analysis script. It helps you to:</p>
 <ol>
 <li>Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.</li>
 <li>Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.</li>
+</ol>
+<ul>
 <li>Link &amp; display your figures automatically inside your report, right there where they are needed.</li>
 <li>Version your findings, annotating which parameters were used to reach certain results.</li>
 <li>Share your report with others via email, Github or a personal website.</li>
-</ol>
-
+</ul>
 <h2>
 <a id="why-did-i-make-it--why-you-might-like-it-too" class="anchor" href="#why-did-i-make-it--why-you-might-like-it-too" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why did I make it &amp; why you might like it too?</h2>
-
-<p>I do exploratory data analysis as a daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc. </p>
-
+<p>I do exploratory data analysis as a daily routine, and I have constant interaction with all sorts of people: supervisors, collaborators, colleagues, etc.</p>
 <p>I often have to...</p>
-
 <ol>
-<li>...write emails summarizing the results (text &amp; figures) of the last few days.</li>
+<li>...write emails summarising the results (text &amp; figures) of the last few days.</li>
 <li>...find results from a couple of month back, with all tiny details (parameters used, etc).</li>
-<li>...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: <em>I observed X; I controlled for Y; Hypothesized explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
+<li>...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: <em>I observed X; I controlled for Y; Hypothesised explanation A; Falsified it; Came up with explanation B; Tested &amp; proven it...</em>
 </li>
 </ol>
-
 <p>For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.</p>
-
 <h3>
-<a id="where-does-markdownreports-stand-out" class="anchor" href="#where-does-markdownreports-stand-out" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where does <strong><em>MarkdownReports</em></strong> stand out?</h3>
-
+<a id="differences-to-rmarkdown" class="anchor" href="#differences-to-rmarkdown" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Differences to Rmarkdown:</h3>
 <ul>
-<li>Pure markdown output, simple and elegant layout.</li>
-<li>Handy integration of text with figures (linked to an external file &amp; displayed: makes manual tailoring easy)</li>
-<li>Easy generation of precise figures (axis labels, etc) that are saved as a vector graphic (pdf), making it scalable for presentations, posters, etc</li>
-<li>The report file is automatically named after the R-script, so that it is linked to the source code that generated it.</li>
-<li>A timestamped subdirectory is created that you can backup once satisfied with your results.</li>
-<li>The generated report is easy to <a href="https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration">share on a GitHub wiki</a>.</li>
-<li>It natively exports tables from R to Markdown</li>
-<li>It is all achieved in ~ 400 lines of well commented code.</li>
+<li>It is intended for a <strong>different purpose</strong>:
+<ul>
+<li>
+<strong>MarkdownReports</strong> is written for <strong>rapid progress reporting</strong>, whereas</li>
+<li>
+<strong>Rmarkdown</strong> is perfect for writing <strong>analytical explanations</strong> on "<em>how do you analyse this?</em>" and writing longer books.</li>
 </ul>
-
+</li>
+<li>
+<strong>Much faster to report in MarkdownReports:</strong>
+<ul>
+<li>You <strong>parse your report on the fly</strong> from <strong>directly your working script</strong>. (</li>
+<li><em>In Rmarkdown you would make a separate cleaned-up a script, that you then knit as a separate step.</em></li>
+</ul>
+</li>
+<li>
+<strong>No hassle of</strong> executing computation in <strong>isolated code-blocks</strong> (and importing all relevant variables there). <em>Your code is also a lot easier to follow because it is not split up in blocks.</em>
+</li>
+</ul>
+<h3>
+<a id="where-does-markdownreports-stand-out" class="anchor" href="#where-does-markdownreports-stand-out" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where does <em><strong>MarkdownReports</strong></em> stand out?</h3>
+<ul>
+<li>
+<strong>Pure markdown output</strong>, compatible, simple and elegant layout.</li>
+<li>Integration of text, figures and tables with <strong><em>very</em> few lines of extra code.</strong>
+</li>
+<li>Easy generation of <strong>precise figures</strong> (axis labels, coloring by filtering etc), a big enhancement over base graphics, while maintaining 90% of its syntax.</li>
+<li>
+<strong>Plots are both displayed and saved as a vector graphic</strong> (pdf), making it scalable for presentations, posters, etc</li>
+<li>
+<strong>Traceable results</strong>:
+<ul>
+<li>
+<strong>PDF plots are labeled by the script generating them</strong> in the title field: <code>Filter.and.Stats by ExpressionAnalysis.R</code>
+</li>
+<li>The <strong>report</strong> file is automatically <strong>named after the R-script, and date</strong> so that it is linked to the source code that generated it.</li>
+<li>Simply <strong>log all used settings</strong> into a markdown table by the <code>log_settings_MarkDown()</code> and the <code>md.LogSettingsFromList()</code>functions.</li>
+</ul>
+</li>
+<li>it <strong>natively exports tables</strong> from R to Markdown</li>
+<li>A timestamped subdirectory is created that you can backup once satisfied with your results.</li>
+<li>**Github Compatibility:**The generated report is easy to <a href="https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration">share on a GitHub wiki</a>.</li>
+<li>It <strong>parses and writes full sentences</strong> to the report from operations you perform.
+<ul>
+<li>For instance filter on gene expression level:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight highlight-source-r"><pre><span class="pl-v">GeneExpression</span> <span class="pl-k">=</span> rnorm(<span class="pl-c1">2000</span>, <span class="pl-v">mean</span> <span class="pl-k">=</span> <span class="pl-c1">100</span>, <span class="pl-v">sd</span><span class="pl-k">=</span><span class="pl-c1">50</span>); 
+<span class="pl-v">MinExpression</span><span class="pl-k">=</span><span class="pl-c1">125</span>
+<span class="pl-v">PASS</span><span class="pl-k">=</span>filter_HP(<span class="pl-smi">GeneExpression</span>, <span class="pl-v">threshold</span> <span class="pl-k">=</span> <span class="pl-smi">MinExpression</span>)</pre></div>
+<p>and your report will have the summary: <em><strong>30.7 % or 614 of 2000 entries in GeneExpression fall above a threshold value of: 125.</strong></em></p>
+<ul>
+<li>
+<strong>Enhanced productivity</strong> features:
+<ul>
+<li>
+<strong>Error bars</strong> are handled by <code>wbarplot()</code> natively.</li>
+<li>Add an labels to bars in a barplot by <code>barplot_label()</code>.</li>
+<li>Native <strong>2-D error bars</strong> in scatterplots<code>wplot()</code> .</li>
+<li>Easy <strong>colour schemes</strong> by <code>wcolorize()</code> from  <code>base</code>, <code>gplots</code> and <code>Rcolorbrewer</code>.</li>
+<li>Add <strong>legends</strong> with the super short command <code>wlegend(colannot$categ)</code>, defining colors named after the categories of your data.
+<ul>
+<li>It is autmatically created by <code>colannot = wcolorize(your.annotation, ReturnCategoriesToo = T)</code>, which you (can) anyways use to colour data points on, say, your scatterplot.</li>
+</ul>
+</li>
+<li>
+<strong>Show filtering results with a one liner</strong>: <code>whist(rnorm(1000), vline = .5, filtercol = T)</code>.</li>
+</ul>
+</li>
+<li>
+<em>Although <strong>currently</strong> plotting is implemented as an enhanced <strong>base graphic</strong>, but the concept could easily be extended to <strong>ggplot</strong>.</em><br>
+Yet, you can still use ggplot, because you equally well save and report them by either <code>wplot_save_this()</code> or the <code>pdfA4plot_on()</code> and <code>pdfA4plot_off()</code> functions.</li>
+<li>It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.</li>
+<li>​</li>
+</ul>
 <p><br><br></p>
-
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
-
-<p>Install directly from <strong>GitHub</strong> via <strong>devtools</strong> with 2 R commands:</p>
-
-<pre><code>install.packages("devtools")
-devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
+<p>Install directly from <strong>GitHub</strong> via <strong>devtools</strong> with one R command:</p>
+<pre><code>devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 </code></pre>
-
 <p>...then simply load the package:</p>
-
 <pre><code>require("MarkdownReports")
 </code></pre>
-
-<p>Alternatively, you simply source it from the web. 
+<p>Alternatively, you simply source it from the web.
 <em>This way function help will not work, and you will have no local copy of the code on your hard drive.</em></p>
-
 <pre><code>source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/MarkdownReports/R/MarkdownReports.R")
 </code></pre>
-
 <p><br><br></p>
-
 <h2>
 <a id="discover-4-yourself" class="anchor" href="#discover-4-yourself" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Discover 4 Yourself!</h2>
-
 <ul>
-<li><p>See it working: Check out a dummy <a href="https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script.R">R script</a> 
-and the <a href="https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md">MarkDown report</a> 
-it generates inside this <a href="https://github.com/vertesy/MarkdownReports">GitHub Repo</a>.</p></li>
 <li>
-<p>Check out the <a href="https://github.com/vertesy/MarkdownReports/wiki">wiki</a> </p>
-
+<strong>Check out the <a href="https://github.com/vertesy/MarkdownReports/wiki">wiki</a>!</strong>
 <ul>
-<li>See <a href="https://github.com/vertesy/MarkdownReports/wiki/MarkdownReports_in_Action.r.log">how easy it is to make customized figures</a>
-</li>
+<li>See <a href="https://github.com/vertesy/MarkdownReports/wiki/MarkdownReports_in_Action.r.log">how easy it is to make customized figures</a>.</li>
 <li>See <a href="https://github.com/vertesy/MarkdownReports/wiki/Function-Overview">the list of functions in the package.</a>
 </li>
 </ul>
 </li>
-<li><p><a href="https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R">Browse the code of the functions.</a></p></li>
+<li>
+<strong>Check the example</strong>:
+<ul>
+<li>Check out a dummy <a href="https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script.R">R script</a> and the</li>
+<li>
+<a href="https://github.com/vertesy/MarkdownReports/blob/master/Examples/Usage_Example_Script/Usage_Example_Script.R.log.md">MarkDown report</a> it generates inside this <a href="https://github.com/vertesy/MarkdownReports">GitHub Repo</a>.</li>
 </ul>
-
+</li>
+<li><a href="https://github.com/vertesy/MarkdownReports/wiki"><strong>Browse the list of functions</strong>.</a></li>
+<li><a href="https://github.com/vertesy/MarkdownReports/blob/master/MarkdownReports/R/MarkdownReports.R"><strong>Browse the code</strong> of the functions.</a></li>
+</ul>
 <h3>
 <a id="learn-about-the-markdown-format" class="anchor" href="#learn-about-the-markdown-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Learn about the markdown format</h3>
-
 <ul>
 <li>See the power and simplicity of markdown format <a href="https://guides.github.com/features/mastering-markdown">explained on Github</a>
 </li>
-<li>Checkout some cool markdown editors, like <a href="http://25.io/mou/">MOU</a>, or <a href="http://markdownpad.com/">markdownpad</a>.</li>
+<li>Checkout some cool markdown editors, like <a href="http://25.io/mou/">MOU</a>, <a href="https://typora.io/">Typora</a>, or <a href="http://markdownpad.com/">markdownpad</a>.</li>
 <li>See how these markdown reports are rendered:</li>
 </ul>
-
 <p><img src="https://raw.githubusercontent.com/vertesy/MarkdownReports/master/SNP%20filter%20and%20code.png" alt="SNP filter and code.png"></p>
-
 <p><br><br></p>
-
 <h4>
 <a id="cite-it-via-its-digital-object-identifier-doi" class="anchor" href="#cite-it-via-its-digital-object-identifier-doi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cite it via its Digital Object Identifier (DOI):</h4>
-
 <p><a href="https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports"><img src="https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg" alt="DOI"></a></p>
-
-<p><br>
-<strong>MarkdownReports</strong> is a project of <a href="https://github.com/vertesy" class="user-mention">@vertesy</a>.</p>
-
+<br>
+<p><strong>MarkdownReports</strong> is a project of <a href="https://github.com/vertesy" class="user-mention">@vertesy</a>.</p>
 <p><br> <br> <br> <br> <br>
 <a href="https://github.com/vertesy/MarkdownReports/generated_pages/new"><em>edit the website</em></a></p>
       </section>
