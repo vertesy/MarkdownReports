@@ -159,7 +159,7 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 #' @param right Size of the right error bar. By default, it equals the left error bar.
 #' @param arrow_lwd Line width for the error bar arrow. Line width for the error bar arrow.
 #' @param col_errorbar Color of the error bar arrow.
-#' @param abline Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.
+#' @param abline Draw a line on the plot. Any value from: c( 'v', 'h', 'ab') for vertical, horizontal, and line with any slope. In each case you need to specify "a=", specifying the X-position for vertical (v); the Y-position for horizontal (yh) lines and the intercept for lines with a slope (ab). In the latter case, 'b' specifes the slope.
 #' @param a X-offset for vertical lines, Y-offset for horizontal, and inclined lines.
 #' @param b Slope of an inclined line.
 #' @param lty Linetype, defined by numbers 1-6.
@@ -177,7 +177,7 @@ wplot_save_this <-function (plotname = ww_autoPlotName(), ..., w = 7, h = w, mdl
 
 wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
-                  abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
+                  abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
                   savefile = trueUnlessSpec("b.save.wplots"), mdlink = trueUnlessSpec("b.mdlink"), w = 7, h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
