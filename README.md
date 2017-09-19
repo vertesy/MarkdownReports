@@ -51,8 +51,16 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
   - Simply **log all used settings** into a markdown table by the `log_settings_MarkDown()` and the ` md.LogSettingsFromList()`functions.
 - it **natively exports tables** from R to Markdown
 - A timestamped subdirectory is created that you can backup once satisfied with your results.
-- The generated report is easy to [share on a GitHub wiki](https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration). 
-- It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.
+- **Github Compatibility:**The generated report is easy to [share on a GitHub wiki](https://github.com/vertesy/MarkdownReports/wiki/Github-wiki-integration). 
+- It **parses and writes full sentences** to the report from operations you perform.  
+  - For instance filter on gene expression level: 
+```R
+GeneExpression = rnorm(2000, mean = 100, sd=50); 
+MinExpression=125
+PASS=filter_HP(GeneExpression, threshold = MinExpression)
+```
+and your report will have the summary: ***30.7 % or 614 of 2000 entries in GeneExpression fall above a threshold value of: 125.***
+
 - **Enhanced productivity** features:
   - **Error bars** are handled by `wbarplot()` natively.
   - Add an labels to bars in a barplot by `barplot_label()`. 
@@ -63,6 +71,8 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
   - **Show filtering results with a one liner**: `whist(rnorm(1000), vline = .5, filtercol = T)`.
 - *Although **currently** plotting is implemented as an enhanced **base graphic**, but the concept could easily be extended to **ggplot**.*  
   Yet, you can still use ggplot, because you equally well save and report them by either `wplot_save_this()` or the `pdfA4plot_on()` and `pdfA4plot_off()` functions.
+- It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.
+- ​
 
 
 <br><br>
