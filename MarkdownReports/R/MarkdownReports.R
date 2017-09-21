@@ -39,7 +39,7 @@
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
 setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
-                                  , b.usepng = F, b.png4Github = T, b.mdlink = F, b.save.wplots = T) {
+                                  , b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   assign("OutDir", OutDir, envir = .GlobalEnv)
