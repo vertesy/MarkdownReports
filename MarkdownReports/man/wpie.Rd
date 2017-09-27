@@ -8,7 +8,7 @@ wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
   plotname = substitute(variable),
   col = gplots::rich.colors(length(variable)),
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = UnlessSpec("b.mdlink"))
+  h = w, mdlink = ww.set.mdlink())
 }
 \arguments{
 \item{variable}{The variable to plot.}

@@ -10,7 +10,7 @@ wbarplot(variable, ..., col = "gold1", sub = F,
   lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper,
   arrow_width = 0.1, arrow_lwd = 1,
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, incrBottMarginBy = 0, mdlink = UnlessSpec("b.mdlink"))
+  h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink())
 }
 \arguments{
 \item{variable}{The variable to plot.}

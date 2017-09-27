@@ -4,8 +4,8 @@
 \alias{wplot_save_this}
 \title{wplot_save_this}
 \usage{
-wplot_save_this(plotname = ww_autoPlotName(), ...,
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = UnlessSpec("b.mdlink"))
+wplot_save_this(plotname = ww.autoPlotName(), ...,
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}

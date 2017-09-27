@@ -7,7 +7,9 @@
 UnlessSpec(NameOfaVariable, def = TRUE)
 }
 \arguments{
-\item{nameOfaBoolean}{Name of a possible defined variable to be tested.}
+\item{NameOfaVariable}{Name of a possibly defined variable to be tested.}
+
+\item{def}{Default return value}
 }
 \description{
 Return value X (TRUE by default) unless the variable is defined. If defined, it returns the variable.

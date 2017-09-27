@@ -8,7 +8,7 @@ whist.back2back(ListOf2 = list(A = rnorm(100), B = rnorm(100)),
   breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
   plotname = substitute(variable), main_ = plotname, ylab = "Frequency",
   savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0,
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = UnlessSpec("b.mdlink"))
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
 }
 \arguments{
 \item{ListOf2}{List of 2 numeric vectors}

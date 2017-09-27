@@ -10,7 +10,7 @@ wplot(df_2columns, col = 1, pch = 18, ...,
   arrow_lwd = 1, col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F,
   "v", "h", "ab")[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
   equal.axes = F, savefile = UnlessSpec("b.save.wplots"),
-  mdlink = UnlessSpec("b.mdlink"), w = UnlessSpec("b.defSize", 7), h = w)
+  mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w)
 }
 \arguments{
 \item{col}{Color of the plot.}

@@ -6,7 +6,7 @@
 \usage{
 pdfA4plot_on.layout(pname = date(), ..., w = UnlessSpec(8.27,
   "b.defSize.fullpage"), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5),
-  mdlink = UnlessSpec("b.mdlink"), title = ttl_field(pname))
+  mdlink = ww.set.mdlink(), title = ww.ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}

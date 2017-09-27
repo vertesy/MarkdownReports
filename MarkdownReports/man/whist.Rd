@@ -9,7 +9,7 @@ whist(variable, breaks = 20, col = "gold1",
   substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
   lty = 2, lwd = 3, lcol = 1, filtercol = 0,
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = UnlessSpec("b.mdlink"), ...)
+  h = w, mdlink = ww.set.mdlink(), ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}
