@@ -9,8 +9,8 @@ wbarplot(variable, ..., col = "gold1", sub = F,
   ylimits = NULL, hline = F, vline = F, filtercol = 1, lty = 1,
   lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper,
   arrow_width = 0.1, arrow_lwd = 1,
-  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
-  incrBottMarginBy = 0, mdlink = trueUnlessSpec("b.mdlink"))
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, incrBottMarginBy = 0, mdlink = UnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{variable}{The variable to plot.}

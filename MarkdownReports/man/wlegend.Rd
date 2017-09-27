@@ -5,7 +5,7 @@
 \title{wlegend}
 \usage{
 wlegend(fill_ = NA, poz = 4, legend, bty = "n", ..., w_ = 7, h_ = w_,
-  OverwritePrevPDF = trueUnlessSpec("b.save.wplots"))
+  title = NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"))
 }
 \arguments{
 \item{fill_}{Color of the boxes next to the text}
@@ -25,7 +25,7 @@ wlegend(fill_ = NA, poz = 4, legend, bty = "n", ..., w_ = 7, h_ = w_,
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
 }
 \description{
-Quickly add a legend to an existing plot, and save the plot immediately.
+Quickly add a legend to an existing plot, and save the plot immediately. Never inserts an mdlink.
 }
 \examples{
 function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)

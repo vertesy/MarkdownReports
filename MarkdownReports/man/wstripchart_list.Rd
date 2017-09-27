@@ -9,8 +9,8 @@ wstripchart_list(yalist, ..., border = 1, bxpcol = 0, pch = 18,
   metod = "jitter", jitter = 0.2,
   plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
   xlab = "", incrBottMarginBy = 0, tilted_text = F,
-  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
-  mdlink = trueUnlessSpec("b.mdlink"))
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, mdlink = UnlessSpec("b.mdlink"))
 }
 \arguments{
 \item{yalist}{Input list to be plotted.}

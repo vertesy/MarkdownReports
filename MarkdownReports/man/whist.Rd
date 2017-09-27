@@ -8,8 +8,8 @@ whist(variable, breaks = 20, col = "gold1",
   plotname = substitute(variable), main = kollapse("Histogram of ",
   substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
   lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w,
-  mdlink = trueUnlessSpec("b.mdlink"), ...)
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, mdlink = UnlessSpec("b.mdlink"), ...)
 }
 \arguments{
 \item{variable}{The variable to plot.}

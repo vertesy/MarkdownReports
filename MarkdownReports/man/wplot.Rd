@@ -5,12 +5,12 @@
 \title{wplot}
 \usage{
 wplot(df_2columns, col = 1, pch = 18, ...,
-  plotname = substitute(df_2columns), errorbar = F, upper = 0,
-  lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
-  col_errorbar = 1, ylimm = F, xlimm = F, abline = F, a = F, b = F,
-  lty = 1, lwd = 1, col_abline = 1, equal.axes = F,
-  savefile = trueUnlessSpec("b.save.wplots"),
-  mdlink = trueUnlessSpec("b.mdlink"), w = 7, h = w)
+  plotname = substitute(df_2columns), panel.first = grid(F), errorbar = F,
+  upper = 0, lower = upper, left = 0, right = left, width = 0.1,
+  arrow_lwd = 1, col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F,
+  "v", "h", "ab")[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
+  equal.axes = F, savefile = UnlessSpec("b.save.wplots"),
+  mdlink = UnlessSpec("b.mdlink"), w = UnlessSpec("b.defSize", 7), h = w)
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -20,6 +20,8 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+
+\item{panel.first}{Draw a background grid similar as in ggplot2. Set to "panel.first=grid()" to draw an auto-fitted grid, (nx=NULL, ny=0) to draw vertical only, etc.}
 
 \item{errorbar}{Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".}
 
@@ -39,7 +41,7 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 
 \item{xlimm}{manual X-limits error bar}
 
-\item{abline}{Draw a line on the plot. FALSE by default. Use parameters "a" and "b" to draw horizontal, vertical or inclined lines.}
+\item{abline}{Draw a line on the plot. Any value from: c( 'v', 'h', 'ab') for vertical, horizontal, and line with any slope. In each case you need to specify "a=", specifying the X-position for vertical (v); the Y-position for horizontal (yh) lines and the intercept for lines with a slope (ab). In the latter case, 'b' specifes the slope.}
 
 \item{a}{X-offset for vertical lines, Y-offset for horizontal, and inclined lines.}
 

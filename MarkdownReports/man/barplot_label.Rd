@@ -5,8 +5,7 @@
 \title{barplot_label}
 \usage{
 barplot_label(barplotted_variable, labels, bottom = F, TopOffset = 0.5,
-  relpos_bottom = 0.1, OverwritePrevPDF = trueUnlessSpec("b.save.wplots"),
-  ...)
+  relpos_bottom = 0.1, OverwritePrevPDF = UnlessSpec("b.save.wplots"), ...)
 }
 \arguments{
 \item{barplotted_variable}{The variable that you barplotted previously.}

@@ -5,7 +5,8 @@
 \title{whist_dfCol}
 \usage{
 whist_dfCol(df, colName, col = "gold", ...,
-  savefile = trueUnlessSpec("b.save.wplots"), w = 7, h = w)
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w)
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
