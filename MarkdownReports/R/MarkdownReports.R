@@ -45,6 +45,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
                                   , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
+
   assign("OutDir", OutDir, envir = .GlobalEnv)
   iprint("All files will be saved under 'OutDir': ", OutDir)
   path_of_report <- paste0(OutDir, scriptname, ".log.md")
@@ -81,8 +82,9 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
 #' @examples create_set_NewOutDir (...)
 
 create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
-  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/")
+  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   NewOutDir = kollapse(OutDir,  ..., "/", print = F)
+  NewOutDir = gsub(x=NewOutDir, pattern = '//', replacement = '/') # replace //
   iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
   if (setDir) {	setwd(NewOutDir)}
@@ -123,6 +125,8 @@ continue_logging_markdown <-function (b.scriptname) {
 
 create_set_OutDir <-function (..., setDir=T) {
   OutDir = kollapse(..., print = F)
+  if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
+  OutDir = gsub(x=OutDir, pattern = '//', replacement = '/')
   iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {	dir.create(OutDir)	}
   if (setDir) {	setwd(OutDir)}
