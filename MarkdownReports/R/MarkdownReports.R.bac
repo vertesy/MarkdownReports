@@ -40,7 +40,7 @@
 #' @export
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
-setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
+setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
                                   , b.defSize = c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)[1]
                                   , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
   if (!exists(OutDir)) {	dir.create(OutDir)	}
@@ -81,7 +81,7 @@ setup_MarkdownReports <-function (OutDir = getwd(), scriptname = basename(OutDir
 #' @export
 #' @examples create_set_NewOutDir (...)
 
-create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
+create_set_SubDir <- function (..., makeOutDirOrig=T, setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   NewOutDir = kollapse(OutDir,  ..., "/", print = F)
   NewOutDir = gsub(x=NewOutDir, pattern = '//', replacement = '/') # replace //
@@ -103,7 +103,7 @@ create_set_SubDir <-function (..., makeOutDirOrig=T, setDir=T) {
 #' @export
 #' @examples continue_logging_markdown (fname =  )
 
-continue_logging_markdown <-function (b.scriptname) {
+continue_logging_markdown <- function (b.scriptname) {
   if (exists("OutDir")) {	path = OutDir } else {	path = getwd(); iprint("OutDir not defined !!! Saving in working directory.") }
   path_of_report <- kollapse(path, "/", b.scriptname, ".log.md", print = F)
   iprint("Writing report in:", path_of_report)
@@ -123,7 +123,7 @@ continue_logging_markdown <-function (b.scriptname) {
 #' @export
 #' @examples create_set_OutDir (... =  )
 
-create_set_OutDir <-function (..., setDir=T) {
+create_set_OutDir <- function (..., setDir=T) {
   OutDir = kollapse(..., print = F)
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   OutDir = gsub(x=OutDir, pattern = '//', replacement = '/')
@@ -147,7 +147,7 @@ create_set_OutDir <-function (..., setDir=T) {
 #' @export
 #' @examples wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = w, mdlink = F, ManualName = FALSE)
 
-wplot_save_this <-function (plotname = ww.autoPlotName(), ..., w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   dev.copy2pdf(file = ww.FnP_parser(plotname, "pdf"), width = w, height = h, title =  ww.ttl_field(flname = plotname ) )
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
@@ -185,10 +185,10 @@ wplot_save_this <-function (plotname = ww.autoPlotName(), ..., w = UnlessSpec( "
 #' @export
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 
-wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns), panel.first=grid(F),
+wplot <- function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns), panel.first=grid(F),
                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
                   abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
-                  savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec( "b.defSize", 7), h = w) {
+                  savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
   fname = kollapse(plotname, ".plot")
@@ -251,11 +251,11 @@ wplot <-function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_
 #' @export
 #' @examples wscatter.fill(x=rnorm(100), y=rnorm(100), color=rnorm(100), nlevels=15, pch = 21, xlab="The X Dimension. Wooaaahh")
 
-wscatter.fill <-function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[, 1]), ylim=range(df2col[, 2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
+wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[, 1]), ylim=range(df2col[, 2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
                            plotname = substitute(df2col), plot.title = plotname,
                            plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
                            axes = TRUE, frame.plot = axes, xlb, ylb,
-                           savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink() ) {
+                           savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink() ) {
   x = df2col[, 1]
   y = df2col[, 2]
   CNN = colnames(df2col)
@@ -347,10 +347,10 @@ wscatter.fill <-function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., c
 #' @export
 #' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 
-wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = plotname, tilted_text = F, ylimits = NULL,
+wbarplot <- function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = plotname, tilted_text = F, ylimits = NULL,
                      hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
                      errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink()) {
+                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink()) {
   isVec = is.vector(variable) | is.table(variable)
   isMat = is.matrix(variable) | is.data.frame(variable)
   NrBars = if (isVec) l(variable) else if ( isMat ) ncol(variable) else l(variable)
@@ -404,9 +404,9 @@ wbarplot <-function (variable, ..., col = "gold1", sub = F, plotname = substitut
 #' @export
 #' @examples whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 
-whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
+whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
                   hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-                  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink(), ...) {
+                  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), ...) {
   xtra = list(...)
   if (length(variable) > 0) {
     fname = kollapse(plotname, ".hist")
@@ -462,9 +462,9 @@ whist <-function (variable, breaks = 20, col = "gold1", plotname = substitute(va
 #' @export
 #' @examples whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
 
-whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
+whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
                            plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
-                           savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                           savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
 
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
@@ -512,8 +512,8 @@ whist.back2back <-function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), br
 #' @export
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = w, mdlink = F)
 
-wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
-                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
+                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".boxplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   if (tilted_text) { 	xlb = NA } else {	xlb = names(yalist) }
@@ -545,7 +545,7 @@ wboxplot <-function (yalist, ..., col = "gold1", plotname = as.character(substit
 #' @export
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = w, mdlink = F)
 
-wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
   fname = kollapse(plotname, ".pie")
 	subt = kollapse("Total = ", sum(variable), print = F)
@@ -584,10 +584,10 @@ wpie <-function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname
 #' @export
 #' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
-wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
+wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
                         pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
-                        savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                        savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
@@ -640,9 +640,9 @@ wstripchart <-function (yalist, ..., plotname = as.character(substitute(yalist))
 #' @export
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
-wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
+wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
-                              savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                              savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".stripchart")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(list)))
@@ -694,9 +694,9 @@ wstripchart_list <-function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pc
 #' @export
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 
-wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
+wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
-                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
@@ -746,9 +746,9 @@ wvioplot_list <-function (yalist, ..., coll = c(2:(length(yalist)+1)),
 #' @export
 #' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
 
-wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
+wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
-                                savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                                savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".VioStripchart")
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -794,7 +794,7 @@ wviostripchart_list <-function (yalist, ..., pch = 23, viocoll = 0, vioborder = 
 #' @export
 #' @examples wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
 
-wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), subt, ..., w = UnlessSpec( "b.defSize", 7), h = w, mdlink = ww.set.mdlink(), plotname = substitute(yalist), LogFile=F) {
+wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist), subt, ..., w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), plotname = substitute(yalist), LogFile=F) {
   if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
   fname = kollapse(plotname, ".", imagetype, print = F)
   LsLen = length(yalist)
@@ -828,7 +828,7 @@ wvenn <-function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist)
 #' @export
 #' @examples wbarplot_dfCol (df =  , colName =  , col = gold1, w = 7, h = w, ... =  )
 
-wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w, ...) {
+wbarplot_dfCol <- function (df, colName, col = "gold1", savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, ...) {
   stopifnot(colName %in% colnames(df))
   variable = unlist(df[, colName])
   stopifnot(length(variable) > 1)
@@ -854,7 +854,7 @@ wbarplot_dfCol <-function (df, colName, col = "gold1", savefile = UnlessSpec("b.
 #' @export
 #' @examples whist_dfCol (df =  , colName =  , col = gold, ... =  , w = 7, h = w)
 
-whist_dfCol <-function (df, colName, col = "gold", ..., savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec( "b.defSize", 7), h = w) {
+whist_dfCol <- function (df, colName, col = "gold", ..., savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w) {
   stopifnot(colName %in% colnames(df))
   variable = as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
@@ -895,7 +895,7 @@ whist_dfCol <-function (df, colName, col = "gold", ..., savefile = UnlessSpec("b
 #' @export
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on <-function (pname = date(), ..., w = UnlessSpec(8.27, "b.defSize.fullpage"), h = 11.69, rows = 4, cols = rows-1, mdlink = ww.set.mdlink(),
+pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, rows = 4, cols = rows-1, mdlink = ww.set.mdlink(),
                          title = ww.ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
@@ -922,7 +922,7 @@ pdfA4plot_on <-function (pname = date(), ..., w = UnlessSpec(8.27, "b.defSize.fu
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on.layout <-function (pname = date(), ..., w = UnlessSpec(8.27, "b.defSize.fullpage"), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = ww.set.mdlink(),
+pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = ww.set.mdlink(),
                                 title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
@@ -943,7 +943,7 @@ pdfA4plot_on.layout <-function (pname = date(), ..., w = UnlessSpec(8.27, "b.def
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_off <-function () {
+pdfA4plot_off <- function () {
   x =  if (exists("b.mfrow_def")) b.mfrow_def else c(1, 1)
   y =  if (exists("b.bg_def")) b.bg_def else "white"
   if (exists("b.save.wplots")) assign("b.save.wplots", T, envir = .GlobalEnv) # switch back mdlink to its original value
@@ -968,7 +968,7 @@ pdfA4plot_off <-function () {
 #' @export
 #' @examples error_bar (x =  , y =  , upper =  , lower = upper, width  = 0.1, ... =  )
 
-error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
+error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
   stopifnot(length(x) == length(y) & length(y) == length(lower) & length(lower) == length(upper))
   if (length(dim(y)) > 1) {
     arrows(as.vector(x), as.vector(y + upper), as.vector(x), as.vector(y - lower), angle = 90, code = 3,
@@ -993,7 +993,7 @@ error_bar <-function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -1018,7 +1018,7 @@ wlegend <-function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title
 #' @export
 #' @examples barplot (1:10); barplot_label (1:10, labels =11:2  , bottom = F, TopOffset = 0.5, relpos_bottom = 0.1, ... =  )
 
-barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) {
+barplot_label <- function (barplotted_variable, labels, bottom = F, TopOffset = .5, relpos_bottom = 0.1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) {
   x = barplot(barplotted_variable, plot = F)
   y = barplotted_variable
   # stopifnot(length(x) == length(y))
@@ -1047,7 +1047,7 @@ barplot_label <-function (barplotted_variable, labels, bottom = F, TopOffset = .
 #' @export
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 
-wLinRegression <-function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
@@ -1073,7 +1073,7 @@ wLinRegression <-function(DF, coeff = c("pearson", "spearman", "r2")[3], textloc
 #' @export
 #' @examples try.dev.off ()
 
-try.dev.off <-function () { try(dev.off(), silent = T) }
+try.dev.off <- function () { try(dev.off(), silent = T) }
 
 #' subscript_in_plots
 #'
@@ -1084,7 +1084,7 @@ try.dev.off <-function () { try(dev.off(), silent = T) }
 #' @export
 #' @examples plot (1, 1, xlab =subscript_in_plots(subscr = 10, quantity = "read count"), ylab =subscript_in_plots())
 
-subscript_in_plots <-function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+subscript_in_plots <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
   formatted_string = bquote(.(prefix)[.(subscr)]*'('*.(quantity)*')')
 }
 
@@ -1098,7 +1098,7 @@ subscript_in_plots <-function(prefix="log", subscr=2, quantity="arbitrary units"
 #' @export
 #' @examples plot (1, 1, main =superscript_in_plots())
 
-superscript_in_plots <-function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
   formatted_string = bquote(.(prefix)^.(sup)*.(suffix))
 }
 
@@ -1118,7 +1118,7 @@ superscript_in_plots <-function(prefix='n', sup='k', suffix='') { # Returns a fo
 #' @export
 #' @examples wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
 
-wcolorize  <-function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
+wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
   NrCol = l(unique(vector))
   condition = F
   COLZ = as.factor.numeric(vector) # if basic numbers
@@ -1157,7 +1157,7 @@ wcolorize  <-function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=
 
 
 ### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
-val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yourdata)))) ), breaks, rename=F) {
+val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yourdata)))) ), breaks, rename=F) {
 
   if (!missing(breaks)) {
     if (length(breaks) != (length(col) + 1)) {
@@ -1192,7 +1192,7 @@ val2col <-function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yo
 #' @export
 #' @examples iprint ("Hello ", "you ", 3, ", " , 11, " year old kids.")
 
-iprint <-function (...) {
+iprint <- function (...) {
   argument_list <- c(...)
   print(paste(argument_list, collapse = " "))
 }
@@ -1206,7 +1206,7 @@ any_print = iprint # for compatibility
 #' @export
 #' @examples llprint (... =  )
 
-llprint <-function (...) {
+llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
   if (exists("path_of_report")) {	write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
@@ -1221,7 +1221,7 @@ llprint <-function (...) {
 #' @export
 #' @examples llogit (... =  )
 
-llogit <-function (...) {
+llogit <- function (...) {
   argument_list <- c(...)
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
@@ -1240,7 +1240,7 @@ llogit <-function (...) {
 #' @export
 #' @examples md.write.as.list()
 
-md.write.as.list <-function (vector=1:3, h=4, numbered =F, ...) {
+md.write.as.list <- function (vector=1:3, h=4, numbered =F, ...) {
   LogEntry = kollapse(rep("#",h)," ", substitute(vector), print = F)
   if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, ..., append = T)
@@ -1258,7 +1258,7 @@ md.write.as.list <-function (vector=1:3, h=4, numbered =F, ...) {
 #' @export
 #' @examples llwrite_list(your_list)
 
-llwrite_list <-function(yalist, printName="self") {
+llwrite_list <- function(yalist, printName="self") {
   if (printName == "self")  llprint("####", substitute(yalist))  else if (printName == F) { ""} else { llprint("####", printName) }  #  else do not print
   for (e in 1:l(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
@@ -1293,7 +1293,7 @@ md.import <- function(from.file, to.file = path_of_report) {
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
 
-md.LogSettingsFromList <-function (parameterlist=p, maxlen =20) {
+md.LogSettingsFromList <- function (parameterlist=p, maxlen =20) {
   LZ = unlapply(parameterlist, l) # collapse paramters with multiple entires
   LNG = names(which(LZ>1))
   for (i in LNG ) {
@@ -1318,7 +1318,7 @@ md.LogSettingsFromList <-function (parameterlist=p, maxlen =20) {
 #' @export
 #' @examples MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 
-MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut =F) {
+MarkDown_Table_writer_DF_RowColNames <- function (df, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut =F) {
   if (is.na(title_of_table)) {
     t = paste0(substitute(df), collapse = " ")
   }
@@ -1371,7 +1371,7 @@ MarkDown_Table_writer_DF_RowColNames <-function (df, FullPath = path_of_report, 
 #' @export
 #' @examples MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 
-MarkDown_Table_writer_NamedVector <-function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut = FALSE) {
+MarkDown_Table_writer_NamedVector <- function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut = FALSE) {
   if (is.na(title_of_table)) {
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
@@ -1439,7 +1439,7 @@ md.import.table <- function(from.file.table, title_of_table, has.rownames=T, has
 #' @export
 #' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 
-filter_HP <-function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall between above high-pass-threshold (X >).
+filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall between above high-pass-threshold (X >).
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
@@ -1459,7 +1459,7 @@ filter_HP <-function(numeric_vector, threshold, passequal = F, prepend ="", retu
 #' @export
 #' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
 
-filter_LP <-function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall below the low-pass threshold (X <).
+filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall below the low-pass threshold (X <).
   survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
@@ -1480,7 +1480,7 @@ filter_LP <-function(numeric_vector, threshold, passequal = F, prepend ="", retu
 #' @export
 #' @examples filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
 
-filter_MidPass <-function(numeric_vector, HP_threshold, LP_threshold, prepend ="", return_survival_ratio=FALSE, EdgePass = F, na_rm = T) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
+filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend ="", return_survival_ratio=FALSE, EdgePass = F, na_rm = T) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
   survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
   if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
@@ -1501,7 +1501,7 @@ filter_MidPass <-function(numeric_vector, HP_threshold, LP_threshold, prepend ="
 #' @export
 #' @examples iround (x =  , digitz = 3)
 
-iround <-function (x, digitz = 3) {
+iround <- function (x, digitz = 3) {
   signif(x, digits = digitz)
 }
 
@@ -1518,7 +1518,7 @@ iround <-function (x, digitz = 3) {
 #' @export
 #' @examples kollapse("Hello ", LETTERS[24], ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
 
-kollapse <-function (..., collapseby = "", print = T) {
+kollapse <- function (..., collapseby = "", print = T) {
   if (print == T) {
     print(paste0(c(...), collapse = collapseby))
   }
@@ -1533,7 +1533,7 @@ kollapse <-function (..., collapseby = "", print = T) {
 #' @export
 #' @examples substrRight  ("Not cool", n=4)
 
-substrRight <-function (x, n){
+substrRight <- function (x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
 
@@ -1545,7 +1545,7 @@ substrRight <-function (x, n){
 #' @export
 #' @examples percentage_formatter (x =  , digitz = 3)
 
-percentage_formatter <-function (x, digitz = 3) {
+percentage_formatter <- function (x, digitz = 3) {
   a = paste(100 * iround(x, digitz), "%", sep = " ")
   a[a == "NaN %"] = NaN
   a[a == "NA %"] = NA
@@ -1562,7 +1562,7 @@ percentage_formatter <-function (x, digitz = 3) {
 #' @export
 #' @examples function(named_categ_vec)
 
-getCategories <-function(named_categ_vec) { named_categ_vec[unique(names(named_categ_vec))] }
+getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_categ_vec))] }
 
 #' parFlags
 #'
@@ -1573,7 +1573,7 @@ getCategories <-function(named_categ_vec) { named_categ_vec[unique(names(named_c
 #' @export
 #' @examples pearson = T; filtered =T; normalized = F; MyPlotname = parFlags(prefix = "MyPlot" , pearson, filtered, normalized ); MyPlotname
 
-parFlags <-function(prefix="", ..., pasteflg=T, collapsechar =".") {
+parFlags <- function(prefix="", ..., pasteflg=T, collapsechar =".") {
   namez=as.character(as.list(match.call())[-(1:2)])
   val = c(...)
   names(val) =namez
@@ -1588,7 +1588,7 @@ parFlags <-function(prefix="", ..., pasteflg=T, collapsechar =".") {
 #' @param NameOfaVariable Name of a possibly defined variable to be tested.
 #' @param def Default return value
 #' @export
-#' @examples UnlessSpec(2,"xsadasf32"); Num=22; UnlessSpec(2,"Num"); UnlessSpec(2, "c")
+#' @examples UnlessSpec("xsadasf32", 2); Num=22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
 
 UnlessSpec <- function(NameOfaVariable, def=TRUE) {  if( exists(NameOfaVariable) ) get(NameOfaVariable) else def }
 
@@ -1603,7 +1603,7 @@ UnlessSpec <- function(NameOfaVariable, def=TRUE) {  if( exists(NameOfaVariable)
 #' @export
 #' @examples ww.FnP_parser(fname = 'myplot', ext_wo_dot = "jpg")
 
-ww.FnP_parser <-function(fname, ext_wo_dot) {
+ww.FnP_parser <- function(fname, ext_wo_dot) {
   if ( exists('OutDir') ) {path = OutDir} else {path = paste0(getwd(), "/") ; iprint ("OutDir not defined !!!")}
   FnP = if (methods::hasArg(ext_wo_dot) ) kollapse (path, fname, ".", ext_wo_dot) else FnP = kollapse (path, "/", fname)
 }
@@ -1626,7 +1626,7 @@ ww.set.mdlink <- function(NameOfaVariable="b.mdlink", def=FALSE) {  if( exists('
 #' @export
 #' @examples ww.MarkDown_ImgLink_formatter (... =  )
 
-ww.MarkDown_ImgLink_formatter <-function (...) {
+ww.MarkDown_ImgLink_formatter <- function (...) {
   FullPath = kollapse(..., print = F)
   splt = strsplit(FullPath, "/")
   fn = splt[[1]][length(splt[[1]])]
@@ -1641,7 +1641,7 @@ ww.MarkDown_ImgLink_formatter <-function (...) {
 #' @export
 #' @examples ww.MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext =  )
 
-ww.MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
+ww.MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext) {
   splt = strsplit(fname_wo_ext, "/")
   fn = splt[[1]][length(splt[[1]])]
   llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
@@ -1663,7 +1663,7 @@ ww.MarkDown_Img_Logger_PDF_and_PNG <-function (fname_wo_ext) {
 #' @export
 #' @examples ww.ttl_field()
 
-ww.ttl_field <-function (flname = fname ) { paste0(basename(flname), " by ", if (exists("b.scriptname")) b.scriptname else "Rscript") }
+ww.ttl_field <- function (flname = fname ) { paste0(basename(flname), " by ", if (exists("b.scriptname")) b.scriptname else "Rscript") }
 
 
 #' ww.autoPlotName
@@ -1673,7 +1673,7 @@ ww.ttl_field <-function (flname = fname ) { paste0(basename(flname), " by ", if 
 #' @export
 #' @examples ww.autoPlotName()
 
-ww.autoPlotName <-function (name=NULL) {
+ww.autoPlotName <- function (name=NULL) {
   if (is.null(name)) {    filename = if (exists("plotnameLastPlot")) {plotnameLastPlot} else {make.names(date())}
   } else {                filename = name}
   return(filename)
@@ -1691,7 +1691,7 @@ ww.autoPlotName <-function (name=NULL) {
 #' @export
 #' @examples setup_logging_markdown (fname =  , title =  , append = T, b.png4Github = T)
 
-setup_logging_markdown <-function (fname, title = "", append = T, b.png4Github = T) {
+setup_logging_markdown <- function (fname, title = "", append = T, b.png4Github = T) {
   if (exists("OutDir")) {		path = OutDir
   } else {					path = getwd(); iprint("OutDir not defined !!!")	}
   path_of_report <- kollapse(path, "/", fname, ".log.md")
@@ -1715,7 +1715,7 @@ setup_logging_markdown <-function (fname, title = "", append = T, b.png4Github =
 #' @export
 #' @examples log_settings_MarkDown (... =  )
 
-log_settings_MarkDown <-function (...) {
+log_settings_MarkDown <- function (...) {
   call <- match.call()
   namez = sapply(as.list(call[-1]), deparse)
   value = c(...)
@@ -1739,7 +1739,7 @@ log_settings_MarkDown <-function (...) {
 # #'
 # #' @examples plot (1, 1, xlab =subscript_in_plots2(subscr = 10, quantity = "read count"), ylab =subscript_in_plots())
 
-# subscript_in_plots2 <-function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+# subscript_in_plots2 <- function(prefix="log", subscr=2, quantity="arbitrary units") { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
 #   formatted_string = substitute(paste(prefix[subscr], "(", quantity, ")") , list(subscr=subscr, prefix=prefix, quantity=quantity))
 # }
 # #' superscript_in_plots2
@@ -1752,11 +1752,11 @@ log_settings_MarkDown <-function (...) {
 # #'
 # #' @examples plot (1, 1, main =superscript_in_plots2())
 
-# superscript_in_plots2 <-function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+# superscript_in_plots2 <- function(prefix='n', sup='k', suffix='') { # Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
 #   formatted_string = substitute(paste(prefix^sup, quantity) , list(prefix=prefix, sup=sup, suffix=suffix))
 # }
 
-# wlegend <-function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
+# wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
 #   stopif(is.null(names(fill_) & 1), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
 #   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
 #   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)

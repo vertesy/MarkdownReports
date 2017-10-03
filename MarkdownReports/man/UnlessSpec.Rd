@@ -15,5 +15,5 @@ UnlessSpec(NameOfaVariable, def = TRUE)
 Return value X (TRUE by default) unless the variable is defined. If defined, it returns the variable.
 }
 \examples{
-UnlessSpec(2,"xsadasf32"); Num=22; UnlessSpec(2,"Num"); UnlessSpec(2, "c")
+UnlessSpec("xsadasf32", 2); Num=22; UnlessSpec("Num", 1); UnlessSpec("c", 333)
 }

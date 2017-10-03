@@ -4,9 +4,9 @@
 \alias{pdfA4plot_on}
 \title{pdfA4plot_on}
 \usage{
-pdfA4plot_on(pname = date(), ..., w = UnlessSpec(8.27,
-  "b.defSize.fullpage"), h = 11.69, rows = 4, cols = rows - 1,
-  mdlink = ww.set.mdlink(), title = ww.ttl_field(pname))
+pdfA4plot_on(pname = date(), ..., w = UnlessSpec("b.defSize.fullpage",
+  8.27), h = 11.69, rows = 4, cols = rows - 1, mdlink = ww.set.mdlink(),
+  title = ww.ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
