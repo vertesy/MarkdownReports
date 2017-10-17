@@ -83,7 +83,8 @@ setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDi
 
 create_set_SubDir <- function (..., makeOutDirOrig=T, setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
-  NewOutDir = kollapse(OutDir,  ..., "/", print = F)
+  NewOutDir = kollapse(OutDir,  ..., print = F)
+  if ( ! substrRight(NewOutDir, 1) == "/" )  NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
   NewOutDir = gsub(x=NewOutDir, pattern = '//', replacement = '/') # replace //
   iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
@@ -151,7 +152,6 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
   dev.copy2pdf(file = ww.FnP_parser(plotname, "pdf"), width = w, height = h, title =  ww.ttl_field(flname = plotname ) )
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
-
 
 #' wplot
 #'
