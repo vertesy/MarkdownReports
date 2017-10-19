@@ -1463,7 +1463,7 @@ filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
   survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
-  if (file.exists(path_of_report) ) {	llogit (conclusion, )	} else { print  ("NOT LOGGED") }
+  if (file.exists(path_of_report) ) {	llogit (conclusion )	} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
