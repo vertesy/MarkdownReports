@@ -148,7 +148,7 @@ create_set_OutDir <- function (..., setDir=T) {
 #' @export
 #' @examples wplot_save_this (plotname = date(), col = gold1, ... =  , w = 7, h = w, mdlink = F, ManualName = FALSE)
 
-wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("b.defSize", 7), h = w, mdlink = F) {
   dev.copy2pdf(file = ww.FnP_parser(plotname, "pdf"), width = w, height = h, title =  ww.ttl_field(flname = plotname ) )
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
