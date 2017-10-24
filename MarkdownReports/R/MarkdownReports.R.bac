@@ -1293,12 +1293,12 @@ md.import <- function(from.file, to.file = path_of_report) {
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
 
-md.LogSettingsFromList <- function (parameterlist=p, maxlen =20) {
+md.LogSettingsFromList <- function (parameterlist=px, maxlen =20) {
   LZ = unlapply(parameterlist, l) # collapse paramters with multiple entires
   LNG = names(which(LZ>1))
   for (i in LNG ) {
-    if (l(parameterlist[[LNG]]) > maxlen) parameterlist[[LNG]] = parameterlist[[LNG]][1:maxlen]
-    parameterlist[[LNG]] = paste(parameterlist[[LNG]], collapse = ", ")
+    if (l(parameterlist[[i]]) > maxlen) parameterlist[[i]] = parameterlist[[i]][1:maxlen]
+    parameterlist[[i]] = paste(parameterlist[[i]], collapse = ", ")
   } #for
   DF = t(as.data.frame(parameterlist))
   colnames(DF) = "Value"

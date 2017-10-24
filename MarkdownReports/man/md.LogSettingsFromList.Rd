@@ -4,7 +4,7 @@
 \alias{md.LogSettingsFromList}
 \title{md.LogSettingsFromList}
 \usage{
-md.LogSettingsFromList(parameterlist = p, maxlen = 20)
+md.LogSettingsFromList(parameterlist = px, maxlen = 20)
 }
 \arguments{
 \item{parameterlist}{List of Paramters}
