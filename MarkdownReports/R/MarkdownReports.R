@@ -1306,7 +1306,7 @@ md.LogSettingsFromList <- function (parameterlist=px, maxlen =20) {
 }
 
 
-#' MarkDown_Table_writer_DF_RowColNames
+#' md.tableWriter.DF.w.dimnames
 #'
 #' Take an R data frame with row- and column- names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param df Input data frame to be plotted
@@ -1316,50 +1316,45 @@ md.LogSettingsFromList <- function (parameterlist=px, maxlen =20) {
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
 #' @export
-#' @examples MarkDown_Table_writer_DF_RowColNames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
+#' @examples md.tableWriter.DF.w.dimnames (df =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 
-MarkDown_Table_writer_DF_RowColNames <- function (df, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut =F) {
-  if (is.na(title_of_table)) {
-    t = paste0(substitute(df), collapse = " ")
-  }
-  else {
-    t = title_of_table
-  }
+md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut =F) {
+  if (is.na(title_of_table)) {    t = paste0(substitute(df), collapse = " ")
+  } else {                        t = title_of_table  }
+
   title_of_table = paste("\n#### ", t)
-  write(title_of_table, path_of_report, append = T)
+  # if (file.exists(FullPath)) {
+    write(title_of_table, FullPath, append = T)
+    # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   h = paste(colnames(df), collapse = " \t| ")
   h = paste("\n| |", h, " |", collapse = "")
   ncolz = dim(df)[2] + 1
   nrows = dim(df)[1]
   rn = rownames(df)
   sep = kollapse(rep("| ---", ncolz), " |", print = F)
-  if (exists("path_of_report")) {
-    write(h, path_of_report, append = T)
-    write(sep, path_of_report, append = T)
-    for (r in 1:nrows) {
-      if (is.numeric(unlist(df[r, ]))) {
-        b = iround(df[r, ])
-        if (percentify) {
-          b = percentage_formatter(b)
-        }
-      }
-      else {
-        b = df[r, ]
-      }
-      b = paste(b, collapse = " \t| ")
-      b = paste("|", rn[r], "\t|", b, " |", collapse = "")
-      write(b, path_of_report, append = T)
-    }
+
+  write(h, FullPath, append = T)
+  write(sep, FullPath, append = T)
+  for (r in 1:nrows) {
+    if (is.numeric(unlist(df[r, ]))) {
+      b = iround(df[r, ])
+      if (percentify) {  b = percentage_formatter(b)  }
+    } else {  b = df[r, ] }
+
+    b = paste(b, collapse = " \t| ")
+    b = paste("|", rn[r], "\t|", b, " |", collapse = "")
+    write(b, FullPath, append = T)
   }
-  else {
-    print("NOT LOGGED: Log path and filename is not defined in path_of_report")
-  }
+
   if (WriteOut) { write.simple.tsv(NamedVector) }
   if (print2screen) { print(b) }
 }
 
+# ALIAS
+MarkDown_Table_writer_DF_RowColNames = md.tableWriter.DF.w.dimnames
 
-#' MarkDown_Table_writer_NamedVector
+
+#' md.tableWriter.VEC.w.names
 #'
 #' Take an R vector with names, parse a markdown table from it, and write it to the markdown report, set by "path_of_report".
 #' @param NamedVector A vector for the table body, with names as table header.
@@ -1369,14 +1364,17 @@ MarkDown_Table_writer_DF_RowColNames <- function (df, FullPath = path_of_report,
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
 #' @export
-#' @examples MarkDown_Table_writer_NamedVector (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
+#' @examples md.tableWriter.VEC.w.names (NamedVector =  , FullPath = path_of_report, percentify = F, title_of_table = NA)
 
-MarkDown_Table_writer_NamedVector <- function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut = FALSE) {
+md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, percentify = F, title_of_table = NA, print2screen=F, WriteOut = FALSE) {
   if (is.na(title_of_table)) {
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
   title_of_table = paste("\n#### ", t)
-  write(title_of_table, path_of_report, append = T)
+  # if (file.exists(FullPath)) {
+    write(title_of_table, FullPath, append = T)
+    # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
+
   if (!is.table(NamedVector)) {
     if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
     if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
@@ -1385,22 +1383,21 @@ MarkDown_Table_writer_NamedVector <- function (NamedVector, FullPath = path_of_r
   h = paste("\n| ", h, " |", collapse = "")
   ncolz = length(NamedVector)
   sep = kollapse(rep("| ---", ncolz), " |", print = F)
-  if (exists("path_of_report")) {
-    write(h, path_of_report, append = T)
-    write(sep, path_of_report, append = T)
-    if (percentify & is.numeric(NamedVector)) {
-      NamedVector = percentage_formatter(NamedVector)
-    }
-    b = paste(NamedVector, collapse = " \t| ")
-    b = paste("|", b, " |", collapse = "")
-    write(b, path_of_report, append = T)
+  write(h, FullPath, append = T)
+  write(sep, FullPath, append = T)
+  if (percentify & is.numeric(NamedVector)) {
+    NamedVector = percentage_formatter(NamedVector)
   }
-  else {
-    print("NOT LOGGED: Log path and filename is not defined in path_of_report")
-  }
+  b = paste(NamedVector, collapse = " \t| ")
+  b = paste("|", b, " |", collapse = "")
+  write(b, FullPath, append = T)
+
   if (WriteOut) { write.simple.tsv(NamedVector) }
   if (print2screen) { print(b) }
 }
+
+# ALIAS
+MarkDown_Table_writer_NamedVector = md.tableWriter.VEC.w.names
 
 
 #' md.import.table
