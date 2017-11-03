@@ -1444,6 +1444,24 @@ md.import.table <- function(from.file.table, title_of_table, has.rownames=T, has
   return(importedtable)
 }
 
+#' md.LinkTable
+#'
+#' Take a dataframe where every entry is a string containing an html link, parse and write out a properly formatted markdown table
+#' @param tableOfLinkswRownames
+#' @export
+#'
+#' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
+
+md.LinkTable <- function(tableOfLinkswRownames) {
+  TBL = tableOfLinkswRownames
+  RN = rownames(tableOfLinkswRownames)
+  for (i in 1:ncol(tableOfLinkswRownames) ) {
+    x = tableOfLinkswRownames[,i]
+    TBL[,i] = p0("[", RN, "]", "(", x, ")")
+  } #for
+  md.tableWriter.DF.w.dimnames(TBL, FullPath = p0(OutDir, substitute(tableOfLinkswRownames),".tsv.md")  )
+}
+
 
 # Filtering Data ------------------------------------------------------------------------------------------------------------------------
 
