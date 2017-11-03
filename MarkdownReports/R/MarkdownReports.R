@@ -74,7 +74,7 @@ setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDi
 
 # create_set_SubDir
 #'
-#' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
+#' Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param makeOutDirOrig Change the "OutDirOrig" variable to the current OutDir (before setting it to a subdir).
 #' @param setDir Change working directory to the newly defined subdirectory
@@ -82,20 +82,42 @@ setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDi
 #' @examples create_set_NewOutDir (...)
 
 create_set_SubDir <- function (..., makeOutDirOrig=T, setDir=T) {
+  b.Subdirname = kollapse(...)
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   NewOutDir = kollapse(OutDir,  ..., print = F)
   if ( ! substrRight(NewOutDir, 1) == "/" )  NewOutDir = paste0(NewOutDir, "/") # add '/' if necessary
   NewOutDir = gsub(x=NewOutDir, pattern = '//', replacement = '/') # replace //
   iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
-  if (!exists(NewOutDir)) {	dir.create(NewOutDir)	}
+  if (!exists(NewOutDir)) {	dir.create(NewOutDir, showWarnings = F)	}
   if (setDir) {	setwd(NewOutDir)}
   if (makeOutDirOrig) {
     if (exists("OutDirOrig")) iprint("OutDirOrig was defined as:", OutDirOrig)
     iprint("OutDirOrig will be:", OutDir)
     assign("OutDirOrig", OutDir, envir = .GlobalEnv)
   } #if
+  iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
   assign("OutDir", NewOutDir, envir = .GlobalEnv)
+  assign("b.Subdirname", b.Subdirname, envir = .GlobalEnv) # Flag that ww.MarkDown_Img_Logger_PDF_and_PNG uses
 }
+
+
+# create_set_Original_OutDir
+#'
+#' Closing pair of the create_set_SubDir function. Call when chaning back to the main dir. Set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
+#' @param NewOutDir The new OutDir
+#' @param NewPath_of_report  The new path_of_report
+#' @param setDir Change working directory to the newly defined subdirectory
+#' @export
+#' @examples create_set_Original_OutDir (...)
+
+create_set_Original_OutDir <- function (NewOutDir = OutDirOrig, b.Subdirname_=NULL, setDir=T) {
+  iprint("All files will be saved under the original OutDir: ", NewOutDir)
+  if (!exists(NewOutDir)) {	dir.create(NewOutDir, showWarnings = F)	}
+  if (setDir) {	setwd(NewOutDir)}
+  assign("OutDir", NewOutDir, envir = .GlobalEnv)
+  assign("b.Subdirname", b.Subdirname_, envir = .GlobalEnv)
+}
+
 
 #' continue_logging_markdown
 #'
@@ -1638,18 +1660,18 @@ ww.MarkDown_ImgLink_formatter <- function (...) {
 #' @export
 #' @examples ww.MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext =  )
 
-ww.MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext) {
+ww.MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext, OutDir_ = OutDir) {
   splt = strsplit(fname_wo_ext, "/")
   fn = splt[[1]][length(splt[[1]])]
   llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
   if (UnlessSpec("b.usepng")) {
     if (UnlessSpec("b.png4Github")) {
-      dirnm = strsplit(OutDir, split = "/")[[1]]
+      dirnm = strsplit(OutDir_, split = "/")[[1]]
       dirnm = dirnm[length(dirnm)]
       llogit(kollapse("![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = F))
     }	else {
-      llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F))
-    }
+      if (exists('b.Subdirname') && ! b.Subdirname==F) { fname_wo_ext = p0( b.Subdirname,"/",fname_wo_ext)} # set only if b.Subdirname is defined, it is not FALSE.
+      llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F)) }
   } # if b.usepng
 }
 
