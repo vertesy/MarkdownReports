@@ -110,7 +110,7 @@ create_set_SubDir <- function (..., makeOutDirOrig=T, setDir=T) {
 #' @export
 #' @examples create_set_Original_OutDir (...)
 
-create_set_Original_OutDir <- function (NewOutDir = OutDirOrig, b.Subdirname_=NULL, setDir=T) {
+create_set_Original_OutDir <- function (NewOutDir = OutDirOrig, b.Subdirname_=FALSE, setDir=T) {
   iprint("All files will be saved under the original OutDir: ", NewOutDir)
   if (!exists(NewOutDir)) {	dir.create(NewOutDir, showWarnings = F)	}
   if (setDir) {	setwd(NewOutDir)}
