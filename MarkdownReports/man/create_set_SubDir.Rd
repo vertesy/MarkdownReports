@@ -2,7 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{create_set_SubDir}
 \alias{create_set_SubDir}
-\title{Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.}
+\title{Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.}
 \usage{
 create_set_SubDir(..., makeOutDirOrig = T, setDir = T)
 }
@@ -14,7 +14,7 @@ create_set_SubDir(..., makeOutDirOrig = T, setDir = T)
 \item{setDir}{Change working directory to the newly defined subdirectory}
 }
 \description{
-Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions.
+Create or set the output directory of the script, and set the "NewOutDir" variable that is used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 }
 \examples{
 create_set_NewOutDir (...)
