@@ -43,7 +43,7 @@
 setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
                                   , b.defSize = c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)[1]
                                   , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
-  if (!exists(OutDir)) {	dir.create(OutDir)	}
+  if (!exists(OutDir)) {	dir.create(OutDir, showWarnings = F)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
 
   assign("OutDir", OutDir, envir = .GlobalEnv)
@@ -60,7 +60,7 @@ setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDi
   BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (setDir) {	setwd(OutDir)}
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
   assign("b.defSize", b.defSize, envir = .GlobalEnv)
@@ -134,7 +134,7 @@ continue_logging_markdown <- function (b.scriptname) {
 
   BackupDir = kollapse(OutDir, "/", substr(b.scriptname, 1, (nchar(b.scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
 }
@@ -151,7 +151,7 @@ create_set_OutDir <- function (..., setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   OutDir = gsub(x=OutDir, pattern = '//', replacement = '/')
   iprint("All files will be saved under 'OutDir': ", OutDir)
-  if (!exists(OutDir)) {	dir.create(OutDir)	}
+  if (!exists(OutDir)) {	dir.create(OutDir, showWarnings = F)	}
   if (setDir) {	setwd(OutDir)}
   assign("OutDir", OutDir, envir = .GlobalEnv)
 }
@@ -1738,7 +1738,7 @@ setup_logging_markdown <- function (fname, title = "", append = T, b.png4Github 
   write(kollapse("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname), path_of_report, append = T)
   BackupDir = kollapse(OutDir, "/", substr(fname, 1, nchar(fname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
   assign("path_of_report", path_of_report, envir = .GlobalEnv)
