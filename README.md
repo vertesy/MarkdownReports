@@ -80,6 +80,8 @@ and your report will have the summary: ***30.7 % or 614 of 2000 entries in GeneE
 
 Install directly from **GitHub** via **devtools** with one R command:
 
+    # install.packages("devtools"); # If you don't have it
+    require("devtools")
     devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 
 ...then simply load the package:
