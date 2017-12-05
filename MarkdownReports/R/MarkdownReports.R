@@ -1012,10 +1012,11 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -1024,7 +1025,7 @@ wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, titl
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty)
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = F)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
 
 #' barplot_label
