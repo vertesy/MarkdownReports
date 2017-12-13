@@ -1369,7 +1369,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
     write(b, FullPath, append = T)
   }
 
-  if (WriteOut) { write.simple.tsv(NamedVector) }
+  if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
   if (print2screen) { print(b) }
 }
 
@@ -1415,7 +1415,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
   b = paste("|", b, " |", collapse = "")
   write(b, FullPath, append = T)
 
-  if (WriteOut) { write.simple.tsv(NamedVector) }
+  if (WriteOut) { write.simple.tsv(NamedVector, ManualName = p0(substitute(NamedVector),".tsv"), ) }
   if (print2screen) { print(b) }
 }
 
