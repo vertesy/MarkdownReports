@@ -1299,7 +1299,7 @@ llwrite_list <- function(yalist, printName="self") {
 #' @examples md.import("~/Downloads/yourfile.txt")
 
 md.import <- function(from.file, to.file = path_of_report) {
-  linez = readLines(md.filename)
+  linez = readLines(from.file)
   if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
   for(LogEntry in linez) {
     write(LogEntry, path_of_report, append = T)
