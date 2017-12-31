@@ -1362,28 +1362,28 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
   } else {                        t = title_of_table  }
 
   title_of_table = paste("\n#### ", t)
-  if (variable.or.path.exists(FullPath)) {  write(title_of_table, FullPath, append = T) }
-    # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
-  h = paste(colnames(df), collapse = " \t| ")
-  h = paste("\n| |", h, " |", collapse = "")
-  ncolz = dim(df)[2] + 1
-  nrows = dim(df)[1]
-  rn = rownames(df)
-  sep = kollapse(rep("| ---", ncolz), " |", print = F)
+  if (variable.or.path.exists(FullPath)) {  write(title_of_table, FullPath, append = T)
 
-  write(h, FullPath, append = T)
-  write(sep, FullPath, append = T)
-  for (r in 1:nrows) {
-    if (is.numeric(unlist(df[r, ]))) {
-      b = iround(df[r, ])
-      if (percentify) {  b = percentage_formatter(b)  }
-    } else {  b = df[r, ] }
+    h = paste(colnames(df), collapse = " \t| ")
+    h = paste("\n| |", h, " |", collapse = "")
+    ncolz = dim(df)[2] + 1
+    nrows = dim(df)[1]
+    rn = rownames(df)
+    sep = kollapse(rep("| ---", ncolz), " |", print = F)
 
-    b = paste(b, collapse = " \t| ")
-    b = paste("|", rn[r], "\t|", b, " |", collapse = "")
-    write(b, FullPath, append = T)
-  }
+    write(h, FullPath, append = T)
+    write(sep, FullPath, append = T)
+    for (r in 1:nrows) {
+      if (is.numeric(unlist(df[r, ]))) {
+        b = iround(df[r, ])
+        if (percentify) {  b = percentage_formatter(b)  }
+      } else {  b = df[r, ] }
 
+      b = paste(b, collapse = " \t| ")
+      b = paste("|", rn[r], "\t|", b, " |", collapse = "")
+      write(b, FullPath, append = T)
+    }
+  } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
   if (print2screen) { print(b) }
 }
@@ -1409,29 +1409,28 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
   title_of_table = paste("\n#### ", t)
-  if (variable.or.path.exists(FullPath)) { write(title_of_table, FullPath, append = T) }
-    # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
-
-  if (!is.table(NamedVector)) {
-    if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
-    if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
-  }
-  h = paste(names(NamedVector), collapse = " \t| ")
-  h = paste("\n| ", h, " |", collapse = "")
-  ncolz = length(NamedVector)
-  sep = kollapse(rep("| ---", ncolz), " |", print = F)
-  write(h, FullPath, append = T)
-  write(sep, FullPath, append = T)
-  if (percentify & is.numeric(NamedVector)) {
-    NamedVector = percentage_formatter(NamedVector)
-  }
-  b = paste(NamedVector, collapse = " \t| ")
-  b = paste("|", b, " |", collapse = "")
-  write(b, FullPath, append = T)
-
+  if (variable.or.path.exists( FullPath)) { write(title_of_table, FullPath, append = T)
+    if (!is.table(NamedVector)) {
+      if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
+      if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
+    }
+    h = paste(names(NamedVector), collapse = " \t| ")
+    h = paste("\n| ", h, " |", collapse = "")
+    ncolz = length(NamedVector)
+    sep = kollapse(rep("| ---", ncolz), " |", print = F)
+    write(h, FullPath, append = T)
+    write(sep, FullPath, append = T)
+    if (percentify & is.numeric(NamedVector)) {
+      NamedVector = percentage_formatter(NamedVector)
+    }
+    b = paste(NamedVector, collapse = " \t| ")
+    b = paste("|", b, " |", collapse = "")
+    write(b, FullPath, append = T)
+  } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   if (WriteOut) { write.simple.tsv(NamedVector, ManualName = p0(substitute(NamedVector),".tsv"), ) }
   if (print2screen) { print(b) }
 }
+
 
 # ALIAS
 MarkDown_Table_writer_NamedVector = md.tableWriter.VEC.w.names
