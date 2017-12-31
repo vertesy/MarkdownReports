@@ -1208,6 +1208,22 @@ val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(y
 
 # Printing to the markdown file and to the screen ------------------------------------------------------------------------------------------------
 
+#' variable.or.path.exists
+#'
+#' Check if a variable name is defined, and if so, does the path (to a file) stored in that variable points to an existing directory?
+#' @param path A variable name that might not exist and might point to a non-existent direcotry.
+#' @export
+#' @examples variable.or.path.exists (path = path_of_report)
+
+variable.or.path.exists <- function(path = path_of_report) {
+  Variable.Name = substitute(path)
+  if (exists(as.character(Variable.Name))) {
+    if (dir.exists(dirname(path))) { TRUE
+    } else { cat("path_of_report variable points to a non-existent directory."); FALSE}
+  } else { print("path_of_report variable does not exist."); FALSE}
+}
+
+
 #' iprint
 #'
 #' A more intelligent printing function that collapses any variable passed to it by white spaces.
@@ -1232,7 +1248,7 @@ any_print = iprint # for compatibility
 llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
-  if (exists("path_of_report")) {	write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
+  if (variable.or.path.exists(path_of_report)) {     write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
   else {	print("NOT LOGGED: Log path and filename is not defined in path_of_report")	}
 }
 
@@ -1248,7 +1264,7 @@ llogit <- function (...) {
   argument_list <- c(...)
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)
 }
 
@@ -1265,7 +1281,7 @@ llogit <- function (...) {
 
 md.write.as.list <- function (vector=1:3, h=4, numbered =F, ...) {
   LogEntry = kollapse(rep("#",h)," ", substitute(vector), print = F)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, ..., append = T)
   LV = length(vector)
   LN = if (numbered) p0(" ", 1:LV, ". ", vector) else p0(" - ", vector)
@@ -1300,7 +1316,7 @@ llwrite_list <- function(yalist, printName="self") {
 
 md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
   for(LogEntry in linez) {
     write(LogEntry, path_of_report, append = T)
   }
@@ -1346,8 +1362,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
   } else {                        t = title_of_table  }
 
   title_of_table = paste("\n#### ", t)
-  # if (file.exists(FullPath)) {
-    write(title_of_table, FullPath, append = T)
+  if (variable.or.path.exists(FullPath)) {  write(title_of_table, FullPath, append = T) }
     # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   h = paste(colnames(df), collapse = " \t| ")
   h = paste("\n| |", h, " |", collapse = "")
@@ -1394,8 +1409,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
   title_of_table = paste("\n#### ", t)
-  # if (file.exists(FullPath)) {
-    write(title_of_table, FullPath, append = T)
+  if (variable.or.path.exists(FullPath)) { write(title_of_table, FullPath, append = T) }
     # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
 
   if (!is.table(NamedVector)) {
@@ -1481,7 +1495,7 @@ filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
-  if (file.exists(path_of_report) ) {	llogit (conclusion)} else { print  ("NOT LOGGED") }
+  if (variable.or.path.exists(path_of_report)) { llogit (conclusion)} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
@@ -1523,13 +1537,14 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
   if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
-  if (file.exists(path_of_report) ) {	llogit (conclusion)	} else { print  ("NOT LOGGED") }
+  if (variable.or.path.exists(path_of_report)) { llogit (conclusion)	} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
 
 
 # Generic ------------------------------------------------------------------------------------------
+
 
 #' iround
 #'
