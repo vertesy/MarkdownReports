@@ -43,7 +43,7 @@
 setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
                                   , b.defSize = c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)[1]
                                   , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
-  if (!exists(OutDir)) {	dir.create(OutDir)	}
+  if (!exists(OutDir)) {	dir.create(OutDir, showWarnings = F)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
 
   assign("OutDir", OutDir, envir = .GlobalEnv)
@@ -60,7 +60,7 @@ setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDi
   BackupDir = kollapse(OutDir, "/", substr(scriptname, 1, nchar(scriptname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (setDir) {	setwd(OutDir)}
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
   assign("b.defSize", b.defSize, envir = .GlobalEnv)
@@ -134,7 +134,7 @@ continue_logging_markdown <- function (b.scriptname) {
 
   BackupDir = kollapse(OutDir, "/", substr(b.scriptname, 1, (nchar(b.scriptname) - 2)), format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
 }
@@ -151,7 +151,7 @@ create_set_OutDir <- function (..., setDir=T) {
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
   OutDir = gsub(x=OutDir, pattern = '//', replacement = '/')
   iprint("All files will be saved under 'OutDir': ", OutDir)
-  if (!exists(OutDir)) {	dir.create(OutDir)	}
+  if (!exists(OutDir)) {	dir.create(OutDir, showWarnings = F)	}
   if (setDir) {	setwd(OutDir)}
   assign("OutDir", OutDir, envir = .GlobalEnv)
 }
@@ -1012,10 +1012,11 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots")) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -1024,7 +1025,7 @@ wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, titl
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty)
-  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = F)  }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
 
 #' barplot_label
@@ -1207,6 +1208,22 @@ val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(y
 
 # Printing to the markdown file and to the screen ------------------------------------------------------------------------------------------------
 
+#' variable.or.path.exists
+#'
+#' Check if a variable name is defined, and if so, does the path (to a file) stored in that variable points to an existing directory?
+#' @param path A variable name that might not exist and might point to a non-existent direcotry.
+#' @export
+#' @examples variable.or.path.exists (path = path_of_report)
+
+variable.or.path.exists <- function(path = path_of_report) {
+  Variable.Name = substitute(path)
+  if (exists(as.character(Variable.Name))) {
+    if (dir.exists(dirname(path))) { TRUE
+    } else { cat("path_of_report variable points to a non-existent directory."); FALSE}
+  } else { print("path_of_report variable does not exist."); FALSE}
+}
+
+
 #' iprint
 #'
 #' A more intelligent printing function that collapses any variable passed to it by white spaces.
@@ -1231,7 +1248,7 @@ any_print = iprint # for compatibility
 llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
-  if (exists("path_of_report")) {	write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
+  if (variable.or.path.exists(path_of_report)) {     write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
   else {	print("NOT LOGGED: Log path and filename is not defined in path_of_report")	}
 }
 
@@ -1247,7 +1264,7 @@ llogit <- function (...) {
   argument_list <- c(...)
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)
 }
 
@@ -1264,7 +1281,7 @@ llogit <- function (...) {
 
 md.write.as.list <- function (vector=1:3, h=4, numbered =F, ...) {
   LogEntry = kollapse(rep("#",h)," ", substitute(vector), print = F)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") }
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, ..., append = T)
   LV = length(vector)
   LN = if (numbered) p0(" ", 1:LV, ". ", vector) else p0(" - ", vector)
@@ -1298,8 +1315,8 @@ llwrite_list <- function(yalist, printName="self") {
 #' @examples md.import("~/Downloads/yourfile.txt")
 
 md.import <- function(from.file, to.file = path_of_report) {
-  linez = readLines(md.filename)
-  if (!exists("path_of_report")) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
+  linez = readLines(from.file)
+  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
   for(LogEntry in linez) {
     write(LogEntry, path_of_report, append = T)
   }
@@ -1345,8 +1362,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
   } else {                        t = title_of_table  }
 
   title_of_table = paste("\n#### ", t)
-  # if (file.exists(FullPath)) {
-    write(title_of_table, FullPath, append = T)
+  if (variable.or.path.exists(FullPath)) {  write(title_of_table, FullPath, append = T) }
     # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   h = paste(colnames(df), collapse = " \t| ")
   h = paste("\n| |", h, " |", collapse = "")
@@ -1368,7 +1384,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
     write(b, FullPath, append = T)
   }
 
-  if (WriteOut) { write.simple.tsv(NamedVector) }
+  if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
   if (print2screen) { print(b) }
 }
 
@@ -1393,8 +1409,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
   title_of_table = paste("\n#### ", t)
-  # if (file.exists(FullPath)) {
-    write(title_of_table, FullPath, append = T)
+  if (variable.or.path.exists(FullPath)) { write(title_of_table, FullPath, append = T) }
     # } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
 
   if (!is.table(NamedVector)) {
@@ -1414,7 +1429,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
   b = paste("|", b, " |", collapse = "")
   write(b, FullPath, append = T)
 
-  if (WriteOut) { write.simple.tsv(NamedVector) }
+  if (WriteOut) { write.simple.tsv(NamedVector, ManualName = p0(substitute(NamedVector),".tsv"), ) }
   if (print2screen) { print(b) }
 }
 
@@ -1447,7 +1462,7 @@ md.import.table <- function(from.file.table, title_of_table, has.rownames=T, has
 #' md.LinkTable
 #'
 #' Take a dataframe where every entry is a string containing an html link, parse and write out a properly formatted markdown table
-#' @param tableOfLinkswRownames
+#' @param tableOfLinkswRownames a dataframe where every entry is a string containing an html link
 #' @export
 #'
 #' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
@@ -1480,7 +1495,7 @@ filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
-  if (file.exists(path_of_report) ) {	llogit (conclusion)} else { print  ("NOT LOGGED") }
+  if (variable.or.path.exists(path_of_report)) { llogit (conclusion)} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
@@ -1522,13 +1537,14 @@ filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =
   if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
-  if (file.exists(path_of_report) ) {	llogit (conclusion)	} else { print  ("NOT LOGGED") }
+  if (variable.or.path.exists(path_of_report)) { llogit (conclusion)	} else { print  ("NOT LOGGED") }
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
 
 
 # Generic ------------------------------------------------------------------------------------------
+
 
 #' iround
 #'
@@ -1550,8 +1566,8 @@ iround <- function (x, digitz = 3) {
 #'
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param collapseby collapse elements into a string separated by this character
 #' @param print Print the results to the terminal. TRUE by default.
-#' @param print collapseby collapse elements into a string separated by this character
 #' @export
 #' @examples kollapse("Hello ", LETTERS[24], ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
 
@@ -1738,7 +1754,7 @@ setup_logging_markdown <- function (fname, title = "", append = T, b.png4Github 
   write(kollapse("		Modified: ", format(Sys.time(), "%d/%m/%Y | %H:%M | by: "), fname), path_of_report, append = T)
   BackupDir = kollapse(OutDir, "/", substr(fname, 1, nchar(fname)), "_", format(Sys.time(), "%Y_%m_%d-%Hh"), print = F)
   if (!exists(BackupDir)) {
-    dir.create(BackupDir)
+    dir.create(BackupDir, showWarnings = F)
     assign("BackupDir", BackupDir, envir = .GlobalEnv)
   }
   assign("path_of_report", path_of_report, envir = .GlobalEnv)

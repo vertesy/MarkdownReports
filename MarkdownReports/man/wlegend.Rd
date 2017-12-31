@@ -5,7 +5,8 @@
 \title{wlegend}
 \usage{
 wlegend(fill_ = NA, poz = 4, legend, bty = "n", ..., w_ = 7, h_ = w_,
-  title = NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"))
+  title = NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"),
+  mdlink = F)
 }
 \arguments{
 \item{fill_}{Color of the boxes next to the text}
@@ -23,6 +24,8 @@ wlegend(fill_ = NA, poz = 4, legend, bty = "n", ..., w_ = 7, h_ = w_,
 \item{h_}{Height of the saved pdf image, in inches.}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).}
+
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 }
 \description{
 Quickly add a legend to an existing plot, and save the plot immediately. Never inserts an mdlink.

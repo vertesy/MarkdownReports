@@ -9,9 +9,9 @@ kollapse(..., collapseby = "", print = T)
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
 
-\item{print}{Print the results to the terminal. TRUE by default.}
+\item{collapseby}{collapse elements into a string separated by this character}
 
-\item{print}{collapseby collapse elements into a string separated by this character}
+\item{print}{Print the results to the terminal. TRUE by default.}
 }
 \description{
 Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)

@@ -1462,7 +1462,7 @@ md.import.table <- function(from.file.table, title_of_table, has.rownames=T, has
 #' md.LinkTable
 #'
 #' Take a dataframe where every entry is a string containing an html link, parse and write out a properly formatted markdown table
-#' @param tableOfLinkswRownames
+#' @param tableOfLinkswRownames a dataframe where every entry is a string containing an html link
 #' @export
 #'
 #' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
@@ -1566,8 +1566,8 @@ iround <- function (x, digitz = 3) {
 #'
 #' Collapses values and strings to one string (without a white space). It also prints the results (good for a quick check)
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param collapseby collapse elements into a string separated by this character
 #' @param print Print the results to the terminal. TRUE by default.
-#' @param print collapseby collapse elements into a string separated by this character
 #' @export
 #' @examples kollapse("Hello ", LETTERS[24], ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
 

@@ -6,6 +6,9 @@
 \usage{
 md.LinkTable(tableOfLinkswRownames)
 }
+\arguments{
+\item{tableOfLinkswRownames}{a dataframe where every entry is a string containing an html link}
+}
 \description{
 Take a dataframe where every entry is a string containing an html link, parse and write out a properly formatted markdown table
 }
