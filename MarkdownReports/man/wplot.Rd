@@ -4,7 +4,7 @@
 \alias{wplot}
 \title{wplot}
 \usage{
-wplot(df_2columns, col = 1, pch = 18, ...,
+wplot(df_2columns, col = 1, pch = 18, ..., panel_first = NULL,
   plotname = substitute(df_2columns), panel.first = grid(F), errorbar = F,
   upper = 0, lower = upper, left = 0, right = left, width = 0.1,
   arrow_lwd = 1, col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F,
@@ -18,6 +18,8 @@ wplot(df_2columns, col = 1, pch = 18, ...,
 \item{pch}{Define the symbol for each data point. A number [0-25] or any string between ""-s.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+
+\item{panel_first}{add a background grid by specifying " panel_first = grid() "}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 

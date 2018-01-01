@@ -182,6 +182,7 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @param col Color of the plot.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param panel_first add a background grid by specifying " panel_first = grid() "
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param panel.first Draw a background grid similar as in ggplot2. Set to "panel.first=grid()" to draw an auto-fitted grid, (nx=NULL, ny=0) to draw vertical only, etc.
 #' @param errorbar Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".
@@ -207,26 +208,26 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @export
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 
-wplot <- function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df_2columns), panel.first=grid(F),
-                  errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
-                  abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
-                  savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w) {
+wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=NULL, plotname = substitute(df_2columns), panel.first=grid(F),
+                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
+                   abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
+                   savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
   fname = kollapse(plotname, ".plot")
   if (errorbar) {
-    ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))))
-    xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))))
+    ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))), na.rm = T)
+    xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))), na.rm = T)
   }
   else {
-    ylim = range(y)
-    xlim = range(x)
+    ylim = range(y, na.rm = T)
+    xlim = range(x, na.rm = T)
   }
   if (equal.axes) xlim = ylim = range(c(xlim,ylim))
   if (is.numeric(ylimm) & length(ylimm)==2) { ylim = ylimm } #overwrite if
   if (is.numeric(xlimm) & length(xlimm)==2) { xlim = xlimm }
 
-  plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim)
+  plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim, panel.first= panel_first)
   if (errorbar) {
     arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
     arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
@@ -238,8 +239,6 @@ wplot <- function (df_2columns, col = 1, pch = 18, ..., plotname = substitute(df
   if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "pdf"), width = w, height = h, title = ww.ttl_field(fname)) }
   if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
-
-
 
 #' wscatter.fill
 #'
