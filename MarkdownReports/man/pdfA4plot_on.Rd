@@ -5,8 +5,8 @@
 \title{pdfA4plot_on}
 \usage{
 pdfA4plot_on(pname = date(), ..., w = UnlessSpec("b.defSize.fullpage",
-  8.27), h = 11.69, rows = 4, cols = rows - 1, mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(pname))
+  8.27), h = 11.69, rows = 4, cols = rows - 1, one_file = T,
+  mdlink = ww.set.mdlink(), title = ww.ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
@@ -20,6 +20,8 @@ pdfA4plot_on(pname = date(), ..., w = UnlessSpec("b.defSize.fullpage",
 \item{rows}{Number of rows for subplots}
 
 \item{cols}{Number of columns for subplots}
+
+\item{one_file}{Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

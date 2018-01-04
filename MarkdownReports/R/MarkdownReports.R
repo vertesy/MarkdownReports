@@ -911,19 +911,20 @@ whist_dfCol <- function (df, colName, col = "gold", ..., savefile = UnlessSpec("
 #' @param h Height of the saved pdf image, in inches.
 #' @param rows Number of rows for subplots
 #' @param cols Number of columns for subplots
+#' @param one_file Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, rows = 4, cols = rows-1, mdlink = ww.set.mdlink(),
-                         title = ww.ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
+pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, rows = 4, cols = rows-1,
+                          one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.mfrow_def", par("mfrow"), fname, envir = .GlobalEnv)
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
-  pdf(fname, width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title, onefile = one_file)
   par(mfrow = c(rows, cols), bg ="white")
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
@@ -938,18 +939,19 @@ pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpag
 #' @param layout_mat A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
+#' @param one_file Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = ww.set.mdlink(),
-                                title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
+pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5),
+                                one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
-  pdf(fname, width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title, onefile = one_file)
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
@@ -1010,22 +1012,26 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param title What should be the title of the legend? NULL by default
+#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
+  if (ttl.by.varname & is.null(title)) title= substitute(fill_)
   stopif( ( LN != LF & missing(legend) ), message = "The color vector (fill_) has less names than entries / the variable 'legend' is not provided.")
   # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
-  legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty)
+  legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
+
 
 #' barplot_label
 #'
@@ -1064,16 +1070,15 @@ barplot_label <- function (barplotted_variable, labels, bottom = F, TopOffset = 
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
 #' @param cexx font size; 1 by default
-#' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 
-wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", cexx =1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
-  condition = F
   if (coeff =="all") coeff = c("pearson", "spearman", "r2")
   if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
   legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))  }
@@ -1084,8 +1089,45 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
   # print(legendText)
   if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n", cex = cexx)
   } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
-  if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
+
+#' corner.label.w
+#'
+#' Add Legends to the corners. From the Plotrix package.
+#' @param label Text to display
+#' @param cex font size
+#' @param x an integer value: -1 for the left side of the plot, 1 for the right side
+#' @param y an integer value: -1 for the bottom side of the plot, 1 for the top side
+#' @param `xoff,yoff` Horizontal and vertical text offsets. If NA, it defaults to one half of the width and height of "m" respectively.
+#' @param figcorner Whether to find/display at the corner of the plot or figure.
+#' @export
+#' @examples corner.label.w("A")
+
+corner.label.w <- function (label = "A", cex =3, x = -1, y = 1, xoff = 1, yoff = 1, figcorner = T, ...) { # Add Legends to the corners. From the Plotrix package.
+  if (is.na(xoff)) xoff <- strwidth("m")/2
+  if (is.na(yoff)) yoff <- strheight("m")/2
+  par.usr <- par("usr")
+  xpos <- par.usr[(3 + x)/2]
+  ypos <- par.usr[(3 + y)/2 + 2]
+  if (figcorner) {
+    par.pin <- par("pin")
+    xplotrange <- par.usr[2] - par.usr[1]
+    yplotrange <- par.usr[4] - par.usr[3]
+    par.mai <- par("mai")
+    xmar <- xplotrange * par.mai[3 + x]/par.pin[1]
+    ymar <- yplotrange * par.mai[2 + y]/par.pin[2]
+    xpos <- xpos + x * xmar
+    ypos <- ypos + y * ymar
+  }
+  if (!is.null(label)) {
+    if (figcorner) par(xpd = TRUE)
+    text(xpos - x * xoff, ypos - y * yoff, label, adj = c((1 + x)/2, (1 + y)/2), cex, ...)
+    if (figcorner) par(xpd = FALSE)
+  }
+  return(list(x = xpos, y = ypos))
+}
+
 
 # Graphics ------------------------------------------------------------------------------------------------
 

@@ -6,8 +6,8 @@
 \usage{
 pdfA4plot_on.layout(pname = date(), ...,
   w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69,
-  layout_mat = rbind(1, c(2, 3), 4:5), mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(pname))
+  layout_mat = rbind(1, c(2, 3), 4:5), one_file = T,
+  mdlink = ww.set.mdlink(), title = ww.ttl_field(pname))
 }
 \arguments{
 \item{pname}{Title of the plot (main parameter) and also the name of the file.}
@@ -19,6 +19,8 @@ pdfA4plot_on.layout(pname = date(), ...,
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{layout_mat}{A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)}
+
+\item{one_file}{Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 

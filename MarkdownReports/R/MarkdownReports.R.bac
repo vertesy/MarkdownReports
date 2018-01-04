@@ -911,19 +911,20 @@ whist_dfCol <- function (df, colName, col = "gold", ..., savefile = UnlessSpec("
 #' @param h Height of the saved pdf image, in inches.
 #' @param rows Number of rows for subplots
 #' @param cols Number of columns for subplots
+#' @param one_file Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @examples pdfA4plot_on();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, rows = 4, cols = rows-1, mdlink = ww.set.mdlink(),
-                         title = ww.ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
+pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, rows = 4, cols = rows-1,
+                          one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.mfrow_def", par("mfrow"), fname, envir = .GlobalEnv)
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
-  pdf(fname, width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title, onefile = one_file)
   par(mfrow = c(rows, cols), bg ="white")
   iprint(" ----  Don't forget to call the pair of this function to finish plotting in the A4 pdf.: pdfA4plot_off ()")
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
@@ -938,18 +939,19 @@ pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpag
 #' @param layout_mat A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
+#' @param one_file Allows multiple figures in one file, if true (default). Set to FALSE to use with pheatmap / grid.base
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
-pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5), mdlink = ww.set.mdlink(),
-                                title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
+pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5),
+                                one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
   assign("b.save.wplots", F, envir = .GlobalEnv) # switch of "savefile" option
-  pdf(fname, width=w, height=h, title = title)
+  pdf(fname, width=w, height=h, title = title, onefile = one_file)
   layout(layout_mat)
   # par(mar = c(3, 3, 0, 0))
   print(layout_mat)
@@ -1086,6 +1088,43 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
   } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
   if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
 }
+
+#' corner.label.w
+#'
+#' Add Legends to the corners. From the Plotrix package.
+#' @param label Text to display
+#' @param cex font size
+#' @param x an integer value: -1 for the left side of the plot, 1 for the right side
+#' @param y an integer value: -1 for the bottom side of the plot, 1 for the top side
+#' @param `xoff,yoff` Horizontal and vertical text offsets. Defaults to one half of the width and height of "m" respectively.
+#' @param figcorner Whether to find/display at the corner of the plot or figure.
+#' @export
+#' @examples corner.label.w("A")
+
+corner.label.w <- function (label = "A", cex =3, x = -1, y = 1, xoff = 1, yoff = 1, figcorner = T, ...) { # Add Legends to the corners. From the Plotrix package.
+  if (is.na(xoff)) xoff <- strwidth("m")/2
+  if (is.na(yoff)) yoff <- strheight("m")/2
+  par.usr <- par("usr")
+  xpos <- par.usr[(3 + x)/2]
+  ypos <- par.usr[(3 + y)/2 + 2]
+  if (figcorner) {
+    par.pin <- par("pin")
+    xplotrange <- par.usr[2] - par.usr[1]
+    yplotrange <- par.usr[4] - par.usr[3]
+    par.mai <- par("mai")
+    xmar <- xplotrange * par.mai[3 + x]/par.pin[1]
+    ymar <- yplotrange * par.mai[2 + y]/par.pin[2]
+    xpos <- xpos + x * xmar
+    ypos <- ypos + y * ymar
+  }
+  if (!is.null(label)) {
+    if (figcorner) par(xpd = TRUE)
+    text(xpos - x * xoff, ypos - y * yoff, label, adj = c((1 + x)/2, (1 + y)/2), cex, ...)
+    if (figcorner) par(xpd = FALSE)
+  }
+  return(list(x = xpos, y = ypos))
+}
+
 
 # Graphics ------------------------------------------------------------------------------------------------
 

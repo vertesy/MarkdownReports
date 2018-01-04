@@ -3,6 +3,7 @@
 export(UnlessSpec)
 export(barplot_label)
 export(continue_logging_markdown)
+export(corner.label.w)
 export(create_set_Original_OutDir)
 export(create_set_OutDir)
 export(create_set_SubDir)
