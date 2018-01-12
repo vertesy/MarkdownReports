@@ -18,7 +18,7 @@ corner.label.w(label = "A", cex = 3, x = -1, y = 1, xoff = 1,
 
 \item{figcorner}{Whether to find/display at the corner of the plot or figure.}
 
-\item{`xoff, yoff`}{Horizontal and vertical text offsets. Defaults to one half of the width and height of "m" respectively.}
+\item{`xoff, yoff`}{Horizontal and vertical text offsets. If NA, it defaults to one half of the width and height of "m" respectively.}
 }
 \description{
 Add Legends to the corners. From the Plotrix package.

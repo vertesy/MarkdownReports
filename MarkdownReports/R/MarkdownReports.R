@@ -1009,6 +1009,7 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
+#' @param cex_ font size
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
@@ -1029,6 +1030,31 @@ wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, 
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty, cex = cex_)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
+}
+
+
+
+#' wlegend.label
+#'
+#' Quickly add a "text only" legend without a filled color box. to an existing plot, and save the plot immediately. Never inserts an mdlink.
+#' @param legend Labels displayed (Text)
+#' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
+#' @param ... Additional parameters for legend()
+#' @param cex_ font size
+#' @param w_ Width of the saved pdf image, in inches.
+#' @param h_ Height of the saved pdf image, in inches.
+#' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param title What should be the title of the legend? NULL by default
+#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @export
+#' @examples function(legend = "Hey",poz=4, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+
+wlegend.label <- function(legend = "...", poz=1, cex_ =1, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+  legend(x=pozz, legend=legend, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
 

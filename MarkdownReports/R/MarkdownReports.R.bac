@@ -1009,25 +1009,55 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
+#' @param cex_ font size
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param title What should be the title of the legend? NULL by default
+#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, bty = "n", ..., w_=7, h_=w_, title=NULL, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
+  if (ttl.by.varname & is.null(title)) title= substitute(fill_)
   stopif( ( LN != LF & missing(legend) ), message = "The color vector (fill_) has less names than entries / the variable 'legend' is not provided.")
   # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend = if( LN == LF & missing(legend) ) fNames else legend
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
-  legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty)
+  legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
+
+
+
+#' wlegend.label
+#'
+#' Quickly add a "text only" legend without a filled color box. to an existing plot, and save the plot immediately. Never inserts an mdlink.
+#' @param legend Labels displayed (Text)
+#' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
+#' @param ... Additional parameters for legend()
+#' @param cex_ font size
+#' @param w_ Width of the saved pdf image, in inches.
+#' @param h_ Height of the saved pdf image, in inches.
+#' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
+#' @param title What should be the title of the legend? NULL by default
+#' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
+#' @export
+#' @examples function(legend = "Hey",poz=4, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+
+wlegend.label <- function(legend = "...", poz=1, cex_ =1, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+  legend(x=pozz, legend=legend, title=title, ..., bty=bty, cex = cex_)
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
+}
+
 
 #' barplot_label
 #'
@@ -1066,16 +1096,15 @@ barplot_label <- function (barplotted_variable, labels, bottom = F, TopOffset = 
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
 #' @param cexx font size; 1 by default
-#' @param savefile Shall it call wplot_save_this(plotname = plotnameLastPlot) ?
+#' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 
-wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", savefile =T, cexx =1, ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", cexx =1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
-  condition = F
   if (coeff =="all") coeff = c("pearson", "spearman", "r2")
   if ( "pearson" %in% coeff) {    dispCoeff = iround(cor(DF[, 2], DF[, 1], method = "pearson"))
   legendText  =  c(legendText, paste0("Pears.: ", dispCoeff))  }
@@ -1086,7 +1115,7 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
   # print(legendText)
   if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n", cex = cexx)
   } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
-  if(savefile){   wplot_save_this(plotname = plotnameLastPlot) }
+  if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
 
 #' corner.label.w
@@ -1096,7 +1125,7 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
 #' @param cex font size
 #' @param x an integer value: -1 for the left side of the plot, 1 for the right side
 #' @param y an integer value: -1 for the bottom side of the plot, 1 for the top side
-#' @param `xoff,yoff` Horizontal and vertical text offsets. Defaults to one half of the width and height of "m" respectively.
+#' @param `xoff,yoff` Horizontal and vertical text offsets. If NA, it defaults to one half of the width and height of "m" respectively.
 #' @param figcorner Whether to find/display at the corner of the plot or figure.
 #' @export
 #' @examples corner.label.w("A")
@@ -1171,7 +1200,7 @@ superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a f
 #'
 #' Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
 #' @param vector A vector with categories, can be numbers or strings
-#' @param UseRColorBrewer Use RColorBrewer palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help.
+#' @param UseRColorBrewer Use RColorBrewer's brewer.pal palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help. ("Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3", "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu", "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral")
 #' @param ReturnCategoriesToo Return unique Categories. See example.
 #' @param show Show generated color palette
 #' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), or gplots::rich.colors.
