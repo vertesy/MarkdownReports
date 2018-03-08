@@ -41,8 +41,8 @@
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
 setup_MarkdownReports <- function (OutDir = getwd(), scriptname = basename(OutDir), title = "", setDir=T, append = F, addTableOfContents=F
-                                  , b.defSize = c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)[1]
-                                  , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
+                                   , b.defSize = c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)[1]
+                                   , b.defSize.fullpage = 8.27, b.usepng = F, b.png4Github = T, b.mdlink = T, b.save.wplots = T) {
   if (!exists(OutDir)) {	dir.create(OutDir, showWarnings = F)	}
   if ( ! substrRight(OutDir, 1) == "/" )  OutDir = paste0(OutDir, "/") # add '/' if necessary
 
@@ -369,12 +369,12 @@ wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., 
 #' @examples wbarplot (variable =  , ... =  , col = gold1, sub = F, plotname = substitute(variable), main = substitute(variable), w = 7, h = w, incrBottMarginBy = 0, mdlink = F, tilted_text = F, hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1)
 
 wbarplot <- function (variable, ..., col = "gold1", sub = F, plotname = substitute(variable), main = plotname, tilted_text = F, ylimits = NULL,
-                     hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
-                     errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
-                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink()) {
+                      hline = F, vline = F, filtercol = 1, lty = 1, lwd = 2, lcol = 2,
+                      errorbar = F, upper = 0, lower = upper, arrow_width = 0.1, arrow_lwd = 1,
+                      savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink()) {
   isVec = is.vector(variable) | is.table(variable)
   isMat = is.matrix(variable) | is.data.frame(variable)
-  NrBars = if (isVec) l(variable) else if ( isMat ) ncol(variable) else l(variable)
+  NrBars = if (isVec) length(variable) else if ( isMat ) ncol(variable) else length(variable)
   BarNames = if (isVec) names(variable) else if ( isMat ) colnames(variable) else names(variable)
 
   fname = kollapse(plotname, ".barplot")
@@ -426,8 +426,8 @@ wbarplot <- function (variable, ..., col = "gold1", sub = F, plotname = substitu
 #' @examples whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 
 whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
-                  hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
-                  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), ...) {
+                   hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
+                   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), ...) {
   xtra = list(...)
   if (length(variable) > 0) {
     fname = kollapse(plotname, ".hist")
@@ -484,8 +484,8 @@ whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(v
 #' @examples whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
 
 whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
-                           plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
-                           savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                            plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
+                            savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
 
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
@@ -498,7 +498,7 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
   hmax = max(h1$counts, na.rm =T)
   hmin = min(h2$counts, na.rm =T)
   xlimm =range(unlist(ListOf2), na.rm =T)
-  xlimm = c(1, max(l(h2$counts), l(h1$counts))+3)
+  xlimm = c(1, max(length(h2$counts), lenght(h1$counts))+3)
 
   print(xlimm)
   X = c(h1$breaks, h2$breaks)
@@ -534,7 +534,7 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = w, mdlink = F)
 
 wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
-                     savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                      savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".boxplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   if (tilted_text) { 	xlb = NA } else {	xlb = names(yalist) }
@@ -569,13 +569,13 @@ wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substi
 wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
   fname = kollapse(plotname, ".pie")
-	subt = kollapse("Total = ", sum(variable), print = F)
-	if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
-	if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), "\n", variable , sep = "")}
-	} else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
-	pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
-	if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "pdf"), width = w, height = h, title = ww.ttl_field(fname)) }
-	if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+  subt = kollapse("Total = ", sum(variable), print = F)
+  if (percentage) {	labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), sep = "")
+  if (both_pc_and_value) { labs <- paste("(", names(variable), ")", "\n", percentage_formatter(variable/sum(variable)), "\n", variable , sep = "")}
+  } else {	labs <- paste("(", names(variable), ")", "\n", variable, sep = "")	}
+  pie(variable, ..., main = plotname, sub = subt, clockwise = T, labels = labs, col = col )
+  if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "pdf"), width = w, height = h, title = ww.ttl_field(fname)) }
+  if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
 
 
@@ -606,9 +606,9 @@ wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotnam
 #' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
 wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
-                        border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
-                        pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:l(yalist) else 1, ylb="",
-                        savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
+                         pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:length(yalist) else 1, ylb="",
+                         savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
@@ -662,8 +662,8 @@ wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)
 #' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
 wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
-                              plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
-                              savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
+                               savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".stripchart")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(list)))
@@ -674,7 +674,7 @@ wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, p
           col = bxpcol, cex.axis = cexNsize)
   mtext(ylb, side = 2, line = 2)
   for (i in 1:length(yalist)) {
-    if( l(na.omit.strip(yalist[[i]])) ){
+    if( length(na.omit.strip(yalist[[i]])) ){
       j = k = i
       if (length(coll) < length(yalist)) { j = 1 }
       if (length(bg) < length(yalist)) {	k = 1	}
@@ -716,8 +716,8 @@ wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, p
 #' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 
 wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
-                          plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
-                          incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
+                           incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
@@ -728,7 +728,7 @@ wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
   plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = ylimm, xaxt = "n", xlab = "",
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
-    if( l(na.omit.strip(yalist[[i]])) ){
+    if( length(na.omit.strip(yalist[[i]])) ){
       vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
     }
   }
@@ -768,8 +768,8 @@ wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
 #' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
 
 wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
-                                plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
-                                savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
+                                 savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   fname = kollapse(plotname, ".VioStripchart")
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -778,12 +778,12 @@ wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder =
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
     print(i)
-    if( l(na.omit.strip(yalist[[i]])) ){
+    if( length(na.omit.strip(yalist[[i]])) ){
       vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = viocoll[i], border = 1)
     } #if
   }
   for (i in 1:length(yalist)) {
-    if( l(na.omit.strip(yalist[[i]])) ){
+    if( length(na.omit.strip(yalist[[i]])) ){
       j = k = i
       if (length(coll) < length(yalist)) {	j = 1	}
       if (length(bg) < length(yalist)) { k = 1 }
@@ -946,7 +946,7 @@ pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpag
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5),
-                                one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
+                                 one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
   fname = ww.FnP_parser(pname, "pdf")
   try.dev.off()
   assign("b.bg_def", par("bg"), fname, envir = .GlobalEnv)
@@ -1209,7 +1209,7 @@ superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a f
 #' @examples wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
 
 wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
-  NrCol = l(unique(vector))
+  NrCol = length(unique(vector))
   condition = F
   COLZ = as.factor.numeric(vector) # if basic numbers
   if(randomize) {COLZ = sample(COLZ)} # if randomise
@@ -1247,7 +1247,7 @@ wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo
 
 
 ### CONTAINS A QUICK FIX FOR THE NUMBER OF COLOR LEVELS. See #59 on GitHub ###
-val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*l(unique(yourdata)))) ), breaks, rename=F) {
+val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*length(unique(yourdata)))) ), breaks, rename=F) {
 
   if (!missing(breaks)) {
     if (length(breaks) != (length(col) + 1)) {
@@ -1366,7 +1366,7 @@ md.write.as.list <- function (vector=1:3, h=4, numbered =F, ...) {
 
 llwrite_list <- function(yalist, printName="self") {
   if (printName == "self")  llprint("####", substitute(yalist))  else if (printName == F) { ""} else { llprint("####", printName) }  #  else do not print
-  for (e in 1:l(yalist)) {
+  for (e in 1:length(yalist)) {
     if (is.null( names(yalist) )) { llprint("#####", names(yalist)[e]) } else { llprint("#####", e)}
     print(yalist[e]); llogit("`", yalist[e], "`")
   }
@@ -1403,7 +1403,7 @@ md.LogSettingsFromList <- function (parameterlist=px, maxlen =20) {
   LZ = unlapply(parameterlist, l) # collapse paramters with multiple entires
   LNG = names(which(LZ>1))
   for (i in LNG ) {
-    if (l(parameterlist[[i]]) > maxlen) parameterlist[[i]] = parameterlist[[i]][1:maxlen]
+    if (length(parameterlist[[i]]) > maxlen) parameterlist[[i]] = parameterlist[[i]][1:maxlen]
     parameterlist[[i]] = paste(parameterlist[[i]], collapse = ", ")
   } #for
   DF = t(as.data.frame(parameterlist))
@@ -1442,19 +1442,23 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
     write(sep, FullPath, append = T)
     for (r in 1:nrows) {
       if (is.numeric(unlist(df[r, ]))) {
+        print(22)
         b = iround(df[r, ])
         if (percentify) {  b = percentage_formatter(b)  }
-      } else {  b = df[r, ] }
-
+      } else {
+        print(11)
+        b = df[r, ] }
       b = paste(b, collapse = " \t| ")
       b = paste("|", rn[r], "\t|", b, " |", collapse = "")
       write(b, FullPath, append = T)
     }
   } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
-  if (print2screen) { print(b) }
+  # if (print2screen) { print(b) }
+  "It was not working above"
 }
 
+md.tableWriter.DF.w.dimnames(GeneCounts.per.sex, print2screen = T)
 # ALIAS
 MarkDown_Table_writer_DF_RowColNames = md.tableWriter.DF.w.dimnames
 

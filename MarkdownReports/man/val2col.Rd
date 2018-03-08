@@ -5,7 +5,7 @@
 \title{val2col}
 \usage{
 val2col(yourdata, zlim, col = rev(heat.colors(max(12, 3 *
-  l(unique(yourdata))))), breaks, rename = F)
+  length(unique(yourdata))))), breaks, rename = F)
 }
 \arguments{
 \item{yourdata}{The data, to what the colors will be scaled to.}

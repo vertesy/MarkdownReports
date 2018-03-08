@@ -8,7 +8,7 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
   sub = NULL, border = 1, incrBottMarginBy = 0, tilted_text = F,
   BoxPlotWithMean = F, metod = "jitter", jitter = 0.3, pch = 18,
   pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
-  colorbyColumn = T, col = if (colorbyColumn) 1:l(yalist) else 1,
+  colorbyColumn = T, col = if (colorbyColumn) 1:length(yalist) else 1,
   ylb = "", savefile = UnlessSpec("b.save.wplots"),
   w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
 }
