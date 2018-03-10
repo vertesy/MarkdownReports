@@ -1315,8 +1315,8 @@ any_print = iprint # for compatibility
 llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
-  if (variable.or.path.exists(path_of_report)) {     write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)	}
-  else {	print("NOT LOGGED: Log path and filename is not defined in path_of_report")	}
+  if (variable.or.path.exists(path_of_report)) {     write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)
+  } else {	print("NOT LOGGED: Log path and filename is not defined in path_of_report")	}
 }
 
 
@@ -1331,8 +1331,8 @@ llogit <- function (...) {
   argument_list <- c(...)
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
-  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
-  write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)
+  if (variable.or.path.exists(path_of_report)) { write(kollapse("\n", LogEntry, print = F), path_of_report, append = T)
+  } else { print("Log path and filename is not defined in path_of_report") }
 }
 
 
@@ -1348,7 +1348,7 @@ llogit <- function (...) {
 
 md.write.as.list <- function (vector=1:3, h=4, numbered =F, ...) {
   LogEntry = kollapse(rep("#",h)," ", substitute(vector), print = F)
-  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
+  if (!variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") }
   write(kollapse("\n", LogEntry, print = F), path_of_report, ..., append = T)
   LV = length(vector)
   LN = if (numbered) p0(" ", 1:LV, ". ", vector) else p0(" - ", vector)
@@ -1383,7 +1383,7 @@ llwrite_list <- function(yalist, printName="self") {
 
 md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
-  if (variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
+  if (!variable.or.path.exists(path_of_report)) { print("Log path and filename is not defined in path_of_report") } else iprint(length(linez), "lines from",basename(from.file) ,"are concatenated to:", basename(path_of_report))
   for(LogEntry in linez) {
     write(LogEntry, path_of_report, append = T)
   }
