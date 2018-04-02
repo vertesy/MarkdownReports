@@ -208,7 +208,7 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @export
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 
-wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=NULL, plotname = substitute(df_2columns), panel.first=grid(F),
+wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=grid(NULL), plotname = substitute(df_2columns),
                    errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
                    abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
                    savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w) {
