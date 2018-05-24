@@ -1691,6 +1691,7 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #'
 #' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
 #' @param ... Paramter variables
+#' @param prefix Append something before?
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param collapsechar Separating character between each parameters-flag
 #' @export
@@ -1704,6 +1705,26 @@ parFlags <- function(prefix="", ..., pasteflg=T, collapsechar =".") {
   flg= if (pasteflg) paste0(prefix, collapsechar, paste0(flg, collapse = collapsechar))
   return(flg)
 }
+
+#' parFlags2
+#'
+#' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
+#' @param ... Paramter variables
+#' @param prefix Append something before?
+#' @param pasteflg Boolean: paste the parameters-flags together?
+#' @param coll.char Separating character between each parameters-flag
+#' @param coll.char.intra Separating character between parameters and its value
+#' @export
+#' @examples pearson = T; filtered =3; normalized = F; MyPlotname = parFlags2(prefix = "MyPlot" , pearson, filtered, normalized ); MyPlotname
+
+parFlags2 <- function( prefix=".",...,  pasteflg=T, coll.char =".", coll.char.intra ="_") {
+  val = c(...)
+  namez=as.character(as.list(match.call())[-(1:2)])
+  names(val) =namez
+  flg= if (pasteflg) paste0(prefix, coll.char, paste0(namez, coll.char.intra, val, collapse = coll.char))
+  return(flg)
+}
+
 
 #' UnlessSpec
 #'
