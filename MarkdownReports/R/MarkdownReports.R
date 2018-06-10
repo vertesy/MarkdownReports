@@ -1198,29 +1198,29 @@ superscript_in_plots <- function(prefix='n', sup='k', suffix='') { # Returns a f
 
 #' wcolorize
 #'
-#' Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
+#' Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.  Some color scale depend on packages "colorRamps", or "gplots".
 #' @param vector A vector with categories, can be numbers or strings
 #' @param UseRColorBrewer Use RColorBrewer's brewer.pal palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help. ("Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3", "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu", "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral")
 #' @param ReturnCategoriesToo Return unique Categories. See example.
 #' @param show Show generated color palette
-#' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), or gplots::rich.colors.
+#' @param set Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow", "matlab"), or "rich" for gplots::rich.colors, or  "matlab" for colorRamps::matlab.like.
 #' @param randomize Randomize colors
 #' @export
 #' @examples wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
 
-wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1]) {
+wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo=F, show=F, randomize=F, set = c(F, "rich", "heat.colors", "terrain.colors", "topo.colors", "matlab", "rainbow")[1]) {
   NrCol = length(unique(vector))
-  condition = F
   COLZ = as.factor.numeric(vector) # if basic numbers
   if(randomize) {COLZ = sample(COLZ)} # if randomise
   if (RColorBrewerSet != F) {
     COLZ = RColorBrewer::brewer.pal(NrCol, name = RColorBrewerSet)[as.factor.numeric(vector)]
   } else {
     COLZ = if
-    (set == "rainbow") {          rainbow(NrCol)[COLZ]} else if
+    (set == "rainbow") {            rainbow(NrCol)[COLZ]} else if
     (set == "heat.colors") {        heat.colors(NrCol)[COLZ]} else if
     (set == "terrain.colors") {     terrain.colors(NrCol)[COLZ]} else if
     (set == "topo.colors") {        topo.colors(NrCol)[COLZ]} else if
+    (set == "matlab") {             colorRamps::matlab.like(NrCol)[COLZ]} else if
     (set == "rich") {               gplots::rich.colors(NrCol)[COLZ]} else
       as.factor.numeric(vector) # if basic numbers
   }#if
@@ -1231,7 +1231,6 @@ wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo
   if (ReturnCategoriesToo) {COLZ = list("vec" = COLZ, "categ" = CATEG)}
   return(COLZ)
 }
-
 
 
 #' val2col
