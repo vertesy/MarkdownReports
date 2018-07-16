@@ -1870,14 +1870,31 @@ log_settings_MarkDown <- function (...) {
 
 
 
-stopif <- function(condition, message ="") { if(condition) {iprint (message); stop()} } # Stop script if the condition is met
+#' stopif
+#'
+#' Stop script if the condition is met, and print a message
+#' @param condition any condition check that gives TRUE or FALSE
+#' @param message print a message
+#' @export
+#' @examples a=1; stopif (a==1, message ="A is 1")
 
-translate = replace_values <- function(vec, oldvalues, newvalues) { # Replaces a set of values in a vector with another set of values, it translates your vector. Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
-  Nr = l(oldvalues)
-  if (Nr > l(newvalues) ) {
-    if (l(newvalues) == 1) {
-      newvalues =  rep(newvalues, l(oldvalues))
-    } else if (l(newvalues) > 1) { iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")}
+stopif <- function(condition, message ="") { if(condition) {iprint (message); stop()} }
+
+#' translate
+#'
+#' Replaces a set of values in a vector with another set of values, it translates your vector. Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
+#' @param vec
+#' @param oldvalues
+#' @param newvalues
+#' @export
+#' @examples A=1:3; translate(vec = A, oldvalues =2:3 , newvalues = letters[1:2])
+
+translate = replace_values <- function(vec, oldvalues, newvalues) {
+  Nr = length(oldvalues)
+  if (Nr > length(newvalues) ) {
+    if (length(newvalues) == 1) {
+      newvalues =  rep(newvalues, length(oldvalues))
+    } else if (length(newvalues) > 1) { iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")}
   }
   tmp = vec
   for (i in 1:Nr) {
