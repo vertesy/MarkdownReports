@@ -507,6 +507,7 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(10000), "B"=rnorm(10000)
                             , plotname = substitute(variable), main = plotname, ylab ="Frequency",
                             savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
 
+  print("Does not always work - experimental. Problem is the separate binning.")
   fname = kollapse(plotname, ".hist.btb")
   lsNm = if (!is.null(names(ListOf2))) names(ListOf2)  else 1:2
 
@@ -519,7 +520,7 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(10000), "B"=rnorm(10000)
   names(h1$counts) = h1$breaks[-1]
   h2$counts =  - h2$counts
 
-  AllBreaks = union(h1$breaks, h2$breaks )[-1]
+  AllBreaks = sort(union(h1$breaks, h2$breaks ))[-1]
   ct1 = h1$counts[as.character(AllBreaks)]
   ct2 = h2$counts[as.character(AllBreaks)]
 
