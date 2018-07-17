@@ -630,7 +630,6 @@ wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotnam
 #' @param col Color of the plot.
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
-#' @param col Color of the plot.orbyColumn
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -678,13 +677,13 @@ wstripchart <- function (yalist, ..., main = as.character(substitute(yalist)), s
 #' @param sub Subtitle below the plot.
 #' @param ylab Y-axis label.
 #' @param xlab X-axis label.
-#' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
+#' @param bg Background color.
+#' @param col Color of the plot.
 #' @param bxpcol Color of the boxplot outlines.
+#' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param pchlwd Define the outline width of the symbol for each data point.
 #' @param pchcex Define the size of the symbol for each data point.
-#' @param bg Background color.
-#' @param col Color of the plot.
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -891,7 +890,6 @@ wvenn <- function (yalist, imagetype = "png", alpha = .5, fill = 1:length(yalist
 #'
 #' wbarplot for a column of a data frame.
 #' @param df Input data frame to be plotted
-#' @param col Color of the plot.Name
 #' @param col Color of the plot.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
@@ -917,7 +915,6 @@ wbarplot_dfCol <- function (df, colName, col = "gold1", savefile = UnlessSpec("b
 #'
 #' Use this version of whist() if you iterate over columns  or rows of a data frame. You can name the file by naming the variable. Cannot be used with dynamically called variables [e.g. call vectors within a loop]
 #' @param df Input data frame to be plotted
-#' @param col Color of the plot.Name
 #' @param col Color of the plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -1053,6 +1050,7 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
   }
 }
 
+
 #' wlegend
 #'
 #' Quickly add a legend to an existing plot, and save the plot immediately. Never inserts an mdlink.
@@ -1060,19 +1058,23 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param legend Labels displayed (Text)
 #' @param ... Additional parameters for legend()
-#' @param cex_ font size
-#' @param w_ Width of the saved pdf image, in inches.
-#' @param h_ Height of the saved pdf image, in inches.
+#' @param cex font size
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
 #' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+#' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w=7, h=w, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, h_=w_
+wlegend <- function(fill_ = NA, poz=4, legend, cex =.75, bty = "n", ..., w=7, h=w
                     , title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+  w_ <- w # to avoid circular reference in the inside function argument
+  h_ <- h
+  cex_ <- cex
+
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -1086,26 +1088,29 @@ wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, 
 }
 
 
-
 #' wlegend.label
 #'
 #' Quickly add a "text only" legend without a filled color box. to an existing plot, and save the plot immediately. Never inserts an mdlink.
 #' @param legend Labels displayed (Text)
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft", "topright", "bottomright", "bottomleft".
 #' @param ... Additional parameters for legend()
-#' @param cex_ font size
-#' @param w_ Width of the saved pdf image, in inches.
-#' @param h_ Height of the saved pdf image, in inches.
+#' @param cex font size
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
 #' @param bty The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
 #' @param ttl.by.varname Should the title of the legend substituted from the fill_ variable's name? FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples function(legend = "Hey",poz=4, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+#' @examples function(legend = "Hey",poz=4, ..., w=7, h=w, bty = "n", OverwritePrevPDF =T)
 
-wlegend.label <- function(legend = "...", poz=1, cex_ =1, bty = "n", ..., w_=7, h_=w_
+wlegend.label <- function(legend = "...", poz=1, cex =1, bty = "n", ..., w=7, h=w
                           , title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+  w_ <- w # to avoid circular reference in the inside function argument
+  h_ <- h
+  cex_ <- cex
+
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
