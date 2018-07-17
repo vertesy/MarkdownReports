@@ -426,11 +426,15 @@ wbarplot <- function (variable, ..., col = "gold1", sub = F, plotname = substitu
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param filter filtervalues
+#' @param passequal Pass equal values
 #' @export
 #' @examples whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 
-whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(variable), main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
-                   hline = F, vline = F, lty = 2, lwd = 3, lcol = 1, filtercol = 0,
+whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(variable),
+                   main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable),
+                   lty = 2, lwd = 3, lcol = 1, filtercol = 0, hline = F, vline = F,
+                   filter=c(F, "HighPass", "LowPass", "MidPass")[1], passequal=T,
                    savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), ...) {
   xtra = list(...)
   if (length(variable) > 0) {
@@ -463,6 +467,17 @@ whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(v
   } else { iprint(variable, " IS EMPTY")	}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
+
+  if( !is.null(filter) ){
+    passequal_ = passequal
+    if (filter=="HighPass" & vline) {
+      filter_HP(numeric_vector = variable, threshold = vline, passequal = passequal_, plot.hist = F)
+    } else if (filter=="LowPass" & vline) {
+      filter_LP(numeric_vector = variable, threshold = vline, passequal = passequal_, plot.hist = F)
+    } else if (filter=="MidPass" & vline & (length(vline)==2) ) {
+      filter_MidPass(numeric_vector = variable, HP_threshold = vline[1], LP_threshold = vline[2], plot.hist = F)
+    }
+  }
 }
 
 #' whist.back2back
