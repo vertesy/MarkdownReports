@@ -489,10 +489,10 @@ whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(v
 #' @param h Height of the saved pdf image, in inches.
 #' @param breaks1 break parameter for histogram function for the 2st list element.
 #' @param breaks2 break parameter for histogram function for the 2st list element.
-#' @param colorz  Color of the 2 histograms
+#' @param col  Color of the 2 histograms
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param plotname The name of the file saved.
-#' @param main_ The title of the plot.
+#' @param main The title of the plot.
 #' @param ylab Y-axis label
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
@@ -500,10 +500,11 @@ whist <- function (variable, breaks = 20, col = "gold1", plotname = substitute(v
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
+#' @examples ls_of_hists = whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
 
-whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
-                            plotname = substitute(variable), main_ = plotname, ylab ="Frequency",
+whist.back2back <- function(ListOf2 = list("A"  = rnorm(10000), "B"=rnorm(10000)), ..., breaks1 = 20, breaks2 = breaks1
+                            , col = c("green", "blue")
+                            , plotname = substitute(variable), main = plotname, ylab ="Frequency",
                             savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0, w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
 
   fname = kollapse(plotname, ".hist.btb")
@@ -511,20 +512,26 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
 
   lng = length(ListOf2)
   if (lng != 2) { iprint("length(List): ", lng, " First two elements used" ) } #if
-  h1 = hist(ListOf2[[1]], plot=FALSE, breaks = breaks1)
-  h2 = hist(ListOf2[[2]], plot=FALSE, breaks = breaks2)
-  h2$counts = - h2$counts
+  x=NULL
+  x[[1]] = h1 = hist(ListOf2[[1]], plot=FALSE, breaks = breaks1)
+  x[[2]] = h2 = hist(ListOf2[[2]], plot=FALSE, breaks = breaks2)
+  names(h2$counts) = h2$breaks[-1]
+  names(h1$counts) = h1$breaks[-1]
+  h2$counts =  - h2$counts
+
+  AllBreaks = union(h1$breaks, h2$breaks )[-1]
+  ct1 = h1$counts[as.character(AllBreaks)]
+  ct2 = h2$counts[as.character(AllBreaks)]
+
   hmax = max(h1$counts, na.rm =T)
   hmin = min(h2$counts, na.rm =T)
   xlimm =range(unlist(ListOf2), na.rm =T)
-  xlimm = c(1, max(length(h2$counts), lenght(h1$counts))+3)
+  xlimm = c(1, max(length(h2$counts), length(h1$counts))+3)
 
-  print(xlimm)
-  X = c(h1$breaks, h2$breaks)
-  barplot(h1$counts, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =h1$breaks[-1], las=3 , main = main_, ylab=ylab, ...)
-  barplot(h2$counts, col=colorz[2], add=T)
-  condition = F
-
+  colorz = col # to avoid circular reference in the inside function argument
+  main_ = main
+  barplot(ct1, ylim=c(hmin, hmax), xlim = xlimm, col=colorz[1], names.arg =AllBreaks, las=3 , main = main_, ylab=ylab, ...)
+  barplot(ct2, col=colorz[2], add=T, names.arg = "")
   legend("topright", lsNm[1], bty="n")
   legend("bottomright", lsNm[2], bty="n")
 
@@ -532,6 +539,7 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname)	}
+  x
 }
 
 
