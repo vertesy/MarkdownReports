@@ -1153,13 +1153,13 @@ barplot_label <- function (barplotted_variable, labels, bottom = F, TopOffset = 
 #' @param DF  The same dataframe as you provided to wplot() before you called this function
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman" correlation values or "r2" for the Coefficient of Determination.
 #' @param textlocation where to put the legend?
-#' @param cexx font size; 1 by default
+#' @param cex font size; 1 by default
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @examples x = cbind(a=rnorm(1:10), b=rnorm(10)); wplot(x); wLinRegression(x, coeff = c("pearson", "spearman", "r2"))
 
-wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", cexx =1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
+wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlocation = "topleft", cex =1, OverwritePrevPDF =UnlessSpec("b.save.wplots"), ...) { # Add linear regression, and descriptors to line to your scatter plot. Provide the same dataframe as you provided to wplot() before you called this function
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)
   legendText = NULL
@@ -1170,11 +1170,14 @@ wLinRegression <- function(DF, coeff = c("pearson", "spearman", "r2")[3], textlo
   legendText = c(legendText, paste0("Spear.: ", dispCoeff))  }
   if ("r2" %in% coeff) {          r2 = iround(summary(regression)$r.squared)
   legendText = c(legendText, paste0("R^2: ", r2))  }
-  # print(legendText)
+  cexx <- cex
+
   if (length(coeff)==1 & "r2" == coeff[1]) {  legend(textlocation, legend = superscript_in_plots(prefix = "R", sup = "2", suffix = paste0(": ", r2)) , bty="n", cex = cexx)
   } else {                                    legend(textlocation, legend = legendText , bty="n", cex = cexx) }
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot)  }
 }
+
+
 
 #' corner.label.w
 #'
