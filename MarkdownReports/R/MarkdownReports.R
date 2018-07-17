@@ -246,6 +246,8 @@ wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=grid(NULL), 
 #' @param x X variable
 #' @param y Y variable
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
+#' @param xlab X axis label
+#' @param ylab Y axis label
 #' @param color Filling color of the symbols
 #' @param xlim Manually set the range of canvas in X dimension
 #' @param ylimManually set the range of canvas in Y dimension
@@ -275,13 +277,13 @@ wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=grid(NULL), 
 wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., color, xlim=range(df2col[, 1]), ylim=range(df2col[, 2]), zlim=range(color), nlevels = 20, pch=21, cex=1,
                            plotname = substitute(df2col), plot.title = plotname,
                            plot.axes, key.title, key.axes, asp = NA, xaxs = "i", yaxs = "i", las = 1,
-                           axes = TRUE, frame.plot = axes, xlb, ylb,
+                           axes = TRUE, frame.plot = axes, xlab, ylab,
                            savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink() ) {
   x = df2col[, 1]
   y = df2col[, 2]
   CNN = colnames(df2col)
-  xlb = if(length(CNN) & missing(xlb)) CNN[1]
-  ylb = if(length(CNN) & missing(ylb)) CNN[2]
+  xlab = if(length(CNN) & missing(xlab)) CNN[1]
+  ylab = if(length(CNN) & missing(ylab)) CNN[2]
 
   fname = kollapse(plotname, ".barplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
@@ -314,6 +316,8 @@ wscatter.fill <- function (df2col = cbind("A"=rnorm(100), "B"=rnorm(100)), ..., 
   par(mar = mar)
 
   # points
+  xlb <- xlab
+  ylb <- ylab
   plot(x, y, main =plot.title, type = "n", xaxt='n', yaxt='n', ..., xlim=xlim, ylim=ylim, bty="n", xlab=xlb, ylab=ylb)
   points(x, y, bg = colz, xaxt='n', yaxt='n', xlab="", ylab="", bty="n", pch=pch, ...)
 
@@ -521,9 +525,10 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
 #' Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 #' @param yalist The variable to plot.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param col Color of the plot.
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param main Title of the plot and also the name of the file.
 #' @param sub Subtitle below the plot.
+#' @param ylab Y axis label
+#' @param col Color of the plot.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -533,13 +538,15 @@ whist.back2back <- function(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)), b
 #' @export
 #' @examples wboxplot (variable =  , ... =  , col = gold1, plotname = as.character(substitute(variable)), sub = FALSE, incrBottMarginBy = 0, tilted_text = F, w = 7, h = w, mdlink = F)
 
-wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substitute(yalist)), ylb="", sub = FALSE, incrBottMarginBy = 0, 	tilted_text = F,
+wboxplot <- function (yalist, ..., main = as.character(substitute(yalist)), sub = FALSE, ylab=""
+                      , col = "gold1", incrBottMarginBy = 0, 	tilted_text = F,
                       savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
-  fname = kollapse(plotname, ".boxplot")
+  fname = kollapse(main, ".boxplot")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   if (tilted_text) { 	xlb = NA } else {	xlb = names(yalist) }
+  plotname <- main # to avoid circular reference in the inside function argument
   boxplot(yalist, ..., names = xlb, main = plotname, col = col, las = 2)
-  mtext(ylb, side = 2, line = 2)
+  mtext(ylab, side = 2, line = 2)
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist), na.rm = T)-(max(nchar(names(yalist)))/2), labels = names(yalist), xpd = TRUE, srt = 45)
   }
@@ -548,6 +555,7 @@ wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substi
   if (incrBottMarginBy) { par("mar" = .ParMarDefault )}
   if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
 
 
 #' wpie
@@ -566,7 +574,9 @@ wboxplot <- function (yalist, ..., col = "gold1", plotname = as.character(substi
 #' @export
 #' @examples wpie (variable =  , ... =  , percentage = TRUE, plotname = substitute(variable), w = 7, h = w, mdlink = F)
 
-wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable), col = gplots::rich.colors(length(variable)), savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
+wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotname = substitute(variable)
+                  , col = gplots::rich.colors(length(variable)), savefile = UnlessSpec("b.save.wplots")
+                  , w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("gplots")) { print("Please install gplots: install.packages('gplots')") }
   fname = kollapse(plotname, ".pie")
   subt = kollapse("Total = ", sum(variable), print = F)
@@ -579,15 +589,17 @@ wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotnam
 }
 
 
+
 #' wstripchart
 #'
 #' Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 #' @param yalist Input list to be plotted.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param main Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
-#' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
+#' @param ylab Y axis label
 #' @param BoxPlotWithMean Display the mean instead of the median in a boxplot. This is non-standard use of a boxplot, report it.
+#' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param pchlwd Define the outline width of the symbol for each data point.
 #' @param pchcex Define the size of the symbol for each data point.
@@ -603,25 +615,26 @@ wpie <- function (variable, ..., percentage = TRUE, both_pc_and_value=F, plotnam
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+#' @examples wstripchart (yalist =  , ... =  , main = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
-wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)), sub = NULL,
-                         border = 1, incrBottMarginBy = 0, tilted_text = F, BoxPlotWithMean = F, metod = "jitter", jitter = 0.3,
-                         pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:length(yalist) else 1, ylb="",
+wstripchart <- function (yalist, ..., main = as.character(substitute(yalist)), sub = NULL, ylab=""
+                         , BoxPlotWithMean = F, border = 1, incrBottMarginBy = 0, tilted_text = F, metod = "jitter", jitter = 0.3,
+                         pch = 18, pchlwd = 1, cex.lab=1, pchcex = 1.5, bg = "seagreen2", colorbyColumn = T, col = if(colorbyColumn) 1:length(yalist) else 1,
                          savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(yalist)))
   cexNsize = min(cexNsize, 1)
-  fname = kollapse(plotname, ".stripchart")
+  fname = kollapse(main, ".stripchart")
   a = boxplot(yalist, plot = F)
   if (colorbyColumn) {bg=NULL }
   if (BoxPlotWithMean) {	a$stats[3, ] = unlist(lapply(yalist, mean))	}
   if (tilted_text) {	xlb = F } else { xlb = T }
+  plotname <- main # to avoid circular reference in the inside function argument
   bxp(a, xlab = "", show.names = xlb, ..., main = plotname, sub = sub, border = border, outpch = NA, las = 2,
       outline = T, cex.axis = cexNsize, ylab=NA)
   stripchart(yalist, vertical = TRUE, add = TRUE, method = metod, jitter = jitter, pch = pch, bg = bg,
              col = col, lwd = pchlwd, cex = pchcex)
-  mtext(ylb, side = 2, line = 2, cex = cex.lab)
+  mtext(ylab, side = 2, line = 2, cex = cex.lab)
   if (tilted_text) {
     xx= min(unlist(yalist), na.rm = T)
     text(x = 1:length(yalist), y=xx, labels = names(yalist), xpd = TRUE, srt = 45, adj = c(1, 3))
@@ -633,23 +646,22 @@ wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)
 }
 
 
-
 #' wstripchart_list
 #'
 #' Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual coloring of each data point, by a color-list of the same dimension. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 #' @param yalist Input list to be plotted.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param main Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
-#' @param ylb Y-axis label.
-#' @param xlb X-axis label.
+#' @param ylab Y-axis label.
+#' @param xlab X-axis label.
 #' @param border An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.
 #' @param bxpcol Color of the boxplot outlines.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param pchlwd Define the outline width of the symbol for each data point.
 #' @param pchcex Define the size of the symbol for each data point.
 #' @param bg Background color.
-#' @param col Color of the plot.l
+#' @param col Color of the plot.
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -659,27 +671,31 @@ wstripchart <- function (yalist, ..., plotname = as.character(substitute(yalist)
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples wstripchart_list (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, ylb = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, coll = black, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+#' @examples wstripchart_list (yalist = list(rnorm(10),rnorm(10),rnorm(10)),  main = as.character(substitute(yalist)), sub = NULL, ylab = NULL, xlab = NULL, border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = 'chartreuse2', col = 1, metod = jitter, jitter = 0.2, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 
-wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", coll = "black", metod = "jitter", jitter = 0.2,
-                               plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", xlab = "", incrBottMarginBy = 0, tilted_text = F,
-                               savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
-  fname = kollapse(plotname, ".stripchart")
+
+wstripchart_list <- function ( yalist, ..., main = as.character(substitute(yalist)), sub = NULL, ylab = "", xlab = ""
+                               , border = 1, bxpcol = 0, pch = 18, pchlwd = 1, pchcex = 1.5, incrBottMarginBy = 0, tilted_text = F
+                               , bg = "chartreuse2", col = "black", metod = "jitter", jitter = 0.2
+                               , savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize"), h = w, mdlink = ww.set.mdlink()) {
+  fname = kollapse(main, ".stripchart")
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   cexNsize = 1/abs(log10(length(list)))
   cexNsize = min(cexNsize, 1)
-  if (tilted_text) {	xlb = F	} else {	xlb = T	}
-
-  boxplot(yalist, ..., show.names = xlb, main = plotname, sub = sub, border = border, outpch = NA, las = 2, ylab =NA,
+  if (tilted_text) {	xlab = F	} else {	xlab = T	}
+  plotname <- main # to avoid circular reference in the inside function argument
+  boxplot(yalist, ..., show.names = xlab, main = plotname, sub = sub, border = border, outpch = NA, las = 2, ylab =NA,
           col = bxpcol, cex.axis = cexNsize)
-  mtext(ylb, side = 2, line = 2)
+  mtext(ylab, side = 2, line = 2)
   for (i in 1:length(yalist)) {
     if( length(na.omit.strip(yalist[[i]])) ){
       j = k = i
-      if (length(coll) < length(yalist)) { j = 1 }
+      if (length(1) < length(yalist)) { j = 1 }
       if (length(bg) < length(yalist)) {	k = 1	}
-      stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
-                 pch = pch, bg = bg[[k]], col = coll[[j]], lwd = pchlwd, cex = pchcex)
+      stripchart(na.omit(yalist[[i]]), at = i, add = T
+                 , vertical = T, method = "jitter", jitter = jitter
+                 , pch = pch, bg = bg[[k]], col = col[[j]], lwd = pchlwd, cex = pchcex
+      )
     }
   } # for
   if (tilted_text) {
@@ -694,6 +710,8 @@ wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, p
 }
 
 
+
+
 #' wvioplot_list
 #'
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
@@ -701,38 +719,42 @@ wstripchart_list <- function ( yalist, ..., 	border = 1, bxpcol = 0, pch = 18, p
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
 #' @param col Color of the plot.l
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param main Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
-#' @param xlb X-axis label.
-#' @param ylb Y-axis label.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
 #' @param tilted_text Manual tuning of the Y-postion of the tilted text labels
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
-#' @param ylimm Manual y axis limits
+#' @param ylim Manual y axis limits
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
+#' @examples wvioplot_list (yalist =  , ... =  , xlab = names(yalist), ylab = "" , col = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, main = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
 
-wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
-                           plotname = as.character(substitute(yalist)), sub = NULL, xlb = names(yalist), ylb = "", ylimm=F,
+wvioplot_list <- function (yalist, ..., col = c(2:(length(yalist)+1)),
+                           main = as.character(substitute(yalist)), sub = NULL, xlab = names(yalist), ylab = "", ylim=F,
                            incrBottMarginBy = 0, tilted_text = F, yoffset=0, savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
-  fname = kollapse(plotname, ".vioplot")
-  if (length(coll) < l_list) { coll = rep(coll, l_list) }
-  if (tilted_text) {	xlb = NA } else { xlb = names(yalist) }
-  if (! (is.numeric(ylimm) & length(ylimm)==2)) { ylimm = range(unlist(yalist), na.rm = T)}
+  fname = kollapse(main, ".vioplot")
+  if (length(col) < l_list) { col = rep(col, l_list) }
+  if (tilted_text) {	xlab = NA } else { xlab = names(yalist) }
+  if (! (is.numeric(ylim) & length(ylim)==2)) { ylim = range(unlist(yalist), na.rm = T)}
+
+  plotname <- main # to avoid circular reference in the inside function argument
+  ylb <- ylab
+  ylimm <- ylim
   plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = ylimm, xaxt = "n", xlab = "",
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
     if( length(na.omit.strip(yalist[[i]])) ){
-      vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = coll[i])
+      vioplot::vioplot(na.omit(yalist[[i]]), ..., at = i, add = T, col = col[i])
     }
   }
-  axis(side = 1, at = 1:l_list, labels = xlb, las = 2)
+  axis(side = 1, at = 1:l_list, labels = xlab, las = 2)
   if (tilted_text) {
     text(x = 1:length(yalist), y = min(unlist(yalist))+yoffset, labels = names(yalist), xpd = TRUE, srt = 45)
   }
@@ -753,27 +775,30 @@ wvioplot_list <- function (yalist, ..., coll = c(2:(length(yalist)+1)),
 #' @param viocoll Background color of each individual violing plot.
 #' @param vioborder Border color of each individual violing plot.
 #' @param bg Background color.
-#' @param col Color of the plot.l
+#' @param col Color of the plot.
 #' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid overlaps).
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param main Title of the plot (main parameter) and also the name of the file.
 #' @param sub Subtitle below the plot.
-#' @param ylb Y-axis label.
+#' @param ylab Y-axis label.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @export
-#' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
+#' @examples wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylab = "" , main = as.character(substitute(yalist)), sub = F, bg = 0, col = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
 
-wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
-                                 plotname = as.character(substitute(yalist)), sub = NULL, ylb = "", incrBottMarginBy = 0,
+wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder = 1, bg = 0, col = "black", metod = "jitter", jitter = 0.1,
+                                 main = as.character(substitute(yalist)), sub = NULL, ylab = "", incrBottMarginBy = 0,
                                  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink()) {
-  fname = kollapse(plotname, ".VioStripchart")
+  fname = kollapse(main, ".VioStripchart")
   if (!require("vioplot")) { print("Please install vioplot: install.packages('vioplot')") }
   if (incrBottMarginBy) { .ParMarDefault <- par("mar"); 	par(mar=c(par("mar")[1]+incrBottMarginBy, par("mar")[2:4]) ) } 	# Tune the margin
   l_list = length(yalist)
+
+  plotname <- main # to avoid circular reference in the inside function argument
+  ylb <- ylab
   plot(0, 0, type = "n", xlim = c(0.5, (l_list + 0.5)), ylim = range(unlist(yalist), na.rm = T), xaxt = "n", xlab = "",
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
@@ -785,10 +810,10 @@ wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder =
   for (i in 1:length(yalist)) {
     if( length(na.omit.strip(yalist[[i]])) ){
       j = k = i
-      if (length(coll) < length(yalist)) {	j = 1	}
+      if (length(col) < length(yalist)) {	j = 1	}
       if (length(bg) < length(yalist)) { k = 1 }
       stripchart(na.omit(yalist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
-                 pch = pch, bg = bg[[k]], col = coll[[j]])
+                 pch = pch, bg = bg[[k]], col = col[[j]])
     } #if
   }
   if (savefile) { dev.copy2pdf(file = ww.FnP_parser(fname, "pdf"), width = w, height = h, title = ww.ttl_field(fname)) }
@@ -796,6 +821,9 @@ wviostripchart_list <- function (yalist, ..., pch = 23, viocoll = 0, vioborder =
   assign("plotnameLastPlot", fname, envir = .GlobalEnv)
   if (mdlink & savefile) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = fname) }
 }
+
+
+
 
 
 #' wvenn
@@ -930,7 +958,6 @@ pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpag
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = pname) }
 }
 
-
 #' pdfA4plot_on.layout
 #'
 #' Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row
@@ -944,6 +971,7 @@ pdfA4plot_on <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpag
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @examples pdfA4plot_on.layout();  hist(rnorm(100)); hist(-rnorm(100)); hist(10+rnorm(100)); pdfA4plot_off()
+
 
 pdfA4plot_on.layout <- function (pname = date(), ..., w = UnlessSpec("b.defSize.fullpage", 8.27), h = 11.69, layout_mat = rbind(1, c(2, 3), 4:5),
                                  one_file = T, mdlink = ww.set.mdlink(), title = ww.ttl_field(pname)) { # Fancy layout version. Print (multiple) plots to an (A4) pdf.
@@ -1020,7 +1048,8 @@ error_bar <- function (x, y, upper, lower = upper, width  = 0.1, ...) {
 #' @export
 #' @examples function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, h_=w_
+                    , title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   fNames = names(fill_)
   LF = length(fill_)
   LN = length(fNames)
@@ -1052,7 +1081,8 @@ wlegend <- function(fill_ = NA, poz=4, legend, cex_ =.75, bty = "n", ..., w_=7, 
 #' @export
 #' @examples function(legend = "Hey",poz=4, ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
 
-wlegend.label <- function(legend = "...", poz=1, cex_ =1, bty = "n", ..., w_=7, h_=w_, title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
+wlegend.label <- function(legend = "...", poz=1, cex_ =1, bty = "n", ..., w_=7, h_=w_
+                          , title=NULL, ttl.by.varname=F, OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink=F) { # Add a legend, and save the plot immediately
   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
@@ -1284,9 +1314,11 @@ val2col <- function (yourdata, zlim, col = rev(heat.colors( max(12, 3*length(uni
 variable.or.path.exists <- function(path = path_of_report) {
   Variable.Name = substitute(path)
   if (exists(as.character(Variable.Name))) {
-    if (dir.exists(dirname(path))) { TRUE
-    } else { cat("path_of_report variable points to a non-existent directory."); FALSE}
-  } else { print("path_of_report variable does not exist."); FALSE}
+    dn = dirname(path)
+    ExisingDir = (dn != "." & dir.exists(dn))
+    if (ExisingDir) { TRUE
+    } else { cat("Variable",Variable.Name," variable points to a non-existent directory: ", path); FALSE}
+  } else { iprint("Variable",Variable.Name,"does not exist."); FALSE}
 }
 
 
@@ -1428,7 +1460,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
   } else {                        t = title_of_table  }
 
   title_of_table = paste("\n#### ", t)
-  if (variable.or.path.exists(FullPath)) {  write(title_of_table, FullPath, append = T)
+  if (file.exists(FullPath)) {  write(title_of_table, FullPath, append = T)
 
     h = paste(colnames(df), collapse = " \t| ")
     h = paste("\n| |", h, " |", collapse = "")
@@ -1438,10 +1470,11 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
     sep = kollapse(rep("| ---", ncolz), " |", print = F)
 
     write(h, FullPath, append = T)
+    if (print2screen) { cat(h,"\n") }
     write(sep, FullPath, append = T)
+    if (print2screen) { cat(sep,"\n") }
     for (r in 1:nrows) {
       if (is.numeric(unlist(df[r, ]))) {
-        print(22)
         b = iround(df[r, ])
         if (percentify) {  b = percentage_formatter(b)  }
       } else {
@@ -1450,14 +1483,14 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
       b = paste(b, collapse = " \t| ")
       b = paste("|", rn[r], "\t|", b, " |", collapse = "")
       write(b, FullPath, append = T)
+      if (print2screen) { cat(b,"\n") }
     }
   } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
-  # if (print2screen) { print(b) }
-  "It was not working above"
 }
 
-md.tableWriter.DF.w.dimnames(GeneCounts.per.sex, print2screen = T)
+
+# md.tableWriter.DF.w.dimnames(GeneCounts.per.sex, print2screen = T)
 # ALIAS
 MarkDown_Table_writer_DF_RowColNames = md.tableWriter.DF.w.dimnames
 
@@ -1479,7 +1512,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     t = paste0(substitute(NamedVector), collapse = " ")
   }	else {		t = title_of_table	}
   title_of_table = paste("\n#### ", t)
-  if (variable.or.path.exists( FullPath)) { write(title_of_table, FullPath, append = T)
+  if (file.exists( FullPath)) { write(title_of_table, FullPath, append = T)
     if (!is.table(NamedVector)) {
       if (is.list(NamedVector) & any(lapply(NamedVector, l)>1)) { print("This complex list cannot be parsed to a table.") }
       if (is.numeric(NamedVector)) {			NamedVector = iround(NamedVector)		}
@@ -1489,7 +1522,10 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     ncolz = length(NamedVector)
     sep = kollapse(rep("| ---", ncolz), " |", print = F)
     write(h, FullPath, append = T)
+    if (print2screen) { cat(h,"\n") }
     write(sep, FullPath, append = T)
+    if (print2screen) { cat(sep,"\n") }
+
     if (percentify & is.numeric(NamedVector)) {
       NamedVector = percentage_formatter(NamedVector)
     }
@@ -1498,7 +1534,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     write(b, FullPath, append = T)
   } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
   if (WriteOut) { write.simple.tsv(NamedVector, ManualName = p0(substitute(NamedVector),".tsv"), ) }
-  if (print2screen) { print(b) }
+  if (print2screen) { cat(b,"\n") }
 }
 
 
@@ -1557,14 +1593,19 @@ md.LinkTable <- function(tableOfLinkswRownames) {
 #' @param passequal Pass if a value is larger, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
+#' @param plot.hist Plot the histogram of the input data
+#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param ... Additional arguments for the histogram
 #' @export
-#' @examples filter_HP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
+#' @examples filter_HP (numeric_vector = rnorm(1000,6) , threshold = 5 , prepend = "From all values " , return_survival_ratio = F)
 
-filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall between above high-pass-threshold (X >).
+filter_HP <- function(numeric_vector, threshold, passequal = F, prepend =""
+                      , return_survival_ratio=F, na_rm = T, plot.hist=T, saveplot=F, ...) { # Filter values that fall between above high-pass-threshold (X >).
   survivors <- if (passequal) { numeric_vector >= threshold } else { numeric_vector > threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall above a threshold value of: ", iround(threshold))
   if (variable.or.path.exists(path_of_report)) { llogit (conclusion)} else { print  ("NOT LOGGED") }
+  if (plot.hist) {whist(variable = numeric_vector, vline = threshold, filtercol = 1, savefile = saveplot, ...)}
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
@@ -1577,14 +1618,19 @@ filter_HP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
 #' @param passequal Pass if a value is smaller, or equal than the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
+#' @param plot.hist Plot the histogram of the input data
+#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param ... Additional arguments for the histogram
 #' @export
-#' @examples filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
+#' @examples filter_LP (numeric_vector = rnorm(1000,6) , threshold = 5 , prepend = "From all values " , return_survival_ratio = F)
 
-filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", return_survival_ratio=F, na_rm = T) { # Filter values that fall below the low-pass threshold (X <).
+filter_LP <- function(numeric_vector, threshold, passequal = F, prepend =""
+                      , return_survival_ratio=F, na_rm = T, plot.hist=T, saveplot=F, ...) { # Filter values that fall below the low-pass threshold (X <).
   survivors <- if (passequal) { numeric_vector <= threshold } else { numeric_vector < threshold }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall below a threshold value of: ", iround(threshold))
   if (file.exists(path_of_report) ) {	llogit (conclusion )	} else { print  ("NOT LOGGED") }
+  if (plot.hist) {whist(variable = numeric_vector, vline = threshold, filtercol = -1, savefile = saveplot, ...)}
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
 
@@ -1598,18 +1644,22 @@ filter_LP <- function(numeric_vector, threshold, passequal = F, prepend ="", ret
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).
 #' @param EdgePass If TRUE, it reverses the filter: everything passes except between the two thresholds.
+#' @param plot.hist Plot the histogram of the input data
+#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param ... Additional arguments for the histogram
 #' @export
-#' @examples filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
+#' @examples filter_MidPass (numeric_vector = rnorm(1000,6)  , HP_threshold = 4 , LP_threshold =8  , prepend = "From all values " , return_survival_ratio = FALSE, EdgePass = T)
 
-filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend ="", return_survival_ratio=FALSE, EdgePass = F, na_rm = T) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
+filter_MidPass <- function(numeric_vector, HP_threshold, LP_threshold, prepend =""
+                           , return_survival_ratio=FALSE, EdgePass = F, na_rm = T, plot.hist=T, saveplot=F, ...) { # Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
   survivors = ( numeric_vector >= HP_threshold & numeric_vector < LP_threshold); keyword = "between"; relation = " <= x < "
   if (EdgePass) {survivors = ( numeric_vector < HP_threshold | numeric_vector >= LP_threshold); keyword = "outside"; relation = " >= x OR x > " }
   pc = percentage_formatter(sum(survivors, na.rm = na_rm)/length(survivors))
   conclusion = kollapse(prepend, pc, " or ", sum(survivors, na.rm = na_rm), " of ", length(numeric_vector), " entries in ", substitute (numeric_vector), " fall ", keyword, " the thresholds: ", iround(HP_threshold), relation, iround(LP_threshold) )
   if (variable.or.path.exists(path_of_report)) { llogit (conclusion)	} else { print  ("NOT LOGGED") }
+  if (plot.hist) {whist(variable = numeric_vector, vline = c(HP_threshold, LP_threshold), filtercol = if(EdgePass) -1 else 1, savefile = saveplot, ...)}
   if (return_survival_ratio) {return (sum(survivors, na.rm = na_rm)/length(survivors))} else if (!return_survival_ratio) { return (survivors) }
 }
-
 
 
 # Generic ------------------------------------------------------------------------------------------
@@ -1866,7 +1916,6 @@ log_settings_MarkDown <- function (...) {
   rownames(value) = namez
   MarkDown_Table_writer_DF_RowColNames((value), title_of_table = "Settings")
 }
-
 
 
 
