@@ -1,6 +1,37 @@
 
  _cite via:_ [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
+
+
+## News
+
+### Version 3.0 is ready and installed by the default. 
+
+- **Function argument names now mirror the `R base` argument names (99%).**
+
+  - Think of `xlb >>> xlab`, or  `sub_ >>> sub`
+- This however breaks the compatibility with earlier versions, so you might need to replace some function arguments
+- **The package now can also work with png images.**
+
+  - You can save files in png, which can be displayed inside the markdown file on windows 7.
+
+  - You need to set `b.usepng=T` in `setup_MarkdownReports`: `setup_MarkdownReports(OutDir = "/Users/...blabla....", b.usepng=T)`
+- The package contains multiple other bug fixes:
+
+  - Self consistency: some missing functions moved from `CodeAndRoll.R` 
+  - Table writing functions `md.tableWriter.DF.w.dimnames()` and `md.tableWriter.VEC.w.names()`
+- Enhancements: 
+
+  - `filter_HP(), filter_LP(), filter_MidPass()` show histogram
+  - `whist()` can invite the above filter functions.
+- Numerous other small fixes.
+
+
+
+**Old version** is under `MarkdownReports.LEGACY.VERSION`.
+
+
+
 ## What is ***MarkdownReports***?
 
 
