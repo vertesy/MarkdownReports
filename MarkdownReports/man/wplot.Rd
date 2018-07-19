@@ -4,13 +4,14 @@
 \alias{wplot}
 \title{wplot}
 \usage{
-wplot(df_2columns, col = 1, pch = 18, ..., panel_first = NULL,
-  plotname = substitute(df_2columns), panel.first = grid(F), errorbar = F,
-  upper = 0, lower = upper, left = 0, right = left, width = 0.1,
-  arrow_lwd = 1, col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F,
-  "v", "h", "ab")[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
+wplot(df_2columns, col = 1, pch = 18, ..., panel_first = grid(NULL),
+  plotname = substitute(df_2columns), errorbar = F, upper = 0,
+  lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
+  col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F, "v", "h",
+  "ab")[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
   equal.axes = F, savefile = UnlessSpec("b.save.wplots"),
-  mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w)
+  mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w,
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{col}{Color of the plot.}
@@ -22,8 +23,6 @@ wplot(df_2columns, col = 1, pch = 18, ..., panel_first = NULL,
 \item{panel_first}{add a background grid by specifying " panel_first = grid() "}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{panel.first}{Draw a background grid similar as in ggplot2. Set to "panel.first=grid()" to draw an auto-fitted grid, (nx=NULL, ny=0) to draw vertical only, etc.}
 
 \item{errorbar}{Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".}
 
@@ -65,7 +64,11 @@ wplot(df_2columns, col = 1, pch = 18, ..., panel_first = NULL,
 
 \item{h}{Height of the saved pdf image, in inches.}
 
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
 \item{df}{Input data frame to be plotted_2columns}
+
+\item{panel.first}{Draw a background grid similar as in ggplot2. Set to "panel.first=grid()" to draw an auto-fitted grid, (nx=NULL, ny=0) to draw vertical only, etc.}
 }
 \description{
 Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).

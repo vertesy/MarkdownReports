@@ -4,15 +4,18 @@
 \alias{whist}
 \title{whist}
 \usage{
-whist(variable, breaks = 20, col = "gold1",
+whist(variable, ..., breaks = 20, col = "gold1",
   plotname = substitute(variable), main = kollapse("Histogram of ",
-  substitute(variable)), xlb = substitute(variable), hline = F, vline = F,
-  lty = 2, lwd = 3, lcol = 1, filtercol = 0,
+  substitute(variable)), xlab = substitute(variable), lty = 2, lwd = 3,
+  lcol = 1, filtercol = 0, hline = F, vline = F, filter = c(F,
+  "HighPass", "LowPass", "MidPass")[1], passequal = T,
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink(), ...)
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{variable}{The variable to plot.}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
 \item{breaks}{Number of bins.}
 
@@ -22,9 +25,7 @@ whist(variable, breaks = 20, col = "gold1",
 
 \item{main}{Title of the plot.}
 
-\item{xlb}{X-axis label.}
-
-\item{vline}{Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.}
+\item{xlab}{X-axis label.}
 
 \item{lty}{Linetype, defined by numbers 1-6.}
 
@@ -34,6 +35,12 @@ whist(variable, breaks = 20, col = "gold1",
 
 \item{filtercol}{Color bars below / above the threshold with red / green. Define the direction by -1 or 1. Takes effect if "vline" is defined.}
 
+\item{vline}{Draw a vertical line at the value you pass on to it. Useful to display a threshold. Design the line by "lty", "lwd" & "lcol" parameters.}
+
+\item{filter}{filtervalues}
+
+\item{passequal}{Pass equal values}
+
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
 \item{w}{Width of the saved pdf image, in inches.}
@@ -42,11 +49,11 @@ whist(variable, breaks = 20, col = "gold1",
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save histograms as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. Name the file by naming the variable! Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol" assumes  >= coloring!
 }
 \examples{
-whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlb = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
+whist (variable =  , col = gold1, w = 7, h = w, plotname = substitute(variable), breaks = 20, main = kollapse("Histogram of ", substitute(variable)), xlab = substitute(variable), mdlink = F, hline = F, vline = F, lty = 2, lwd = 3, lcol = 2, filtercol = 0, ... =  )
 }

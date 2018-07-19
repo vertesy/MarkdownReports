@@ -4,30 +4,32 @@
 \alias{wstripchart}
 \title{wstripchart}
 \usage{
-wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
-  sub = NULL, border = 1, incrBottMarginBy = 0, tilted_text = F,
-  BoxPlotWithMean = F, metod = "jitter", jitter = 0.3, pch = 18,
-  pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
-  colorbyColumn = T, col = if (colorbyColumn) 1:length(yalist) else 1,
-  ylb = "", savefile = UnlessSpec("b.save.wplots"),
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
+wstripchart(yourlist, ..., main = as.character(substitute(yourlist)),
+  sub = NULL, ylab = "", BoxPlotWithMean = F, border = 1,
+  incrBottMarginBy = 0, tilted_text = F, metod = "jitter", jitter = 0.3,
+  pch = 18, pchlwd = 1, cex.lab = 1, pchcex = 1.5, bg = "seagreen2",
+  colorbyColumn = T, col = if (colorbyColumn) 1:length(yourlist) else 1,
+  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
-\item{yalist}{Input list to be plotted.}
+\item{yourlist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+\item{main}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{sub}{Subtitle below the plot.}
+
+\item{ylab}{Y axis label}
+
+\item{BoxPlotWithMean}{Display the mean instead of the median in a boxplot. This is non-standard use of a boxplot, report it.}
 
 \item{border}{An optional vector of colors for the outlines of the boxplots. The values in border are recycled if the length of border is less than the number of plots.}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
-
-\item{BoxPlotWithMean}{Display the mean instead of the median in a boxplot. This is non-standard use of a boxplot, report it.}
 
 \item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
 
@@ -51,11 +53,11 @@ wstripchart(yalist, ..., plotname = as.character(substitute(yalist)),
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{col}{Color of the plot.orbyColumn}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save strip charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wstripchart (yalist =  , ... =  , plotname = as.character(substitute(yalist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
+wstripchart (yourlist =  , ... =  , main = as.character(substitute(yourlist)), sub = FALSE, border = 1, BoxPlotWithMean = F, pch = 23, pchlwd = 1, pchcex = 1.5, bg = chartreuse2, col = black, metod = jitter, jitter = 0.2, colorbyColumn = F, w = 7, h = w, incrBottMarginBy = 0, tilted_text = F, mdlink = F)
 }

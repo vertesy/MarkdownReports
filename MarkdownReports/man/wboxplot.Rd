@@ -4,22 +4,24 @@
 \alias{wboxplot}
 \title{wboxplot}
 \usage{
-wboxplot(yalist, ..., col = "gold1",
-  plotname = as.character(substitute(yalist)), ylb = "", sub = FALSE,
-  incrBottMarginBy = 0, tilted_text = F,
-  savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink())
+wboxplot(yourlist, ..., main = as.character(substitute(yourlist)),
+  sub = FALSE, ylab = "", col = "gold1", incrBottMarginBy = 0,
+  tilted_text = F, savefile = UnlessSpec("b.save.wplots"),
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
-\item{yalist}{The variable to plot.}
+\item{yourlist}{The variable to plot.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
-\item{col}{Color of the plot.}
-
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+\item{main}{Title of the plot and also the name of the file.}
 
 \item{sub}{Subtitle below the plot.}
+
+\item{ylab}{Y axis label}
+
+\item{col}{Color of the plot.}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
@@ -32,6 +34,8 @@ wboxplot(yalist, ..., col = "gold1",
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save box plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.

@@ -5,7 +5,8 @@
 \title{filter_LP}
 \usage{
 filter_LP(numeric_vector, threshold, passequal = F, prepend = "",
-  return_survival_ratio = F, na_rm = T)
+  return_survival_ratio = F, na_rm = T, plot.hist = T, saveplot = F,
+  ...)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}
@@ -17,10 +18,16 @@ filter_LP(numeric_vector, threshold, passequal = F, prepend = "",
 \item{prepend}{Text prepended to the results.}
 
 \item{return_survival_ratio}{Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).}
+
+\item{plot.hist}{Plot the histogram of the input data}
+
+\item{saveplot}{Save the histogram as PDF, FALSE by defeault}
+
+\item{...}{Additional arguments for the histogram}
 }
 \description{
 Filter values that fall below the low-pass threshold (X <).
 }
 \examples{
-filter_LP (numeric_vector =  , threshold =  , prepend =  , return_survival_ratio = F)
+filter_LP (numeric_vector = rnorm(1000,6) , threshold = 5 , prepend = "From all values " , return_survival_ratio = F)
 }

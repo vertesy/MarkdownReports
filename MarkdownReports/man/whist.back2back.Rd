@@ -4,26 +4,27 @@
 \alias{whist.back2back}
 \title{whist.back2back}
 \usage{
-whist.back2back(ListOf2 = list(A = rnorm(100), B = rnorm(100)),
-  breaks1 = 20, breaks2 = breaks1, colorz = c("green", "blue"), ...,
-  plotname = substitute(variable), main_ = plotname, ylab = "Frequency",
+whist.back2back(ListOf2 = list(A = rnorm(10000), B = rnorm(10000)), ...,
+  breaks1 = 20, breaks2 = breaks1, col = c("green", "blue"),
+  plotname = substitute(variable), main = plotname, ylab = "Frequency",
   savefile = UnlessSpec("b.save.wplots"), incrBottMarginBy = 0,
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{ListOf2}{List of 2 numeric vectors}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
 \item{breaks1}{break parameter for histogram function for the 2st list element.}
 
 \item{breaks2}{break parameter for histogram function for the 2st list element.}
 
-\item{colorz}{Color of the 2 histograms}
-
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+\item{col}{Color of the 2 histograms}
 
 \item{plotname}{The name of the file saved.}
 
-\item{main_}{The title of the plot.}
+\item{main}{The title of the plot.}
 
 \item{ylab}{Y-axis label}
 
@@ -37,15 +38,17 @@ whist.back2back(ListOf2 = list(A = rnorm(100), B = rnorm(100)),
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 
 \item{w}{Width of the saved pdf image, in inches.}
 
 \item{h}{Height of the saved pdf image, in inches.}
+
+\item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 }
 \description{
 Two back-to-back histograms from a list. The X-axis is only correct if  breaks1 ==breaks2. Undeveloped function, contains graphical bugs, no support for this function.
 }
 \examples{
-whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
+ls_of_hists = whist.back2back(ListOf2 = list("A"  = rnorm(100), "B"=rnorm(100)))
 }

@@ -4,8 +4,8 @@
 \alias{wlegend}
 \title{wlegend}
 \usage{
-wlegend(fill_ = NA, poz = 4, legend, cex_ = 0.75, bty = "n", ...,
-  w_ = 7, h_ = w_, title = NULL, ttl.by.varname = F,
+wlegend(fill_ = NA, poz = 4, legend, cex = 0.75, bty = "n", ...,
+  w = 7, h = w, title = NULL, ttl.by.varname = F,
   OverwritePrevPDF = UnlessSpec("b.save.wplots"), mdlink = F)
 }
 \arguments{
@@ -15,15 +15,15 @@ wlegend(fill_ = NA, poz = 4, legend, cex_ = 0.75, bty = "n", ...,
 
 \item{legend}{Labels displayed (Text)}
 
-\item{cex_}{font size}
+\item{cex}{font size}
 
 \item{bty}{The type of box to be drawn around the legend. The allowed values are "o" (the default) and "n".}
 
 \item{...}{Additional parameters for legend()}
 
-\item{w_}{Width of the saved pdf image, in inches.}
+\item{w}{Width of the saved pdf image, in inches.}
 
-\item{h_}{Height of the saved pdf image, in inches.}
+\item{h}{Height of the saved pdf image, in inches.}
 
 \item{title}{What should be the title of the legend? NULL by default}
 
@@ -37,5 +37,5 @@ wlegend(fill_ = NA, poz = 4, legend, cex_ = 0.75, bty = "n", ...,
 Quickly add a legend to an existing plot, and save the plot immediately. Never inserts an mdlink.
 }
 \examples{
-function(fill_ = NULL, poz=4, legend = names(fill_), ..., w_=7, h_=w_, bty = "n", OverwritePrevPDF =T)
+function(fill_ = NULL, poz=4, legend = names(fill_), ..., w=7, h=w, bty = "n", OverwritePrevPDF =T)
 }

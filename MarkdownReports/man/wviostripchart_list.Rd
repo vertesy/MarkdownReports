@@ -4,14 +4,15 @@
 \alias{wviostripchart_list}
 \title{wviostripchart_list}
 \usage{
-wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
-  bg = 0, coll = "black", metod = "jitter", jitter = 0.1,
-  plotname = as.character(substitute(yalist)), sub = NULL, ylb = "",
+wviostripchart_list(yourlist, ..., pch = 23, viocoll = 0, vioborder = 1,
+  bg = 0, col = "black", metod = "jitter", jitter = 0.1,
+  main = as.character(substitute(yourlist)), sub = NULL, ylab = "",
   incrBottMarginBy = 0, savefile = UnlessSpec("b.save.wplots"),
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
-\item{yalist}{Input list to be plotted.}
+\item{yourlist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
@@ -23,15 +24,17 @@ wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{bg}{Background color.}
 
+\item{col}{Color of the plot.}
+
 \item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid overlaps).}
 
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+\item{main}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{sub}{Subtitle below the plot.}
 
-\item{ylb}{Y-axis label.}
+\item{ylab}{Y-axis label.}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
@@ -43,11 +46,14 @@ wviostripchart_list(yalist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{col}{Color of the plot.l}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.
+
+
+, PNG = UnlessSpec("b.usepng")}
 }
 \description{
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wviostripchart_list (yalist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylb =  , plotname = as.character(substitute(yalist)), sub = F, bg = 0, coll = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
+wviostripchart_list (yourlist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylab = "" , main = as.character(substitute(yourlist)), sub = F, bg = 0, col = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
 }

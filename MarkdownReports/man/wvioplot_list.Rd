@@ -4,26 +4,29 @@
 \alias{wvioplot_list}
 \title{wvioplot_list}
 \usage{
-wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
-  plotname = as.character(substitute(yalist)), sub = NULL,
-  xlb = names(yalist), ylb = "", ylimm = F, incrBottMarginBy = 0,
+wvioplot_list(yourlist, ..., col = c(2:(length(yourlist) + 1)),
+  main = as.character(substitute(yourlist)), sub = NULL,
+  xlab = names(yourlist), ylab = "", ylim = F, incrBottMarginBy = 0,
   tilted_text = F, yoffset = 0, savefile = UnlessSpec("b.save.wplots"),
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink())
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(),
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
-\item{yalist}{Input list to be plotted.}
+\item{yourlist}{Input list to be plotted.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
-\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
+\item{col}{Color of the plot.}
+
+\item{main}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{sub}{Subtitle below the plot.}
 
-\item{xlb}{X-axis label.}
+\item{xlab}{X-axis label.}
 
-\item{ylb}{Y-axis label.}
+\item{ylab}{Y-axis label.}
 
-\item{ylimm}{Manual y axis limits}
+\item{ylim}{Manual y axis limits}
 
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
@@ -37,13 +40,11 @@ wvioplot_list(yalist, ..., coll = c(2:(length(yalist) + 1)),
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{col}{Color of the plot.l}
-
-\item{tilted_text}{Manual tuning of the Y-postion of the tilted text labels}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
 }
 \examples{
-wvioplot_list (yalist =  , ... =  , xlb = names(yalist), ylb =  , coll = c(1:length(yalist)), incrBottMarginBy = 0, w = 7, h = w, plotname = as.character(substitute(yalist)), tilted_text = F, mdlink = F)
+wvioplot_list (yourlist =  , ... =  , xlab = names(yourlist), ylab = "" , col = c(1:length(yourlist)), incrBottMarginBy = 0, w = 7, h = w, main = as.character(substitute(yourlist)), tilted_text = F, mdlink = F)
 }

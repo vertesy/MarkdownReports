@@ -6,12 +6,12 @@
 \usage{
 whist_dfCol(df, colName, col = "gold", ...,
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w)
+  h = w, PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
 
-\item{col}{Color of the plot.Name}
+\item{col}{Color of the plot.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
 
@@ -21,7 +21,7 @@ whist_dfCol(df, colName, col = "gold", ...,
 
 \item{h}{Height of the saved pdf image, in inches.}
 
-\item{col}{Color of the plot.}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Use this version of whist() if you iterate over columns  or rows of a data frame. You can name the file by naming the variable. Cannot be used with dynamically called variables [e.g. call vectors within a loop]

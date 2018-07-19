@@ -5,7 +5,8 @@
 \title{filter_MidPass}
 \usage{
 filter_MidPass(numeric_vector, HP_threshold, LP_threshold, prepend = "",
-  return_survival_ratio = FALSE, EdgePass = F, na_rm = T)
+  return_survival_ratio = FALSE, EdgePass = F, na_rm = T, plot.hist = T,
+  saveplot = F, ...)
 }
 \arguments{
 \item{numeric_vector}{Values to be filtered.}
@@ -19,10 +20,16 @@ filter_MidPass(numeric_vector, HP_threshold, LP_threshold, prepend = "",
 \item{return_survival_ratio}{Return a number with the survival ratio (TRUE), or a logical index vector of the survivors (FALSE).}
 
 \item{EdgePass}{If TRUE, it reverses the filter: everything passes except between the two thresholds.}
+
+\item{plot.hist}{Plot the histogram of the input data}
+
+\item{saveplot}{Save the histogram as PDF, FALSE by defeault}
+
+\item{...}{Additional arguments for the histogram}
 }
 \description{
 Filter values that fall above high-pass-threshold !(X >=)! and below the low-pass threshold (X <).
 }
 \examples{
-filter_MidPass (numeric_vector =  , HP_threshold =  , LP_threshold =  , prepend =  , return_survival_ratio = FALSE, EdgePass = F)
+filter_MidPass (numeric_vector = rnorm(1000,6)  , HP_threshold = 4 , LP_threshold =8  , prepend = "From all values " , return_survival_ratio = FALSE, EdgePass = T)
 }

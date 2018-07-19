@@ -5,7 +5,8 @@
 \title{wplot_save_this}
 \usage{
 wplot_save_this(plotname = ww.autoPlotName(), ...,
-  w = UnlessSpec("b.defSize", 7), h = w, mdlink = F)
+  w = UnlessSpec("b.defSize", 7), h = w, mdlink = F,
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
@@ -17,6 +18,8 @@ wplot_save_this(plotname = ww.autoPlotName(), ...,
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Save the currently active graphic device (for complicated plots).  Insert links to your markdown report, set by "path_of_report". Name the file by naming the variable!

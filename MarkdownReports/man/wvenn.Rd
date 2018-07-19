@@ -4,12 +4,12 @@
 \alias{wvenn}
 \title{wvenn}
 \usage{
-wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
+wvenn(yourlist, imagetype = "png", alpha = 0.5, fill = 1:length(yourlist),
   subt, ..., w = UnlessSpec("b.defSize", 7), h = w,
-  mdlink = ww.set.mdlink(), plotname = substitute(yalist), LogFile = F)
+  mdlink = ww.set.mdlink(), plotname = substitute(yourlist), LogFile = F)
 }
 \arguments{
-\item{yalist}{The variable to plot.}
+\item{yourlist}{The variable to plot.}
 
 \item{imagetype}{Image format, png by default.}
 
@@ -35,5 +35,5 @@ wvenn(yalist, imagetype = "png", alpha = 0.5, fill = 1:length(yalist),
 Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, and it does not use the dev.copy2pdf() function.
 }
 \examples{
-wvenn (yalist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
+wvenn (yourlist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
 }

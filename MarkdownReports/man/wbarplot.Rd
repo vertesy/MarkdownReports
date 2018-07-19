@@ -10,7 +10,8 @@ wbarplot(variable, ..., col = "gold1", sub = F,
   lwd = 2, lcol = 2, errorbar = F, upper = 0, lower = upper,
   arrow_width = 0.1, arrow_lwd = 1,
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink())
+  h = w, incrBottMarginBy = 0, mdlink = ww.set.mdlink(),
+  PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -60,6 +61,8 @@ wbarplot(variable, ..., col = "gold1", sub = F,
 \item{incrBottMarginBy}{Increase the blank space at the bottom of the plot. Use if labels do not fit on the plot.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save bar plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.

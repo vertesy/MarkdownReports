@@ -4,14 +4,16 @@
 \alias{wbarplot_dfCol}
 \title{wbarplot_dfCol}
 \usage{
-wbarplot_dfCol(df, colName, col = "gold1",
+wbarplot_dfCol(df, ..., colName, col = "gold1",
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, ...)
+  h = w, PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{df}{Input data frame to be plotted}
 
-\item{col}{Color of the plot.Name}
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
+
+\item{col}{Color of the plot.}
 
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
@@ -19,9 +21,7 @@ wbarplot_dfCol(df, colName, col = "gold1",
 
 \item{h}{Height of the saved pdf image, in inches.}
 
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
-
-\item{col}{Color of the plot.}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 wbarplot for a column of a data frame.

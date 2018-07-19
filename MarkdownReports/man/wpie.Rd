@@ -8,7 +8,7 @@ wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
   plotname = substitute(variable),
   col = gplots::rich.colors(length(variable)),
   savefile = UnlessSpec("b.save.wplots"), w = UnlessSpec("b.defSize", 7),
-  h = w, mdlink = ww.set.mdlink())
+  h = w, mdlink = ww.set.mdlink(), PNG = UnlessSpec("b.usepng"))
 }
 \arguments{
 \item{variable}{The variable to plot.}
@@ -30,6 +30,8 @@ wpie(variable, ..., percentage = TRUE, both_pc_and_value = F,
 \item{h}{Height of the saved pdf image, in inches.}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
+
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save pie charts as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.

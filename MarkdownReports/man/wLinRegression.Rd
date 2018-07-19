@@ -5,7 +5,7 @@
 \title{wLinRegression}
 \usage{
 wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
-  textlocation = "topleft", cexx = 1,
+  textlocation = "topleft", cex = 1,
   OverwritePrevPDF = UnlessSpec("b.save.wplots"), ...)
 }
 \arguments{
@@ -15,7 +15,7 @@ wLinRegression(DF, coeff = c("pearson", "spearman", "r2")[3],
 
 \item{textlocation}{where to put the legend?}
 
-\item{cexx}{font size; 1 by default}
+\item{cex}{font size; 1 by default}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.}
 

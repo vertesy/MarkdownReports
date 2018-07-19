@@ -41,7 +41,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
     3. Link & display your figures automatically inside your report, right there where they are needed.
     4. Version your findings, annotating which parameters were used to reach certain results.
     5. Share your report with others via email, Github or a personal website.", "License" = "GNU GPL 3",
-		"Version"= "2.9.4.6", "Imports" = "vioplot, gplots, VennDiagram"
+		"Version"= "3.0.0.0", "Imports" = "vioplot, gplots, VennDiagram"
 )
 
 setwd(RepositoryDir)

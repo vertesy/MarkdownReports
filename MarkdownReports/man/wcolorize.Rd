@@ -6,7 +6,7 @@
 \usage{
 wcolorize(vector = c(1, 1, 1:6), RColorBrewerSet = F,
   ReturnCategoriesToo = F, show = F, randomize = F, set = c(F, "rich",
-  "heat.colors", "terrain.colors", "topo.colors", "rainbow")[1])
+  "heat.colors", "terrain.colors", "topo.colors", "matlab", "rainbow")[1])
 }
 \arguments{
 \item{vector}{A vector with categories, can be numbers or strings}
@@ -17,12 +17,12 @@ wcolorize(vector = c(1, 1, 1:6), RColorBrewerSet = F,
 
 \item{randomize}{Randomize colors}
 
-\item{set}{Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow"), or gplots::rich.colors.}
+\item{set}{Color palette for base ("heat.colors", "terrain.colors", "topo.colors", "rainbow", "matlab"), or "rich" for gplots::rich.colors, or  "matlab" for colorRamps::matlab.like.}
 
 \item{UseRColorBrewer}{Use RColorBrewer's brewer.pal palettes. Either FALSE or one of the legit RColorBrewer palettes, e.g.: "Set1". See its help. ("Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3", "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu", "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral")}
 }
 \description{
-Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.
+Generate color palettes. Input: a vector with categories, can be numbers or strings. Handles repeating values. Output: color vector of equal length as input. Optionally it can ouput a list where an extra element lists the categories (simply using unique would remove the names). See example.  Some color scale depend on packages "colorRamps", or "gplots".
 }
 \examples{
 wcolorize (vector=c(1,1,1:6), ReturnCategoriesToo=T, show=T)
