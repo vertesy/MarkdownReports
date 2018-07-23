@@ -7,7 +7,7 @@
 wplot(df_2columns, col = 1, pch = 18, ..., panel_first = grid(NULL),
   plotname = substitute(df_2columns), errorbar = F, upper = 0,
   lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1,
-  col_errorbar = 1, ylimm = F, xlimm = F, abline = c(F, "v", "h",
+  col_errorbar = 1, ylim = F, xlim = F, abline = c(F, "v", "h",
   "ab")[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1,
   equal.axes = F, savefile = UnlessSpec("b.save.wplots"),
   mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w,
@@ -19,8 +19,6 @@ wplot(df_2columns, col = 1, pch = 18, ..., panel_first = grid(NULL),
 \item{pch}{Define the symbol for each data point. A number [0-25] or any string between ""-s.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should work).}
-
-\item{panel_first}{add a background grid by specifying " panel_first = grid() "}
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
@@ -38,9 +36,9 @@ wplot(df_2columns, col = 1, pch = 18, ..., panel_first = grid(NULL),
 
 \item{col_errorbar}{Color of the error bar arrow.}
 
-\item{ylimm}{manual Y-limits error bar}
+\item{ylim}{manual Y-limits error bar}
 
-\item{xlimm}{manual X-limits error bar}
+\item{xlim}{manual X-limits error bar}
 
 \item{abline}{Draw a line on the plot. Any value from: c( 'v', 'h', 'ab') for vertical, horizontal, and line with any slope. In each case you need to specify "a=", specifying the X-position for vertical (v); the Y-position for horizontal (yh) lines and the intercept for lines with a slope (ab). In the latter case, 'b' specifes the slope.}
 

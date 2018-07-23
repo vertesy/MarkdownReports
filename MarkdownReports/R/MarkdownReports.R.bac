@@ -179,6 +179,7 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
   if (mdlink) { ww.MarkDown_Img_Logger_PDF_and_PNG(fname_wo_ext = plotname) }
 }
 
+
 #' wplot
 #'
 #' Create and save scatter plots as .pdf, in "OutDir". If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions. The .png version is not created, only the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to your plot, by setting "abline" argument to = F (no line, default), "h" (horizontal, further specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an angle, further specified by a = offset, b = slope).
@@ -186,9 +187,10 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @param col Color of the plot.
 #' @param pch Define the symbol for each data point. A number [0-25] or any string between ""-s.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should work).
-#' @param panel_first add a background grid by specifying " panel_first = grid() "
-#' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param panel.first Draw a background grid similar as in ggplot2. Set to "panel.first=grid()" to draw an auto-fitted grid, (nx=NULL, ny=0) to draw vertical only, etc.
+#' @param plotname Title of the plot (main parameter) and also the name of the file.
+#' @param ylim manual Y-limits error bar
+#' @param xlim manual X-limits error bar
 #' @param errorbar Draw error bars if TRUE. Pass on the value in parameters "upper" and "lower". Refine the look by "w" and "arrow_lwd".
 #' @param upper Size of the upper error bar.
 #' @param lower Size of the lower error bar. By default, it equals the upper error bar.
@@ -203,8 +205,6 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @param lwd Line width. Set to 2 by default.
 #' @param col_abline Color of the line.
 #' @param equal.axes Span of axes is set to equal (maximum range in either X or Y).
-#' @param ylimm manual Y-limits error bar
-#' @param xlimm manual X-limits error bar
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -214,25 +214,25 @@ wplot_save_this <- function (plotname = ww.autoPlotName(), ..., w = UnlessSpec("
 #' @examples wplot (df_2columns =  , col = 1, pch = 18, ... =  , w = 7, h = w, plotname = substitute(df_2columns), mdlink = F, errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, abline = F, a = F, b = F, lty = 1, lwd = 1, col_abline = 1)
 
 wplot <- function (df_2columns, col = 1, pch = 18, ..., panel_first=grid(NULL), plotname = substitute(df_2columns),
-                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylimm=F, xlimm=F,
+                   errorbar = F, upper = 0, lower = upper, left = 0, right = left, width = 0.1, arrow_lwd = 1, col_errorbar = 1, ylim=F, xlim=F,
                    abline = c( F, 'v', 'h', 'ab')[1], a = F, b = F, lty = 1, lwd = 1, col_abline = 1, equal.axes =F,
                    savefile = UnlessSpec("b.save.wplots"), mdlink = ww.set.mdlink(), w = UnlessSpec("b.defSize", 7), h = w, PNG = UnlessSpec("b.usepng")) {
   x = df_2columns[, 1]
   y = df_2columns[, 2]
   fname = kollapse(plotname, ".plot")
   if (errorbar) {
-    ylim = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))), na.rm = T)
-    xlim = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))), na.rm = T)
+    ylim_ = range(c( (y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))), na.rm = T)
+    xlim_ = range(c( (x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))), na.rm = T)
   }
   else {
-    ylim = range(y, na.rm = T)
-    xlim = range(x, na.rm = T)
+    ylim_ = range(y, na.rm = T)
+    xlim_ = range(x, na.rm = T)
   }
-  if (equal.axes) xlim = ylim = range(c(xlim,ylim))
-  if (is.numeric(ylimm) & length(ylimm)==2) { ylim = ylimm } #overwrite if
-  if (is.numeric(xlimm) & length(xlimm)==2) { xlim = xlimm }
+  if (equal.axes) xlim_ = ylim_ = range(c(xlim_,ylim_))
+  if (is.numeric(ylim) & length(ylim)==2) { ylim_ = ylim } #overwrite if
+  if (is.numeric(xlim) & length(xlim)==2) { xlim_ = xlim }
 
-  plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim, xlim = xlim, panel.first= panel_first)
+  plot(df_2columns, ..., main = plotname, col = col, pch = pch, ylim = ylim_, xlim = xlim_, panel.first= panel_first)
   if (errorbar) {
     arrows(x0 = x, y0 = y + upper, x1 = x, y1 = y - lower, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
     arrows(x0 = x + left, y0 = y, x1 = x - right, y1 = y, angle = 90, code = 3, length = width, lwd = arrow_lwd, col = col_errorbar)
@@ -771,6 +771,7 @@ wstripchart_list <- function ( yourlist, ..., main = as.character(substitute(you
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @export
 #' @examples wvioplot_list (yourlist =  , ... =  , xlab = names(yourlist), ylab = "" , col = c(1:length(yourlist)), incrBottMarginBy = 0, w = 7, h = w, main = as.character(substitute(yourlist)), tilted_text = F, mdlink = F)
+
 
 wvioplot_list <- function (yourlist, ..., col = c(2:(length(yourlist)+1)),
                            main = as.character(substitute(yourlist)), sub = NULL, xlab = names(yourlist), ylab = "", ylim=F,
@@ -2013,9 +2014,9 @@ stopif <- function(condition, message ="") { if(condition) {iprint (message); st
 #' translate
 #'
 #' Replaces a set of values in a vector with another set of values, it translates your vector. Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
-#' @param vec
-#' @param oldvalues
-#' @param newvalues
+#' @param vec set of values where you want to replace
+#' @param oldvalues oldvalues (from)
+#' @param newvalues newvalues (to)
 #' @export
 #' @examples A=1:3; translate(vec = A, oldvalues =2:3 , newvalues = letters[1:2])
 
@@ -2037,14 +2038,14 @@ translate = replace_values <- function(vec, oldvalues, newvalues) {
 
 
 
-#' Title
+#' na.omit.strip
 #'
 #' Omit NA values from a vector and return a clean vector without any spam.
 #' @param vec Values to filter for NA
 #' @param silent Silence the data structure coversion warning: anything ->vector
 #' @export
 #'
-#' @examples
+#' @examples na.omit.strip(c(1,2,3,NA, NaN,2))
 
 na.omit.strip <- function(vec, silent = F) {
   if (is.data.frame(vec)) {
