@@ -3,6 +3,9 @@
 # date: # 14 September 2017 (Monday) 12:38
 # source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
+
+# Dependecies: vioplot, colorRamps, gplots, VennDiagram
+
 # Table of Contents ------------------------------------
 # - Setup
 # - Plots
@@ -2044,7 +2047,6 @@ translate = replace_values <- function(vec, oldvalues, newvalues) {
 #' @param vec Values to filter for NA
 #' @param silent Silence the data structure coversion warning: anything ->vector
 #' @export
-#'
 #' @examples na.omit.strip(c(1,2,3,NA, NaN,2))
 
 na.omit.strip <- function(vec, silent = F) {
