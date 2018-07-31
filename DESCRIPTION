@@ -1,0 +1,15 @@
+Package: MarkdownReports
+Title: Generate Scientific Figures and Reports Easily
+Version: 3.0.0.2
+Authors@R: Abel Vertesy <a.vertesy@hubrecht.eu> [aut, cre]
+Description: MarkdownReports is a set of R functions that allows you to generate precise figures easily, and create clean markdown reports about what you just discovered with your analysis script. It helps you to:
+    1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.
+    2. Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.
+    3. Link & display your figures automatically inside your report, right there where they are needed.
+    4. Version your findings, annotating which parameters were used to reach certain results.
+    5. Share your report with others via email, Github or a personal website.
+Depends: R (>= 3.3.2)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: stats, methods, gplots, RColorBrewer, colorRamps, vioplot, VennDiagram

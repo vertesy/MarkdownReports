@@ -1,6 +1,7 @@
 # MacOS Files
 .DS_STORE
 
-
 # R Files
 .Rhistory
+.Rproj.user
+.RData
