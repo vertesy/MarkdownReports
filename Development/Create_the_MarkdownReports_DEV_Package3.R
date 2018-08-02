@@ -44,7 +44,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version"= "3.3.0.1"
+    , "Version"= "4.0.0.1"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
     , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram"
@@ -56,7 +56,7 @@ setwd(RepositoryDir)
 if ( !dir.exists(RepositoryDir) ) { create(path = RepositoryDir, description = DESCRIPTIO, rstudio = TRUE)
 } else {
     getwd()
-    file.remove(c("DESCRIPTION","NAMESPACE"))
+    file.remove(c("DESCRIPTION","NAMESPACE", "MarkdownReportsDev.Rproj"))
     setup(path = RepositoryDir, description = DESCRIPTION, rstudio = TRUE)
   }
 
