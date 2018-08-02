@@ -8,14 +8,17 @@ try.dev.off()
 
 
 # Functions ------------------------
-require(MarkdownReports)
+require(MarkdownReportsDev)
 # source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 # source("https://raw.githubusercontent.com/vertesy/TheCorvinas/master/R/CodeAndRoll.R")
 # library(stringr)
 
+sem <- function (x, na.rm=T) sd(unlist(x), na.rm = na.rm)/sqrt(length(na.omit(as.numeric(x))))  # Calculates the standard error of the mean (SEM) for a numeric vector (it excludes NA-s by default)
+
 # Setup ------------------------
 OutDir = "/Users/abelvertesy/Github_repos/MarkdownReports/Examples/MarkdownReports_in_Action"
-setup_MarkdownReports(OutDir=OutDir,, scriptname =  "MarkdownReports_in_Action.r", title = "Snowflakes")
+setup_MarkdownReports(OutDir=OutDir, scriptname =  "MarkdownReports_in_Action.r", title = "Snowflakes"
+                      , b.usepng = T, b.mdlink = T )
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
 
 
@@ -51,28 +54,62 @@ md.tableWriter.VEC.w.names(SnowflakeSizes_Reykjavik)
 
 
 llprint("Let's visualize them:")
-wbarplot(SnowflakeSizes_Reykjavik, mdlink = T)
+wbarplot(SnowflakeSizes_Reykjavik)
 llogit('The code:
 ```
-wbarplot(SnowflakeSizes_Reykjavik, mdlink = T)
-```')
-
+wbarplot(SnowflakeSizes_Reykjavik)
+```
+NOTE: use the `mdlink = FALSE` argument if you don not want to save this specific plot.
+       See wiki for more ')
 
 llprint("### At first we would like to throw away every  measurement where the measurement bias (reported by your snowflake collecting machine) is above 10%:")
-wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1, mdlink = T)
+wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1)
+barplot_label(Measurement_Bias, TopOffset = 2)
 
 pass = filter_LP(Measurement_Bias, threshold = thresholdX) # report the actual numbers
-# llogit("The code:")
+llogit('The code:
+```
+wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1)
+barplot_label(Measurement_Bias, TopOffset = 2)
+```')
+
+Nr_of_measurements = unlist(lapply(SnowflakeSizes, length))
+wpie(Nr_of_measurements, both_pc_and_value = F)
+llogit('The code:
+```
+wpie(Nr_of_measurements, both_pc_and_value = F)
+```')
 
 # --------------------------------------------------------------------------------
 llprint("### Let's see how it compares with snow flakes from other cities?")
 SnowflakeSizes$Reykjavik = SnowflakeSizes_Reykjavik[pass]
 
-wstripchart(SnowflakeSizes, tilted_text = T, mdlink = T)
+Average_SnowflakeSizes = unlist(lapply(SnowflakeSizes, mean))
+SEM_SnowflakeSizes = unlist(lapply(SnowflakeSizes, sem))
+wbarplot(Average_SnowflakeSizes, tilted_text = T,
+         errorbar = T, upper = SEM_SnowflakeSizes)
+wlegend.label("Error bars denote +- SEM", cex = .75)
+
+wstripchart(SnowflakeSizes, tilted_text = T)
 llogit('The code:
 ```
-wstripchart(SnowflakeSizes, tilted_text = T, mdlink = T)
+wstripchart(SnowflakeSizes, tilted_text = T)
 ```')
+
+
+wvioplot_list(SnowflakeSizes, tilted_text = T, yoffset = -.2)
+llogit('The code:
+       ```
+       wvioplot_list(SnowflakeSizes, tilted_text = T, yoffset = -.2)
+       ```')
+wplot_save_this()
+
+wviostripchart_list(SnowflakeSizes)
+llogit('The code:
+       ```
+       wviostripchart_list(SnowflakeSizes)
+       ```')
+
 
 # --------------------------------------------------------------------------------
 llprint("### Let's say, we also measured the temperature of the flakes. We can color flakes that had temperature below -10:")
@@ -83,18 +120,19 @@ SnowflakeTemperature = list( c(-13.3, -13.1, -11.4, -15, -15, -6.28, -9.02),
 							 c(-9.02, -5.98, -10.5, 0.48, 4.56, -16.4),
 							 c(-8.76, -12.6, -9.02, -13.2, -13.5, -10.9, -12.2, -11.6, -10.7, -9.27) )
 
-colore = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
+
+colz = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
 SnowflakeSizes_colored_by_temp = SnowflakeSizes
-wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colore, mdlink = T)
+wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, pch = 23, bg = colz)
 llogit('The code:
 ```
 SnowflakeTemperature = list( c(-13.3, -13.1, -11.4, -15, -15, -6.28, -9.02),
 							 c(-9.02, -5.98, -10.5, 0.48, 4.56, -16.4),
        c(-8.76, -12.6, -9.02, -13.2, -13.5, -10.9, -12.2, -11.6, -10.7, -9.27) )
 
-       colore = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
+       colz = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
        SnowflakeSizes_colored_by_temp = SnowflakeSizes
-       wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colore, mdlink = T)
+       wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colz)
 
 ```')
 
@@ -108,7 +146,7 @@ Mean_Snowflake_Size_and_Temp = cbind(
 	"Size" = unlist(lapply(SnowflakeSizes, mean))
 )
 
-sem <- function(x, na.rm=T) sd(unlist(x), na.rm = na.rm)/sqrt(length(na.omit.strip(as.numeric(x))))  # Calculates the standard error of the mean (SEM) for a numeric vector (it excludes NA-s by default)
+
 Snowflakes_SEM = cbind(
 	"Temperature" = unlist(lapply(SnowflakeTemperature, sem)),
 	"Size" = unlist(lapply(SnowflakeSizes, sem))
@@ -119,7 +157,7 @@ wplot(Mean_Snowflake_Size_and_Temp, errorbar = T, upper = Snowflakes_SEM[,"Size"
 
 legend_=3:5
 names(legend_) = rownames(Mean_Snowflake_Size_and_Temp)
-wlegend( fill_= legend_, poz = 3,bty="n")
+wlegend(NamedColorVec = legend_, poz = 3)
 wLinRegression(Mean_Snowflake_Size_and_Temp, lty=3 )
 
 

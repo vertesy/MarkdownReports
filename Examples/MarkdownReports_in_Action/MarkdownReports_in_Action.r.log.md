@@ -1,5 +1,5 @@
 #  Snowflakes
-		Modified: 19/07/2018 | 14:00 | by: MarkdownReports_in_Action.r
+		Modified: 31/07/2018 | 22:49 | by: MarkdownReports_in_Action.r
 
 _I will show an (imaginary) example workflow on complitely made up data._
 
@@ -20,37 +20,60 @@ md.tableWriter.VEC.w.names(SnowflakeSizes_Reykjavik)
 
 Let's visualize them:
 
-![](SnowflakeSizes_Reykjavik.barplot.pdf)
-
 ![SnowflakeSizes_Reykjavik.barplot](SnowflakeSizes_Reykjavik.barplot.png)
 
 The code:
 ```
-wbarplot(SnowflakeSizes_Reykjavik, mdlink = T)
+wbarplot(SnowflakeSizes_Reykjavik)
 ```
+NOTE: use the `mdlink = FALSE` argument if you don not want to save this specific plot.
+       See wiki for more
 
 ### At first we would like to throw away every  measurement where the measurement bias (reported by your snowflake collecting machine) is above 10%:
-
-![](Measurement_Bias.barplot.pdf)
 
 ![Measurement_Bias.barplot](Measurement_Bias.barplot.png)
 
 76.9 % or 10 of 13 entries in Measurement_Bias fall below a threshold value of: 10
 
+The code:
+```
+wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1)
+barplot_label(Measurement_Bias, TopOffset = 2)
+```
+
+![Nr_of_measurements.pie](Nr_of_measurements.pie.png)
+
+The code:
+```
+wpie(Nr_of_measurements, both_pc_and_value = F)
+```
+
 ### Let's see how it compares with snow flakes from other cities?
 
-![](SnowflakeSizes.stripchart.pdf)
+![Average_SnowflakeSizes.barplot](Average_SnowflakeSizes.barplot.png)
 
 ![SnowflakeSizes.stripchart](SnowflakeSizes.stripchart.png)
 
 The code:
 ```
-wstripchart(SnowflakeSizes, tilted_text = T, mdlink = T)
+wstripchart(SnowflakeSizes, tilted_text = T)
 ```
 
-### Let's say, we also measured the temperature of the flakes. We can color flakes that had temperature below -10:
+![SnowflakeSizes.vioplot](SnowflakeSizes.vioplot.png)
 
-![](SnowflakeSizes_colored_by_temp.stripchart.pdf)
+The code:
+       ```
+       wvioplot_list(SnowflakeSizes, tilted_text = T, yoffset = -.2)
+       ```
+
+![SnowflakeSizes.VioStripchart](SnowflakeSizes.VioStripchart.png)
+
+The code:
+       ```
+       wviostripchart_list(SnowflakeSizes)
+       ```
+
+### Let's say, we also measured the temperature of the flakes. We can color flakes that had temperature below -10:
 
 ![SnowflakeSizes_colored_by_temp.stripchart](SnowflakeSizes_colored_by_temp.stripchart.png)
 
@@ -60,15 +83,13 @@ SnowflakeTemperature = list( c(-13.3, -13.1, -11.4, -15, -15, -6.28, -9.02),
 							 c(-9.02, -5.98, -10.5, 0.48, 4.56, -16.4),
        c(-8.76, -12.6, -9.02, -13.2, -13.5, -10.9, -12.2, -11.6, -10.7, -9.27) )
 
-       colore = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
+       colz = lapply(SnowflakeTemperature, function(x) (x< -10)+1)
        SnowflakeSizes_colored_by_temp = SnowflakeSizes
-       wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colore, mdlink = T)
+       wstripchart_list(SnowflakeSizes_colored_by_temp, tilted_text = T, bg = colz)
 
 ```
 
 ### And let's see how the correlation looks like for snowflakes in each city:
-
-![](Mean_Snowflake_Size_and_Temp.plot.pdf)
 
 ![Mean_Snowflake_Size_and_Temp.plot](Mean_Snowflake_Size_and_Temp.plot.png)
 
@@ -99,3 +120,5 @@ wlegend( fill_= legend_, poz = 3,bty="n")
 # linear regression and correlation coefficient
 wLinRegression(Mean_Snowflake_Size_and_Temp, lty=3 )
 ```
+
+![SnowflakeSizes_colored_by_temp.stripchart](SnowflakeSizes_colored_by_temp.stripchart.png)
