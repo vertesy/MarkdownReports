@@ -40,6 +40,63 @@
 
         <p><em>cite via:</em> <a href="https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports"><img src="https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg" alt="DOI"></a></p>
 <h2>
+<a id="news" class="anchor" href="#news" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>News</h2>
+<h3>
+<a id="version-311-is-ready-and-installed-by-the-default" class="anchor" href="#version-311-is-ready-and-installed-by-the-default" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version 3.1.1 is ready and installed by the default.</h3>
+<ol>
+<li>See legacy/old version at: <a href="https://github.com/vertesy/MarkdownReports.v2.9.5">https://github.com/vertesy/MarkdownReports.v2.9.5</a>
+</li>
+<li>See development version at: <a href="https://github.com/vertesy/MarkdownReportsDev">https://github.com/vertesy/MarkdownReportsDev</a>
+</li>
+</ol>
+<h3>
+<a id="new-features" class="anchor" href="#new-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>New features"</h3>
+<ul>
+<li>
+<p><strong>Function argument names now mirror the <code>R base</code> argument names (99%).</strong></p>
+<ul>
+<li>Think of <code>xlb &gt;&gt;&gt; xlab</code>, or  <code>sub_ &gt;&gt;&gt; sub</code>
+</li>
+</ul>
+</li>
+<li>
+<p>This however breaks the compatibility with earlier versions, so you might need to replace some function arguments</p>
+</li>
+<li>
+<p><strong>The package now can also work with png images.</strong></p>
+<ul>
+<li>
+<p>You can save files in png, which can be displayed inside the markdown file on windows 7.</p>
+</li>
+<li>
+<p>You need to set <code>b.usepng=T</code> in <code>setup_MarkdownReports</code>: <code>setup_MarkdownReports(OutDir = "/Users/...blabla....", b.usepng=T)</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>The package contains multiple other bug fixes:</p>
+<ul>
+<li>Self consistency: some missing functions moved from <code>CodeAndRoll.R</code>
+</li>
+<li>Table writing functions <code>md.tableWriter.DF.w.dimnames()</code> and <code>md.tableWriter.VEC.w.names()</code>
+</li>
+</ul>
+</li>
+<li>
+<p>Enhancements:</p>
+<ul>
+<li>
+<code>filter_HP(), filter_LP(), filter_MidPass()</code> show histogram</li>
+<li>
+<code>whist()</code> can invite the above filter functions.</li>
+</ul>
+</li>
+<li>
+<p>Numerous other small fixes.</p>
+</li>
+</ul>
+<p><strong>Old version</strong> is under <code>MarkdownReports.LEGACY.VERSION</code>.</p>
+<h2>
 <a id="what-is-markdownreports" class="anchor" href="#what-is-markdownreports" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <em><strong>MarkdownReports</strong></em>?</h2>
 <p>MarkdownReports is a set of <strong>R</strong> functions that allows you to generate precise figures easily, and create clean reports in markdown language about what you just discovered with your analysis script. It helps you to:</p>
 <ol>
@@ -192,8 +249,9 @@ devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
 <h4>
 <a id="cite-it-via-its-digital-object-identifier-doi" class="anchor" href="#cite-it-via-its-digital-object-identifier-doi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cite it via its Digital Object Identifier (DOI):</h4>
 <p><a href="https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports"><img src="https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg" alt="DOI"></a></p>
+<p>Abel Vertesy. (2017, October 17). MarkdownReports: An R function library to create scientific figures and markdown reports easily. (Version v2.9.5). Zenodo. <a href="http://doi.org/10.5281/zenodo.594683">http://doi.org/10.5281/zenodo.594683</a></p>
 <br>
-<p><strong>MarkdownReports</strong> is a project of <a href="https://github.com/vertesy" class="user-mention">@vertesy</a>.</p>
+<p><strong>MarkdownReports</strong> is a project of <a class="user-mention" data-hovercard-user-id="5101911" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/vertesy">@vertesy</a>.</p>
 <p><br> <br> <br> <br> <br>
 <a href="https://github.com/vertesy/MarkdownReports/generated_pages/new"><em>edit the website</em></a></p>
       </section>
