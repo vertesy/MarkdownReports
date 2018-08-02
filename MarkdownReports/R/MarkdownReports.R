@@ -4,7 +4,7 @@
 # source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
-# Dependecies: vioplot, colorRamps, gplots, VennDiagram
+# Dependecies:  stats, vioplot, colorRamps, gplots, VennDiagram,
 
 # Table of Contents ------------------------------------
 # - Setup
@@ -29,18 +29,34 @@
 
 #' setup_MarkdownReports
 #'
-#' Setup the markdown report file and the output directory, create a sub directory in "OutDir". Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
+#' Setup the markdown report file and the output directory, create a sub directory in "OutDir".
+#' Its name is stamped with the script name and the modification time. Create the "path_of_report" variable used by all log-writing and ~wplot functions.
 #' @param OutDir The output directory (absolute / full path).
-#' @param b.scriptname Name of the script (file) generating the report. "b.scriptname" will be used as the default title for the report. It is assigned to the global environment and used in pdf's title field to denote which script generated the file.
 #' @param title Manually set the title of the report.
-#' @param append Set append to TRUE if you do not want to overwrite the previous report. Use continue_logging_markdown() if you return logging into an existing report. FALSE by default: rerunning the script overwrites the previous report. Archive reports manually into the timestamped subfolder within the OutDir.
-#' @param b.defSize Default width of plot EXCEPT in pdfA4plot_on(), assuming h=w by default. c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35, "1.5col.cell" = 4.49, "2col.cell" = 6.85)
-#' @param b.defSize.fullpage Default width of plot in pdfA4plot_on()A global background variable used by pdfA4plot_on.
-#' @param b.usepng A global background variable used by the plotting functions. If TRUE, a link to the .png versions of the saved plot will be created. The .png file itself is not created.
-#' @param b.png4Github A global background variable used by the plotting functions. If TRUE (default), the link to the .png versions of the saved plot will be created in a GitHub compatible format.  That means, when you upload your markdown report and the .png images to your GitHub wiki under "Reports/" the links will correctly display the images online.
-#' @param b.mdlink A global background variable used by the plotting functions. If TRUE (default), all saved (.pdf) plots will be linked into your report.
-#' @param b.save.wplots A global background variable used by the plotting functions. If TRUE (default), plots will be saved to a .pdf file.
-#' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a proper Table Of Contents by, e.g. Typora.
+#' @param append Set append to TRUE if you do not want to overwrite the previous report.
+#' Use continue_logging_markdown() if you return logging into an existing report.
+#' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
+#' into the timestamped subfolder within the OutDir.
+#' @param b.scriptname Name of the script (file) generating the report. "b.scriptname" will be used
+#'  as the default title for the report. It is assigned to the global environment and used in pdf's
+#'  title field to denote which script generated the file.
+#' @param b.defSize Default width of plot EXCEPT in pdfA4plot_on(), assuming h=w by default.
+#' c("def"= 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
+#' "1.5col.cell" = 4.49, "2col.cell" = 6.85)
+#' @param b.defSize.fullpage Default width of plot in pdfA4plot_on()A global background variable
+#' used by pdfA4plot_on.
+#' @param b.usepng A global background variable used by the plotting functions. If TRUE, a link to
+#' the .png versions of the saved plot will be created. The .png file itself is not created.
+#' @param b.png4Github A global background variable used by the plotting functions.
+#' If TRUE (default), the link to the .png versions of the saved plot will be created in a
+#' GitHub compatible format.  That means, when you upload your markdown report and the .png
+#' images to your GitHub wiki under "Reports/" the links will correctly display the images online.
+#' @param b.mdlink A global background variable used by the plotting functions. If TRUE (default),
+#' all saved (.pdf) plots will be linked into your report.
+#' @param b.save.wplots A global background variable used by the plotting functions.
+#' If TRUE (default), plots will be saved to a .pdf file.
+#' @param addTableOfContents write '[TOC]' below the header of the file, This is compiled to a
+#' proper Table Of Contents by, e.g. Typora.
 #' @export
 #' @examples setup_logging_markdown (scriptname =  , title =  , append = T, b.png4Github = T)
 
@@ -734,7 +750,7 @@ wstripchart_list <- function ( yourlist, ..., main = as.character(substitute(you
       j = k = i
       if (length(1) < length(yourlist)) { j = 1 }
       if (length(bg) < length(yourlist)) {	k = 1	}
-      stripchart(na.omit(yourlist[[i]]), at = i, add = T
+      stripchart(na.omit.strip(yourlist[[i]]), at = i, add = T
                  , vertical = T, method = "jitter", jitter = jitter
                  , pch = pch, bg = bg[[k]], col = col[[j]], lwd = pchlwd, cex = pchcex
       )
@@ -772,6 +788,7 @@ wstripchart_list <- function ( yourlist, ..., main = as.character(substitute(you
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @importFrom vioplot vioplot
 #' @export
 #' @examples wvioplot_list (yourlist =  , ... =  , xlab = names(yourlist), ylab = "" , col = c(1:length(yourlist)), incrBottMarginBy = 0, w = 7, h = w, main = as.character(substitute(yourlist)), tilted_text = F, mdlink = F)
 
@@ -796,7 +813,7 @@ wvioplot_list <- function (yourlist, ..., col = c(2:(length(yourlist)+1)),
        ylab = ylb, main = plotname, sub = sub)
   for (i in 1:l_list) {
     if( length(na.omit.strip(yourlist[[i]])) ){
-      vioplot::vioplot(na.omit(yourlist[[i]]), ..., at = i, add = T, col = col[i])
+      vioplot::vioplot(na.omit.strip(yourlist[[i]]), ..., at = i, add = T, col = col[i])
     }
   }
   axis(side = 1, at = 1:l_list, labels = xlab, las = 2)
@@ -832,9 +849,7 @@ wvioplot_list <- function (yourlist, ..., col = c(2:(length(yourlist)+1)),
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
-#'
-#'
-#' , PNG = UnlessSpec("b.usepng")
+#' @importFrom vioplot vioplot
 #'
 #' @export
 #' @examples wviostripchart_list (yourlist =  , ... =  , pch = 23, viocoll = 0, vioborder = 1, ylab = "" , main = as.character(substitute(yourlist)), sub = F, bg = 0, col = black, metod = jitter, jitter = 0.1, w = 7, h = w, incrBottMarginBy = 0, mdlink = F)
@@ -854,7 +869,7 @@ wviostripchart_list <- function (yourlist, ..., pch = 23, viocoll = 0, vioborder
   for (i in 1:l_list) {
     print(i)
     if( length(na.omit.strip(yourlist[[i]])) ){
-      vioplot::vioplot(na.omit(yourlist[[i]]), ..., at = i, add = T, col = viocoll[i], border = 1)
+      vioplot::vioplot(na.omit.strip(yourlist[[i]]), ..., at = i, add = T, col = viocoll[i], border = 1)
     } #if
   }
   for (i in 1:length(yourlist)) {
@@ -862,7 +877,7 @@ wviostripchart_list <- function (yourlist, ..., pch = 23, viocoll = 0, vioborder
       j = k = i
       if (length(col) < length(yourlist)) {	j = 1	}
       if (length(bg) < length(yourlist)) { k = 1 }
-      stripchart(na.omit(yourlist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
+      stripchart(na.omit.strip(yourlist[[i]]), at = i, add = T, vertical = T, method = metod, jitter = jitter,
                  pch = pch, bg = bg[[k]], col = col[[j]])
     } #if
   }
@@ -889,11 +904,13 @@ wviostripchart_list <- function (yourlist, ..., pch = 23, viocoll = 0, vioborder
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".
 #' @param plotname Manual plotname parameter
-#' @param LogFile Allow logfiles.
+#' @importFrom VennDiagram venn.diagram
 #' @export
 #' @examples wvenn (yourlist =  , imagetype = png, alpha = 0.5, ... =  , w = 7, h = w, mdlink = F)
 
-wvenn <- function (yourlist, imagetype = "png", alpha = .5, fill = 1:length(yourlist), subt, ..., w = UnlessSpec("b.defSize", 7), h = w, mdlink = ww.set.mdlink(), plotname = substitute(yourlist), LogFile=F) {
+wvenn <- function (yourlist, imagetype = "png", alpha = .5, fill = 1:length(yourlist)
+                   , subt, ..., w = UnlessSpec("b.defSize", 7), h = w
+                   , mdlink = ww.set.mdlink(), plotname = substitute(yourlist)) {
   if (!require("VennDiagram")) { print("Please install VennDiagram: install.packages('VennDiagram')") }
   fname = kollapse(plotname, ".", imagetype, print = F)
   LsLen = length(yourlist)
@@ -902,8 +919,7 @@ wvenn <- function (yourlist, imagetype = "png", alpha = .5, fill = 1:length(your
 
   filename = kollapse(OutDir, "/", fname, print = F)
   if (missing(subt)) { subt = kollapse("Total = ", length(unique(unlist(yourlist))), " elements in total.", print = F)  } #if
-  if (!LogFile) futile.logger::flog.threshold(futile.logger::ERROR, name = "VennDiagramLogger") # suppress unless wamted
-  venn.diagram(x = yourlist, imagetype = imagetype, filename = filename, main = plotname, ... ,
+  VennDiagram::venn.diagram(x = yourlist, imagetype = imagetype, filename = filename, main = plotname, ... ,
                sub = subt, fill = fill, alpha = alpha, sub.cex = .75, main.cex = 2)
   if (mdlink) {
     llogit(ww.MarkDown_ImgLink_formatter(fname))
@@ -1896,23 +1912,45 @@ ww.MarkDown_ImgLink_formatter <- function (...) {
 #'
 #' Format a markdown image reference (link) to a .pdf and .png versions of graph, and insert both links to the markdown report, set by "path_of_report". If the "b.png4Github" variable is set, the .png-link is set up such, that you can upload the whole report with the .png image into your GitHub repo's wiki, under "Reports"/OutDir/ (Reports is a literal string, OutDir is the last/deepest directory name in the "OutDir" variable. See create_set_OutDir() function.). This function is called by the ~wplot functions.
 #' @param fname_wo_ext Name of the image file where markdown links going to point to.
+#' @param OutDir_ The output directory (absolute / full path).
 #' @export
 #' @examples ww.MarkDown_Img_Logger_PDF_and_PNG (fname_wo_ext =  )
 
-ww.MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext, OutDir_ = OutDir) {
-  splt = strsplit(fname_wo_ext, "/")
-  fn = splt[[1]][length(splt[[1]])]
-  llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
-  if (UnlessSpec("b.usepng")) {
-    if (UnlessSpec("b.png4Github")) {
-      dirnm = strsplit(OutDir_, split = "/")[[1]]
-      dirnm = dirnm[length(dirnm)]
-      llogit(kollapse("![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = F))
-    }	else {
-      if (exists('b.Subdirname') && ! b.Subdirname==F) { fname_wo_ext = p0( b.Subdirname,"/",fname_wo_ext)} # set only if b.Subdirname is defined, it is not FALSE.
-      llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F)) }
-  } # if b.usepng
-}
+# ww.MarkDown_Img_Logger_PDF_and_PNG <- function (fname_wo_ext, OutDir_ = OutDir) {
+#   splt = strsplit(fname_wo_ext, "/")
+#   fn = splt[[1]][length(splt[[1]])]
+#   llogit(kollapse("![]", "(", fname_wo_ext, ".pdf)", print = F))
+#   if (UnlessSpec("b.usepng")) {
+#     if (UnlessSpec("b.png4Github")) {
+#       dirnm = strsplit(OutDir_, split = "/")[[1]]
+#       dirnm = dirnm[length(dirnm)]
+#       llogit(kollapse("![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = F))
+#     }	else {
+#       if (exists('b.Subdirname') && ! b.Subdirname==F) { fname_wo_ext = p0( b.Subdirname,"/",fname_wo_ext)} # set only if b.Subdirname is defined, it is not FALSE.
+#       llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = F)) }
+#   } # if b.usepng
+# }
+
+ww.MarkDown_Img_Logger_PDF_and_PNG <-
+  function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
+    splt = strsplit(fname_wo_ext, "/")
+    fn = splt[[1]][length(splt[[1]])]
+    if (unless.specified("b.usepng")) {
+      if (unless.specified("b.png4Github")) {
+        dirnm = strsplit(x = OutDir_, split = "/")[[1]]
+        dirnm = dirnm[length(dirnm)]
+        llogit(kollapse( "![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = FALSE))
+      }	else {
+        if (exists('b.Subdirname') && !b.Subdirname == FALSE) {
+          fname_wo_ext = paste0(b.Subdirname, "/", fname_wo_ext)
+        } # set only if b.Subdirname is defined, it is not FALSE.
+        llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".png)", print = FALSE))
+      }
+    } else {
+      llogit(kollapse("![", fn, "]", "(", fname_wo_ext, ".pdf)", print = FALSE))
+    } # if b.usepng
+  }
+
 
 #' ww.ttl_field
 #'
@@ -2046,6 +2084,7 @@ translate = replace_values <- function(vec, oldvalues, newvalues) {
 #' Omit NA values from a vector and return a clean vector without any spam.
 #' @param vec Values to filter for NA
 #' @param silent Silence the data structure coversion warning: anything ->vector
+#' @importFrom stats na.omit
 #' @export
 #' @examples na.omit.strip(c(1,2,3,NA, NaN,2))
 
@@ -2053,7 +2092,7 @@ na.omit.strip <- function(vec, silent = F) {
   if (is.data.frame(vec)) {
     if ( min(dim(vec)) > 1 & silent == F) { iprint(dim(vec), "dimensional array is converted to a vector.") }
     vec = unlist(vec) }
-  clean = na.omit(vec)
+  clean = stats::na.omit(vec)
   attributes(clean)$na.action <- NULL
   return(clean)
 }
