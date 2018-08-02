@@ -1,7 +1,26 @@
 #  Snowflakes
-		Modified: 31/07/2018 | 22:49 | by: MarkdownReports_in_Action.r
+
+		Modified: 02/08/2018 | 12:44 | by: MarkdownReports_in_Action.r
 
 _I will show an (imaginary) example workflow on complitely made up data._
+
+
+
+
+
+
+
+### This example is for MarkdownReports v3.1
+
+Other major version (v2, v4-dev) might not run !
+
+
+
+
+
+
+
+
 
 ### Hey Snowflake collector, welcome back from Reykjavik! How big are the snowflakes over there?
 
@@ -66,13 +85,6 @@ The code:
        wvioplot_list(SnowflakeSizes, tilted_text = T, yoffset = -.2)
        ```
 
-![SnowflakeSizes.VioStripchart](SnowflakeSizes.VioStripchart.png)
-
-The code:
-       ```
-       wviostripchart_list(SnowflakeSizes)
-       ```
-
 ### Let's say, we also measured the temperature of the flakes. We can color flakes that had temperature below -10:
 
 ![SnowflakeSizes_colored_by_temp.stripchart](SnowflakeSizes_colored_by_temp.stripchart.png)
@@ -121,4 +133,4 @@ wlegend( fill_= legend_, poz = 3,bty="n")
 wLinRegression(Mean_Snowflake_Size_and_Temp, lty=3 )
 ```
 
-![SnowflakeSizes_colored_by_temp.stripchart](SnowflakeSizes_colored_by_temp.stripchart.png)
+

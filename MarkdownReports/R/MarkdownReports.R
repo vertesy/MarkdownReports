@@ -1935,8 +1935,8 @@ ww.MarkDown_Img_Logger_PDF_and_PNG <-
   function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
     splt = strsplit(fname_wo_ext, "/")
     fn = splt[[1]][length(splt[[1]])]
-    if (unless.specified("b.usepng")) {
-      if (unless.specified("b.png4Github")) {
+    if (UnlessSpec("b.usepng")) {
+      if (UnlessSpec("b.png4Github")) {
         dirnm = strsplit(x = OutDir_, split = "/")[[1]]
         dirnm = dirnm[length(dirnm)]
         llogit(kollapse( "![]", "(Reports/", dirnm, "/", fname_wo_ext, ".png)", print = FALSE))

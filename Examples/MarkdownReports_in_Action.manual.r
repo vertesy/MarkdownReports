@@ -3,12 +3,12 @@
 ######################################################################################################
 # source("~/MarkdownReports.wiki/Reports/MarkdownReports_in_Action.r")
 rm(list=ls(all.names = TRUE));
+require(MarkdownReports)
 try.dev.off()
 
 
 
 # Functions ------------------------
-require(MarkdownReportsDev)
 # source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 # source("https://raw.githubusercontent.com/vertesy/TheCorvinas/master/R/CodeAndRoll.R")
 # library(stringr)
@@ -20,6 +20,12 @@ OutDir = "/Users/abelvertesy/Github_repos/MarkdownReports/Examples/MarkdownRepor
 setup_MarkdownReports(OutDir=OutDir, scriptname =  "MarkdownReports_in_Action.r", title = "Snowflakes"
                       , b.usepng = T, b.mdlink = T )
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
+
+
+
+llprint("### This example is for MarkdownReports v3.1")
+llprint("Other major version (v2, v4-dev) might not run !")
+
 
 
 # Your data ------------------------
@@ -64,7 +70,7 @@ NOTE: use the `mdlink = FALSE` argument if you don not want to save this specifi
 
 llprint("### At first we would like to throw away every  measurement where the measurement bias (reported by your snowflake collecting machine) is above 10%:")
 wbarplot(Measurement_Bias, ylab = "Measurement Bias (%)", hline = thresholdX, filtercol = -1)
-barplot_label(Measurement_Bias, TopOffset = 2)
+barplot_label(Measurement_Bias, barplotted_variable = Measurement_Bias, TopOffset = 2)
 
 pass = filter_LP(Measurement_Bias, threshold = thresholdX) # report the actual numbers
 llogit('The code:
@@ -104,11 +110,6 @@ llogit('The code:
        ```')
 wplot_save_this()
 
-wviostripchart_list(SnowflakeSizes)
-llogit('The code:
-       ```
-       wviostripchart_list(SnowflakeSizes)
-       ```')
 
 
 # --------------------------------------------------------------------------------
@@ -157,7 +158,7 @@ wplot(Mean_Snowflake_Size_and_Temp, errorbar = T, upper = Snowflakes_SEM[,"Size"
 
 legend_=3:5
 names(legend_) = rownames(Mean_Snowflake_Size_and_Temp)
-wlegend(NamedColorVec = legend_, poz = 3)
+wlegend(legend_, poz = 3)
 wLinRegression(Mean_Snowflake_Size_and_Temp, lty=3 )
 
 

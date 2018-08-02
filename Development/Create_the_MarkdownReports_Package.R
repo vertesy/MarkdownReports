@@ -9,7 +9,7 @@ try.dev.off()
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+ try (source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 
 irequire(devtools)
 irequire(roxygen2)
@@ -42,14 +42,14 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
     4. Version your findings, annotating which parameters were used to reach certain results.
     5. Share your report with others via email, Github or a personal website."
     , "License" = "GPL-3"
-    , "Version"= "3.0.0.2"
+    , "Version"= "3.1.1.0"
     , "Imports" = "stats, methods, gplots, RColorBrewer, colorRamps, vioplot, VennDiagram"
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
 )
 
 setwd(RepositoryDir)
 if ( !dir.exists(PackageName) ) { create(path = RepositoryDir, description = DESCRIPTION)
-  } else { setup(path = RepositoryDir, description = DESCRIPTION ) }
+  } else { setup(path = PackageDir, description = DESCRIPTION, rstudio = F ) }
 
 # go and write fun's ------------------------------------------------------------------------
 # file.edit(Package_FnP)
