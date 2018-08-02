@@ -5,7 +5,13 @@
 
 ## News
 
-### Version 3.0 is ready and installed by the default. 
+### Version 3.1.1 is ready and installed by the default. 
+
+1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
+2. See development version at: https://github.com/vertesy/MarkdownReportsDev
+
+
+### New features"
 
 - **Function argument names now mirror the `R base` argument names (99%).**
 
