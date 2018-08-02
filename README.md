@@ -157,8 +157,10 @@ Alternatively, you simply source it from the web.
  <br/><br/>
 #### Cite it via its Digital Object Identifier (DOI): 
 
-
 [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
+
+Abel Vertesy. (2017, October 17). MarkdownReports: An R function library to create scientific figures and markdown reports easily. (Version v2.9.5). Zenodo. http://doi.org/10.5281/zenodo.594683
+
 
 <br>
 
