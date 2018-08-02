@@ -3,5 +3,5 @@
 
 Any contribution or feedback is welcome.   
 
-Preferentially, please raise an issue or make a pull request with some decent description.  
+Preferentially, please raise an [issue](https://github.com/vertesy/MarkdownReports/issues/new) or make a pull request with some decent description.  
 
