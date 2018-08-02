@@ -6,7 +6,7 @@
 \usage{
 wvenn(yourlist, imagetype = "png", alpha = 0.5, fill = 1:length(yourlist),
   subt, ..., w = UnlessSpec("b.defSize", 7), h = w,
-  mdlink = ww.set.mdlink(), plotname = substitute(yourlist), LogFile = F)
+  mdlink = ww.set.mdlink(), plotname = substitute(yourlist))
 }
 \arguments{
 \item{yourlist}{The variable to plot.}
@@ -28,8 +28,6 @@ wvenn(yourlist, imagetype = "png", alpha = 0.5, fill = 1:length(yourlist),
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
 \item{plotname}{Manual plotname parameter}
-
-\item{LogFile}{Allow logfiles.}
 }
 \description{
 Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png, and it does not use the dev.copy2pdf() function.

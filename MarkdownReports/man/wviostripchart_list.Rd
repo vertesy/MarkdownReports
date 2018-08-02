@@ -46,10 +46,7 @@ wviostripchart_list(yourlist, ..., pch = 23, viocoll = 0, vioborder = 1,
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by "path_of_report".}
 
-\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.
-
-
-, PNG = UnlessSpec("b.usepng")}
+\item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
 Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package. If mdlink =T, it inserts a .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not created, only the link is put in place, not to overwrite previous versions.
