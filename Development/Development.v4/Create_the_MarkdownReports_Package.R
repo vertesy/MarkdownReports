@@ -70,7 +70,7 @@ file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = T)
 setwd(RepositoryDir)
 setwd(PackageName)
 getwd()
-document()
+document(,)
 
 
 # Install your package ------------------------------------------------
