@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-### export PATH=/Users/abelvertesy/Github_repos/ppw/Scripts/Modeling.Tools/:$PATH
+### export PATH=~/GitHub/ppw/Scripts/Modeling.Tools/:$PATH
 
 import argparse, os
 

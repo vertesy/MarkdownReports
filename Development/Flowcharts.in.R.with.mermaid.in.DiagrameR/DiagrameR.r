@@ -1,6 +1,6 @@
 
 
-setup_MarkdownReports("/Users/abelvertesy/Github_repos/MarkdownReports/Development/Flowcharts.in.R.with.mermaid.in.DiagrameR/")
+setup_MarkdownReports("~/GitHub/MarkdownReports/Development/Flowcharts.in.R.with.mermaid.in.DiagrameR/")
 
 irequire(DiagrammeR)
 require(MarkdownReportsDev)

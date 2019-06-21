@@ -26,7 +26,6 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
 					"License" = "GNU GPL 3"
 )
 
-
 # Compile a package ------------------------------------------------
 setwd("~/MarkdownReports/MarkdownReports/")
 getwd()

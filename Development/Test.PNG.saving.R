@@ -1,9 +1,9 @@
 rm(list=ls(all.names = TRUE)); try(dev.off(), silent = T)
-source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
 "Test: Save images as PNG"
-setup_MarkdownReports(OutDir = "/Users/abelvertesy/Downloads/from.8GB.else/", b.usepng=T)
+setup_MarkdownReports(OutDir = "~/Downloads/from.8GB.else/", b.usepng=T)
 
 Y =1:3; names(Y) = letters[3:5]
 wbarplot(Y)

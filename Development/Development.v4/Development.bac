@@ -1,7 +1,7 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
 # date: # 14 September 2017 (Monday) 12:38
-# source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+# source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLastPlot',

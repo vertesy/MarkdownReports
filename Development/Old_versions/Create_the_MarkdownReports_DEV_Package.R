@@ -8,7 +8,7 @@ try.dev.off()
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= FALSE)
+try (source ('~/GitHub/TheCorvinas/R/CodeAndRoll.R'),silent= FALSE)
 
 irequire(devtools)
 irequire(roxygen2)
@@ -23,13 +23,13 @@ kollapse <-function (..., print = TRUE) {
 
 # Setup ------------------------
 PackageName = 	"MarkdownReportsDev"
-setwd("~/Github_repos/")
+setwd("~/GitHub/")
 
-RepositoryDir = kollapse("~/Github_repos/",PackageName,"/")
+RepositoryDir = kollapse("~/GitHub/",PackageName,"/")
 fname = 	kollapse(PackageName,".R")
 Package_FnP = 	kollapse(RepositoryDir, "R/", fname)
 
-BackupDir = "~/Github_repos/MarkdownReports/Development2/"
+BackupDir = "~/GitHub/MarkdownReports/Development2/"
 dir.create(BackupDir)
 
 # devtools::use_package("vioplot")
@@ -111,5 +111,5 @@ check(RepositoryDir, cran = TRUE)
 # # desc$get(MarkdownReports)
 #
 #
-# system("cd ~/Github_repos/MarkdownReportsDev/; ls -a; open .Rbuildignore")
+# system("cd ~/GitHub/MarkdownReportsDev/; ls -a; open .Rbuildignore")
 #

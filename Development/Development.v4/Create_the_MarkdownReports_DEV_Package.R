@@ -9,7 +9,7 @@ try.dev.off()
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source ('~/Github_repos/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+try (source ('~/GitHub/TheCorvinas/R/CodeAndRoll.R'),silent= F)
 
 irequire(devtools)
 irequire(roxygen2)
@@ -26,9 +26,9 @@ kollapse <-function (..., print = T) {
 # Setup ------------------------
 PackageName = 	"MarkdownReportsDev"
 
-setwd("~/Github_repos/")
+setwd("~/GitHub/")
 
-RepositoryDir = kollapse("~/Github_repos/",PackageName,"/")
+RepositoryDir = kollapse("~/GitHub/",PackageName,"/")
 fname = 	kollapse(PackageName,".R")
 
 Package_FnP = 	kollapse(RepositoryDir, "/R/", fname)
@@ -83,7 +83,7 @@ document()
 
 # Install your package ------------------------------------------------
 # setwd(RepositoryDir)
-setwd("~/Github_repos/")
+setwd("~/GitHub/")
 install(PackageName)
 require("MarkdownReports")
 

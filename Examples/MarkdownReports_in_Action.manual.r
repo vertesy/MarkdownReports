@@ -9,14 +9,14 @@ try.dev.off()
 
 
 # Functions ------------------------
-# source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+# source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 # source("https://raw.githubusercontent.com/vertesy/TheCorvinas/master/R/CodeAndRoll.R")
 # library(stringr)
 
 sem <- function (x, na.rm=T) sd(unlist(x), na.rm = na.rm)/sqrt(length(na.omit(as.numeric(x))))  # Calculates the standard error of the mean (SEM) for a numeric vector (it excludes NA-s by default)
 
 # Setup ------------------------
-OutDir = "/Users/abelvertesy/Github_repos/MarkdownReports/Examples/MarkdownReports_in_Action"
+OutDir = "~/GitHub/MarkdownReports/Examples/MarkdownReports_in_Action"
 setup_MarkdownReports(OutDir=OutDir, scriptname =  "MarkdownReports_in_Action.r", title = "Snowflakes"
                       , b.usepng = T, b.mdlink = T )
 llprint("_I will show an (imaginary) example workflow on complitely made up data._")
