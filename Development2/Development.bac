@@ -1,7 +1,7 @@
 ## MarkdownReports.R
 # author: Abel Vertesy
 # date: # 14 September 2017 (Monday) 12:38
-# source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
+# source("~/Github_repos/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLastPlot',
@@ -38,6 +38,8 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' @param OutDir The output directory (absolute / full path).
 #' @param title Manually set the title of the report.
 #' @param append Set append to TRUE if you do not want to overwrite the previous report.
+#' @param backupfolder Create a time-stamped backup folder inside the working directory (OutDir)?
+#' @param recursive.folder Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
 #' Use continue_logging_markdown() if you return logging into an existing report.
 #' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
 #' into the timestamped subfolder within the OutDir.
@@ -61,7 +63,9 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'path_of_report', 'plotnameLast
 #' This filename is written in the title field of .pdf files,
 #' so that you know which script generated that file.
 #' Example: "GeneFilt.hist by MyFilteringScript".
+#' @param b.def.color Set the default color for all wplot* functions.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
+#' @param saveSessionInfo save 'devtools::session_info()' results to '.session_info.DATE.txt.gz'
 #' proper Table Of Contents by, e.g. Typora.
 #' @export
 #' @examples setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
@@ -72,8 +76,11 @@ setup_MarkdownReports <-
             scriptname = basename(OutDir),
             title = "",
             setDir = TRUE,
+            recursive.folder = TRUE,
+            backupfolder = TRUE,
             append = FALSE,
             addTableOfContents = FALSE,
+            saveSessionInfo = TRUE,
             b.defSize = c(
               "def" = 7,
               "A4" = 8.27,
@@ -90,7 +97,7 @@ setup_MarkdownReports <-
             b.save.wplots = TRUE,
             b.def.color = "gold1") {
     if (!exists(OutDir)) {
-      dir.create(OutDir, showWarnings = FALSE)
+      dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
     }
     if (!substrRight(OutDir, 1) == "/")
       OutDir = paste0(OutDir, "/") # add '/' if necessary
@@ -128,7 +135,16 @@ setup_MarkdownReports <-
     if (setDir) {
       setwd(OutDir)
     }
-    if (!exists(BackupDir)) {
+    if (saveSessionInfo) {
+      defWidth = options("width")$width
+      options("width"= 200)
+      sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"))
+      devtools::session_info()
+      sink()
+      options("width"= defWidth)
+      rm(defWidth)
+    }
+    if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
       ww.assign_to_global("BackupDir", BackupDir, 1)
     }
@@ -149,15 +165,16 @@ setup_MarkdownReports <-
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @param makeOutDirOrig Change the "OutDirOrig" variable to the
+#' @param ParentDir Change the "OutDirOrig" variable to the
+#' @param define.ParentDir Report on what was the parent directory of the new subdir.
 #' current OutDir (before setting it to a subdir).
 #' @param setDir Change working directory to the newly defined subdirectory
 #' @export
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
 create_set_SubDir <-
-  function (makeOutDirOrig = TRUE,
-            setDir = TRUE, ...) {
+  function (..., define.ParentDir = TRUE,
+            setDir = TRUE) {
     b.Subdirname = kollapse(...)
     OutDir = ww.set.OutDir()
 
@@ -174,11 +191,11 @@ create_set_SubDir <-
     if (setDir) {
       setwd(NewOutDir)
     }
-    if (makeOutDirOrig) {
-      if (exists("OutDirOrig"))
-        iprint("OutDirOrig was defined as:", OutDirOrig)
-      iprint("OutDirOrig will be:", OutDir)
-      ww.assign_to_global("OutDirOrig", OutDir, 1)
+    if (define.ParentDir) {
+      if (exists("ParentDir")) # If this function has been run already, you have "ParentDir", which will be overwritten.
+        iprint("ParentDir was defined as:", ParentDir)
+      iprint("ParentDir will be:", OutDir)
+      ww.assign_to_global("ParentDir", OutDir, 1)
     } #if
     iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
     ww.assign_to_global("OutDir", NewOutDir, 1)
@@ -245,13 +262,13 @@ continue_logging_markdown <- function (b.scriptname) {
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
 #'
-#' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param setDir Set the working directory to OutDir? Default: TRUE
 #'
 #' @export
 #' @examples create_set_OutDir (setDir = TRUE, getwd(),"/"   )
 
-create_set_OutDir <- function (setDir = TRUE, ...) {
+create_set_OutDir <- function (..., setDir = TRUE) {
   OutDir = kollapse(..., print = FALSE)
   if (!substrRight(OutDir, 1) == "/")
     OutDir = paste0(OutDir, "/") # add '/' if necessary
@@ -298,8 +315,7 @@ wplot_save_this <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = FALSE,
-            PNG = unless.specified("b.usepng", FALSE)) {
-    condition = F
+            PNG = unless.specified("b.usepng")) {
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -395,7 +411,7 @@ wplot <-
             mdlink = ww.set.mdlink(),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     x = df2col[, 1]
     y = df2col[, 2]
     fname = kollapse(plotname, ".plot")
@@ -564,7 +580,7 @@ wscatter.fill <-
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     x = df2col[, 1]
     y = df2col[, 2]
     CNN = colnames(df2col)
@@ -747,7 +763,7 @@ wbarplot <-
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     isVec = is.vector(variable) | is.table(variable)
     isMat = is.matrix(variable) | is.data.frame(variable)
 
@@ -909,7 +925,7 @@ whist <-
   function (variable,
             ...,
             breaks = 20,
-            col = unless.specified("b.def.colors", "gold1"),
+            col = unless.specified("b.def.color", "gold1"),
             plotname = substitute(variable),
             main = kollapse("Histogram of ", substitute(variable)),
             xlab = substitute(variable),
@@ -925,7 +941,7 @@ whist <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     xtra = list(...)
     xlb <- xlab # to avoid circular reference in the inside function argument
     if (length(variable) > 0) {
@@ -1077,7 +1093,7 @@ wboxplot <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE),
+            PNG = unless.specified("b.usepng"),
             ...) {
     fname = kollapse(main, ".boxplot")
     if (incrBottMarginBy) {
@@ -1162,7 +1178,7 @@ wpie <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE),
+            PNG = unless.specified("b.usepng"),
             ...) {
     # if (!require("gplots")) {
     #   print("Please install gplots: install.packages('gplots')")
@@ -1283,7 +1299,7 @@ wstripchart <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE),
+            PNG = unless.specified("b.usepng"),
             ...) {
 
     col_ <- col # to avoid circular reference in the inside function argument
@@ -1432,7 +1448,7 @@ wstripchart_list <- function (yourlist,
             w = unless.specified("b.defSize"),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     fname = kollapse(main, ".stripchart")
     if (incrBottMarginBy) {
       .ParMarDefault <- par("mar")
@@ -1570,7 +1586,7 @@ wvioplot_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(is.list(yourlist))
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1712,7 +1728,7 @@ wviostripchart_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     fname = kollapse(main, ".VioStripchart")
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1815,6 +1831,7 @@ wviostripchart_list <-
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
+#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T'))
 #'
 #' @export
 #' @examples TwoSets = list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9] )
@@ -1831,7 +1848,8 @@ wvenn <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            plotname = substitute(yourlist)) {
+            plotname = substitute(yourlist),
+            openFolder = T) {
 
     # if (!require("VennDiagram")) {
     #   print("Please install VennDiagram: install.packages('VennDiagram')")
@@ -1874,6 +1892,7 @@ wvenn <-
         llogit(ww.md.image.link.parser(paste0("Reports/", fname)))
       }
     }
+    if (openFolder) system("open .")
   }
 
 
@@ -1909,7 +1928,7 @@ wbarplot_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(colName %in% colnames(df))
     variable = unlist(df[, colName])
     stopifnot(length(variable) > 1)
@@ -1967,7 +1986,7 @@ whist_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng", FALSE)) {
+            PNG = unless.specified("b.usepng")) {
     stopifnot(colName %in% colnames(df))
     variable = as.vector(unlist(df[, colName]))
     stopifnot(length(variable) > 1)
@@ -2726,7 +2745,7 @@ md.image.linker <-
   function (fname_wo_ext, OutDir_ = ww.set.OutDir()) {
     splt = strsplit(fname_wo_ext, "/")
     fn = splt[[1]][length(splt[[1]])]
-    if (unless.specified("b.usepng", FALSE)) {
+    if (unless.specified("b.usepng")) {
       if (unless.specified("b.png4Github")) {
         dirnm = strsplit(x = OutDir_, split = "/")[[1]]
         dirnm = dirnm[length(dirnm)]
@@ -2913,7 +2932,6 @@ md.tableWriter.DF.w.dimnames <-
             b = percentage_formatter(b)
           }
         } else {
-          print(11)
           b = df[r, ]
         }
         b = paste(b, collapse = " \t| ")
@@ -3726,6 +3744,7 @@ ww.autoPlotName <- function (name = NULL) {
 #'
 #' Parser for dev.copy to save as PDF or PNG
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @param PNG_res deafult 450
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param fname_ File name
@@ -3733,6 +3752,7 @@ ww.autoPlotName <- function (name = NULL) {
 #' @examples try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 
 ww.dev.copy <- function(PNG_ = FALSE,
+                        PNG_res = 450,
                         w_,
                         h_,
                         fname_) {
@@ -3740,6 +3760,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
     dev.copy(
       png,
       filename = ww.FnP_parser(fname_, "png"),
+      res = PNG_res,
       width = w_ * 100,
       height = h_ * 100
     )
