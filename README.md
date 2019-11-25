@@ -5,36 +5,21 @@
 
 ## News
 
-### Version 3.1.1 is ready and installed by the default. 
+### Version 4.1.0 is ready and installed by the default. 
 
 1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
 2. See development version at: https://github.com/vertesy/MarkdownReportsDev
 
 
-### New features"
+### New features:
 
-- **Function argument names now mirror the `R base` argument names (99%).**
-
-  - Think of `xlb >>> xlab`, or  `sub_ >>> sub`
-- This however breaks the compatibility with earlier versions, so you might need to replace some function arguments
-- **The package now can also work with png images.**
-
-  - You can save files in png, which can be displayed inside the markdown file on windows 7.
-
-  - You need to set `b.usepng=T` in `setup_MarkdownReports`: `setup_MarkdownReports(OutDir = "/Users/...blabla....", b.usepng=T)`
-- The package contains multiple other bug fixes:
-
-  - Self consistency: some missing functions moved from `CodeAndRoll.R` 
-  - Table writing functions `md.tableWriter.DF.w.dimnames()` and `md.tableWriter.VEC.w.names()`
-- Enhancements: 
-
-  - `filter_HP(), filter_LP(), filter_MidPass()` show histogram
-  - `whist()` can invite the above filter functions.
-- Numerous other small fixes.
+- **Formatted session info Sessioninfo**
+- Updated dependencies
+- Many func
 
 
 
-**Old version** is under `MarkdownReports.LEGACY.VERSION`.
+**Old version** is under `MarkdownReports.LEGACY.VERSION.X.X.X`.
 
 
 
@@ -109,7 +94,7 @@ and your report will have the summary: ***30.7 % or 614 of 2000 entries in GeneE
 - *Although **currently** plotting is implemented as an enhanced **base graphic**, but the concept could easily be extended to **ggplot**.*  
   Yet, you can still use ggplot, because you equally well save and report them by either `wplot_save_this()` or the `pdfA4plot_on()` and `pdfA4plot_off()` functions.
 - It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.
-- ​
+- 
 
 
 <br><br>
@@ -153,8 +138,45 @@ Alternatively, you simply source it from the web.
 
 
 
+## Older News
+
+[3.1.1  is under legacy now]
+
+### Version 3.1.1 is ready and installed by the default. 
+
+1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
+2. See development version at: https://github.com/vertesy/MarkdownReportsDev
+
+
+### New features"
+
+- **Function argument names now mirror the `R base` argument names (99%).**
+
+  - Think of `xlb >>> xlab`, or  `sub_ >>> sub`
+- This however breaks the compatibility with earlier versions, so you might need to replace some function arguments
+- **The package now can also work with png images.**
+
+  - You can save files in png, which can be displayed inside the markdown file on windows 7.
+
+  - You need to set `b.usepng=T` in `setup_MarkdownReports`: `setup_MarkdownReports(OutDir = "/Users/...blabla....", b.usepng=T)`
+- The package contains multiple other bug fixes:
+
+  - Self consistency: some missing functions moved from `CodeAndRoll.R` 
+  - Table writing functions `md.tableWriter.DF.w.dimnames()` and `md.tableWriter.VEC.w.names()`
+- Enhancements: 
+
+  - `filter_HP(), filter_LP(), filter_MidPass()` show histogram
+  - `whist()` can invite the above filter functions.
+- Numerous other small fixes.
+
+
+
+**Old version** is under `MarkdownReports.LEGACY.VERSION`.
+
+
 
  <br/><br/>
+
 #### Cite it via its Digital Object Identifier (DOI): 
 
 [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
