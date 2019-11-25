@@ -15,7 +15,7 @@
 
 - **Formatted session info Sessioninfo**
 - Updated dependencies
-- Many func
+- Many functions are more stable and versatile
 
 
 
@@ -42,13 +42,25 @@ I do exploratory data analysis as a daily routine, and I have constant interacti
 
 I often have to...
 
-1. ...write emails summarising the results (text & figures) of the last few days.
-2. ...find results from a couple of month back, with all tiny details (parameters used, etc).
-3. ...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: *I observed X; I controlled for Y; Hypothesised explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
+1. Make figures quickly.
+2. ...write emails summarising the results (text & figures) of the last few days.
+3. ...find results from a couple of month back, with all tiny details (parameters used, etc).
+4. ...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: *I observed X; I controlled for Y; Hypothesised explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
 
 For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
 
+## Make figures quickly
 
+- The philosophy of the package is to ***type little*** (but draw and save correctly annotated figures).
+- Instead of specifying everything in lengthy commands (*ala ggplot*), plotting functions make use of sensible defaults (such as meaningful variable name, row names, column names, etc.)
+- Both display and save each plot as `.pdf` dynamically named (from variable names)
+- Examples: `wboxplot()` takes a list, used the `variable name` to set the *filename* and the *title*,  `list element names` to set the *x-axis labels*, saves the file as `variable name.pdf` (or `.png`).
+- All plot functions start with **w**, followed by the **base plot name**, such as `wplot()`,  `wbarplot()`, `wpie()`, `wboxplot()`,but also `wvenn()`, `wvioplot_list()`,`wviostripchart_list()`.
+- See more under: ***Discover 4 Yourself!*** (Below)
+
+
+
+## Write a report on the fly
 
 ### Differences to Rmarkdown:
 
