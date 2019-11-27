@@ -11,7 +11,7 @@ wplot_save_this(
   w = unless.specified("b.defSize", 7),
   h = w,
   mdlink = FALSE,
-  PNG = unless.specified("b.usepng")
+  PNG = unless.specified("b.usepng", F)
 )
 }
 \arguments{

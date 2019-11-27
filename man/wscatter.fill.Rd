@@ -32,7 +32,7 @@ wscatter.fill(
   h = w,
   incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng")
+  PNG = unless.specified("b.usepng", F)
 )
 }
 \arguments{

@@ -32,7 +32,7 @@ wplot(
   mdlink = ww.set.mdlink(),
   w = unless.specified("b.defSize", 7),
   h = w,
-  PNG = unless.specified("b.usepng")
+  PNG = unless.specified("b.usepng", F)
 )
 }
 \arguments{

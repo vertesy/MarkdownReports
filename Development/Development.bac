@@ -144,9 +144,9 @@ setup_MarkdownReports <-
       # sessioninfo::session_info()
       # sink()
       writeLines(
-        utils::capture.output(
+        capture.output(
           sessioninfo::session_info()
-        ), con = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt")
+        ),con = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt")
       )
 
       options("width"= defWidth)
@@ -336,7 +336,7 @@ wplot_save_this <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = FALSE,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -432,7 +432,7 @@ wplot <-
             mdlink = ww.set.mdlink(),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     x = df2col[, 1]
     y = df2col[, 2]
     fname = kollapse(plotname, ".plot")
@@ -601,7 +601,7 @@ wscatter.fill <-
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     x = df2col[, 1]
     y = df2col[, 2]
     CNN = colnames(df2col)
@@ -784,7 +784,7 @@ wbarplot <-
             h = w,
             incrBottMarginBy = 0,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     isVec = is.vector(variable) | is.table(variable)
     isMat = is.matrix(variable) | is.data.frame(variable)
 
@@ -1199,7 +1199,7 @@ wpie <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng"),
+            PNG = unless.specified("b.usepng", F),
             ...) {
     # if (!require("gplots")) {
     #   print("Please install gplots: install.packages('gplots')")
@@ -1320,7 +1320,7 @@ wstripchart <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng"),
+            PNG = unless.specified("b.usepng", F),
             ...) {
 
     col_ <- col # to avoid circular reference in the inside function argument
@@ -1469,7 +1469,7 @@ wstripchart_list <- function (yourlist,
                               w = unless.specified("b.defSize"),
                               h = w,
                               mdlink = ww.set.mdlink(),
-                              PNG = unless.specified("b.usepng")) {
+                              PNG = unless.specified("b.usepng", F)) {
   fname = kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
@@ -1607,7 +1607,7 @@ wvioplot_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(is.list(yourlist))
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1749,7 +1749,7 @@ wviostripchart_list <-
             w = unless.specified("b.defSize", 7),
             h = w,
             mdlink = ww.set.mdlink(),
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     fname = kollapse(main, ".VioStripchart")
     # if (!require("vioplot")) {
     #   print("Please install vioplot: install.packages('vioplot')")
@@ -1949,7 +1949,7 @@ wbarplot_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(colName %in% colnames(df))
     variable = unlist(df[, colName])
     stopifnot(length(variable) > 1)
@@ -2007,7 +2007,7 @@ whist_dfCol <-
             savefile = unless.specified("b.save.wplots"),
             w = unless.specified("b.defSize", 7),
             h = w,
-            PNG = unless.specified("b.usepng")) {
+            PNG = unless.specified("b.usepng", F)) {
     stopifnot(colName %in% colnames(df))
     variable = as.vector(unlist(df[, colName]))
     stopifnot(length(variable) > 1)
@@ -2320,8 +2320,7 @@ wlegend <-
         plotname = ww.set.PlotName(),
         w = w_,
         h = h_,
-        mdlink = mdlink,
-
+        mdlink = mdlink
       )
     }
   }
@@ -2360,12 +2359,10 @@ wlegend.label <-
            w = 7,
            h = w,
            title = NULL,
-           ttl.by.varname = FALSE
-           ,
+           ttl.by.varname = FALSE,
            OverwritePrevPDF = unless.specified("b.save.wplots"),
            mdlink = FALSE) {
-    w_ <-
-      w # to avoid circular reference in the inside function argument
+    w_ <- w # to avoid circular reference in the inside function argument
     h_ <- h
     cex_ <- cex
 
@@ -2404,6 +2401,9 @@ wlegend.label <-
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
 #' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
 #' @param filename Filename to overwrite after errorbars are added to the current barplot.
+#' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @param w Width of the saved pdf image, in inches.
+#' @param h Height of the saved pdf image, in inches.
 #' @param ... Pass any other parameter of the corresponding
 #' text function (most of them should work).
 #' @import graphics
@@ -2411,6 +2411,8 @@ wlegend.label <-
 #'
 #' @examples barplot (1:10);
 #' barplot_label (barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
+
+
 
 
 barplot_label <-
@@ -2421,7 +2423,12 @@ barplot_label <-
             relpos_bottom = 0.1,
             OverwritePrevPDF = unless.specified("b.save.wplots"),
             filename = plotnameLastPlot,
+            PNG_ = unless.specified("b.usepng",F),
+            w = 7,
+            h = w,
             ...) {
+    w_ = w
+    h_ = h
     x = barplot(barplotted_variable, plot = FALSE)
     y = barplotted_variable
     # stopifnot(length(x) == length(y))
@@ -2438,10 +2445,9 @@ barplot_label <-
       text(x, y, labels = labels, ...)
     }
     if (OverwritePrevPDF) {
-      wplot_save_this(plotname = filename, mdlink = FALSE, ...)
+      wplot_save_this(plotname = filename, mdlink = FALSE, PNG = PNG_, w = w_, h = h_, ...)
     }
   }
-
 
 #'wLinRegression
 #'
@@ -3609,6 +3615,40 @@ ww.variable.and.path.exists <- function(path = path_of_report, alt.message = NUL
 }
 
 
+#' ww.variable.exists.and.true
+#'
+#' Check if a variable name is defined, and if so, is it TRUE
+#' @param var A variable
+#' @param alt.message Alternative message if the variable + path does not exist. FALSE or string.
+#' @export
+#' @examples ww.variable.and.path.exists(path = B, alt.message = "Hello, your path/var does not exist.")
+
+ww.variable.exists.and.true <- function(var, alt.message = NULL) {
+  Variable.Name = substitute(var)
+  if (exists(as.character(Variable.Name))) {
+    if (isTRUE(var)) {
+      TRUE
+    } else {
+      cat("Variable", Variable.Name," is not true: ", var)
+      FALSE
+    }
+  } else {
+    if (is.null(alt.message) ) {
+      iprint("Variable", Variable.Name, "does not exist.")
+    } else {
+      cat(alt.message)
+    }
+    FALSE
+  }
+}
+
+# al1=T; al3=F; al4=3232; # al2 not defined
+# ww.variable.exists.and.true(al1)
+# ww.variable.exists.and.true(al2)
+# ww.variable.exists.and.true(al3)
+# ww.variable.exists.and.true(al4)
+
+
 
 #' ww.set.OutDir
 #'
@@ -3875,4 +3915,6 @@ log_settings_MarkDown <- function (...) {
   rownames(value) = namez
   md.tableWriter.DF.w.dimnames(value, title_of_table = "Settings")
 }
+
+
 

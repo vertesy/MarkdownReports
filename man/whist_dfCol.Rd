@@ -12,7 +12,7 @@ whist_dfCol(
   savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize", 7),
   h = w,
-  PNG = unless.specified("b.usepng")
+  PNG = unless.specified("b.usepng", F)
 )
 }
 \arguments{
