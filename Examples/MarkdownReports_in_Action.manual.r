@@ -10,7 +10,7 @@ try.dev.off()
 
 # Functions ------------------------
 # source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
-# source("https://raw.githubusercontent.com/vertesy/TheCorvinas/master/R/CodeAndRoll.R")
+# source("https://raw.githubusercontent.com/vertesy/CodeAndRoll/master/CodeAndRoll.R")
 # library(stringr)
 
 sem <- function (x, na.rm=T) sd(unlist(x), na.rm = na.rm)/sqrt(length(na.omit(as.numeric(x))))  # Calculates the standard error of the mean (SEM) for a numeric vector (it excludes NA-s by default)

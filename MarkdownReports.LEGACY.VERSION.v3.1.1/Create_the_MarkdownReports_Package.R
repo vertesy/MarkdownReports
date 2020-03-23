@@ -9,7 +9,7 @@ try.dev.off()
 # install.packages("devtools")
 # Functions ------------------------
 # devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
- try (source ('~/GitHub/TheCorvinas/R/CodeAndRoll.R'),silent= F)
+ try (source ('~/GitHub/CodeAndRoll/CodeAndRoll.R'),silent= F)
 
 irequire(devtools)
 irequire(roxygen2)
