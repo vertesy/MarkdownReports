@@ -1,6 +1,8 @@
 
  _cite via:_ [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
+# Type Less, Plot More.
+MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles an report in markdown from those.
 
 
 ## News
@@ -17,9 +19,7 @@
 - Updated dependencies
 - Many functions are more stable and versatile
 
-
-
-**Old version** is under `MarkdownReports.LEGACY.VERSION.X.X.X`.
+In case you find a bug, please report. Try the [development version](https://github.com/vertesy/MarkdownReportsDev/) or a legacy version. **Old versions** are under `MarkdownReports.LEGACY.VERSION.X.X.X`.
 
 
 
