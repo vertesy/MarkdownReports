@@ -79,18 +79,18 @@ llogit <- function  (...) { # log to markdown file, do not print
 
 MarkDown_ImgLink_formatter <-  function (...) { # insert a link to a pdf image
 	FnP =kollapse(..., print=F)
-	splt = strsplit(FnP,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
+	splt = strsplit(FnP,"/"); fn = splt[[1]][length(splt[[1]])] # Split and select the trailing file name
 	kollapse ('![', fn, ']', '(', FnP,')',  print=F)
 }
 
 MarkDown_Img_Logger_PDF_and_PNG <-  function (fname_wo_ext) { # insert 2 links, one for PDF, one for PNG version of the same image (png files are needed for web or email sharing!!!)
-	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
+	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][length(splt[[1]])] # Split and select the trailing file name
 	log_it(kollapse ('![', fn, ']', '(', fname_wo_ext,'.pdf)',  print=F))
 	# log_it(kollapse ('![', fn, ']', '(', fname_wo_ext,'.png)',  print=F))
 }
 
 MarkDown_Img_Logger_4GitHub <-  function (fname_wo_ext) { # insert 2 links, one for PDF, one for PNG version of the same image (png files are needed for web or email sharing!!!)
-	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][l(splt[[1]])] # Split and select the trailing file name
+	splt = strsplit(fname_wo_ext,"/"); fn = splt[[1]][length(splt[[1]])] # Split and select the trailing file name
 	log_it(kollapse ('![', fn, ']', '(Reports/',fn ,'.png)',  print=F))
 }
 
@@ -124,7 +124,7 @@ MarkDown_Table_writer_NamedVector <- function (NamedVector, FnP=Log_PnF, percent
 	if (!is.table(NamedVector)) {if (is.numeric(NamedVector)) {NamedVector = iround(NamedVector)}}
 	h =	paste(names(NamedVector), collapse = " \t| ") 			# Format header
 	h = paste ("\n| ", h, " |",collapse = "")
-	ncolz = l(NamedVector)
+	ncolz = length(NamedVector)
 	sep = kollapse(rep("| ---", ncolz)," |", print=F)
 	if (exists("Log_PnF") ) {
 		write ( h, Log_PnF, append=T)
