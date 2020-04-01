@@ -1567,7 +1567,7 @@ md.tableWriter.DF.w.dimnames <- function (df, FullPath = path_of_report, percent
       if (print2screen) { cat(b,"\n") }
     }
   } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
-  if (WriteOut) { write.simple.tsv(df, ManualName = p0(substitute(df),".tsv")) }
+  if (WriteOut) { write.simple.tsv(df, ManualName = paste0(substitute(df),".tsv")) }
 }
 
 
@@ -1614,7 +1614,7 @@ md.tableWriter.VEC.w.names <- function (NamedVector, FullPath = path_of_report, 
     b = paste("|", b, " |", collapse = "")
     write(b, FullPath, append = T)
   } else { print("NOT LOGGED: Log path and filename is not defined in FullPath")  }
-  if (WriteOut) { write.simple.tsv(NamedVector, ManualName = p0(substitute(NamedVector),".tsv"), ) }
+  if (WriteOut) { write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector),".tsv"), ) }
   if (print2screen) { cat(b,"\n") }
 }
 
@@ -1660,7 +1660,7 @@ md.LinkTable <- function(tableOfLinkswRownames) {
     x = tableOfLinkswRownames[,i]
     TBL[,i] = p0("[", RN, "]", "(", x, ")")
   } #for
-  md.tableWriter.DF.w.dimnames(TBL, FullPath = p0(OutDir, substitute(tableOfLinkswRownames),".tsv.md")  )
+  md.tableWriter.DF.w.dimnames(TBL, FullPath = paste0(OutDir, substitute(tableOfLinkswRownames),".tsv.md")  )
 }
 
 
