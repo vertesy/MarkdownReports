@@ -147,7 +147,7 @@ setup_MarkdownReports <-
         capture.output(
           sessioninfo::session_info()
         ),con = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt")
-      )
+        )
 
       options("width"= defWidth)
       rm(defWidth)
@@ -173,7 +173,7 @@ setup_MarkdownReports <-
     ww.assign_to_global("b.scriptname", scriptname, 1)
     ww.assign_to_global("b.def.color", b.def.color, 1)
     ww.assign_to_global("b.report.not.found",
-                        "Path to the Markdown report file is not defined in path_of_report", 1)
+           "Path to the Markdown report file is not defined in path_of_report", 1)
   }
 
 # create_set_SubDir
@@ -1449,109 +1449,109 @@ wstripchart <-
 
 
 wstripchart_list <- function (yourlist,
-                              ...,
-                              main = as.character(substitute(yourlist)),
-                              sub = NULL,
-                              ylab = "",
-                              xlab = "",
-                              border = 1,
-                              bxpcol = 0,
-                              pch = 18,
-                              pchlwd = 1,
-                              pchcex = 1.5,
-                              incrBottMarginBy = 0,
-                              tilted_text = FALSE,
-                              bg = "chartreuse2",
-                              col = "black",
-                              metod = "jitter",
-                              jitter = 0.2,
-                              savefile = unless.specified("b.save.wplots"),
-                              w = unless.specified("b.defSize"),
-                              h = w,
-                              mdlink = ww.set.mdlink(),
-                              PNG = unless.specified("b.usepng", F)) {
-  fname = kollapse(main, ".stripchart")
-  if (incrBottMarginBy) {
-    .ParMarDefault <- par("mar")
-    par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
-  } 	# Tune the margin
-  cexNsize = 1 / abs(log10(length(list)))
-  cexNsize = min(cexNsize, 1)
-  if (tilted_text) {
-    xlab = FALSE
-  } else {
-    xlab = TRUE
-  }
-  plotname <-
-    main # to avoid circular reference in the inside function argument
-  boxplot(
-    yourlist,
-    ...,
-    show.names = xlab,
-    main = plotname,
-    sub = sub,
-    border = border,
-    outpch = NA,
-    las = 2,
-    ylab = NA,
-    col = bxpcol,
-    cex.axis = cexNsize
-  )
-  mtext(ylab, side = 2, line = 2)
-  for (i in 1:length(yourlist)) {
-    if (length(na.omit.strip(yourlist[[i]]))) {
-      j = k = i
-      if (length(1) < length(yourlist)) {
-        j = 1
+            ...,
+            main = as.character(substitute(yourlist)),
+            sub = NULL,
+            ylab = "",
+            xlab = "",
+            border = 1,
+            bxpcol = 0,
+            pch = 18,
+            pchlwd = 1,
+            pchcex = 1.5,
+            incrBottMarginBy = 0,
+            tilted_text = FALSE,
+            bg = "chartreuse2",
+            col = "black",
+            metod = "jitter",
+            jitter = 0.2,
+            savefile = unless.specified("b.save.wplots"),
+            w = unless.specified("b.defSize"),
+            h = w,
+            mdlink = ww.set.mdlink(),
+            PNG = unless.specified("b.usepng", F)) {
+    fname = kollapse(main, ".stripchart")
+    if (incrBottMarginBy) {
+      .ParMarDefault <- par("mar")
+      par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
+    } 	# Tune the margin
+    cexNsize = 1 / abs(log10(length(list)))
+    cexNsize = min(cexNsize, 1)
+    if (tilted_text) {
+      xlab = FALSE
+    } else {
+      xlab = TRUE
+    }
+    plotname <-
+      main # to avoid circular reference in the inside function argument
+    boxplot(
+      yourlist,
+      ...,
+      show.names = xlab,
+      main = plotname,
+      sub = sub,
+      border = border,
+      outpch = NA,
+      las = 2,
+      ylab = NA,
+      col = bxpcol,
+      cex.axis = cexNsize
+    )
+    mtext(ylab, side = 2, line = 2)
+    for (i in 1:length(yourlist)) {
+      if (length(na.omit.strip(yourlist[[i]]))) {
+        j = k = i
+        if (length(1) < length(yourlist)) {
+          j = 1
+        }
+        if (length(bg) < length(yourlist)) {
+          k = 1
+        }
+        stripchart(
+          na.omit.strip(yourlist[[i]]),
+          at = i,
+          add = TRUE
+          ,
+          vertical = TRUE,
+          method = "jitter",
+          jitter = jitter
+          ,
+          pch = pch,
+          bg = bg[[k]],
+          col = col[[j]],
+          lwd = pchlwd,
+          cex = pchcex
+        )
       }
-      if (length(bg) < length(yourlist)) {
-        k = 1
-      }
-      stripchart(
-        na.omit.strip(yourlist[[i]]),
-        at = i,
-        add = TRUE
+    } # for
+    if (tilted_text) {
+      xx = min(unlist(yourlist), na.rm = TRUE)
+      text(
+        x = 1:length(yourlist),
+        y = xx,
+        labels = names(yourlist)
         ,
-        vertical = TRUE,
-        method = "jitter",
-        jitter = jitter
-        ,
-        pch = pch,
-        bg = bg[[k]],
-        col = col[[j]],
-        lwd = pchlwd,
-        cex = pchcex
+        xpd = TRUE,
+        srt = 45,
+        adj = c(1, 3)
       )
     }
-  } # for
-  if (tilted_text) {
-    xx = min(unlist(yourlist), na.rm = TRUE)
-    text(
-      x = 1:length(yourlist),
-      y = xx,
-      labels = names(yourlist)
-      ,
-      xpd = TRUE,
-      srt = 45,
-      adj = c(1, 3)
-    )
+    if (savefile) {
+      ww.dev.copy(
+        PNG_ = PNG,
+        fname_ = fname,
+        w_ = w,
+        h_ = h
+      )
+    }
+    if (incrBottMarginBy) {
+      par("mar" = .ParMarDefault)
+    }
+    ww.assign_to_global("plotnameLastPlot", fname, 1)
+    if (mdlink & savefile) {
+      md.image.linker(fname_wo_ext = fname)
+    }
   }
-  if (savefile) {
-    ww.dev.copy(
-      PNG_ = PNG,
-      fname_ = fname,
-      w_ = w,
-      h_ = h
-    )
-  }
-  if (incrBottMarginBy) {
-    par("mar" = .ParMarDefault)
-  }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
-  if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
-  }
-}
 
 
 
@@ -2693,7 +2693,7 @@ llprint <- function (...) {
   argument_list <- c(...)
   LogEntry = print(paste(argument_list, collapse = " "))
   if (ww.variable.and.path.exists(path_of_report,
-                                  alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report") ) {
+      alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report") ) {
     write(kollapse("\n", LogEntry, print = FALSE),
           path_of_report,
           append = TRUE)
@@ -2715,7 +2715,7 @@ llogit <- function (...) {
   LogEntry = paste(argument_list, collapse = " ")
   LogEntry = gsub("^ +| +$", "", LogEntry)
   if (ww.variable.and.path.exists(path_of_report,
-                                  alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report")) {
+      alt.message = "NOT LOGGED: Log path and filename is not defined in path_of_report")) {
     write(kollapse("\n", LogEntry, print = FALSE),
           path_of_report,
           append = TRUE)
@@ -2830,18 +2830,21 @@ llwrite_list <- function(yourlist, printName = "self") {
 #' @param ManualName Specify full filename if you do not want to name it by the variable name.
 #' @param o Open the file after saving? FALSE by default
 #' @param gzip Compress the file after saving? FALSE by default
+#' @param separator Field separator, such as "," for csv
 #' @param ... Pass any other argument to the kollapse() function used for file name.
 #' @export
 #' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
 #' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
 #' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
 
-write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE , ...  ) {
+write.simple.tsv <- function(input_df, separator = "\t", extension = 'tsv', ManualName = "", o = FALSE,
+                             gzip = FALSE, ...  ) {
+  if (separator %in% c(',', ';')) extension <- 'csv'
   fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
+
   if (nchar(ManualName)) {FnP = kollapse(ManualName)
   } else { FnP = ww.FnP_parser (fname, extension) }
-  utils::write.table (input_df, file = FnP, sep = "\t", row.names = TRUE,
+  utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
                       col.names = NA, quote = FALSE  )
   printme = if(length(dim(input_df))) {
     paste0("Dim: ", dim(input_df) )
@@ -2869,7 +2872,7 @@ write.simple.tsv <- function(input_df, extension = 'tsv', ManualName = "", o = F
 md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
   if (ww.variable.and.path.exists(path_of_report,
-                                  alt.message = "Log path and filename is not defined in path_of_report")) {
+                               alt.message = "Log path and filename is not defined in path_of_report")) {
     iprint(length(linez),"lines from",basename(from.file) ,
            "are concatenated to:",basename(path_of_report))
   }
@@ -2903,6 +2906,37 @@ md.LogSettingsFromList <- function (parameterlist,
   colnames(DF) = "Value"
   md.tableWriter.DF.w.dimnames(DF, title_of_table = "Script Parameters and Settings")
 }
+
+
+# Writing markdown tables --------------------------------------------------------------------------
+
+#' md.List2Table
+#'
+#' Broader variant of md.LogSettingsFromList(). Log the values (col2) from a named (col1) list, in a table format
+#'  in the report.
+#' @param title Title of the table.
+#' @param colname2 Name of the 2nd column.
+#' @param parameterlist List of Paramters
+#' @param maxlen Maximum length of entries in a parameter list element
+#' @export
+#' @examples md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
+
+md.List2Table <- function (parameterlist,
+                           title="List elements",
+                           colname2="Value",
+                                    maxlen = 20) {
+  LZ = unlist(lapply(parameterlist, length)) # collapse paramters with multiple entires
+  LNG = names(which(LZ > 1))
+  for (i in LNG) {
+    if (length(parameterlist[[i]]) > maxlen)
+      parameterlist[[i]] = parameterlist[[i]][1:maxlen]
+    parameterlist[[i]] = paste(parameterlist[[i]], collapse = ", ")
+  } #for
+  DF = t(as.data.frame(parameterlist))
+  colnames(DF) = colname2
+  md.tableWriter.DF.w.dimnames(DF, title_of_table = title)
+}
+
 
 
 #' md.tableWriter.DF.w.dimnames
@@ -3051,6 +3085,28 @@ md.tableWriter.VEC.w.names <-
 
 
 
+
+#' md.LinkTable
+#'
+#' Take a dataframe where every entry is a string containing an html link, parse and write out
+#'  a properly formatted markdown table
+#' @param tableOfLinkswRownames a dataframe where every entry is a string containing an html link
+#' @export
+#'
+#' @examples tableOfLinkswRownames(tableOfLinkswRownames = df_of_LinksParsedByDatabaseLinkeR)
+
+md.LinkTable <- function(tableOfLinkswRownames) { # Take a dataframe where every entry is a string containing an html link, parse and write out
+  TBL = tableOfLinkswRownames
+  RN = rownames(tableOfLinkswRownames)
+  for (i in 1:ncol(tableOfLinkswRownames)) {
+    x = tableOfLinkswRownames[, i]
+    TBL[, i] = paste0("[", RN, "]", "(", x, ")")
+  } #for
+  md.tableWriter.DF.w.dimnames(TBL,
+                               FullPath = paste0(OutDir, substitute(tableOfLinkswRownames), ".tsv.md"))
+}
+
+
 #' md.import.table
 #'
 #' Import a table (.csv, or tab seprated values, .tsv file) and write it
@@ -3077,7 +3133,7 @@ md.import.table <-
            field.sep = "\t",
            to.file = path_of_report) {
     TTL = if (missing(title_of_table)){
-      basename(from.file.table)
+            basename(from.file.table)
     } else { title_of_table}
     importedtable = if (has.rownames) {
       utils::read.table(
@@ -3330,7 +3386,7 @@ stopif <-
 #' @param x Unrounded number.
 #' @param digitz Number of digits to keep. 3 by default.
 #' @export
-#' @examples iround (x = 2.3232, digitz = 3)
+#' @examples iround(x = 2.3232, digitz = 3)
 
 iround <- function (x, digitz = 3) {
   signif(x, digits = digitz)
@@ -3889,7 +3945,7 @@ setup_logging_markdown <-
           path_of_report,
           append = TRUE)
     BackupDir = kollapse( OutDir, "/", substr(fname, 1, nchar(fname)), "_",
-                          format(Sys.time(), "%Y_%m_%d-%Hh"), print = FALSE
+      format(Sys.time(), "%Y_%m_%d-%Hh"), print = FALSE
     )
     if (!exists(BackupDir)) {
       dir.create(BackupDir, showWarnings = FALSE)
