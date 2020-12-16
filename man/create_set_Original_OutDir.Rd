@@ -4,7 +4,7 @@
 \alias{create_set_Original_OutDir}
 \title{Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
 Set the output directory of the script, and set the "NewOutDir" variable that is
- used by all ~wplot functions.}
+used by all ~wplot functions.}
 \usage{
 create_set_Original_OutDir(
   NewOutDir = OutDirOrig,
@@ -25,7 +25,7 @@ create_set_Original_OutDir(
 \description{
 Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
 Set the output directory of the script, and set the "NewOutDir" variable that is
- used by all ~wplot functions.
+used by all ~wplot functions.
 }
 \examples{
 create_set_Original_OutDir (getwd(),"/")

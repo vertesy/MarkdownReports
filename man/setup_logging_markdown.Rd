@@ -17,7 +17,7 @@ Use continue_logging_markdown() if you return logging into an existing report.}
 \item{b.png4Github}{A global variable, defined by this and used by the other functions.
 If TRUE (default), any link to the .png versions of images will be created in a
 GitHub compatible format. That means, when you upload your markdown report and the .png images
- to your GitHub wiki under "Reports/" the links will correctly display the images online.}
+to your GitHub wiki under "Reports/" the links will correctly display the images online.}
 }
 \description{
 Setup the markdown report file, create a sub directory in "OutDir". Its name is stamped with

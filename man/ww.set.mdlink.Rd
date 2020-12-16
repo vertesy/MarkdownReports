@@ -14,7 +14,7 @@ ww.set.mdlink(NameOfaVariable = "b.mdlink", def = FALSE)
 \description{
 Internal function. Sets inserting a markdown link to the image
 (created by the wplot* function that calls this function) only if 'path_of_report' is defined
- and 'b.mdlink' is defined as TRUE.
+and 'b.mdlink' is defined as TRUE.
 }
 \examples{
 ww.set.mdlink() # It is an internal function, not intended for manual use.

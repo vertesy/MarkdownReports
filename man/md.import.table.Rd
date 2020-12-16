@@ -33,6 +33,6 @@ Import a table (.csv, or tab seprated values, .tsv file) and write it
 in markdown format to the report.
 }
 \examples{
-x = matrix(1:9,3); utils::write.table(x, sep = "\\t", file = "~/x.tsv");
+x = matrix(1:9,3); utils::write.table(x, sep = "\t", file = "~/x.tsv");
 md.import.table("~/x.tsv")
 }

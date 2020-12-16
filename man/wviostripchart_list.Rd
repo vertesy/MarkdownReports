@@ -32,7 +32,7 @@ wviostripchart_list(
 \item{...}{Pass any other parameter of the corresponding plotting
 function (most of them should work).}
 
-\item{pch}{Define the symbol for each data point. A number [0-25] or any string between ""-s.}
+\item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
 
 \item{viocoll}{Background color of each individual violing plot.}
 

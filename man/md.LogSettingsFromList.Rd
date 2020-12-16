@@ -13,7 +13,7 @@ md.LogSettingsFromList(parameterlist, maxlen = 20)
 }
 \description{
 Log the parameters & settings used in the script and stored in a list, in a table format
- in the report.
+in the report.
 }
 \examples{
 md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))

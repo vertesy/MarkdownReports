@@ -46,7 +46,7 @@ into the timestamped subfolder within the OutDir.}
 
 \item{append}{Set append to TRUE if you do not want to overwrite the previous report.}
 
-\item{addTableOfContents}{write '[TOC]' below the header of the file, This is compiled to a
+\item{addTableOfContents}{write '\link{TOC}' below the header of the file, This is compiled to a
 proper Table Of Contents by, e.g. Typora.}
 
 \item{saveSessionInfo}{save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'}

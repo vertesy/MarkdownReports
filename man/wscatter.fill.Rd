@@ -51,7 +51,7 @@ work).}
 
 \item{nlevels}{Number of steps in the color gradient}
 
-\item{pch}{Define the symbol for each data point. A number [0-25] or any string between ""-s.}
+\item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
 
 \item{cex}{Size of the symbols}
 

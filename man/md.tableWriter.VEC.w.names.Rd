@@ -18,7 +18,7 @@ md.tableWriter.VEC.w.names(
 
 \item{FullPath}{Full path to the file.}
 
-\item{percentify}{Format numbers [0, 1] to percentages 0-100.}
+\item{percentify}{Format numbers \link{0, 1} to percentages 0-100.}
 
 \item{title_of_table}{Title above the table (in the markdown report).}
 
@@ -28,7 +28,7 @@ md.tableWriter.VEC.w.names(
 }
 \description{
 Take an R vector with names, parse a markdown table from it, and write it to the markdown report,
- set by "path_of_report".
+set by "path_of_report".
 }
 \examples{
 x = -1:2; names(x) = LETTERS[1:4]

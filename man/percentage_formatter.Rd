@@ -7,12 +7,12 @@
 percentage_formatter(x, digitz = 3)
 }
 \arguments{
-\item{x}{A vector of numbers between [0, 1]/}
+\item{x}{A vector of numbers between \link{0, 1}/}
 
 \item{digitz}{Number of digits to keep. 3 by default.}
 }
 \description{
-Parse a string of 0-100% from a number between 0 and 1.
+Parse a string of 0-100\% from a number between 0 and 1.
 }
 \examples{
 percentage_formatter (x = 4.2822212, digitz = 3)

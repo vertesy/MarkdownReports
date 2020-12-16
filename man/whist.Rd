@@ -73,7 +73,7 @@ Design the line by "lty", "lwd" & "lcol" parameters.}
 Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 link in the markdown report, set by "path_of_report". The .png version is not created, only the
 link is put in place, not to overwrite previous versions. Name the file by naming the variable!
-Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol"
+Cannot be used with dynamically called variables \link{e.g. call vectors within a loop}. "filtercol"
 assumes  >= coloring!
 }
 \examples{
