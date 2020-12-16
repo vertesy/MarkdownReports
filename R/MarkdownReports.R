@@ -3805,7 +3805,7 @@ ww.autoPlotName <- function (name = NULL) {
 #'
 #' Parser for dev.copy to save as PDF or PNG
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
-#' @param PNG_res deafult 450
+#' @param PNG_res default 100
 #' @param w_ Width of the saved pdf image, in inches.
 #' @param h_ Height of the saved pdf image, in inches.
 #' @param fname_ File name
@@ -3813,13 +3813,13 @@ ww.autoPlotName <- function (name = NULL) {
 #' @examples try.dev.off(); plot(1); # ww.dev.copy(PNG = FALSE, w_ = 7, h_ = 7, fname_ = "myNewplot")
 
 ww.dev.copy <- function(PNG_ = FALSE,
-                        PNG_res = 450,
+                        PNG_res = 100,
                         w_,
                         h_,
                         fname_) {
   if (PNG_) {
     dev.copy(
-      png,
+      device = png,
       filename = ww.FnP_parser(fname_, "png"),
       res = PNG_res,
       width = w_ * 100,
