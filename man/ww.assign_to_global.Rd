@@ -4,7 +4,7 @@
 \alias{ww.assign_to_global}
 \title{ww.assign_to_global}
 \usage{
-ww.assign_to_global(name, value, pos = 1)
+ww.assign_to_global(name, value, pos = 1, verbose = TRUE)
 }
 \arguments{
 \item{name}{Name of the global variabe to be assigned}
@@ -12,8 +12,10 @@ ww.assign_to_global(name, value, pos = 1)
 \item{value}{Value of the global variabe to be assigned}
 
 \item{pos}{defaults to 1 which equals an assingment to global environment}
+
+\item{verbose}{Print directory to screen? Default: TRUE}
 }
 \description{
-function loading results in global environment.
+A function loading results to the global environment.
 Source: https://stackoverflow.com/questions/28180989/
 }

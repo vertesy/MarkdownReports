@@ -1,22 +1,22 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.1.0
+Version: 4.3.2
 Authors@R: 
     person(given = "Abel",
            family = "Vertesy",
            role = c("aut", "cre"),
            email = "a.vertesy@hubrecht.eu")
 Author: Abel Vertesy <a.vertesy@hubrecht.eu> [aut, cre]
-Description: MarkdownReports is a set of R functions that allows
-    you to generate precise figures easily, and create clean markdown
-    reports about what you just discovered with your analysis script. It
-    helps you to: 1. Create scientifically accurate (annotated) figures
-    with very short code, making use of variable-, row- and columnnames.
-    2. Save figures automatically as vector graphic (.pdf), that you can
-    use from presentation to posters anywhere.  3. Incorporate your
-    figures automatically in a markdown report file.  4. Describe your
-    figures & findings in the same report in a clear and nicely formatted
-    way, parsed from your variables into english sentences.  5. Share your
+Description: MarkdownReports is a set of R functions that allows you to
+    generate precise figures easily, and create clean markdown reports
+    about what you just discovered with your analysis script. It helps you
+    to: 1. Create scientifically accurate (annotated) figures with very
+    short code, making use of variable-, row- and columnnames.  2. Save
+    figures automatically as vector graphic (.pdf), that you can use from
+    presentation to posters anywhere.  3. Incorporate your figures
+    automatically in a markdown report file.  4. Describe your figures &
+    findings in the same report in a clear and nicely formatted way,
+    parsed from your variables into english sentences.  5. Share your
     report, by exporting your report to .pdf, .html or .docx, or via
     Github or a personal website.
 License: GPL-3 + file LICENSE
@@ -36,7 +36,7 @@ Imports:
     vioplot
 Encoding: UTF-8
 LazyData: true
-Packaged: 2020-12-16 11:20:44
+Packaged: 2021-10-31 15:03:27
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

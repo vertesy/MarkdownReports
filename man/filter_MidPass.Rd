@@ -10,6 +10,7 @@ filter_MidPass(
   LP_threshold,
   prepend = "",
   return_survival_ratio = FALSE,
+  return_conclusion = FALSE,
   EdgePass = FALSE,
   na.rm = TRUE,
   plot.hist = TRUE,
@@ -26,8 +27,10 @@ filter_MidPass(
 
 \item{prepend}{Text prepended to the results.}
 
-\item{return_survival_ratio}{Return a number with the survival ratio (TRUE),
-or a logical index vector of the survivors (FALSE).}
+\item{return_survival_ratio}{Return a number with the survival ratio (TRUE).
+or a logical index vector of the survivors (FALSE). return_conclusion must be FALSE}
+
+\item{return_conclusion}{Return conclusion sentence that (also printed). return_survival_ratio must be FALSE}
 
 \item{EdgePass}{If TRUE, it reverses the filter:
 everything passes except between the two thresholds.}

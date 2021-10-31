@@ -4,12 +4,14 @@
 \alias{percentage_formatter}
 \title{percentage_formatter}
 \usage{
-percentage_formatter(x, digitz = 3)
+percentage_formatter(x, digitz = 3, keep.names = F)
 }
 \arguments{
-\item{x}{A vector of numbers between \link{0, 1}/}
+\item{x}{A vector of numbers between 0-1.}
 
 \item{digitz}{Number of digits to keep. 3 by default.}
+
+\item{keep.names}{Keep vector names}
 }
 \description{
 Parse a string of 0-100\% from a number between 0 and 1.

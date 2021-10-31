@@ -4,10 +4,12 @@
 \alias{ww.ttl_field}
 \title{ww.ttl_field}
 \usage{
-ww.ttl_field(flname)
+ww.ttl_field(plotname, creator = "MarkdownReports")
 }
 \arguments{
-\item{flname}{Name of the plot}
+\item{plotname}{Name of the plot}
+
+\item{creator}{String X in: "plotblabla by X". Defaults: "MarkdownReports".}
 }
 \description{
 Internal function. Creates the string written into the PDF files "Title' (metadata) field.

@@ -4,11 +4,14 @@
 \alias{ww.set.OutDir}
 \title{ww.set.OutDir}
 \usage{
-ww.set.OutDir()
+ww.set.OutDir(dir = OutDir)
+}
+\arguments{
+\item{dir}{OutDir to check and set.}
 }
 \description{
 Checks if global variable OutDir is defined. If not,
-it defines it as the current working directory
+it returns the current working directory
 }
 \examples{
 ww.set.OutDir()

@@ -18,7 +18,7 @@ md.tableWriter.VEC.w.names(
 
 \item{FullPath}{Full path to the file.}
 
-\item{percentify}{Format numbers \link{0, 1} to percentages 0-100.}
+\item{percentify}{Format numbers (0, 1) to percentages 0-100.}
 
 \item{title_of_table}{Title above the table (in the markdown report).}
 

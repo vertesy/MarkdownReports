@@ -6,6 +6,7 @@
 \usage{
 write.simple.tsv(
   input_df,
+  separator = "\\t",
   extension = "tsv",
   ManualName = "",
   o = FALSE,
@@ -15,6 +16,8 @@ write.simple.tsv(
 }
 \arguments{
 \item{input_df}{Your Dataframe with row- and column-names}
+
+\item{separator}{Field separator, such as "," for csv}
 
 \item{extension}{e.g.: tsv}
 

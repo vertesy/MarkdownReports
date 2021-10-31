@@ -48,7 +48,7 @@ are recycled if the length of border is less than the number of plots.}
 
 \item{bxpcol}{Color of the boxplot outlines.}
 
-\item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
+\item{pch}{Define the symbol for each data point. A number (0-25) or any string between ""-s.}
 
 \item{pchlwd}{Define the outline width of the symbol for each data point.}
 

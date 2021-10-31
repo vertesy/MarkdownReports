@@ -36,7 +36,7 @@ plotting function (most of them should work).}
 \description{
 Use this version of whist() if you iterate over columns  or rows of a data frame.
 You can name the file by naming the variable.
-Cannot be used with dynamically called variables \link{e.g. call vectors within a loop}
+Cannot be used with dynamically called variables (e.g. call vectors within a loop).
 }
 \examples{
 try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))

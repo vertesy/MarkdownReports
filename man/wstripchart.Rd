@@ -56,7 +56,7 @@ stripchart().}
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid
 overlaps).}
 
-\item{pch}{Define the symbol for each data point. A number \link{0-25} or any string between ""-s.}
+\item{pch}{Define the symbol for each data point. A number (0-25) or any string between ""-s.}
 
 \item{pchlwd}{Define the outline width of the symbol for each data point.}
 

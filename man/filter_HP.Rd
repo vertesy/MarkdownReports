@@ -10,6 +10,7 @@ filter_HP(
   passequal = FALSE,
   prepend = "",
   return_survival_ratio = FALSE,
+  return_conclusion = FALSE,
   na.rm = TRUE,
   plot.hist = TRUE,
   saveplot = FALSE,
@@ -25,8 +26,10 @@ filter_HP(
 
 \item{prepend}{Text prepended to the results.}
 
-\item{return_survival_ratio}{Return a number with the survival ratio (TRUE),
-or a logical index vector of the survivors (FALSE).}
+\item{return_survival_ratio}{Return a number with the survival ratio (TRUE).
+or a logical index vector of the survivors (FALSE). return_conclusion must be FALSE}
+
+\item{return_conclusion}{Return conclusion sentence that (also printed). return_survival_ratio must be FALSE}
 
 \item{na.rm}{Remove NA-s? Default: TRUE}
 
