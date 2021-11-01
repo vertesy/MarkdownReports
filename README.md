@@ -1,7 +1,7 @@
 
  _cite via:_ [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
-# Type Less, Plot More.
+# MarkdownReportsType Less, Plot More.
 MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles an report in markdown from those.
 
 
@@ -128,6 +128,11 @@ Alternatively, you simply source it from the web.
     source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/MarkdownReports/R/MarkdownReports.R")
 
 <br><br>
+
+### Troubleshooting
+
+*If you encounter a **bug**, something doesn't work or unclear, please let me know by raising an issue on [MarkdownReports](https://github.com/vertesy/MarkdownReports/issues) – Please check if it has been asked.*
+
 ## Discover 4 Yourself!
 
 -  **Check out the [wiki](https://github.com/vertesy/MarkdownReports/wiki)!** 

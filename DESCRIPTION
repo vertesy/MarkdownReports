@@ -1,12 +1,12 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
 Version: 4.3.2
-Authors@R: 
+Authors@R:
     person(given = "Abel",
            family = "Vertesy",
            role = c("aut", "cre"),
-           email = "a.vertesy@hubrecht.eu")
-Author: Abel Vertesy <a.vertesy@hubrecht.eu> [aut, cre]
+           email = "abel.vertesy@imba.oeaw.ac.at")
+Author: Abel Vertesy <abel.vertesy@imba.oeaw.ac.at> [aut, cre]
 Description: MarkdownReports is a set of R functions that allows you to
     generate precise figures easily, and create clean markdown reports
     about what you just discovered with your analysis script. It helps you
@@ -21,7 +21,7 @@ Description: MarkdownReports is a set of R functions that allows you to
     Github or a personal website.
 License: GPL-3 + file LICENSE
 BugReports: https://github.com/vertesy/MarkdownReports/issues
-Imports: 
+Imports:
     clipr,
     colorRamps,
     gplots,
