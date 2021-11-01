@@ -34,8 +34,8 @@ dir.create(BackupDir)
 
 # devtools::use_package("vioplot")
 DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
-    , "Author" = person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role =  c("aut", "cre") )
-    , "Authors@R" = 'person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role =  c("aut", "cre") )'
+    , "Author" = person(given = "Abel", family = "Vertesy", email = "abel.vertesy@imba.oeaw.ac.at", role =  c("aut", "cre") )
+    , "Authors@R" = 'person(given = "Abel", family = "Vertesy", email = "abel.vertesy@imba.oeaw.ac.at", role =  c("aut", "cre") )'
     , "Description" = "MarkdownReports is a set of R functions that allows you to generate precise figures easily,
     and create clean markdown reports about what you just discovered with your analysis script. It helps you to:
     1. Create scientifically accurate (annotated) figures with very short code, making use of variable-, row- and columnnames.

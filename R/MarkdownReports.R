@@ -88,7 +88,7 @@ iround <- function(x, digitz = 3) {
   signif(x, digits = digitz)
 }
 
-
+######## Also in CodeA...2 ########################################
 #' cv
 #'
 #' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)

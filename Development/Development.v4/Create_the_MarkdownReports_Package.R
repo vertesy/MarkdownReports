@@ -34,7 +34,7 @@ Package_FnP = 	kollapse(PackageDir, "/R/", fname)
 
 # devtools::use_package("vioplot")
 DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
-    "Authors@R" = person(given = "Abel", family = "Vertesy", email = "a.vertesy@hubrecht.eu", role = c("aut", "cre"))
+    "Authors@R" = person(given = "Abel", family = "Vertesy", email = "abel.vertesy@imba.oeaw.ac.at", role = c("aut", "cre"))
     , "Description" = "MarkdownReports is a set of R functions that allows you to generate precise figures easily, and create clean markdown reports about what you just discovered with your analysis script. It helps you to:
     1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.
     2. Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.
