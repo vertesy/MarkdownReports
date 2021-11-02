@@ -50,51 +50,6 @@ stopif <-
   }
 
 
-#' iround
-#'
-#' Rounds a value to the significant amount of digits. Its a wrapper for signif().
-#' @param x Unrounded number.
-#' @param digitz Number of digits to keep. 3 by default.
-#' @export
-#' @examples iround(x = 2.3232, digitz = 3)
-
-iround <- function(x, digitz = 3) {
-  signif(x, digits = digitz)
-}
-
-######## Also in CodeA...2 ########################################
-#' cv
-#'
-#' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
-#' @param x A vector with numbers
-#' @param na.rm Remove NA-s? Default: TRUE
-#' @import stats
-#' @export
-#'
-#' @examples cv(rnorm(100, sd = 10))
-
-cv <- function(x, na.rm = TRUE) {
-  sd( x, na.rm = na.rm)/mean(x, na.rm = na.rm)
-}
-
-
-#' modus
-#'
-#' Calculates the mode (modus) of a numeric vector (it excludes NA-s by default). https://en.wikipedia.org/wiki/Mode_(statistics)
-#' @param x A numeric vector
-#' @import stats
-#' @export
-#' @examples modus(c(1, 1, 2, 3, 3, 3, 4, 5)); modus(1:4)
-
-modus <- function(x) {
-  x = unlist(na.exclude(x))
-  ux <- unique(x)
-  tab <- tabulate(match(x, ux));
-  ux[tab == max(tab)]
-}
-
-# String Manipulation ------------------------------------------------------------------------------
-
 
 
 
