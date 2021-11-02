@@ -2,7 +2,11 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{setup_MarkdownReports}
 \alias{setup_MarkdownReports}
-\title{setup_MarkdownReports}
+\title{setup_MarkdownReports
+
+Setup the markdown report file and the output directory, create a sub directory in "OutDir".
+Its name is stamped with the script name and the modification time. Create the "path_of_report"
+variable used by all log-writing and ~wplot functions.}
 \usage{
 setup_MarkdownReports(
   OutDir = getwd(),
@@ -77,6 +81,8 @@ If TRUE (default), plots will be saved to a .pdf file.}
 \item{b.def.color}{Set the default color for all wplot* functions.}
 }
 \description{
+setup_MarkdownReports
+
 Setup the markdown report file and the output directory, create a sub directory in "OutDir".
 Its name is stamped with the script name and the modification time. Create the "path_of_report"
 variable used by all log-writing and ~wplot functions.

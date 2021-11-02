@@ -2,7 +2,9 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{iprint}
 \alias{iprint}
-\title{iprint}
+\title{iprint
+
+A more intelligent printing function that collapses any variable passed to it by white spaces.}
 \usage{
 iprint(...)
 }
@@ -10,6 +12,8 @@ iprint(...)
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
 }
 \description{
+iprint
+
 A more intelligent printing function that collapses any variable passed to it by white spaces.
 }
 \examples{

@@ -1,7 +1,7 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
 Version: 4.3.2
-Authors@R:
+Authors@R: 
     person(given = "Abel",
            family = "Vertesy",
            role = c("aut", "cre"),
@@ -21,7 +21,7 @@ Description: MarkdownReports is a set of R functions that allows you to
     Github or a personal website.
 License: GPL-3 + file LICENSE
 BugReports: https://github.com/vertesy/MarkdownReports/issues
-Imports:
+Imports: 
     clipr,
     colorRamps,
     gplots,
@@ -36,7 +36,7 @@ Imports:
     vioplot
 Encoding: UTF-8
 LazyData: true
-Packaged: 2021-10-31 15:03:27
+Packaged: 2021-11-02 11:10:19
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

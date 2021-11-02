@@ -2,7 +2,9 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{wbarplot_dfCol}
 \alias{wbarplot_dfCol}
-\title{wbarplot_dfCol}
+\title{wbarplot_dfCol
+
+wbarplot for a column of a data frame.}
 \usage{
 wbarplot_dfCol(
   df,
@@ -34,6 +36,8 @@ plotting function (most of them should work).}
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
+wbarplot_dfCol
+
 wbarplot for a column of a data frame.
 }
 \examples{

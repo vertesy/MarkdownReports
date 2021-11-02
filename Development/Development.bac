@@ -27,32 +27,6 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 
 
 ######################################################################
-# Duplicated functions to avoid dependencies
-######################################################################
-
-
-#' kollapse
-#'
-#' Collapses values and strings to one string (without a white space).
-#' It also prints the results (good for a quick check)
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @param collapseby collapse elements into a string separated by this character
-#' @param print Print the results to the terminal. TRUE by default.
-#' @export
-#' @examples kollapse("Hello ", LETTERS[24],
-#' ", the winning numbers are ", c(1, 3, 5, 65, 11), " . Yay!")
-
-kollapse <- function(...,
-                     collapseby = "",
-                     print = TRUE) {
-  if (print == TRUE) {
-    print(paste0(c(...), collapse = collapseby))
-  }
-  paste0(c(...), collapse = collapseby)
-}
-
-
-######################################################################
 # Functions moved here, but should not be here
 ######################################################################
 
@@ -88,7 +62,7 @@ iround <- function(x, digitz = 3) {
   signif(x, digits = digitz)
 }
 
-
+######## Also in CodeA...2 ########################################
 #' cv
 #'
 #' Calculates the coefficient of variation (CV) for a numeric vector (it excludes NA-s by default)
@@ -226,107 +200,7 @@ translate = replace_values <- function(vec, oldvalues, newvalues) {
 # but it did not seem very robust regarding your input...'
 
 
-#' AddTrailingSlash
-#'
-#' Adds a final slash '/', if missing from a string (file path).
-#' @param string The file path potentially missing the trailing slash
-#' @export
-#'
-#' @examples AddTrailingSlash (string = "stairway/to/heaven")
 
-AddTrailingSlash <- function(string = "stairway/to/heaven") { #
-  LastChr <- substr(string, nchar(string), nchar(string))
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
-
-#' RemoveDoubleSlash
-#'
-#' RemoveDoubleSlash removes multiple consecutive slashes (e.g. '//') from a string (file path). Also works for 2,3 consecutive slashes
-#' @param string The file path potentially having Double Slash
-#' @export
-#'
-#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
-
-RemoveDoubleSlash <- function(string = "stairway//to/heaven") { #
-  gsub(x = string, pattern = '//|///|////', replacement = '/')
-}
-
-
-#' RemoveFinalSlash
-#'
-#' RemoveFinalSlash removes the final slash from a string
-#' @param string The file path potentially having Final Slash
-#' @export
-#'
-#' @examples RemoveDoubleSlash (string = "stairway//to///heaven")
-
-RemoveFinalSlash <- function(string = "stairway/to/heaven/") { #
-  gsub(x = string, pattern = '/$', replacement = '')
-}
-
-
-
-#' FixPath
-#'
-#' FixPath removes multiple consecutive slashes (e.g. '//') from a string and adds a final '/' if missing from a file path.
-#' @param string The file path potentially having Double Slash
-#' @export
-#'
-#' @examples FixPath(string = "stairway//to/heaven")
-
-FixPath <- function(string = "stairway//to/heaven") { #
-  string <- gsub(x = string, pattern = '//|///|////', replacement = '/')
-  LastChr <- substr(string, nchar(string), nchar(string))
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
-
-
-
-
-#' ParseFilePath
-#'
-#' ParseFilePath pastes elements by slash, then removes Double Slashes '//' from a string and adds a final '/' if missing from a file path.
-#' @param ...  The set of strings (character vectors) to be parsed into a file path, and potentially having Double Slashes, potentially missing a trailing slash.
-#' @export
-#'
-#' @examples ParseFilePath(string = "stairway///to/heaven")
-
-ParseFilePath <- function(...) { #
-  string <- paste(..., sep = '/', collapse = '/')  # kollapse by (forward) slash
-  string <- gsub(x = string, pattern = '//', replacement = '/') # RemoveDoubleSlash
-  LastChr <- substr(string, nchar(string), nchar(string)) # AddTrailingSlash
-  if (!LastChr == "/")
-    string = paste0(string, "/")
-  return(string)
-}
-
-
-
-# ------------------------------------------------------------------------------------------------
-
-
-#' FixUnderscores
-#'
-#' FixUnderscores removes multiple consecutive underscores (e.g. '_') from a string, and optionally also removes a final '_'.
-#' @param string The file path potentially having Double Slash
-#' @param trimFinal Remove final undescore?
-#' @export
-#'
-#' @examples FixUnderscores(string = "stairway//to/heaven")
-
-FixUnderscores <- function(string = "stairway__to_heaven_", trimFinal = TRUE) { #
-  string <- gsub(x = string, pattern = '_+', replacement = '_')
-  LastChr <- substr(string, nchar(string), nchar(string))
-  if (trimFinal && LastChr == "_") {
-    iprint('LastChr: ', LastChr)
-    string = substr(string, 1, (nchar(string)-1))
-  }
-  return(string)
-}
 
 
 
@@ -336,7 +210,7 @@ FixUnderscores <- function(string = "stairway__to_heaven_", trimFinal = TRUE) { 
 ######################################################################
 # Setup --------------------------------------------------------------------------------------------
 
-#' setup_MarkdownReports
+#' @title setup_MarkdownReports
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir".
 #' Its name is stamped with the script name and the modification time. Create the "path_of_report"
@@ -614,7 +488,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
 
 # Plots ------------------------------------------------------------------------------------------
 
-#' wplot_save_this
+#' @title wplot_save_this
 #'
 #' Save the currently active graphic device (for complicated plots).  Insert links to your markdown
 #' report, set by "path_of_report". Name the file by naming the variable!
@@ -2259,7 +2133,7 @@ wvenn <-
 
 # Plots for cycling over data frame columns or rows ------------------------------------------------
 
-#' wbarplot_dfCol
+#' @title wbarplot_dfCol
 #'
 #' wbarplot for a column of a data frame.
 #'
@@ -2393,7 +2267,7 @@ whist_dfCol <-
 
 # A4 pdfs for multi-plots --------------------------------------------------------------------------
 
-#' pdfA4plot_on
+#' @title pdfA4plot_on
 #'
 #' Create A4 PDFs to plot multiple subplots in one file
 #' @param pname Title of the plot (main parameter) and also the name of the file.
@@ -2533,7 +2407,7 @@ pdfA4plot_off <- function() {
 
 # Add-ons to exisiting plots -----------------------------------------------------------------------
 
-#' error_bar
+#' @title error_bar
 #'
 #' Put error bars on top of your bar plots. This functionality is now integrated into
 #' MarkdownReporter's wbarplot() function
@@ -2856,7 +2730,7 @@ wLinRegression <-
 
 # Graphics -----------------------------------------------------------------------------------------
 
-#' try.dev.off
+#' @title try.dev.off
 #'
 #' Tries to close R graphical devices without raising an error.
 #' @export
@@ -2886,7 +2760,7 @@ subscript_in_plots <-
   }
 
 
-#' superscript_in_plots
+#' @title superscript_in_plots
 #'
 #' Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
 #' Create an expression with superscript for axis labels.
@@ -2907,7 +2781,7 @@ superscript_in_plots <- function(prefix = 'n',
 
 # Colors -------------------------------------------------------------------------------------------
 
-#' wcolorize
+#' @title wcolorize
 #'
 #' Generate color palettes. Input: a vector with categories, can be numbers or strings.
 #' Handles repeating values. Output: color vector of equal length as input.
@@ -2976,7 +2850,7 @@ wcolorize  <-
 
 
 
-#' color_check
+#' @title color_check
 #'
 #' Display the colors encoded by the numbers / color-ID-s you pass on to this function
 #' @param ... Additional parameters.
@@ -3003,7 +2877,7 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 
 # Printing to the markdown file and to the screen --------------------------------------------------
 
-#' iprint
+#' @title iprint
 #'
 #' A more intelligent printing function that collapses any variable passed to it by white spaces.
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.

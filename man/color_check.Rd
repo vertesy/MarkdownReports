@@ -2,7 +2,9 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{color_check}
 \alias{color_check}
-\title{color_check}
+\title{color_check
+
+Display the colors encoded by the numbers / color-ID-s you pass on to this function}
 \usage{
 color_check(..., incrBottMarginBy = 0, savefile = FALSE)
 }
@@ -14,6 +16,8 @@ color_check(..., incrBottMarginBy = 0, savefile = FALSE)
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 }
 \description{
+color_check
+
 Display the colors encoded by the numbers / color-ID-s you pass on to this function
 }
 \examples{
