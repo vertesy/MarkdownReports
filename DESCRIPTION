@@ -1,6 +1,6 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.3.2
+Version: 4.3.3
 Authors@R: 
     person(given = "Abel",
            family = "Vertesy",
@@ -36,7 +36,7 @@ Imports:
     vioplot
 Encoding: UTF-8
 LazyData: true
-Packaged: 2021-11-02 11:10:19
+Packaged: 2021-11-02 13:57:22
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

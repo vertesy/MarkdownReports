@@ -93,112 +93,7 @@ modus <- function(x) {
   ux[tab == max(tab)]
 }
 
-
-#' as.factor.numeric
-#'
-#' Turn any vector into numeric categories as.numeric(as.factor(vec))
-#' @param vec vector of factors or strings
-#' @param rename Rename the vector?
-#' @param ... Pass any other argument to as.factor()
-#' @export
-#'
-#' @examples as.factor.numeric(LETTERS[1:4])
-
-as.factor.numeric <- function(vec, rename = FALSE, ...) {
-  vec2 = as.numeric(as.factor(vec, ...)) ;
-  names (vec2) <- if ( !rename & !is.null(names(vec) ) ) { names (vec)
-  } else { vec }
-  return(vec2)
-}
-
-
-#' na.omit.strip
-#'
-#' Omit NA values from a vector and return a clean vector without any spam.
-#' @param object Values to filter for NA
-#' @param silent Silence the data structure coversion warning: anything ->vector
-#' @param ... Pass any other argument to na.omit()
-#' @importFrom stats na.omit
-#' @export
-#'
-#' @examples # na.omit.strip(c(1, 2, 3, NA, NaN, 2))
-
-na.omit.strip <- function(object, silent = FALSE, ...) {
-  if (is.data.frame(object)) {
-    if (min(dim(object)) > 1 & silent == FALSE) {
-      iprint(dim(object), "dimensional array is converted to a vector.")
-    }
-    object = unlist(object)
-  }
-  clean = stats::na.omit(object, ...)
-  attributes(clean)$na.action <- NULL
-  return(clean)
-}
-
-
-
-
 # String Manipulation ------------------------------------------------------------------------------
-
-#' substrRight
-#'
-#' Take the right substring of a string
-#' @param x a character vector.
-#' @param n integer. The number of elements on the right to be kept.
-#' @export
-#' @examples substrRight  ("Not cool", n = 4)
-
-substrRight <- function(x, n) {
-  substr(x, nchar(x) - n + 1, nchar(x))
-}
-
-#' percentage_formatter
-#'
-#' Parse a string of 0-100% from a number between 0 and 1.
-#' @param x A vector of numbers between 0-1.
-#' @param digitz Number of digits to keep. 3 by default.
-#' @param keep.names Keep vector names
-#' @export
-#' @examples percentage_formatter (x = 4.2822212, digitz = 3)
-
-percentage_formatter <- function(x, digitz = 3, keep.names = F) {
-  if (keep.names) nmz <- names(x)
-  a = paste(100 * signif(x, digitz), "%", sep = " ")
-  a[a == "NaN %"] = NaN
-  a[a == "NA %"] = NA
-  if (keep.names) names(a) <- nmz
-  return(a)
-}
-
-#' translate
-#'
-#' Replaces a set of values in a vector with another set of values, it translates your vector.
-#' Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
-#' @param vec set of values where you want to replace
-#' @param oldvalues oldvalues (from)
-#' @param newvalues newvalues (to)
-#' @export
-#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
-
-translate = replace_values <- function(vec, oldvalues, newvalues) {
-  Nr = length(oldvalues)
-  if (Nr > length(newvalues)) {
-    if (length(newvalues) == 1) {
-      newvalues = rep(newvalues, length(oldvalues))
-    } else if (length(newvalues) > 1) {
-      iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
-    }
-  }
-  tmp = vec
-  for (i in 1:Nr) {
-    oldval = oldvalues[i]
-    tmp[vec == oldval] = newvalues[i]
-  }
-  return(tmp)
-}
-# 'chartr("a-cX", "D-Fw", x) does the same as above in theory,
-# but it did not seem very robust regarding your input...'
-
 
 
 
@@ -1711,7 +1606,7 @@ wstripchart_list <- function(yourlist,
   )
   mtext(ylab, side = 2, line = 2)
   for (i in 1:length(yourlist)) {
-    if (length(na.omit.strip(yourlist[[i]]))) {
+    if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j = k = i
       if (length(1) < length(yourlist)) {
         j = 1
@@ -1720,7 +1615,7 @@ wstripchart_list <- function(yourlist,
         k = 1
       }
       stripchart(
-        na.omit.strip(yourlist[[i]]),
+        CodeAndRoll2::na.omit.strip(yourlist[[i]]),
         at = i,
         add = TRUE
         ,
@@ -1859,9 +1754,9 @@ wvioplot_list <-
       sub = sub
     )
     for (i in 1:l_list) {
-      if (length(na.omit.strip(yourlist[[i]]))) {
+      if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
         vioplot(
-          na.omit.strip(yourlist[[i]]),
+          CodeAndRoll2::na.omit.strip(yourlist[[i]]),
           ...,
           at = i,
           add = TRUE,
@@ -1988,9 +1883,9 @@ wviostripchart_list <-
     )
     for (i in 1:l_list) {
       print(i)
-      if (length(na.omit.strip(yourlist[[i]]))) {
+      if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
         vioplot(
-          na.omit.strip(yourlist[[i]]),
+          CodeAndRoll2::na.omit.strip(yourlist[[i]]),
           ...,
           at = i,
           add = TRUE,
@@ -2006,7 +1901,7 @@ wviostripchart_list <-
       )
     }
     for (i in 1:length(yourlist)) {
-      if (length(na.omit.strip(yourlist[[i]]))) {
+      if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
         j = k = i
         if (length(col) < length(yourlist)) {
           j = 1
@@ -2015,7 +1910,7 @@ wviostripchart_list <-
           k = 1
         }
         stripchart(
-          na.omit.strip(yourlist[[i]]),
+          CodeAndRoll2::na.omit.strip(yourlist[[i]]),
           at = i,
           add = TRUE,
           vertical = TRUE,
