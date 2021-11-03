@@ -18,7 +18,7 @@ MarkdownReports v4.3.2 Relies on
 - [ReadWriter](https://github.com/vertesy/ReadWriter)
 - [CodeAndRoll2](https://github.com/vertesy/CodeAndRoll2)
 
-... and provides funcitoions for
+... and provides functions for
 - [ggExpress](https://github.com/vertesy/ggExpress)
 - [SeuratUtils](https://github.com/vertesy/SeuratUtils).
 
