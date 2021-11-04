@@ -2,9 +2,25 @@ $`c("package:graphics", "package:base")`
 [1] "plot"
 
 $`character(0)`
- [1] "."             "brewer.pal"    "grid.draw"     "grid.newpage" 
- [5] "matlab.like"   "na.omit.strip" "rich.colors"   "venn.diagram" 
- [9] "vioplot"       "write_clip"   
+ [1] "."                            "brewer.pal"                  
+ [3] "color_check"                  "filter_HP"                   
+ [5] "filter_LP"                    "filter_MidPass"              
+ [7] "grid.draw"                    "grid.newpage"                
+ [9] "iprint"                       "llogit"                      
+[11] "llprint"                      "matlab.like"                 
+[13] "md.image.linker"              "md.LogSettingsFromList"      
+[15] "md.tableWriter.DF.w.dimnames" "na.omit.strip"               
+[17] "rich.colors"                  "stopif"                      
+[19] "superscript_in_plots"         "try.dev.off"                 
+[21] "unless.specified"             "venn.diagram"                
+[23] "vioplot"                      "whist"                       
+[25] "wplot_save_this"              "write_clip"                  
+[27] "write.simple.tsv"             "ww.assign_to_global"         
+[29] "ww.autoPlotName"              "ww.dev.copy"                 
+[31] "ww.FnP_parser"                "ww.md.image.link.parser"     
+[33] "ww.set.mdlink"                "ww.set.OutDir"               
+[35] "ww.set.path_of_report"        "ww.set.PlotName"             
+[37] "ww.ttl_field"                 "ww.variable.and.path.exists" 
 
 $`package:base`
  [1] "abs"            "any"            "as.character"   "as.data.frame" 
@@ -23,15 +39,15 @@ $`package:base`
 [53] "options"        "paste"          "paste0"         "print"         
 [57] "range"          "rbind"          "readLines"      "rep"           
 [61] "return"         "rm"             "rownames"       "sample"        
-[65] "sapply"         "seq"            "setwd"          "stop"          
-[69] "stopifnot"      "strsplit"       "substitute"     "substr"        
-[73] "sum"            "summary"        "Sys.time"       "system"        
-[77] "t"              "table"          "try"            "unique"        
-[81] "unlist"         "which"          "write"          "writeLines"    
+[65] "sapply"         "seq"            "setwd"          "stopifnot"     
+[69] "strsplit"       "substitute"     "substr"         "sum"           
+[73] "summary"        "Sys.time"       "system"         "t"             
+[77] "table"          "try"            "unique"         "unlist"        
+[81] "which"          "write"          "writeLines"    
 
 $`package:CodeAndRoll2`
-[1] "as.factor.numeric" "cv"                "iround"            "modus"            
-[5] "translate"        
+[1] "as.factor.numeric" "cv"                "iround"           
+[4] "modus"             "translate"        
 
 $`package:devtools`
 [1] "session_info"
@@ -44,25 +60,9 @@ $`package:graphics`
 [21] "stripchart"  "text"        "title"      
 
 $`package:grDevices`
-[1] "colorRampPalette" "dev.copy"         "dev.copy2pdf"     "dev.off"         
-[5] "heat.colors"      "pdf"              "rainbow"          "terrain.colors"  
-[9] "topo.colors"     
-
-$`package:MarkdownReports`
- [1] "color_check"                  "filter_HP"                   
- [3] "filter_LP"                    "filter_MidPass"              
- [5] "iprint"                       "llogit"                      
- [7] "llprint"                      "md.image.linker"             
- [9] "md.LogSettingsFromList"       "md.tableWriter.DF.w.dimnames"
-[11] "stopif"                       "superscript_in_plots"        
-[13] "try.dev.off"                  "unless.specified"            
-[15] "whist"                        "wplot_save_this"             
-[17] "write.simple.tsv"             "ww.assign_to_global"         
-[19] "ww.autoPlotName"              "ww.dev.copy"                 
-[21] "ww.FnP_parser"                "ww.md.image.link.parser"     
-[23] "ww.set.mdlink"                "ww.set.OutDir"               
-[25] "ww.set.path_of_report"        "ww.set.PlotName"             
-[27] "ww.ttl_field"                 "ww.variable.and.path.exists" 
+[1] "colorRampPalette" "dev.copy"         "dev.copy2pdf"    
+[4] "dev.off"          "heat.colors"      "pdf"             
+[7] "rainbow"          "terrain.colors"   "topo.colors"     
 
 $`package:methods`
 [1] "hasArg"
@@ -76,7 +76,7 @@ $`package:Stringendo`
 [7] "ppp"                  "RemoveDoubleSlash"   
 
 $`package:utils`
-[1] "capture.output"  "globalVariables" "read.table"      "write.table"    
+[1] "capture.output"  "globalVariables" "read.table"     
 
 c("graphics", "base")
 character(0)
@@ -85,7 +85,6 @@ CodeAndRoll2
 devtools
 graphics
 grDevices
-MarkdownReports
 methods
 stats
 Stringendo

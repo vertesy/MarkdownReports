@@ -33,24 +33,6 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 
 # Generic ------------------------------------------------------------------------------------------
 
-#' stopif
-#'
-#' Stop script if the condition is met, and print a message
-#' @param condition any condition check that gives TRUE or FALSE
-#' @param message print a message
-#' @export
-#' @examples a = 1; stopif (a!= 1, message = "A is 1")
-
-stopif <-
-  function(condition, message = "") {
-    if (condition) {
-      iprint (message)
-      stop()
-    }
-  }
-
-
-
 
 
 
@@ -2650,6 +2632,7 @@ superscript_in_plots <- function(prefix = 'n',
 #'
 #' @export
 #' @examples wcolorize (vector = c(1, 1, 1:6), ReturnCategoriesToo = TRUE, show = TRUE)
+#' @import ReadWriter write.simple.tsv
 
 wcolorize  <-
   function(vector = c(1, 1, 1:6),
@@ -2726,20 +2709,6 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 
 
 # Printing to the markdown file and to the screen --------------------------------------------------
-
-#' @title iprint
-#'
-#' A more intelligent printing function that collapses any variable passed to it by white spaces.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @export
-#' @examples iprint ("Hello ", "you ", 3, ", ", 11, " year old kids.")
-
-iprint <- function(...) {
-  argument_list <- c(...)
-  print(paste(argument_list, collapse = " "))
-}
-
-any_print = iprint # for compatibility
 
 #' llprint
 #'
@@ -2879,46 +2848,6 @@ llwrite_list <- function(yourlist, printName = "self") {
 
 # Writing out tabular data / importing mdrkdown ---------------------------------------------------
 
-#' write.simple.tsv
-#'
-#' Write out a matrix-like R-object WITH ROW- AND COLUMN- NAMES to a file with as tab separated
-#' values (.tsv). Your output filename will be either the variable's name. The output file will be
-#' located in "OutDir" specified by you at the beginning of the script, or under your current
-#' working directory. You can pass the PATH and VARIABLE separately (in order), they will be
-#' concatenated to the filename.
-#' @param input_df Your Dataframe with row- and column-names
-#' @param extension e.g.: tsv
-#' @param ManualName Specify full filename if you do not want to name it by the variable name.
-#' @param o Open the file after saving? FALSE by default
-#' @param gzip Compress the file after saving? FALSE by default
-#' @param separator Field separator, such as "," for csv
-#' @param ... Pass any other argument to the kollapse() function used for file name.
-#' @export
-#' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
-#' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
-#' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
-
-write.simple.tsv <- function(input_df, separator = "\t", extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE, ...  ) {
-  if (separator %in% c(',', ';')) extension <- 'csv'
-  fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
-
-  if (nchar(ManualName)) {FnP = kollapse(ManualName)
-  } else { FnP = ww.FnP_parser (fname, extension) }
-  utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
-                      col.names = NA, quote = FALSE  )
-  printme = if (length(dim(input_df))) {
-    paste0("Dim: ", dim(input_df) )
-  }else {
-    paste0("Length (of your vector): ", length(input_df) )
-  }
-  iprint (printme)
-  if (o) { system(paste0("open ", FnP), wait = FALSE) }
-  if (gzip) { system(paste0("gzip ", FnP), wait = FALSE) }
-} # fun
-# If col.names = NA and row.names = TRUE a blank column name is added, which is the convention used
-# for CSV files to be read by spreadsheets.
-
 
 #' md.import
 #'
@@ -3013,7 +2942,7 @@ md.List2Table <- function(parameterlist,
 #' @export
 #' @examples df = matrix(1:9,3); rownames(df) = 6:8;rownames(df) = 9:11;
 #' md.tableWriter.DF.w.dimnames (df, percentify = FALSE, title_of_table = NA)
-
+#' @import ReadWriter write.simple.tsv
 
 md.tableWriter.DF.w.dimnames <-
   function(df,
@@ -3067,7 +2996,7 @@ md.tableWriter.DF.w.dimnames <-
       print("NOT LOGGED: Log path and filename is not defined in FullPath")
     }
     if (WriteOut) {
-      write.simple.tsv(df, ManualName = paste0(substitute(df), ".tsv"))
+      ReadWriter::write.simple.tsv(df, ManualName = paste0(substitute(df), ".tsv"))
     }
   }
 
@@ -3088,9 +3017,10 @@ md.tableWriter.DF.w.dimnames <-
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
-#' @export
 #' @examples x = -1:2; names(x) = LETTERS[1:4]
 #' md.tableWriter.VEC.w.names (NamedVector = x, percentify = FALSE, title_of_table = NA)
+#' @export
+#' @import ReadWriter write.simple.tsv
 
 md.tableWriter.VEC.w.names <-
   function(NamedVector,
@@ -3138,7 +3068,7 @@ md.tableWriter.VEC.w.names <-
       print("NOT LOGGED: Log path and filename is not defined in FullPath")
     }
     if (WriteOut) {
-      write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv") )
+      ReadWriter::write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv") )
     }
     if (print2screen) {
       cat(b, "\n")

@@ -40,11 +40,11 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version" = "4.3.4"
+    , "Version" = "4.3.6"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
-    , "Depends" =  "Stringendo"
-    , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram, sessioninfo"
+    , "Depends" =  "CodeAndRoll2, Stringendo"
+    , "Imports" = "base, clipr, colorRamps, devtools, gplots, graphics, grDevices,  methods, ReadWriter, RColorBrewer, sessioninfo, sm, stats, utils, VennDiagram, vioplot"
     # , "Suggests" = ""
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
 )
@@ -121,5 +121,6 @@ depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
 sink(file = depFile); print(f.deps); sink()
 p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
 write(x = p.deps, file = depFile, append = T)
-
-
+p.dep.declared <- trimws(unlist(strsplit(DESCRIPTION$Imports, ",")))
+p.dep.new <- sort(union( p.deps, p.dep.declared))
+# clipr::write_clip(p.dep.new)
