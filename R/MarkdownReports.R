@@ -2727,19 +2727,7 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 
 # Printing to the markdown file and to the screen --------------------------------------------------
 
-#' @title iprint
-#'
-#' A more intelligent printing function that collapses any variable passed to it by white spaces.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @export
-#' @examples iprint ("Hello ", "you ", 3, ", ", 11, " year old kids.")
-
-iprint <- function(...) {
-  argument_list <- c(...)
-  print(paste(argument_list, collapse = " "))
-}
-
-any_print = iprint # for compatibility
+# any_print = iprint # for compatibility
 
 #' llprint
 #'
