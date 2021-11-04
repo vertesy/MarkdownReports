@@ -2847,46 +2847,6 @@ llwrite_list <- function(yourlist, printName = "self") {
 
 # Writing out tabular data / importing mdrkdown ---------------------------------------------------
 
-#' write.simple.tsv
-#'
-#' Write out a matrix-like R-object WITH ROW- AND COLUMN- NAMES to a file with as tab separated
-#' values (.tsv). Your output filename will be either the variable's name. The output file will be
-#' located in "OutDir" specified by you at the beginning of the script, or under your current
-#' working directory. You can pass the PATH and VARIABLE separately (in order), they will be
-#' concatenated to the filename.
-#' @param input_df Your Dataframe with row- and column-names
-#' @param extension e.g.: tsv
-#' @param ManualName Specify full filename if you do not want to name it by the variable name.
-#' @param o Open the file after saving? FALSE by default
-#' @param gzip Compress the file after saving? FALSE by default
-#' @param separator Field separator, such as "," for csv
-#' @param ... Pass any other argument to the kollapse() function used for file name.
-#' @export
-#' @examples YourDataFrameWithRowAndColumnNames = cbind("A" = rnorm(100), "B" = rpois(100, 8))
-#' rownames(YourDataFrameWithRowAndColumnNames) = letters[1:NROW(YourDataFrameWithRowAndColumnNames)]
-#' write.simple.tsv(YourDataFrameWithRowAndColumnNames)
-
-write.simple.tsv <- function(input_df, separator = "\t", extension = 'tsv', ManualName = "", o = FALSE,
-                             gzip = FALSE, ...  ) {
-  if (separator %in% c(',', ';')) extension <- 'csv'
-  fname = kollapse (..., print = FALSE); if (nchar (fname) < 2 ) { fname = substitute(input_df) }
-
-  if (nchar(ManualName)) {FnP = kollapse(ManualName)
-  } else { FnP = ww.FnP_parser (fname, extension) }
-  utils::write.table (input_df, file = FnP, sep = separator, row.names = TRUE,
-                      col.names = NA, quote = FALSE  )
-  printme = if (length(dim(input_df))) {
-    paste0("Dim: ", dim(input_df) )
-  }else {
-    paste0("Length (of your vector): ", length(input_df) )
-  }
-  iprint (printme)
-  if (o) { system(paste0("open ", FnP), wait = FALSE) }
-  if (gzip) { system(paste0("gzip ", FnP), wait = FALSE) }
-} # fun
-# If col.names = NA and row.names = TRUE a blank column name is added, which is the convention used
-# for CSV files to be read by spreadsheets.
-
 
 #' md.import
 #'
