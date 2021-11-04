@@ -103,27 +103,27 @@ devtools::install(RepositoryDir, upgrade = F)
 # View(installed.packages())
 # remove.packages("MarkdownReports")
 #
-# check(RepositoryDir, cran = TRUE)
-# # as.package(RepositoryDir)
-# #
-# #
-# # # source("https://install-github.me/r-lib/desc")
-# # # library(desc)
-# # # desc$set("MarkdownReports", "foo")
-# # # desc$get(MarkdownReports)
-# #
-# #
-# # system("cd ~/GitHub/MarkdownReports/; ls -a; open .Rbuildignore")
-# #
-# # Check package dependencies ------------------------------------------------
-# depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
+check(RepositoryDir, cran = TRUE)
+# as.package(RepositoryDir)
 #
-# (f.deps <- NCmisc::list.functions.in.file(filename = Package_FnP))
-# # clipr::write_clip(f.deps)
 #
-# sink(file = depFile); print(f.deps); sink()
-# p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
-# write(x = p.deps, file = depFile, append = T)
-# p.dep.declared <- trimws(unlist(strsplit(DESCRIPTION$Imports, ",")))
-# p.dep.new <- sort(union( p.deps, p.dep.declared))
-# # clipr::write_clip(p.dep.new)
+# # source("https://install-github.me/r-lib/desc")
+# # library(desc)
+# # desc$set("MarkdownReports", "foo")
+# # desc$get(MarkdownReports)
+#
+#
+# system("cd ~/GitHub/MarkdownReports/; ls -a; open .Rbuildignore")
+#
+# Check package dependencies ------------------------------------------------
+depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
+
+(f.deps <- NCmisc::list.functions.in.file(filename = Package_FnP))
+# clipr::write_clip(f.deps)
+
+sink(file = depFile); print(f.deps); sink()
+p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
+write(x = p.deps, file = depFile, append = T)
+p.dep.declared <- trimws(unlist(strsplit(DESCRIPTION$Imports, ",")))
+p.dep.new <- sort(union( p.deps, p.dep.declared))
+# clipr::write_clip(p.dep.new)
