@@ -33,24 +33,6 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 
 # Generic ------------------------------------------------------------------------------------------
 
-#' stopif
-#'
-#' Stop script if the condition is met, and print a message
-#' @param condition any condition check that gives TRUE or FALSE
-#' @param message print a message
-#' @export
-#' @examples a = 1; stopif (a!= 1, message = "A is 1")
-
-stopif <-
-  function(condition, message = "") {
-    if (condition) {
-      iprint (message)
-      stop()
-    }
-  }
-
-
-
 
 
 
@@ -2726,8 +2708,6 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 
 
 # Printing to the markdown file and to the screen --------------------------------------------------
-
-# any_print = iprint # for compatibility
 
 #' llprint
 #'
