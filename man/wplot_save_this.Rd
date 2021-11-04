@@ -2,10 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{wplot_save_this}
 \alias{wplot_save_this}
-\title{wplot_save_this
-
-Save the currently active graphic device (for complicated plots).  Insert links to your markdown
-report, set by "path_of_report". Name the file by naming the variable!}
+\title{wplot_save_this}
 \usage{
 wplot_save_this(
   plotname = ww.autoPlotName(),
@@ -36,8 +33,6 @@ If FALSE, it creates a name from the date.}
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 }
 \description{
-wplot_save_this
-
 Save the currently active graphic device (for complicated plots).  Insert links to your markdown
 report, set by "path_of_report". Name the file by naming the variable!
 }

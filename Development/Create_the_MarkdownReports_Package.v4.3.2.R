@@ -15,6 +15,9 @@ require("stringr")
 # devtools::install_github(repo = "vertesy/CodeAndRoll2")
 require('CodeAndRoll2')
 require('Stringendo')
+# try (source('~/GitHub/Packages/CodeAndRoll/CodeAndRoll.R'),silent= FALSE) # ONLY If Stringendo not yet exist
+# try (source('~/GitHub/Packages/Rocinante/R/Rocinante.R'),silent= FALSE) # ONLY If Stringendo not yet exist
+
 
 
 # Setup ------------------------
@@ -40,7 +43,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version" = "4.3.6"
+    , "Version" = "4.3.3"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
     , "Depends" =  "CodeAndRoll2, Stringendo"
@@ -54,7 +57,7 @@ setwd(RepositoryDir)
 if ( !dir.exists(RepositoryDir) ) { create(path = RepositoryDir, description = DESCRIPTION, rstudio = TRUE)
 } else {
     getwd()
-    try(file.remove(c("DESCRIPTION","NAMESPACE", "MarkdownReports.Rproj")))
+    try(file.remove(c("DESCRIPTION","NAMESPACE"))) #, "MarkdownReports.Rproj"
     create_package(path = RepositoryDir, fields = DESCRIPTION, open = F)
 }
 
@@ -77,12 +80,12 @@ file.copy(from = Package_FnP, to = BackupOldFile, overwrite = TRUE)
 # Compile a package ------------------------------------------------
 setwd(RepositoryDir)
 getwd()
-document()
+devtools::document()
 
 
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
-install(RepositoryDir, upgrade = F)
+devtools::install(RepositoryDir, upgrade = F)
 # require("MarkdownReports")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
@@ -99,28 +102,28 @@ install(RepositoryDir, upgrade = F)
 # Clean up if not needed anymore ------------------------------------------------
 # View(installed.packages())
 # remove.packages("MarkdownReports")
-
-check(RepositoryDir, cran = TRUE)
-# as.package(RepositoryDir)
 #
+# check(RepositoryDir, cran = TRUE)
+# # as.package(RepositoryDir)
+# #
+# #
+# # # source("https://install-github.me/r-lib/desc")
+# # # library(desc)
+# # # desc$set("MarkdownReports", "foo")
+# # # desc$get(MarkdownReports)
+# #
+# #
+# # system("cd ~/GitHub/MarkdownReports/; ls -a; open .Rbuildignore")
+# #
+# # Check package dependencies ------------------------------------------------
+# depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
 #
-# # source("https://install-github.me/r-lib/desc")
-# # library(desc)
-# # desc$set("MarkdownReports", "foo")
-# # desc$get(MarkdownReports)
+# (f.deps <- NCmisc::list.functions.in.file(filename = Package_FnP))
+# # clipr::write_clip(f.deps)
 #
-#
-# system("cd ~/GitHub/MarkdownReports/; ls -a; open .Rbuildignore")
-#
-# Check package dependencies ------------------------------------------------
-depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
-
-(f.deps <- NCmisc::list.functions.in.file(filename = Package_FnP))
-# clipr::write_clip(f.deps)
-
-sink(file = depFile); print(f.deps); sink()
-p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
-write(x = p.deps, file = depFile, append = T)
-p.dep.declared <- trimws(unlist(strsplit(DESCRIPTION$Imports, ",")))
-p.dep.new <- sort(union( p.deps, p.dep.declared))
-# clipr::write_clip(p.dep.new)
+# sink(file = depFile); print(f.deps); sink()
+# p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
+# write(x = p.deps, file = depFile, append = T)
+# p.dep.declared <- trimws(unlist(strsplit(DESCRIPTION$Imports, ",")))
+# p.dep.new <- sort(union( p.deps, p.dep.declared))
+# # clipr::write_clip(p.dep.new)

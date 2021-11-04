@@ -2,10 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{error_bar}
 \alias{error_bar}
-\title{error_bar
-
-Put error bars on top of your bar plots. This functionality is now integrated into
-MarkdownReporter's wbarplot() function}
+\title{error_bar}
 \usage{
 error_bar(x, y, upper, lower = upper, width.whisker = 0.1, ...)
 }
@@ -24,8 +21,6 @@ error_bar(x, y, upper, lower = upper, width.whisker = 0.1, ...)
 arrows function (most of them should work).}
 }
 \description{
-error_bar
-
 Put error bars on top of your bar plots. This functionality is now integrated into
 MarkdownReporter's wbarplot() function
 }

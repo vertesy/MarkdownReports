@@ -2,67 +2,51 @@ $`c("package:graphics", "package:base")`
 [1] "plot"
 
 $`character(0)`
- [1] "."                            "brewer.pal"                  
- [3] "color_check"                  "filter_HP"                   
- [5] "filter_LP"                    "filter_MidPass"              
- [7] "grid.draw"                    "grid.newpage"                
- [9] "iprint"                       "llogit"                      
-[11] "llprint"                      "matlab.like"                 
-[13] "md.image.linker"              "md.LogSettingsFromList"      
-[15] "md.tableWriter.DF.w.dimnames" "na.omit.strip"               
-[17] "rich.colors"                  "stopif"                      
-[19] "superscript_in_plots"         "try.dev.off"                 
-[21] "unless.specified"             "venn.diagram"                
-[23] "vioplot"                      "whist"                       
-[25] "wplot_save_this"              "write_clip"                  
-[27] "write.simple.tsv"             "ww.assign_to_global"         
-[29] "ww.autoPlotName"              "ww.dev.copy"                 
-[31] "ww.FnP_parser"                "ww.md.image.link.parser"     
-[33] "ww.set.mdlink"                "ww.set.OutDir"               
-[35] "ww.set.path_of_report"        "ww.set.PlotName"             
-[37] "ww.ttl_field"                 "ww.variable.and.path.exists" 
+ [1] "."                "brewer.pal"       "grid.draw"        "grid.newpage"     "iprint"          
+ [6] "matlab.like"      "na.omit.strip"    "rich.colors"      "stopif"           "venn.diagram"    
+[11] "vioplot"          "write_clip"       "write.simple.tsv"
 
 $`package:base`
- [1] "abs"            "any"            "as.character"   "as.data.frame" 
- [5] "as.environment" "as.list"        "as.vector"      "assign"        
- [9] "basename"       "bquote"         "c"              "cat"           
-[13] "cbind"          "colnames"       "cut"            "date"          
-[17] "dim"            "dir.create"     "dir.exists"     "dirname"       
-[21] "duplicated"     "exists"         "file.exists"    "format"        
-[25] "get"            "getwd"          "gsub"           "invisible"     
-[29] "is.data.frame"  "is.list"        "is.matrix"      "is.na"         
-[33] "is.null"        "is.numeric"     "is.table"       "is.vector"     
-[37] "isTRUE"         "lapply"         "length"         "list"          
-[41] "log10"          "make.names"     "match.call"     "matrix"        
-[45] "max"            "mean"           "min"            "missing"       
-[49] "names"          "nchar"          "ncol"           "on.exit"       
-[53] "options"        "paste"          "paste0"         "print"         
-[57] "range"          "rbind"          "readLines"      "rep"           
-[61] "return"         "rm"             "rownames"       "sample"        
-[65] "sapply"         "seq"            "setwd"          "stopifnot"     
-[69] "strsplit"       "substitute"     "substr"         "sum"           
-[73] "summary"        "Sys.time"       "system"         "t"             
-[77] "table"          "try"            "unique"         "unlist"        
-[81] "which"          "write"          "writeLines"    
+ [1] "abs"            "any"            "as.character"   "as.data.frame"  "as.environment" "as.list"       
+ [7] "as.vector"      "assign"         "basename"       "bquote"         "c"              "cat"           
+[13] "cbind"          "colnames"       "cut"            "date"           "dim"            "dir.create"    
+[19] "dir.exists"     "dirname"        "duplicated"     "exists"         "file.exists"    "format"        
+[25] "get"            "getwd"          "gsub"           "invisible"      "is.data.frame"  "is.list"       
+[31] "is.matrix"      "is.na"          "is.null"        "is.numeric"     "is.table"       "is.vector"     
+[37] "isTRUE"         "lapply"         "length"         "list"           "log10"          "make.names"    
+[43] "match.call"     "matrix"         "max"            "mean"           "min"            "missing"       
+[49] "names"          "nchar"          "ncol"           "on.exit"        "options"        "paste"         
+[55] "paste0"         "print"          "range"          "rbind"          "readLines"      "rep"           
+[61] "return"         "rm"             "rownames"       "sample"         "sapply"         "seq"           
+[67] "setwd"          "stopifnot"      "strsplit"       "substitute"     "substr"         "sum"           
+[73] "summary"        "Sys.time"       "system"         "t"              "table"          "try"           
+[79] "unique"         "unlist"         "which"          "write"          "writeLines"    
 
 $`package:CodeAndRoll2`
-[1] "as.factor.numeric" "cv"                "iround"           
-[4] "modus"             "translate"        
+[1] "as.factor.numeric" "cv"                "iround"            "modus"             "translate"        
 
 $`package:devtools`
 [1] "session_info"
 
 $`package:graphics`
- [1] "abline"      "arrows"      "axis"        "Axis"        "barplot"    
- [6] "box"         "boxplot"     "bxp"         "grid"        "hist"       
-[11] "layout"      "lcm"         "legend"      "mtext"       "par"        
-[16] "pie"         "plot.new"    "plot.window" "points"      "rect"       
-[21] "stripchart"  "text"        "title"      
+ [1] "abline"      "arrows"      "axis"        "Axis"        "barplot"     "box"         "boxplot"     "bxp"        
+ [9] "grid"        "hist"        "layout"      "lcm"         "legend"      "mtext"       "par"         "pie"        
+[17] "plot.new"    "plot.window" "points"      "rect"        "stripchart"  "text"        "title"      
 
 $`package:grDevices`
-[1] "colorRampPalette" "dev.copy"         "dev.copy2pdf"    
-[4] "dev.off"          "heat.colors"      "pdf"             
+[1] "colorRampPalette" "dev.copy"         "dev.copy2pdf"     "dev.off"          "heat.colors"      "pdf"             
 [7] "rainbow"          "terrain.colors"   "topo.colors"     
+
+$`package:MarkdownReports`
+ [1] "color_check"                  "filter_HP"                    "filter_LP"                   
+ [4] "filter_MidPass"               "llogit"                       "llprint"                     
+ [7] "md.image.linker"              "md.LogSettingsFromList"       "md.tableWriter.DF.w.dimnames"
+[10] "superscript_in_plots"         "try.dev.off"                  "unless.specified"            
+[13] "whist"                        "wplot_save_this"              "ww.assign_to_global"         
+[16] "ww.autoPlotName"              "ww.dev.copy"                  "ww.FnP_parser"               
+[19] "ww.md.image.link.parser"      "ww.set.mdlink"                "ww.set.OutDir"               
+[22] "ww.set.path_of_report"        "ww.set.PlotName"              "ww.ttl_field"                
+[25] "ww.variable.and.path.exists" 
 
 $`package:methods`
 [1] "hasArg"
@@ -71,9 +55,8 @@ $`package:stats`
 [1] "cor"    "lm"     "median" "rnorm" 
 
 $`package:Stringendo`
-[1] "AddTrailingSlash"     "FixPath"              "kollapse"            
-[4] "kpp"                  "kpps"                 "percentage_formatter"
-[7] "ppp"                  "RemoveDoubleSlash"   
+[1] "AddTrailingSlash"     "FixPath"              "kollapse"             "kpp"                 
+[5] "kpps"                 "percentage_formatter" "ppp"                  "RemoveDoubleSlash"   
 
 $`package:utils`
 [1] "capture.output"  "globalVariables" "read.table"     
@@ -85,6 +68,7 @@ CodeAndRoll2
 devtools
 graphics
 grDevices
+MarkdownReports
 methods
 stats
 Stringendo

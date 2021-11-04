@@ -2,15 +2,11 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{try.dev.off}
 \alias{try.dev.off}
-\title{try.dev.off
-
-Tries to close R graphical devices without raising an error.}
+\title{try.dev.off}
 \usage{
 try.dev.off()
 }
 \description{
-try.dev.off
-
 Tries to close R graphical devices without raising an error.
 }
 \examples{

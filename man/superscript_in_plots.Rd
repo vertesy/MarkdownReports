@@ -2,11 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{superscript_in_plots}
 \alias{superscript_in_plots}
-\title{superscript_in_plots
-
-Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
-Create an expression with superscript for axis labels.
-Parsed when provided to xlab or ylab of a function.}
+\title{superscript_in_plots}
 \usage{
 superscript_in_plots(prefix = "n", sup = "k", suffix = "")
 }
@@ -18,8 +14,6 @@ superscript_in_plots(prefix = "n", sup = "k", suffix = "")
 \item{suffix}{String after the subscript.}
 }
 \description{
-superscript_in_plots
-
 Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
 Create an expression with superscript for axis labels.
 Parsed when provided to xlab or ylab of a function.

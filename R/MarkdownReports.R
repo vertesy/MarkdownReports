@@ -1,6 +1,6 @@
-## MarkdownReports.R
+## MarkdownReports.R   ------------------------------
 # author: Abel Vertesy
-# date: Oct 30 2021  ------------------------------
+# date: Oct 30 2021
 # source("~/Github/Packages/MarkdownReports/R/MarkdownReports.R")
 
 utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 'plotnameLastPlot',
@@ -35,18 +35,14 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 
 
 
-
-
 ######################################################################
 # Original functions
 ######################################################################
 # Setup --------------------------------------------------------------------------------------------
 
-
-# _________________________________________________________________________________________________
 #' @title setup_MarkdownReports
 #'
-#' Setup the markdown report file and the output directory, create a sub directory in "OutDir".
+#' @description Setup the markdown report file and the output directory, create a sub directory in "OutDir".
 #' Its name is stamped with the script name and the modification time. Create the "path_of_report"
 #' variable used by all log-writing and ~wplot functions.
 #'
@@ -121,10 +117,10 @@ setup_MarkdownReports <-
     OutDir = RemoveDoubleSlash(OutDir)
 
     ww.assign_to_global("OutDir", OutDir, 1)
-    iprint("All files will be saved under 'OutDir': ", OutDir)
+    Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
     path_of_report <- paste0(OutDir, scriptname, ".log.md")
     ww.assign_to_global("path_of_report", path_of_report, 1)
-    iprint("MarkdownReport location is stored in 'path_of_report': ",
+    Stringendo::iprint("MarkdownReport location is stored in 'path_of_report': ",
            path_of_report)
 
     if (nchar(title)) {
@@ -177,7 +173,7 @@ setup_MarkdownReports <-
     if (saveParameterList != FALSE) {
       if (exists(saveParameterList)) {
         md.LogSettingsFromList(saveParameterList)
-      } else { iprint ("No parameter list is defined in variable: ", saveParameterList,
+      } else { Stringendo::iprint ("No parameter list is defined in variable: ", saveParameterList,
                        ". It has to be a list of key:value pairs like: p$thr=10")}
     }
     ww.assign_to_global("b.defSize", b.defSize, 1)
@@ -192,7 +188,7 @@ setup_MarkdownReports <-
                         "Path to the Markdown report file is not defined in path_of_report", 1)
   }
 
-#' @title create_set_SubDir
+# create_set_SubDir
 #'
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
@@ -216,7 +212,7 @@ create_set_SubDir <-
 
     NewOutDir = AddTrailingSlash(NewOutDir) # add '/' if necessary
     NewOutDir = RemoveDoubleSlash(NewOutDir)
-    if (verbose) iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
+    if (verbose) Stringendo::iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
     if (!dir.exists(NewOutDir)) {
       dir.create(NewOutDir, showWarnings = FALSE)
     }
@@ -225,17 +221,17 @@ create_set_SubDir <-
     }
     if (define.ParentDir) {
       if (exists("ParentDir")) # If this function has been run already, you have "ParentDir", which will be overwritten.
-        if (verbose) iprint("ParentDir was defined as:", ParentDir)
-      if (verbose) iprint("ParentDir will be:", OutDir)
+        if (verbose) Stringendo::iprint("ParentDir was defined as:", ParentDir)
+      if (verbose) Stringendo::iprint("ParentDir will be:", OutDir)
       ww.assign_to_global("ParentDir", OutDir, 1)
     } #if
-    if (verbose) iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+    if (verbose) Stringendo::iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
     ww.assign_to_global("OutDir", NewOutDir, 1)
     ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
     # Flag that md.image.linker uses
   }
 
-#' @title create_set_Original_OutDir
+# create_set_Original_OutDir
 #'
 #' Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
 #' Set the output directory of the script, and set the "NewOutDir" variable that is
@@ -253,7 +249,7 @@ create_set_Original_OutDir <-
            b.Subdirname = FALSE,
            setDir = TRUE,
            verbose = TRUE) {
-    if (verbose) iprint("All files will be saved under the original OutDir: ", NewOutDir)
+    if (verbose) Stringendo::iprint("All files will be saved under the original OutDir: ", NewOutDir)
     if (!exists(NewOutDir)) {
       dir.create(NewOutDir, showWarnings = FALSE)
     }
@@ -265,7 +261,7 @@ create_set_Original_OutDir <-
   }
 
 
-#' @title continue_logging_markdown
+#' continue_logging_markdown
 #'
 #' Continue writing to an existing report file.
 #' @param b.scriptname Name of the report file.
@@ -277,7 +273,7 @@ continue_logging_markdown <- function(b.scriptname) {
   path = ww.set.OutDir()
   path_of_report <-
     kollapse(path, b.scriptname, ".log.md", print = FALSE)
-  iprint("Writing report in:", path_of_report)
+  Stringendo::iprint("Writing report in:", path_of_report)
   ww.assign_to_global("path_of_report", path_of_report, 1)
 
   BackupDir = kollapse(path,
@@ -291,7 +287,7 @@ continue_logging_markdown <- function(b.scriptname) {
   }
 }
 
-#' @title create_set_OutDir
+#' create_set_OutDir
 #'
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
@@ -307,7 +303,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
   OutDir = kollapse(..., print = FALSE)
   OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
   OutDir = RemoveDoubleSlash(OutDir)
-  if (verbose) iprint("All files will be saved under 'OutDir': ", OutDir)
+  if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE)
   }
@@ -324,7 +320,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
 
 #' @title wplot_save_this
 #'
-#' Save the currently active graphic device (for complicated plots).  Insert links to your markdown
+#' @description Save the currently active graphic device (for complicated plots).  Insert links to your markdown
 #' report, set by "path_of_report". Name the file by naming the variable!
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param OverwritePrevPDF Overwrite previous PDF image (as name stored in plotnameLastPlot).
@@ -363,7 +359,7 @@ wplot_save_this <-
   }
 
 
-#' @title wplot_save_pheatmap
+#' wplot_save_pheatmap
 #'
 #' Save pheatmap object. Modified from:
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
@@ -398,7 +394,7 @@ wplot_save_pheatmap <-
   }
 
 
-#' @title wplot
+#' wplot
 #'
 #' Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -574,7 +570,7 @@ wplot <-
 
 
 
-#' @title wscatter.fill
+#' wscatter.fill
 #'
 #' A scatterplot with color gradient and color legend. Modified from:
 #' http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
@@ -762,7 +758,7 @@ wscatter.fill <-
   }
 
 
-#' @title wbarplot
+#' wbarplot
 #'
 #' Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -953,7 +949,7 @@ wbarplot <-
 
 
 
-#' @title whist
+#' whist
 #'
 #' Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1085,7 +1081,7 @@ whist <-
         )
       }
     } else {
-      iprint(variable, " IS EMPTY")
+      Stringendo::iprint(variable, " IS EMPTY")
     }
     ww.assign_to_global("plotnameLastPlot", fname, 1)
     if (mdlink & savefile) {
@@ -1122,7 +1118,7 @@ whist <-
 
 
 
-#' @title wboxplot
+#' wboxplot
 #'
 #' Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1213,7 +1209,7 @@ wboxplot <-
 
 
 
-#' @title wpie
+#' wpie
 #'
 #' Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1300,7 +1296,7 @@ wpie <-
 
 
 
-#' @title wstripchart
+#' wstripchart
 #'
 #' Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1452,8 +1448,8 @@ wstripchart <-
     }
   }
 
-# _________________________________________________________________________________________________
-#' @title wstripchart_list
+
+#' wstripchart_list
 #'
 #' Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual
 #' coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a
@@ -1602,7 +1598,7 @@ wstripchart_list <- function(yourlist,
 
 
 
-#' @title wvioplot_list
+#' wvioplot_list
 #'
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
 #' If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,
@@ -1969,7 +1965,7 @@ wvenn <-
 
 #' @title wbarplot_dfCol
 #'
-#' wbarplot for a column of a data frame.
+#' @description wbarplot for a column of a data frame.
 #'
 #' @param df Input data frame to be plotted
 #' @param ... Pass any other parameter of the corresponding
@@ -2103,7 +2099,7 @@ whist_dfCol <-
 
 #' @title pdfA4plot_on
 #'
-#' Create A4 PDFs to plot multiple subplots in one file
+#' @description Create A4 PDFs to plot multiple subplots in one file
 #' @param pname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding
 #' plotting function (most of them should work).
@@ -2146,7 +2142,7 @@ pdfA4plot_on <-
       onefile = one_file
     )
     par(mfrow = c(rows, cols), bg = "white")
-    iprint(
+    Stringendo::iprint(
       " ----  Don't forget to call the pair of this function to finish
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
@@ -2200,7 +2196,7 @@ pdfA4plot_on.layout <-
     layout(layout_mat)
     # par(mar = c(3, 3, 0, 0))
     print(layout_mat)
-    iprint(
+    Stringendo::iprint(
       " ----  Don't forget to call the pair of this function to finish
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
@@ -2243,7 +2239,7 @@ pdfA4plot_off <- function() {
 
 #' @title error_bar
 #'
-#' Put error bars on top of your bar plots. This functionality is now integrated into
+#' @description Put error bars on top of your bar plots. This functionality is now integrated into
 #' MarkdownReporter's wbarplot() function
 #' @param x X-position on the plot.
 #' @param y Y-position on the plot.
@@ -2339,10 +2335,10 @@ wlegend <-
     LN = length(fNames)
     if (ttl.by.varname & is.null(title))
       title = substitute(NamedColorVec)
-    stopif((LN != LF & missing(legend)),
+    Stringendo::stopif((LN != LF & missing(legend)),
            message = "The color vector (NamedColorVec) has less names than entries /
            the variable 'legend' is not provided.")
-    # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
+    # Stringendo::stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
     legend = if (LN == LF & missing(legend))
       fNames
     else
@@ -2566,7 +2562,7 @@ wLinRegression <-
 
 #' @title try.dev.off
 #'
-#' Tries to close R graphical devices without raising an error.
+#' @description Tries to close R graphical devices without raising an error.
 #' @export
 #' @examples try.dev.off ()
 
@@ -2596,7 +2592,7 @@ subscript_in_plots <-
 
 #' @title superscript_in_plots
 #'
-#' Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
+#' @description Returns a formatted string that you feed to main, xlab or ylab parameters of a plot
 #' Create an expression with superscript for axis labels.
 #' Parsed when provided to xlab or ylab of a function.
 #' @param prefix String before the superscript.
@@ -2617,7 +2613,7 @@ superscript_in_plots <- function(prefix = 'n',
 
 #' @title wcolorize
 #'
-#' Generate color palettes. Input: a vector with categories, can be numbers or strings.
+#' @description Generate color palettes. Input: a vector with categories, can be numbers or strings.
 #' Handles repeating values. Output: color vector of equal length as input.
 #' Optionally it can ouput a list where an extra element lists the
 #' categories (simply using unique would remove the names). See example.
@@ -2634,7 +2630,6 @@ superscript_in_plots <- function(prefix = 'n',
 #'
 #' @export
 #' @examples wcolorize (vector = c(1, 1, 1:6), ReturnCategoriesToo = TRUE, show = TRUE)
-#' @import ReadWriter write.simple.tsv
 
 wcolorize  <-
   function(vector = c(1, 1, 1:6),
@@ -2687,7 +2682,7 @@ wcolorize  <-
 
 #' @title color_check
 #'
-#' Display the colors encoded by the numbers / color-ID-s you pass on to this function
+#' @description Display the colors encoded by the numbers / color-ID-s you pass on to this function
 #' @param ... Additional parameters.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -2711,6 +2706,7 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 
 
 # Printing to the markdown file and to the screen --------------------------------------------------
+
 
 #' llprint
 #'
@@ -2851,6 +2847,7 @@ llwrite_list <- function(yourlist, printName = "self") {
 # Writing out tabular data / importing mdrkdown ---------------------------------------------------
 
 
+
 #' md.import
 #'
 #' Import and concatenated an external markdown or text file to the report
@@ -2865,7 +2862,7 @@ md.import <- function(from.file, to.file = path_of_report) {
   linez = readLines(from.file)
   if (ww.variable.and.path.exists(path_of_report,
                                   alt.message = "Log path and filename is not defined in path_of_report")) {
-    iprint(length(linez),"lines from",basename(from.file) ,
+    Stringendo::iprint(length(linez),"lines from",basename(from.file) ,
            "are concatenated to:",basename(path_of_report))
   }
   for (LogEntry in linez) {
@@ -2944,7 +2941,7 @@ md.List2Table <- function(parameterlist,
 #' @export
 #' @examples df = matrix(1:9,3); rownames(df) = 6:8;rownames(df) = 9:11;
 #' md.tableWriter.DF.w.dimnames (df, percentify = FALSE, title_of_table = NA)
-#' @import ReadWriter write.simple.tsv
+
 
 md.tableWriter.DF.w.dimnames <-
   function(df,
@@ -3019,10 +3016,9 @@ md.tableWriter.DF.w.dimnames <-
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
+#' @export
 #' @examples x = -1:2; names(x) = LETTERS[1:4]
 #' md.tableWriter.VEC.w.names (NamedVector = x, percentify = FALSE, title_of_table = NA)
-#' @export
-#' @import ReadWriter write.simple.tsv
 
 md.tableWriter.VEC.w.names <-
   function(NamedVector,
@@ -3146,7 +3142,7 @@ md.import.table <-
       )
     }
     md.tableWriter.DF.w.dimnames(importedtable, title_of_table = TTL)
-    iprint("The follwoing table is included in the markdown report:")
+    Stringendo::iprint("The follwoing table is included in the markdown report:")
     return(importedtable)
   }
 
@@ -3479,7 +3475,7 @@ ww.variable.and.path.exists <- function(path = path_of_report, alt.message = NUL
     }
   } else {
     if (is.null(alt.message) ) {
-      iprint("Variable", Variable.Name, "does not exist.")
+      Stringendo::iprint("Variable", Variable.Name, "does not exist.")
     } else {
       cat(alt.message)
     }
@@ -3507,7 +3503,7 @@ ww.variable.exists.and.true <- function(var, alt.message = NULL) {
     }
   } else {
     if (is.null(alt.message) ) {
-      iprint("Variable", Variable.Name, "does not exist.")
+      Stringendo::iprint("Variable", Variable.Name, "does not exist.")
     } else {
       cat(alt.message)
     }
@@ -3533,8 +3529,8 @@ ww.variable.exists.and.true <- function(var, alt.message = NULL) {
 #' @examples ww.set.OutDir()
 
 ww.set.OutDir <- function(dir = OutDir) {
-  if (!exists("OutDir")) iprint("OutDir not defined !!! Saving in working directory."); dir = getwd();
-  if (!dir.exists(dir)) iprint("OutDir defined, but folder does not exist!!! Saving in working directory.")
+  if (!exists("OutDir")) Stringendo::iprint("OutDir not defined !!! Saving in working directory."); dir = getwd();
+  if (!dir.exists(dir)) Stringendo::iprint("OutDir defined, but folder does not exist!!! Saving in working directory.")
   NewOutDir =
     if (exists("OutDir") & dir.exists(dir)) { dir
     } else {     paste0(getwd(), "/", collapse = "")}
@@ -3555,7 +3551,7 @@ ww.set.path_of_report <- function() {
     if (ww.variable.and.path.exists(path_of_report)) {
       path_of_report
     } else {
-      iprint("path_of_report is not defined! Setting it to Analysis.md in the working directory:",
+      Stringendo::iprint("path_of_report is not defined! Setting it to Analysis.md in the working directory:",
              getwd(),"/Analysis.md")
       paste0(getwd(),"/Analysis.md", collapse = "")
     }
@@ -3574,7 +3570,7 @@ ww.set.PlotName <- function() {
     if (exists("plotnameLastPlot")) {
       plotnameLastPlot
     } else {
-      iprint("plotnameLastPlot not defined! Naming file after the date and time.")
+      Stringendo::iprint("plotnameLastPlot not defined! Naming file after the date and time.")
       paste0(ww.autoPlotName(), ".pdf", collapse = "")
     }
   print(NewPlotname)
@@ -3719,7 +3715,7 @@ ww.dev.copy <- function(PNG_ = FALSE,
 #' @export
 
 ww.assign_to_global <- function(name, value,  pos = 1, verbose = TRUE){
-  if (verbose) iprint(name, "defined as:", value) # , "is a new global environment variable"
+  if (verbose) Stringendo::iprint(name, "defined as:", value) # , "is a new global environment variable"
   assign(name, value, envir=as.environment(pos) )
 }
 

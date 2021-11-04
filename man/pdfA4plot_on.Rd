@@ -2,9 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{pdfA4plot_on}
 \alias{pdfA4plot_on}
-\title{pdfA4plot_on
-
-Create A4 PDFs to plot multiple subplots in one file}
+\title{pdfA4plot_on}
 \usage{
 pdfA4plot_on(
   pname = date(),
@@ -42,8 +40,6 @@ set by "path_of_report".}
 \item{title}{Manually set the title field of the PDF file}
 }
 \description{
-pdfA4plot_on
-
 Create A4 PDFs to plot multiple subplots in one file
 }
 \examples{

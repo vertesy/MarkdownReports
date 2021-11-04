@@ -2,13 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{wcolorize}
 \alias{wcolorize}
-\title{wcolorize
-
-Generate color palettes. Input: a vector with categories, can be numbers or strings.
-Handles repeating values. Output: color vector of equal length as input.
-Optionally it can ouput a list where an extra element lists the
-categories (simply using unique would remove the names). See example.
-Some color scale depend on packages "colorRamps", or "gplots".}
+\title{wcolorize}
 \usage{
 wcolorize(
   vector = c(1, 1, 1:6),
@@ -36,8 +30,6 @@ wcolorize(
 or "rich" for gplots::rich.colors, or  "matlab" for colorRamps::matlab.like.}
 }
 \description{
-wcolorize
-
 Generate color palettes. Input: a vector with categories, can be numbers or strings.
 Handles repeating values. Output: color vector of equal length as input.
 Optionally it can ouput a list where an extra element lists the
