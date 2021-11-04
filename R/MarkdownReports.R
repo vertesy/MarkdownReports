@@ -2995,7 +2995,7 @@ md.tableWriter.DF.w.dimnames <-
       print("NOT LOGGED: Log path and filename is not defined in FullPath")
     }
     if (WriteOut) {
-      write.simple.tsv(df, ManualName = paste0(substitute(df), ".tsv"))
+      ReadWriter::write.simple.tsv(df, ManualName = paste0(substitute(df), ".tsv"))
     }
   }
 
@@ -3066,7 +3066,7 @@ md.tableWriter.VEC.w.names <-
       print("NOT LOGGED: Log path and filename is not defined in FullPath")
     }
     if (WriteOut) {
-      write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv") )
+      ReadWriter::write.simple.tsv(NamedVector, ManualName = paste0(substitute(NamedVector), ".tsv") )
     }
     if (print2screen) {
       cat(b, "\n")
