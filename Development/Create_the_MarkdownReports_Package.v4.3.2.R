@@ -6,23 +6,16 @@
 rm(list = ls(all.names = TRUE));
 try(dev.off(), silent = TRUE)
 
-# install.packages("devtools")
 # Functions ------------------------
-# devtools::install_github(repo = "vertesy/MarkdownReports/MarkdownReports")
-try (source('~/GitHub/Packages/CodeAndRoll/CodeAndRoll.R'),silent= FALSE)
+# install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org") # install.packages("devtools")
+require("devtools")
+require("roxygen2")
+require("stringr")
 
-# irequire("devtools")
-# install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org")
-irequire("devtools")
-irequire("roxygen2")
-irequire("stringr")
+# devtools::install_github(repo = "vertesy/CodeAndRoll2")
+require('CodeAndRoll2')
+require('Stringendo')
 
-kollapse <-function(..., print = TRUE) {
-if (print == TRUE) {
-    print(paste0(c(...), collapse = ""))
-  }
-  paste0(c(...), collapse = "")
-}
 
 # Setup ------------------------
 PackageName = 	"MarkdownReports"
@@ -50,6 +43,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     , "Version" = "4.3.4"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
+    , "Depends" =  "Stringendo"
     , "Imports" = "stats, methods, sm, graphics, grDevices, gplots, RColorBrewer, colorRamps, clipr, vioplot, VennDiagram, sessioninfo"
     # , "Suggests" = ""
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
@@ -118,3 +112,14 @@ check(RepositoryDir, cran = TRUE)
 #
 # system("cd ~/GitHub/MarkdownReports/; ls -a; open .Rbuildignore")
 #
+# Check package dependencies ------------------------------------------------
+depFile = paste0(RepositoryDir, 'Development/Dependencies.R')
+
+(f.deps <- NCmisc::list.functions.in.file(filename = Package_FnP))
+# clipr::write_clip(f.deps)
+
+sink(file = depFile); print(f.deps); sink()
+p.deps <- gsub(x = names(f.deps), pattern = 'package:', replacement = '')
+write(x = p.deps, file = depFile, append = T)
+
+
