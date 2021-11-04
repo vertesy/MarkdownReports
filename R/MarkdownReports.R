@@ -192,7 +192,7 @@ setup_MarkdownReports <-
                         "Path to the Markdown report file is not defined in path_of_report", 1)
   }
 
-# create_set_SubDir
+#' @title create_set_SubDir
 #'
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
@@ -235,7 +235,7 @@ create_set_SubDir <-
     # Flag that md.image.linker uses
   }
 
-# create_set_Original_OutDir
+#' @title create_set_Original_OutDir
 #'
 #' Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
 #' Set the output directory of the script, and set the "NewOutDir" variable that is
@@ -265,7 +265,7 @@ create_set_Original_OutDir <-
   }
 
 
-#' continue_logging_markdown
+#' @title continue_logging_markdown
 #'
 #' Continue writing to an existing report file.
 #' @param b.scriptname Name of the report file.
@@ -291,7 +291,7 @@ continue_logging_markdown <- function(b.scriptname) {
   }
 }
 
-#' create_set_OutDir
+#' @title create_set_OutDir
 #'
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
@@ -363,7 +363,7 @@ wplot_save_this <-
   }
 
 
-#' wplot_save_pheatmap
+#' @title wplot_save_pheatmap
 #'
 #' Save pheatmap object. Modified from:
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
@@ -398,7 +398,7 @@ wplot_save_pheatmap <-
   }
 
 
-#' wplot
+#' @title wplot
 #'
 #' Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -574,7 +574,7 @@ wplot <-
 
 
 
-#' wscatter.fill
+#' @title wscatter.fill
 #'
 #' A scatterplot with color gradient and color legend. Modified from:
 #' http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend
@@ -762,7 +762,7 @@ wscatter.fill <-
   }
 
 
-#' wbarplot
+#' @title wbarplot
 #'
 #' Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -953,7 +953,7 @@ wbarplot <-
 
 
 
-#' whist
+#' @title whist
 #'
 #' Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1122,7 +1122,7 @@ whist <-
 
 
 
-#' wboxplot
+#' @title wboxplot
 #'
 #' Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1213,7 +1213,7 @@ wboxplot <-
 
 
 
-#' wpie
+#' @title wpie
 #'
 #' Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1300,7 +1300,7 @@ wpie <-
 
 
 
-#' wstripchart
+#' @title wstripchart
 #'
 #' Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
 #' link in the markdown report, set by "path_of_report". The .png version is not created, only the
@@ -1453,7 +1453,7 @@ wstripchart <-
   }
 
 # _________________________________________________________________________________________________
-#' wstripchart_list
+#' @title wstripchart_list
 #'
 #' Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual
 #' coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a
@@ -1602,7 +1602,7 @@ wstripchart_list <- function(yourlist,
 
 
 
-#' wvioplot_list
+#' @title wvioplot_list
 #'
 #' Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
 #' If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,
