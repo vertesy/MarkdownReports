@@ -82,7 +82,7 @@ document()
 
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
-install(RepositoryDir)
+install(RepositoryDir, upgrade = F)
 # require("MarkdownReports")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
