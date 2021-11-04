@@ -7,6 +7,23 @@ MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles 
 
 ## News
 
+### Version 4.3.2 is released
+
+In a major work to form installable R-packages from all my function libraries, I reorganized the codebase as below:
+
+<img width="915" alt="Package Reorganisation Diagram" src="https://user-images.githubusercontent.com/5101911/140038110-b0e843cf-10c7-45c7-87dc-0525fafb0f57.png">
+
+MarkdownReports v4.3.2 Relies on
+- [Stringendo](https://github.com/vertesy/Stringendo)
+- [ReadWriter](https://github.com/vertesy/ReadWriter)
+- [CodeAndRoll2](https://github.com/vertesy/CodeAndRoll2)
+
+... and provides functions for
+- [ggExpress](https://github.com/vertesy/ggExpress)
+- [SeuratUtils](https://github.com/vertesy/SeuratUtils).
+
+
+
 ### Version 4.1.0 is ready and installed by the default. 
 
 1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
