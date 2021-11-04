@@ -42,6 +42,8 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 ######################################################################
 # Setup --------------------------------------------------------------------------------------------
 
+
+# _________________________________________________________________________________________________
 #' @title setup_MarkdownReports
 #'
 #' Setup the markdown report file and the output directory, create a sub directory in "OutDir".
@@ -1450,7 +1452,7 @@ wstripchart <-
     }
   }
 
-
+# _________________________________________________________________________________________________
 #' wstripchart_list
 #'
 #' Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual
