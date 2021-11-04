@@ -2632,6 +2632,7 @@ superscript_in_plots <- function(prefix = 'n',
 #'
 #' @export
 #' @examples wcolorize (vector = c(1, 1, 1:6), ReturnCategoriesToo = TRUE, show = TRUE)
+#' @import ReadWriter write.simple.tsv
 
 wcolorize  <-
   function(vector = c(1, 1, 1:6),
@@ -2941,7 +2942,7 @@ md.List2Table <- function(parameterlist,
 #' @export
 #' @examples df = matrix(1:9,3); rownames(df) = 6:8;rownames(df) = 9:11;
 #' md.tableWriter.DF.w.dimnames (df, percentify = FALSE, title_of_table = NA)
-
+#' @import ReadWriter write.simple.tsv
 
 md.tableWriter.DF.w.dimnames <-
   function(df,
@@ -3016,9 +3017,10 @@ md.tableWriter.DF.w.dimnames <-
 #' @param title_of_table Title above the table (in the markdown report).
 #' @param print2screen Print the markdown formatted table to the sceen.
 #' @param WriteOut Write the table into a TSV file.
-#' @export
 #' @examples x = -1:2; names(x) = LETTERS[1:4]
 #' md.tableWriter.VEC.w.names (NamedVector = x, percentify = FALSE, title_of_table = NA)
+#' @export
+#' @import ReadWriter write.simple.tsv
 
 md.tableWriter.VEC.w.names <-
   function(NamedVector,
