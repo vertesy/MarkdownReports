@@ -1,6 +1,6 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.3.3
+Version: 4.5.0
 Authors@R: 
     person("Abel", "Vertesy", , "abel.vertesy@imba.oeaw.ac.at", role = c("aut", "cre"))
 Author: Abel Vertesy <abel.vertesy@imba.oeaw.ac.at> [aut, cre]
@@ -20,26 +20,27 @@ License: GPL-3 + file LICENSE
 BugReports: https://github.com/vertesy/MarkdownReports/issues
 Depends: 
     CodeAndRoll2,
+    MarkdownHelpers,
     Stringendo
 Imports: 
-    RColorBrewer,
-    ReadWriter,
-    VennDiagram,
     base,
     clipr,
     colorRamps,
     devtools,
     gplots,
-    grDevices,
     graphics,
+    grDevices,
     methods,
+    RColorBrewer,
+    ReadWriter,
     sessioninfo,
     sm,
     stats,
     utils,
+    VennDiagram,
     vioplot
 Encoding: UTF-8
-Packaged: 2021-11-04 23:56:09
+Packaged: 2021-11-05 21:15:02
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

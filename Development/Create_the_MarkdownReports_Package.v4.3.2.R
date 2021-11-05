@@ -43,10 +43,10 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version" = "4.3.3"
+    , "Version" = "4.5.0"
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
-    , "Depends" =  "CodeAndRoll2, Stringendo"
+    , "Depends" =  "CodeAndRoll2, Stringendo, MarkdownHelpers"
     , "Imports" = "base, clipr, colorRamps, devtools, gplots, graphics, grDevices,  methods, ReadWriter, RColorBrewer, sessioninfo, sm, stats, utils, VennDiagram, vioplot"
     # , "Suggests" = ""
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
