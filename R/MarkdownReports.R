@@ -2593,10 +2593,9 @@ superscript_in_plots <- function(prefix = 'n',
 
 
 
-
-#' ww.dev.copy
+#' @title ww.dev.copy
 #'
-#' Parser for dev.copy to save as PDF or PNG
+#' @description Parser for dev.copy to save as PDF or PNG
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param PNG_res default 100
 #' @param w_ Width of the saved pdf image, in inches.
