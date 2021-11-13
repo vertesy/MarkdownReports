@@ -2087,7 +2087,7 @@ whist_dfCol <-
 #' @title pdfA4plot_on
 #'
 #' @description Create A4 PDFs to plot multiple subplots in one file
-#' @param pname Title of the plot (main parameter) and also the name of the file.
+#' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding
 #' plotting function (most of them should work).
 #' @param w Width of the saved pdf image, in inches. c("A4" = 8.27, "1col.nature" = 3.50,
@@ -2102,12 +2102,12 @@ whist_dfCol <-
 #' @param title Manually set the title field of the PDF file
 #' @export
 #' @import graphics grDevices
-#' @examples pdfA4plot_on(pname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
+#' @examples pdfA4plot_on(plotname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
 #'  hist(10+rnorm(100)); pdfA4plot_off()
 
 
 pdfA4plot_on <-
-  function(pname = date(),
+  function(plotname = date(),
            ...,
            w = unless.specified("b.defSize.fullpage", 8.27),
            h = 11.69,
@@ -2115,8 +2115,8 @@ pdfA4plot_on <-
            cols = rows - 1,
            one_file = TRUE,
            mdlink = ww.set.mdlink(),
-           title = ww.ttl_field(pname)) {
-    fname = ww.FnP_parser(pname, "pdf")
+           title = ww.ttl_field(plotname)) {
+    fname = ww.FnP_parser(plotname, "pdf")
     try.dev.off()
     ww.assign_to_global("b.mfrow_def", par("mfrow"), 1)
     ww.assign_to_global("b.bg_def", par("bg"), 1)
@@ -2134,7 +2134,7 @@ pdfA4plot_on <-
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
     if (mdlink) {
-      md.image.linker(fname_wo_ext = pname)
+      md.image.linker(fname_wo_ext = plotname)
     }
   }
 
@@ -2142,7 +2142,7 @@ pdfA4plot_on <-
 #'
 #' @description Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row.
 #' Fancy layout version of pdfA4plot_on()
-#' @param pname Title of the plot (main parameter) and also the name of the file.
+#' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param ... Pass any other parameter of the corresponding plotting function
 #' (most of them should work).
 #' @param layout_mat A matrix of plot layout. Default: rbind(1, c(2, 3), 4:5)
@@ -2156,20 +2156,20 @@ pdfA4plot_on <-
 #' @export
 #' @import graphics grDevices
 #'
-#' @examples pdfA4plot_on.layout(pname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
+#' @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
 
 pdfA4plot_on.layout <-
-  function(pname = date(),
+  function(plotname = date(),
            ...,
            layout_mat = rbind(1, c(2, 3), 4:5),
            w = unless.specified("b.defSize.fullpage", 8.27),
            h = 11.69,
            one_file = TRUE,
            mdlink = ww.set.mdlink(),
-           title = ww.ttl_field(pname)) {
-    fname = ww.FnP_parser(pname, "pdf")
+           title = ww.ttl_field(plotname)) {
+    fname = ww.FnP_parser(plotname, "pdf")
     try.dev.off()
     ww.assign_to_global("b.bg_def", par("bg"), 1)
     ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
@@ -2188,7 +2188,7 @@ pdfA4plot_on.layout <-
       plotting in the A4 pdf.: pdfA4plot_off ()"
     )
     if (mdlink) {
-      md.image.linker(fname_wo_ext = pname)
+      md.image.linker(fname_wo_ext = plotname)
     }
   }
 
@@ -2199,7 +2199,7 @@ pdfA4plot_on.layout <-
 #' @export
 #' @import graphics grDevices
 #' @importFrom clipr write_clip
-#' @examples pdfA4plot_on.layout(pname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
+#' @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
 pdfA4plot_off <- function() {
