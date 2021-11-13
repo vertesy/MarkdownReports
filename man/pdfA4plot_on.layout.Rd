@@ -5,18 +5,18 @@
 \title{pdfA4plot_on.layout}
 \usage{
 pdfA4plot_on.layout(
-  pname = date(),
+  plotname = date(),
   ...,
   layout_mat = rbind(1, c(2, 3), 4:5),
   w = unless.specified("b.defSize.fullpage", 8.27),
   h = 11.69,
   one_file = TRUE,
   mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(pname)
+  title = ww.ttl_field(plotname)
 )
 }
 \arguments{
-\item{pname}{Title of the plot (main parameter) and also the name of the file.}
+\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{...}{Pass any other parameter of the corresponding plotting function
 (most of them should work).}
@@ -40,6 +40,6 @@ Create A4 PDFs to plot multiple subplots in one file with custom numbers of colu
 Fancy layout version of pdfA4plot_on()
 }
 \examples{
-pdfA4plot_on.layout(pname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
+pdfA4plot_on.layout(plotname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 hist(10+rnorm(100)); pdfA4plot_off()
 }

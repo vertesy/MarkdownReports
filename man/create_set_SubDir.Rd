@@ -2,8 +2,7 @@
 % Please edit documentation in R/MarkdownReports.R
 \name{create_set_SubDir}
 \alias{create_set_SubDir}
-\title{Create or set the output directory of the script, and set the "NewOutDir" variable that is
-used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.}
+\title{Create_set_SubDir}
 \usage{
 create_set_SubDir(..., define.ParentDir = TRUE, setDir = TRUE, verbose = TRUE)
 }

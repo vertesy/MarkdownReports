@@ -5,7 +5,7 @@
 \title{pdfA4plot_on}
 \usage{
 pdfA4plot_on(
-  pname = date(),
+  plotname = date(),
   ...,
   w = unless.specified("b.defSize.fullpage", 8.27),
   h = 11.69,
@@ -13,11 +13,11 @@ pdfA4plot_on(
   cols = rows - 1,
   one_file = TRUE,
   mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(pname)
+  title = ww.ttl_field(plotname)
 )
 }
 \arguments{
-\item{pname}{Title of the plot (main parameter) and also the name of the file.}
+\item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
 \item{...}{Pass any other parameter of the corresponding
 plotting function (most of them should work).}
@@ -43,6 +43,6 @@ set by "path_of_report".}
 Create A4 PDFs to plot multiple subplots in one file
 }
 \examples{
-pdfA4plot_on(pname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
+pdfA4plot_on(plotname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
  hist(10+rnorm(100)); pdfA4plot_off()
 }
