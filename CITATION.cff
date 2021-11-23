@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: vertesy/MarkdownReports:  MarkdownReports 4.3.2
+version: v4.3.2
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Abel
+    family-names: Vertesy
+    email: abel.vertesy@imba.oeaw.ac.at
+    affiliation: IMBA
+    orcid: 'https://orcid.org/0000-0001-6075-5702'
