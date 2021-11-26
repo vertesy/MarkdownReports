@@ -1,44 +1,37 @@
 
  _cite via:_ [![DOI](https://zenodo.org/badge/20391/vertesy/MarkdownReports.svg)](https://zenodo.org/badge/latestdoi/20391/vertesy/MarkdownReports)
 
-# MarkdownReportsType Less, Plot More.
+# MarkdownReports – Type Less, Plot More.
 MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles an report in markdown from those.
+
 
 
 ## News
 
-### Version 4.3.2 is released
+### Version 4.5.2
 
 In a major work to form installable R-packages from all my function libraries, I reorganized the codebase as below:
 
-<img width="915" alt="Package Reorganisation Diagram" src="https://user-images.githubusercontent.com/5101911/140038110-b0e843cf-10c7-45c7-87dc-0525fafb0f57.png">
 
-MarkdownReports v4.3.2 Relies on
+
+<img width="1005" alt="R-package Tree" src="https://user-images.githubusercontent.com/5101911/143560128-065d8a49-0283-4a3a-9448-540fa424d0ef.png">
+
+
+
+MarkdownReports depends on
+
 - [Stringendo](https://github.com/vertesy/Stringendo)
 - [ReadWriter](https://github.com/vertesy/ReadWriter)
 - [CodeAndRoll2](https://github.com/vertesy/CodeAndRoll2)
+- [MarkdownHelpers](https://github.com/vertesy/MarkdownHelpers)
 
 ... and provides functions for
 - [ggExpress](https://github.com/vertesy/ggExpress)
-- [SeuratUtils](https://github.com/vertesy/SeuratUtils).
+- [SeuratUtils](https://github.com/vertesy/SeuratUtils)
 
 
 
-### Version 4.1.0 is ready and installed by the default. 
-
-1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
-2. See development version at: https://github.com/vertesy/MarkdownReportsDev
-
-
-### New features:
-
-- **Formatted session info Sessioninfo**
-- Updated dependencies
-- Many functions are more stable and versatile
-
-In case you find a bug, please report. Try the [development version](https://github.com/vertesy/MarkdownReportsDev/) or a legacy version. **Old versions** are under `MarkdownReports.LEGACY.VERSION.X.X.X`.
-
-
+<br>
 
 ## What is ***MarkdownReports***?
 
@@ -51,6 +44,8 @@ MarkdownReports is a set of **R** functions that allows you to generate precise 
 - Link & display your figures automatically inside your report, right there where they are needed.
 - Version your findings, annotating which parameters were used to reach certain results.
 - Share your report with others via email, Github or a personal website.
+
+<br>
 
 
 ## Why did I make it & why you might like it too?
@@ -66,6 +61,8 @@ I often have to...
 
 For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
 
+<br>
+
 ## Make figures quickly
 
 - The philosophy of the package is to ***type little*** (but draw and save correctly annotated figures).
@@ -75,7 +72,7 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
 - All plot functions start with **w**, followed by the **base plot name**, such as `wplot()`,  `wbarplot()`, `wpie()`, `wboxplot()`,but also `wvenn()`, `wvioplot_list()`,`wviostripchart_list()`.
 - See more under: ***Discover 4 Yourself!*** (Below)
 
-
+<br>
 
 ## Write a report on the fly
 
@@ -89,6 +86,8 @@ For all of the above, my solution is MarkdownReports. I think its better than ot
   - You **parse your report on the fly** from **directly your working script**. (
   - *In Rmarkdown you would make a separate cleaned-up a script, that you then knit as a separate step.*
 - **No hassle of** executing computation in **isolated code-blocks** (and importing all relevant variables there). *Your code is also a lot easier to follow because it is not split up in blocks.*
+
+<br>
 
 ### Where does ***MarkdownReports*** stand out?
 
@@ -125,30 +124,49 @@ and your report will have the summary: ***30.7 % or 614 of 2000 entries in GeneE
 - It is all achieved in ~ 1600 lines of well documented code compiled into a proper R-package.
 - 
 
-
 <br><br>
+
 ## Installation
 
-Install directly from **GitHub** via **devtools** with one R command:
+You can install all of them directly from **GitHub** via **devtools** with one R command:
 
-    # install.packages("devtools"); # If you don't have it.
-    require("devtools")
-    devtools::install_github(repo = "vertesy/MarkdownReports")
+```R
+# install.packages("devtools"); # If you don't have it.
+require("devtools")
+
+# Install dependencies
+devtools::install_github(repo = "vertesy/Stringendo", upgrade = F)
+devtools::install_github(repo = "vertesy/CodeAndRoll2", upgrade = F)
+devtools::install_github(repo = "vertesy/ReadWriter", upgrade = F)
+devtools::install_github(repo = "vertesy/MarkdownHelpers", upgrade = F)
+
+# Install MarkdownReports
+devtools::install_github(repo = "vertesy/Markdownreports", upgrade = F)
+
+```
+
+
 
 ...then simply load the package:
 
-    require("MarkdownReports")
+```R
+require("MarkdownReports")
+```
 
 Alternatively, you simply source it from the web. 
 *This way function help will not work, and you will have no local copy of the code on your hard drive.*
 
-    source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/R/MarkdownReports.R")
+```R
+source("https://raw.githubusercontent.com/vertesy/MarkdownReports/master/R/MarkdownReports.R")
+```
 
 <br><br>
 
 ### Troubleshooting
 
 *If you encounter a **bug**, something doesn't work or unclear, please let me know by raising an issue on [MarkdownReports](https://github.com/vertesy/MarkdownReports/issues) – Please check if it has been asked.*
+
+<br>
 
 ## Discover 4 Yourself!
 
@@ -172,44 +190,7 @@ Alternatively, you simply source it from the web.
 
 
 
-## Older News
-
-[3.1.1  is under legacy now]
-
-### Version 3.1.1 is ready and installed by the default. 
-
-1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
-2. See development version at: https://github.com/vertesy/MarkdownReportsDev
-
-
-### New features"
-
-- **Function argument names now mirror the `R base` argument names (99%).**
-
-  - Think of `xlb >>> xlab`, or  `sub_ >>> sub`
-- This however breaks the compatibility with earlier versions, so you might need to replace some function arguments
-- **The package now can also work with png images.**
-
-  - You can save files in png, which can be displayed inside the markdown file on windows 7.
-
-  - You need to set `b.usepng=T` in `setup_MarkdownReports`: `setup_MarkdownReports(OutDir = "/Users/...blabla....", b.usepng=T)`
-- The package contains multiple other bug fixes:
-
-  - Self consistency: some missing functions moved from `CodeAndRoll.R` 
-  - Table writing functions `md.tableWriter.DF.w.dimnames()` and `md.tableWriter.VEC.w.names()`
-- Enhancements: 
-
-  - `filter_HP(), filter_LP(), filter_MidPass()` show histogram
-  - `whist()` can invite the above filter functions.
-- Numerous other small fixes.
-
-
-
-**Old version** is under `MarkdownReports.LEGACY.VERSION`.
-
-
-
- <br/><br/>
+## 
 
 #### Cite it via its Digital Object Identifier (DOI): 
 
