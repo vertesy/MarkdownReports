@@ -22,6 +22,7 @@ require('Stringendo')
 
 # Setup ------------------------
 PackageName = 	"MarkdownReports"
+package.version = "4.5.2"
 setwd("~/GitHub/")
 
 RepositoryDir = kollapse("~/GitHub/Packages/", PackageName, "/")
@@ -43,7 +44,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily"
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website."
     , "License" = "GPL-3 + file LICENSE"
-    , "Version" = "4.5.2"
+    , "Version" = package.version
     , "Packaged" =  Sys.time()
     , "Repository" =  "CRAN"
     , "Depends" =  "CodeAndRoll2, Stringendo, MarkdownHelpers"
@@ -85,13 +86,20 @@ devtools::document()
 
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
-devtools::install(RepositoryDir, upgrade = F)
+install(RepositoryDir, upgrade = F)
 # require("MarkdownReports")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
 # help("wplot")
 # cat("\014")
 # devtools::run_examples()
+
+{
+  "update cff version"
+  citpath <- paste0(RepositoryDir, 'CITATION.cff')
+  xfun::gsub_file(file = citpath, perl = T
+                  , "^version: v.+", paste0("version: v", package.version))
+}
 
 
 # Test if you can install from github ------------------------------------------------
