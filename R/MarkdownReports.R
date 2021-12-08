@@ -286,7 +286,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
   OutDir = RemoveDoubleSlash(OutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
-    dir.create(OutDir, showWarnings = FALSE)
+    dir.create(OutDir, recursive = T, showWarnings = FALSE)
   }
   if (setDir) {
     setwd(OutDir)
