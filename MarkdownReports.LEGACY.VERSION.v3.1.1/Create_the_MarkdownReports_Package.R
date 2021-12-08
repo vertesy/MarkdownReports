@@ -27,6 +27,7 @@ kollapse <-function (..., print = T) {
 
 RepositoryDir = 	"~/GitHub/MarkdownReports/"
 PackageName = 	"MarkdownReports"
+package.version = "3.1.1.0"
 fname = 	kollapse(PackageName,".R")
 
 PackageDir = kollapse(RepositoryDir, PackageName)
@@ -42,7 +43,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
     4. Version your findings, annotating which parameters were used to reach certain results.
     5. Share your report with others via email, Github or a personal website."
     , "License" = "GPL-3"
-    , "Version"= "3.1.1.0"
+    , "Version"= package.version
     , "Imports" = "stats, methods, gplots, RColorBrewer, colorRamps, vioplot, VennDiagram"
     , "BugReports"= "https://github.com/vertesy/MarkdownReports/issues"
 )
@@ -77,6 +78,14 @@ document()
 setwd(RepositoryDir)
 install(PackageName)
 require("MarkdownReports")
+
+{
+  "update cff version"
+  citpath <- paste0(RepositoryDir, 'CITATION.cff')
+  xfun::gsub_file(file = citpath, perl = T
+                  , "^version: v.+", paste0("version: v", package.version))
+}
+
 
 # Test your package ------------------------------------------------
 help("wplot")
