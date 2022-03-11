@@ -1,6 +1,5 @@
 ######################################################################################################
 # Workflow_to_Create_an_R_Package.R
-# 3- Oct 2021
 ######################################################################################################
 # source("~/GitHub/Packages/MarkdownReports/Development/Create_the_MarkdownReports_Package.v4.3.2.R")
 rm(list = ls(all.names = TRUE));
@@ -22,7 +21,7 @@ require('Stringendo')
 
 # Setup ------------------------
 PackageName = 	"MarkdownReports"
-package.version = "4.5.3"
+package.version = "4.5.4"
 setwd("~/GitHub/")
 
 RepositoryDir = kollapse("~/GitHub/Packages/", PackageName, "/")

@@ -152,7 +152,7 @@ setup_MarkdownReports <-
     }
     saveParameterList
     if (saveParameterList != FALSE) {
-      if (exists(saveParameterList)) {
+      if (exists(saveParameterList) & is.list(saveParameterList)) {
         md.LogSettingsFromList(saveParameterList)
       } else { Stringendo::iprint ("No parameter list is defined in variable: ", saveParameterList,
                        ". It has to be a list of key:value pairs like: p$thr=10")}
