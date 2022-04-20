@@ -21,7 +21,7 @@ require('Stringendo')
 
 # Setup ------------------------
 PackageName = 	"MarkdownReports"
-package.version = "4.5.4"
+package.version = "4.5.5"
 setwd("~/GitHub/")
 
 RepositoryDir = kollapse("~/GitHub/Packages/", PackageName, "/")

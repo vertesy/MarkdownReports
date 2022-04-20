@@ -2324,10 +2324,10 @@ wlegend <-
     LN = length(fNames)
     if (ttl.by.varname & is.null(title))
       title = substitute(NamedColorVec)
-    Stringendo::stopif((LN != LF & missing(legend)),
+    MarkdownHelpers::stopif((LN != LF & missing(legend)),
            message = "The color vector (NamedColorVec) has less names than entries /
            the variable 'legend' is not provided.")
-    # Stringendo::stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
+    # MarkdownHelpers::stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
     legend = if (LN == LF & missing(legend))
       fNames
     else
