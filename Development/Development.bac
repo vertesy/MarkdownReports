@@ -65,6 +65,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 #' @examples setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
 #' append = TRUE, b.png4Github = TRUE)
 
+
 setup_MarkdownReports <-
   function(OutDir = getwd(),
            scriptname = basename(OutDir),
@@ -97,12 +98,13 @@ setup_MarkdownReports <-
     OutDir = AddTrailingSlash(OutDir) # add '/' if necessary
     OutDir = RemoveDoubleSlash(OutDir)
 
-    ww.assign_to_global("OutDir", OutDir, 1)
+    print("LOCATIONS ---------------------------")
+    ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
     Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
     path_of_report <- paste0(OutDir, scriptname, ".log.md")
-    ww.assign_to_global("path_of_report", path_of_report, 1)
+    ww.assign_to_global("path_of_report", path_of_report, 1, verbose =  FALSE)
     Stringendo::iprint("MarkdownReport location is stored in 'path_of_report': ",
-           path_of_report)
+                       path_of_report)
 
     if (nchar(title)) {
       write(paste("# ", title), path_of_report, append = append)
@@ -148,15 +150,17 @@ setup_MarkdownReports <-
     }
     if (!exists(BackupDir) & backupfolder) {
       dir.create(BackupDir, showWarnings = FALSE)
-      ww.assign_to_global("BackupDir", BackupDir, 1)
+      ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
     }
     saveParameterList
     if (saveParameterList != FALSE) {
+      print(""); print("PARAMETER LIST ---------------------------")
       if (exists(saveParameterList) & is.list(saveParameterList)) {
         md.LogSettingsFromList(saveParameterList)
       } else { Stringendo::iprint ("No parameter list is defined in variable: ", saveParameterList,
-                       ". It has to be a list of key:value pairs like: p$thr=10")}
+                                   ". It has to be a list of key:value pairs like: p$thr=10")}
     }
+    print(""); print("BACKGROUND VARIABLES (Added to global env.) ---------------------------")
     ww.assign_to_global("b.defSize", b.defSize, 1)
     ww.assign_to_global("b.defSize.fullpage", b.defSize.fullpage, 1)
     ww.assign_to_global("b.mdlink", b.mdlink, 1)
@@ -166,8 +170,10 @@ setup_MarkdownReports <-
     ww.assign_to_global("b.scriptname", scriptname, 1)
     ww.assign_to_global("b.def.color", b.def.color, 1)
     ww.assign_to_global("b.report.not.found",
-                        "Path to the Markdown report file is not defined in path_of_report", 1)
+                        "Path to the Markdown report file is not defined in path_of_report", 1, verbose = FALSE)
   }
+
+
 
 #' @title Create_set_SubDir
 #'
