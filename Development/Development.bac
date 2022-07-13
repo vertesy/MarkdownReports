@@ -372,7 +372,7 @@ wplot_save_pheatmap <-
            width = 15,
            height = width) {
     stopifnot(!missing(x))
-    filename <- ppp(filename, ".heatmap.pdf")
+    filename <- ppp(filename, suffix, ".heatmap.pdf")
     pdf(file = filename,
         width = width,
         height = height)
