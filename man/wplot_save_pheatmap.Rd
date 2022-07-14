@@ -6,22 +6,35 @@
 \usage{
 wplot_save_pheatmap(
   x,
-  suffix = NULL,
-  filename = kpp(substitute(x), suffix),
+  suffix = "heatmap",
+  plotname = substitute(x),
   width = 15,
-  height = width
+  height = width,
+  pdf = TRUE,
+  png = FALSE,
+  png_dim_factor = 100,
+  mdlink = TRUE
 )
 }
 \arguments{
 \item{x}{The pheatmap object to save.}
 
-\item{suffix}{Suffix to File name.}
-
-\item{filename}{File name (saved as .pdf, inside working directory).}
+\item{suffix}{Suffix to File name. Default: 'heatmap'.}
 
 \item{width}{width of the plot in inches.}
 
 \item{height}{height of the plot in inches.}
+
+\item{pdf}{Save as pdf. Default: TRUE.}
+
+\item{png}{Save as png. Default: F.}
+
+\item{png_dim_factor}{Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.}
+
+\item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by
+"path_of_report".}
+
+\item{filename}{File name (saved as .pdf, inside working directory).}
 }
 \description{
 Save pheatmap object. Modified from:

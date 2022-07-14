@@ -314,25 +314,26 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
 #' @param plotname Title of the plot (main parameter) and also the name of the file.
 #' @param OverwritePrevPDF Overwrite previous PDF image (as name stored in plotnameLastPlot).
 #' If FALSE, it creates a name from the date.
-#' @param ... Pass any other parameter of the corresponding plotting function (most of them should
-#'   work).
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
+#' @param ... Pass any other parameter of the corresponding plotting function (most of them should
+#'   work).
 #' @export
 #' @examples wplot_save_this (plotname = date(), col = "gold1", w = 7
 #' , mdlink = FALSE, ManualName = FALSE)
 
 wplot_save_this <-
   function(plotname = ww.autoPlotName(),
-           ...,
+
            OverwritePrevPDF = TRUE,
            w = unless.specified("b.defSize", 7),
            h = w,
            mdlink = FALSE,
-           PNG = unless.specified("b.usepng", F)) {
+           PNG = unless.specified("b.usepng", F),
+           ... ) {
     if (!OverwritePrevPDF) {plotname = make.names(date())}
 
     ww.dev.copy(
@@ -353,10 +354,15 @@ wplot_save_this <-
 #'@description Save pheatmap object. Modified from:
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 #' @param x The pheatmap object to save.
-#' @param suffix Suffix to File name.
+#' @param suffix Suffix to File name. Default: 'heatmap'.
 #' @param filename File name (saved as .pdf, inside working directory).
 #' @param width width of the plot in inches.
 #' @param height height of the plot in inches.
+#' @param pdf Save as pdf. Default: TRUE.
+#' @param png Save as png. Default: F.
+#' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
+#' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
+#'   "path_of_report".
 #' @export
 #'
 #' @examples test = matrix(rnorm(200), 20, 10);
@@ -367,19 +373,39 @@ wplot_save_this <-
 
 wplot_save_pheatmap <-
   function(x,
-           suffix = NULL,
-           filename = kpp(substitute(x), suffix),
+           suffix = 'heatmap',
+           plotname = substitute(x),
            width = 15,
-           height = width) {
+           height = width,
+           pdf = TRUE,
+           png = FALSE,
+           png_dim_factor = 100,
+           mdlink = TRUE
+           ) {
     stopifnot(!missing(x))
-    filename <- ppp(filename, suffix, ".heatmap.pdf")
-    pdf(file = filename,
-        width = width,
-        height = height)
-    grid::grid.newpage()
-    grid::grid.draw(x$gtable)
-    dev.off()
-    print(kpps(getwd(), filename))
+    filename <- ppp(plotname, suffix, "pdf")
+    if (pdf) {
+      pdf(file = filename,
+          width = width,
+          height = height)
+      grid::grid.newpage()
+      grid::grid.draw(x$gtable)
+      dev.off()
+      print(kpps(getwd(), filename))
+    }
+    if (png) {
+      filename <- ppp(filename, suffix, "png")
+      png(file = filename,
+          width = width * png_dim_factor,
+          height = height * png_dim_factor)
+      grid::grid.newpage()
+      grid::grid.draw(x$gtable)
+      dev.off()
+      print(kpps(getwd(), filename))
+      if (mdlink) {
+        md.image.linker(fname_wo_ext = plotname)
+      }
+    }
   }
 
 

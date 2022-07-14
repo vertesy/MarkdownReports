@@ -6,19 +6,16 @@
 \usage{
 wplot_save_this(
   plotname = ww.autoPlotName(),
-  ...,
   OverwritePrevPDF = TRUE,
   w = unless.specified("b.defSize", 7),
   h = w,
   mdlink = FALSE,
-  PNG = unless.specified("b.usepng", F)
+  PNG = unless.specified("b.usepng", F),
+  ...
 )
 }
 \arguments{
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
-
-\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
-work).}
 
 \item{OverwritePrevPDF}{Overwrite previous PDF image (as name stored in plotnameLastPlot).
 If FALSE, it creates a name from the date.}
@@ -31,6 +28,9 @@ If FALSE, it creates a name from the date.}
 "path_of_report".}
 
 \item{PNG}{Set to true if you want to save the plot as PNG instead of the default PDF.}
+
+\item{...}{Pass any other parameter of the corresponding plotting function (most of them should
+work).}
 }
 \description{
 Save the currently active graphic device (for complicated plots).  Insert links to your markdown
