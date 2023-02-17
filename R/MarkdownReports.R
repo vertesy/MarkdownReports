@@ -394,7 +394,7 @@ wplot_save_pheatmap <-
       print(kpps(getwd(), filename))
     }
     if (png) {
-      filename <- ppp(filename, suffix, "png")
+      filename <- ppp(plotname, suffix, "png")
       png(file = filename,
           width = width * png_dim_factor,
           height = height * png_dim_factor)
