@@ -360,6 +360,7 @@ wplot_save_this <-
 #' @param height height of the plot in inches.
 #' @param pdf Save as pdf. Default: TRUE.
 #' @param png Save as png. Default: F.
+#' @param png_res Super unintuitive way to control plot "outcome" (works super unpredictably).
 #' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
@@ -379,6 +380,7 @@ wplot_save_pheatmap <-
            height = width,
            pdf = TRUE,
            png = FALSE,
+           png_res = 100, # NA
            png_dim_factor = 100,
            mdlink = TRUE
            ) {
@@ -395,7 +397,7 @@ wplot_save_pheatmap <-
     }
     if (png) {
       filename <- ppp(plotname, suffix, "png")
-      png(file = filename,
+      png(file = filename, res = png_res,
           width = width * png_dim_factor,
           height = height * png_dim_factor)
       grid::grid.newpage()
