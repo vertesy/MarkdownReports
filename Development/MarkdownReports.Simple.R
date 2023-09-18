@@ -19,11 +19,11 @@ any_print <- function(...) { # more flexible printing fun
 
 iround  <- function (x, digz = 3) {signif (x, digits=digz)}
 
-percentage_formatter <- function(x, digitz=3) {
-	a = paste (100*iround(x, digitz),"%", sep = " ")
-	a[a == "NaN %"] = NaN; 	a[a == "NA %"] = NA
-	return(a)
-}
+# percentage_formatter <- function(x, digitz=3) {
+# 	a = paste (100*iround(x, digitz),"%", sep = " ")
+# 	a[a == "NaN %"] = NaN; 	a[a == "NA %"] = NA
+# 	return(a)
+# }
 
 ## Setup Logging -------------------------------------------------------------------------------------------------
 create_set_OutDir <- function (...) {
