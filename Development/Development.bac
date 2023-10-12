@@ -66,8 +66,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 #' append = TRUE, b.png4Github = TRUE)
 
 
-setup_MarkdownReports <-
-  function(OutDir = getwd(),
+setup_MarkdownReports <- function(OutDir = getwd(),
            scriptname = basename(OutDir),
            title = "",
            setDir = TRUE,
@@ -188,8 +187,7 @@ setup_MarkdownReports <-
 #' @export
 #' @examples create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 
-create_set_SubDir <-
-  function(..., define.ParentDir = TRUE,
+create_set_SubDir <- function(..., define.ParentDir = TRUE,
            setDir = TRUE,
            verbose = TRUE) {
     b.Subdirname = kollapse(...)
@@ -231,8 +229,7 @@ create_set_SubDir <-
 #' @export
 #' @examples create_set_Original_OutDir (getwd(),"/")
 
-create_set_Original_OutDir <-
-  function(NewOutDir = OutDirOrig,
+create_set_Original_OutDir <- function(NewOutDir = OutDirOrig,
            b.Subdirname = FALSE,
            setDir = TRUE,
            verbose = TRUE) {
@@ -325,9 +322,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
 #' @examples wplot_save_this (plotname = date(), col = "gold1", w = 7
 #' , mdlink = FALSE, ManualName = FALSE)
 
-wplot_save_this <-
-  function(plotname = ww.autoPlotName(),
-
+wplot_save_this <- function(plotname = ww.autoPlotName(),
            OverwritePrevPDF = TRUE,
            w = unless.specified("b.defSize", 7),
            h = w,
@@ -360,6 +355,7 @@ wplot_save_this <-
 #' @param height height of the plot in inches.
 #' @param pdf Save as pdf. Default: TRUE.
 #' @param png Save as png. Default: F.
+#' @param png_res Super unintuitive way to control plot "outcome" (works super unpredictably).
 #' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
@@ -371,14 +367,14 @@ wplot_save_this <-
 #' ph.test <- pheatmap::pheatmap(test);
 #' wplot_save_pheatmap(ph.test)
 
-wplot_save_pheatmap <-
-  function(x,
+wplot_save_pheatmap <- function(x,
            suffix = 'heatmap',
            plotname = substitute(x),
            width = 15,
            height = width,
            pdf = TRUE,
            png = FALSE,
+           png_res = 100, # NA
            png_dim_factor = 100,
            mdlink = TRUE
            ) {
@@ -395,7 +391,7 @@ wplot_save_pheatmap <-
     }
     if (png) {
       filename <- ppp(plotname, suffix, "png")
-      png(file = filename,
+      png(file = filename, res = png_res,
           width = width * png_dim_factor,
           height = height * png_dim_factor)
       grid::grid.newpage()
@@ -461,8 +457,7 @@ wplot_save_pheatmap <-
 #' left = 0, right = left, width.whisker = 0.1, arrow_lwd = 1, abline = FALSE,
 #' a = FALSE, b = FALSE, lty = 1, lwd = 1, col_abline = 1)
 
-wplot <-
-  function(df2col,
+wplot <- function(df2col,
            col = 1,
            pch = 18,
            ...,
@@ -630,8 +625,7 @@ wplot <-
 
 
 
-wscatter.fill <-
-  function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
+wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
            ...,
            color,
            xlim = range(df2col[, 1]),
@@ -816,8 +810,7 @@ wscatter.fill <-
 #' filtercol = 1, lty = 1, lwd = 2, lcol = 2, errorbar = FALSE, upper = 0,
 #' arrow_width = 0.1, arrow_lwd = 1)
 
-wbarplot <-
-  function(variable,
+wbarplot <- function(variable,
            ...,
            col = unless.specified("b.def.colors", "gold1"),
            sub = FALSE,
@@ -999,8 +992,7 @@ wbarplot <-
 #' breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
 #' lcol = 2, filtercol = 0)
 
-whist <-
-  function(variable,
+whist <- function(variable,
            ...,
            breaks = 20,
            col = unless.specified("b.def.color", "gold1"),
@@ -1159,8 +1151,7 @@ whist <-
 #' sub = FALSE, incrBottMarginBy = 0,
 #'  tilted_text = FALSE, w = 7, mdlink = FALSE)
 
-wboxplot <-
-  function(yourlist,
+wboxplot <- function(yourlist,
            main = as.character(substitute(yourlist)),
            sub = FALSE,
            ylab = "",
@@ -1246,8 +1237,7 @@ wboxplot <-
 #' @examples Cake = 1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
 #' w = 7, mdlink = FALSE)
 
-wpie <-
-  function(NamedVector,
+wpie <- function(NamedVector,
            percentage = TRUE,
            both_pc_and_value = FALSE,
            plotname = substitute(NamedVector),
@@ -1352,8 +1342,7 @@ wpie <-
 #' @examples try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
 #' wstripchart (yourlist = my.ls)
 
-wstripchart <-
-  function(yourlist,
+wstripchart <- function(yourlist,
            main = as.character(substitute(yourlist)),
            sub = NULL,
            ylab = "",
@@ -1648,8 +1637,7 @@ wstripchart_list <- function(yourlist,
 #' # w = 7, tilted_text = FALSE, mdlink = FALSE)
 
 
-wvioplot_list <-
-  function(yourlist,
+wvioplot_list <- function(yourlist,
            ...,
            main = as.character(substitute(yourlist)),
            sub = NULL,
@@ -1787,8 +1775,7 @@ wvioplot_list <-
 #' # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
 #' # bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 
-wviostripchart_list <-
-  function(yourlist,
+wviostripchart_list <- function(yourlist,
            ...,
            pch = 20,
            viocoll = c(2:(length(yourlist) + 1)),
@@ -1916,8 +1903,7 @@ wviostripchart_list <-
 #' wvenn (yourlist = TwoSets, imagetype = "png", alpha = 0.5, w = 7, mdlink = FALSE)
 
 # @importFrom VennDiagram venn.diagram
-wvenn <-
-  function(yourlist,
+wvenn <- function(yourlist,
            imagetype = "png",
            alpha = .5,
            fill = 1:length(yourlist),
@@ -1998,10 +1984,7 @@ wvenn <-
 #' @examples try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
 #' wbarplot_dfCol (df, colName = "a",  col = "gold1", w = 7)
 
-
-
-wbarplot_dfCol <-
-  function(df,
+wbarplot_dfCol <- function(df,
            ...,
            colName,
            col = unless.specified("b.def.colors", "gold1"),
@@ -2058,8 +2041,7 @@ wbarplot_dfCol <-
 #' @examples try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
 #' whist_dfCol (df, colName="a", col = "gold", w = 7)
 
-whist_dfCol <-
-  function(df,
+whist_dfCol <- function(df,
            colName,
            col = unless.specified("b.def.colors", "gold1"),
            ...,
@@ -2137,9 +2119,7 @@ whist_dfCol <-
 #' @examples pdfA4plot_on(plotname = "MyA4plots");  hist(rnorm(100)); hist(-rnorm(100))
 #'  hist(10+rnorm(100)); pdfA4plot_off()
 
-
-pdfA4plot_on <-
-  function(plotname = date(),
+pdfA4plot_on <- function(plotname = date(),
            ...,
            w = unless.specified("b.defSize.fullpage", 8.27),
            h = 11.69,
@@ -2191,9 +2171,7 @@ pdfA4plot_on <-
 #' @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
 #' hist(10+rnorm(100)); pdfA4plot_off()
 
-
-pdfA4plot_on.layout <-
-  function(plotname = date(),
+pdfA4plot_on.layout <- function(plotname = date(),
            ...,
            layout_mat = rbind(1, c(2, 3), 4:5),
            w = unless.specified("b.defSize.fullpage", 8.27),
@@ -2272,13 +2250,8 @@ pdfA4plot_off <- function() {
 #' @export
 #' @examples plot (1); error_bar (x = 1, y = 1, upper = .1, width.whisker = 0.1)
 
-error_bar <-
-  function(x,
-           y,
-           upper,
-           lower = upper,
-           width.whisker = 0.1,
-           ...) {
+error_bar <- function(x, y, upper, lower = upper, width.whisker = 0.1
+                      , ...) {
     stopifnot(length(x) == length(y) &  length(y) == length(lower) & length(lower) == length(upper))
     if (length(dim(y)) > 1) {
       arrows(
@@ -2334,8 +2307,7 @@ error_bar <-
 #' LegendCols = 2:5; names(LegendCols) = LETTERS[1:4]
 #' wlegend(NamedColorVec = LegendCols, poz = 1, w = 7, bty = "n", OverwritePrevPDF = TRUE)
 
-wlegend <-
-  function(NamedColorVec = NA,
+wlegend <- function(NamedColorVec = NA,
            poz = 4,
            legend,
            cex = .75,
@@ -2413,8 +2385,7 @@ wlegend <-
 #' @examples x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x);
 #' wlegend.label(legend = "Hey", poz = 2,  w = 7, bty = "n", OverwritePrevPDF = TRUE)
 
-wlegend.label <-
-  function(legend = "...",
+wlegend.label <- function(legend = "...",
            poz = 1,
            cex = 1,
            bty = "n",
@@ -2475,10 +2446,7 @@ wlegend.label <-
 #' @examples barplot (1:10);
 #' barplot_label(barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
 
-
-
-barplot_label <-
-  function(barplotted_variable,
+barplot_label <- function(barplotted_variable,
            labels = iround(barplotted_variable),
            bottom = FALSE,
            TopOffset = .5,
@@ -2528,8 +2496,7 @@ barplot_label <-
 #' @examples try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
 #' # wLinRegression(x, coeff = c("pearson", "spearman", "r2")[3])
 
-wLinRegression <-
-  function(DF,
+wLinRegression <- function(DF,
            coeff = c("pearson", "spearman", "r2")[3],
            textlocation = "topleft",
            cex = 1,
@@ -2595,8 +2562,7 @@ wLinRegression <-
 #' @examples plot (1, 1, xlab = subscript_in_plots(subscr = 10, quantity = "read count"),
 #'  ylab = subscript_in_plots())
 
-subscript_in_plots <-
-  function(prefix = "log",
+subscript_in_plots <- function(prefix = "log",
            subscr = 2,
            quantity = "arbitrary units") {
     formatted_string = bquote(.(prefix)[.(subscr)] * '(' * .(quantity) * ')')

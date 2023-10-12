@@ -12,6 +12,7 @@ wplot_save_pheatmap(
   height = width,
   pdf = TRUE,
   png = FALSE,
+  png_res = 100,
   png_dim_factor = 100,
   mdlink = TRUE
 )
@@ -28,6 +29,8 @@ wplot_save_pheatmap(
 \item{pdf}{Save as pdf. Default: TRUE.}
 
 \item{png}{Save as png. Default: F.}
+
+\item{png_res}{Super unintuitive way to control plot "outcome" (works super unpredictably).}
 
 \item{png_dim_factor}{Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.}
 

@@ -15,8 +15,8 @@ setup_MarkdownReports(
   addTableOfContents = FALSE,
   saveSessionInfo = TRUE,
   saveParameterList = "p",
-  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` = 7.2,
-    `1col.cell` = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
+  b.defSize = c(def = 7, A4 = 8.27, `1col.nature` = 3.5, `2col.nature` = 7.2, `1col.cell`
+    = 3.35, `1.5col.cell` = 4.49, `2col.cell` = 6.85)[1],
   b.defSize.fullpage = 8.27,
   b.usepng = FALSE,
   b.png4Github = FALSE,
