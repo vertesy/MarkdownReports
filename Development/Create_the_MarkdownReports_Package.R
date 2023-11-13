@@ -1,34 +1,34 @@
 ######################################################################################################
 # Workflow_to_Create_an_R_Package.R
 ######################################################################################################
-# source("~/GitHub/Packages/MarkdownReports/Development/Create_the_MarkdownReports_Package.v4.3.2.R")
+# source("~/GitHub/Packages/MarkdownReports/Development/Create_the_MarkdownReports_Package.R")
 rm(list = ls(all.names = TRUE));
 try(dev.off(), silent = TRUE)
 
 # Functions ------------------------
 # install_version("devtools", version = "2.0.2", repos = "http://cran.at.r-project.org") # install.packages("devtools")
-require("devtools")
-require("roxygen2")
-require("stringr")
+# require("devtools")
+# require("roxygen2")
+# require("stringr")
 
-# devtools::install_github(repo = "vertesy/CodeAndRoll2")
-require('CodeAndRoll2')
-require('Stringendo')
+# # devtools::install_github(repo = "vertesy/CodeAndRoll2")
+# require('CodeAndRoll2')
+# require('Stringendo')
 # try (source('~/GitHub/Packages/CodeAndRoll/CodeAndRoll.R'),silent= FALSE) # ONLY If Stringendo not yet exist
 # try (source('~/GitHub/Packages/Rocinante/R/Rocinante.R'),silent= FALSE) # ONLY If Stringendo not yet exist
 
 
 
 # Setup ------------------------
-PackageName = 	"MarkdownReports"
-package.version = "4.5.9"
+package.name <- 	"MarkdownReports"
+package.version <- "4.5.9"
 setwd("~/GitHub/")
 
-RepositoryDir = kollapse("~/GitHub/Packages/", PackageName, "/")
-fname = 	kollapse(PackageName, ".R")
-Package_FnP = 	kollapse(RepositoryDir, "R/", fname)
+RepositoryDir <- paste0("~/GitHub/Packages/", PackageName, "/")
+fname <-	paste0(PackageName, ".R")
+Package_FnP <-		paste0(RepositoryDir, "R/", fname)
 
-BackupDir = "~/GitHub/Packages/MarkdownReports/Development/"
+BackupDir <- "~/GitHub/Packages/MarkdownReports/Development/"
 dir.create(BackupDir)
 
 # devtools::use_package("vioplot")
@@ -69,8 +69,8 @@ if ( !dir.exists(RepositoryDir) ) { create(path = RepositoryDir, description = D
 # RoxygenReady(Package_FnP)
 
 # replace output files ------------------------------------------------
-BackupOldFile = 	kollapse(BackupDir, "Development", ".bac", print = FALSE)
-AnnotatedFile = 	kollapse(BackupDir, "Development", ".annot.R", print = FALSE)
+BackupOldFile <-	paste0(BackupDir, "Development", ".bac", print = FALSE)
+AnnotatedFile <-	paste0(BackupDir, "Development", ".annot.R", print = FALSE)
 file.copy(from = Package_FnP, to = BackupOldFile, overwrite = TRUE)
 # file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = TRUE)
 
@@ -80,7 +80,7 @@ file.copy(from = Package_FnP, to = BackupOldFile, overwrite = TRUE)
 # Compile a package ------------------------------------------------
 setwd(RepositoryDir)
 getwd()
-devtools::document()
+devtools::devtools::document()
 
 
 {
@@ -93,7 +93,7 @@ devtools::document()
 
 # Install your package ------------------------------------------------
 # # setwd(RepositoryDir)
-install(RepositoryDir, upgrade = F)
+devtools::install(RepositoryDir, upgrade = F)
 # require("MarkdownReports")
 # # remove.packages("MarkdownReports")
 # # Test your package ------------------------------------------------
