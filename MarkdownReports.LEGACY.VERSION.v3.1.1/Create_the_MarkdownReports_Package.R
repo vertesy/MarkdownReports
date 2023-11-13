@@ -1,8 +1,7 @@
 ######################################################################################################
-# Workflow_to_Create_an_R_Package.R
-# 01 Jan 2018
+# Create_the_MarkdownReports_Package.R
 ######################################################################################################
-# source("~/MarkdownReports/Workflow_to_Create_an_R_Package.R")
+# source("~/MarkdownReports/Create_the_MarkdownReports_Package.R")
 # rm(list=ls(all.names = TRUE));
 try.dev.off()
 
@@ -25,13 +24,13 @@ kollapse <-function (..., print = T) {
 
 # Setup ------------------------
 
-RepositoryDir = 	"~/GitHub/MarkdownReports/"
-PackageName = 	"MarkdownReports"
-package.version = "3.1.1.0"
-fname = 	kollapse(PackageName,".R")
+RepositoryDir <- 	"~/GitHub/MarkdownReports/"
+package.name <- 	"MarkdownReports"
+package.version <- "3.1.1.0"
+fname <-	paste0(PackageName,".R")
 
-PackageDir = kollapse(RepositoryDir, PackageName)
-Package_FnP = 	kollapse(PackageDir, "/R/", fname)
+PackageDir = paste0(RepositoryDir, PackageName)
+Package_FnP <-		paste0(PackageDir, "/R/", fname)
 
 # devtools::use_package("vioplot")
 DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
@@ -59,8 +58,8 @@ if ( !dir.exists(PackageName) ) { create(path = RepositoryDir, description = DES
 # RoxygenReady(Package_FnP)
 
 # replace output files ------------------------------------------------
-BackupOldFile = 	kollapse(RepositoryDir, "Development", ".bac", print = F)
-AnnotatedFile = 	kollapse(RepositoryDir, "Development", ".annot.R", print = F)
+BackupOldFile <-	paste0(RepositoryDir, "Development", ".bac", print = F)
+AnnotatedFile <-	paste0(RepositoryDir, "Development", ".annot.R", print = F)
 file.copy(from = Package_FnP, to = BackupOldFile, overwrite = T)
 file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = T)
 
@@ -71,7 +70,7 @@ file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = T)
 setwd(RepositoryDir)
 setwd(PackageName)
 getwd()
-document()
+devtools::document()
 
 
 # Install your package ------------------------------------------------
