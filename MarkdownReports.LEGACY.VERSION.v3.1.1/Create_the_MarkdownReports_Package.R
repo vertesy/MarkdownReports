@@ -27,9 +27,9 @@ kollapse <-function (..., print = T) {
 RepositoryDir <- 	"~/GitHub/MarkdownReports/"
 package.name <- 	"MarkdownReports"
 package.version <- "3.1.1.0"
-fname <-	paste0(PackageName,".R")
+fname <-	paste0(package.name,".R")
 
-PackageDir = paste0(RepositoryDir, PackageName)
+PackageDir = paste0(RepositoryDir, package.name)
 Package_FnP <-		paste0(PackageDir, "/R/", fname)
 
 # devtools::use_package("vioplot")
@@ -48,7 +48,7 @@ DESCRIPTION <- list("Title" = "Generate Scientific Figures and Reports Easily",
 )
 
 setwd(RepositoryDir)
-if ( !dir.exists(PackageName) ) { create(path = RepositoryDir, description = DESCRIPTION)
+if ( !dir.exists(package.name) ) { create(path = RepositoryDir, description = DESCRIPTION)
   } else { setup(path = PackageDir, description = DESCRIPTION, rstudio = F ) }
 
 # go and write fun's ------------------------------------------------------------------------
@@ -68,14 +68,14 @@ file.copy(from = AnnotatedFile, to = Package_FnP, overwrite = T)
 
 # Compile a package ------------------------------------------------
 setwd(RepositoryDir)
-setwd(PackageName)
+setwd(package.name)
 getwd()
 devtools::document()
 
 
 # Install your package ------------------------------------------------
 setwd(RepositoryDir)
-install(PackageName)
+install(package.name)
 require("MarkdownReports")
 
 {
