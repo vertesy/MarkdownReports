@@ -2266,14 +2266,14 @@ pdfA4plot_on.layout <- function(plotname = date(),
 #' @title pdfA4plot_off
 #'
 #' @description The pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
-#' @export
-#' @import graphics grDevices
 #' @importFrom clipr write_clip
 #' @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout")
 #' hist(rnorm(100))
 #' hist(-rnorm(100))
 #' hist(10 + rnorm(100))
 #' pdfA4plot_off()
+#'
+#' @export
 pdfA4plot_off <- function() {
   x <- if (exists("b.mfrow_def")) {
     b.mfrow_def
@@ -2289,10 +2289,10 @@ pdfA4plot_off <- function() {
     ww.assign_to_global("b.save.wplots", TRUE, 1) # switch back mdlink to its original value
   }
   par(mfrow = x, bg = y)
-  try.dev.off()
-  # close pdf
+  try.dev.off() # close pdf
+
   if (exists("OutDir")) {
-    try(write_clip(OutDir), silent = TRUE)
+    try(clipr::write_clip(OutDir), silent = TRUE)
   }
 }
 
