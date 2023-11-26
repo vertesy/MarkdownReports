@@ -5,12 +5,17 @@
 # rm(list = ls(all.names = TRUE));
 try(dev.off(), silent = TRUE)
 
+
 # Functions ------------------------
-RepositoryDir <- "~/GitHub/Packages/MarkdownReports/"
+devtools::load_all("~/GitHub/Packages/PackageTools/")
+
 
 # Setup ------------------------
+RepositoryDir <- "~/GitHub/Packages/MarkdownReports/"
+
 "TAKE A LOOK AT"
 file.edit("~/GitHub/Packages/MarkdownReports/Development/config.R")
+source("~/GitHub/Packages/MarkdownReports/Development/config.R")
 
 
 PackageTools::document_and_create_package(RepositoryDir, config_file = 'config.R')
@@ -56,8 +61,10 @@ PackageTools::extract_package_dependencies(RepositoryDir)
 
 # Try to find and add missing @importFrom statements------------------------------------------------
 if (F) {
-  (FNP <- list.files(file.path(RepositoryDir, "R"), full.names = T))
-  for (Fx in FNP) {
-    PackageTools::add_importFrom_statements(Fx, exclude_packages = "")
-  }
+  FNP <- list.files(file.path(RepositoryDir, "R"), full.names = T)
+  (excluded.packages <- unlist(strsplit(DESCRIPTION$'depends', split = ", ")))
+
+  devtools::load_all("~/GitHub/Packages/PackageTools/")
+  PackageTools::add_importFrom_statements(FNP, exclude_packages = excluded.packages)
+  # OLD: exclude_packages = c('Stringendo', 'MarkdownHelpers', 'ggplot2', 'ggpubr')
 }
