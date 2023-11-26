@@ -1,4 +1,4 @@
-Dependency file generated on Mon Nov 27 00:25:24 2023 
+Dependency file generated on Mon Nov 27 00:36:06 2023 
 
 #################################################################################################### 
 MarkdownReports.R
@@ -7,8 +7,8 @@ $`c("package:graphics", "package:base")`
 [1] "plot"
 
 $`character(0)`
- [1] "."                 "AddTrailingSlash"  "grid.draw"         "grid.newpage"      "RemoveDoubleSlash"
- [6] "rich.colors"       "session_info"      "venn.diagram"      "vioplot"           "write_clip"       
+[1] "."                 "AddTrailingSlash"  "grid.draw"         "grid.newpage"      "RemoveDoubleSlash"
+[6] "rich.colors"       "session_info"      "venn.diagram"      "vioplot"          
 
 $`package:base`
  [1] "abs"           "any"           "as.character"  "as.vector"     "basename"      "bquote"        "c"            
@@ -43,6 +43,9 @@ $`package:MarkdownHelpers`
 $`package:MarkdownReports`
 [1] "superscript_in_plots" "wplot_save_this"      "ww.dev.copy"         
 
+$`package:PackageTools`
+[1] "write_clip"
+
 $`package:stats`
 [1] "cor"    "lm"     "median" "rnorm" 
 
@@ -61,6 +64,7 @@ graphics
 grDevices
 MarkdownHelpers
 MarkdownReports
+PackageTools
 stats
 Stringendo
 utils
