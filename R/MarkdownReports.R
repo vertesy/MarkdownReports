@@ -61,7 +61,11 @@ utils::globalVariables(c(
 #' @param b.def.color Set the default color for all wplot* functions.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param saveSessionInfo save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'
-#' @param saveParameterList save the list of parameters stored in the variable name provides ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function. Set to FALSE to disable this option.
+#' @param saveParameterList save the list of parameters stored in the variable name provides
+#' ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function.
+#' Set to FALSE to disable this option.
+#'
+#' @importFrom sessioninfo session_info
 #' @export
 #' @import sessioninfo vioplot
 #' @examples setup_MarkdownReports(
@@ -141,13 +145,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   if (saveSessionInfo) {
     defWidth <- options("width")$width
     options("width" = 200)
-    # sink(file = paste0(".sessionInfo.", format(Sys.time(), format ="%Y.%m.%d" ),".txt"), type = "output")
-    # sessioninfo::session_info()
-    # sink()
     writeLines(
-      utils::capture.output(
-        sessioninfo::session_info()
-      ),
+     capture.output(sessioninfo::session_info()),
       con = paste0(".sessionInfo.", format(Sys.time(), format = "%Y.%m.%d"), ".txt")
     )
 
@@ -332,6 +331,8 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should
 #'   work).
+#'
+#' @importFrom pheatmap pheatmap
 #' @export
 #' @examples wplot_save_this(
 #'   plotname = date(), col = "gold1", w = 7,
@@ -376,6 +377,8 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
+#'
+#' @importFrom grid grid.newpage grid.draw
 #' @export
 #'
 #' @examples test <- matrix(rnorm(200), 20, 10)
@@ -1278,6 +1281,8 @@ wboxplot <- function(yourlist,
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
+#'
+#' @importFrom gplots rich.colors
 #' @export
 #' @examples Cake <- 1:3
 #' names(Cake) <- letters[1:3]
@@ -1944,10 +1949,10 @@ wviostripchart_list <- function(yourlist,
 #' @param plotname Manual plotname parameter
 #' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T'))
 #'
+#' @importFrom VennDiagram venn.diagram
 #' @export
 #' @examples TwoSets <- list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9])
 #' wvenn(yourlist = TwoSets, imagetype = "png", alpha = 0.5, w = 7, mdlink = FALSE)
-# @importFrom VennDiagram venn.diagram
 wvenn <- function(yourlist,
                   imagetype = "png",
                   alpha = .5,
