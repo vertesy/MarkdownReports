@@ -77,7 +77,8 @@ set by "path_of_report". The .png version is not created, only the link is put i
 not to overwrite previous versions.
 }
 \examples{
-try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+try.dev.off()
+my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
 # bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 }

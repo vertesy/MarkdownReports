@@ -82,6 +82,8 @@ Its name is stamped with the script name and the modification time. Create the "
 variable used by all log-writing and ~wplot functions.
 }
 \examples{
-setup_MarkdownReports( scriptname = "MyRscript.R", title = "Awesome Ananlysis",
-append = TRUE, b.png4Github = TRUE)
+setup_MarkdownReports(
+  scriptname = "MyRscript.R", title = "Awesome Ananlysis",
+  append = TRUE, b.png4Github = TRUE
+)
 }

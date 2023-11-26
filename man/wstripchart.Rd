@@ -21,7 +21,11 @@ wstripchart(
   pchcex = 1.5,
   bg = "seagreen2",
   colorbyColumn = TRUE,
-  col = if (colorbyColumn) 1:length(yourlist) else 1,
+  col = if (colorbyColumn) {
+     1:length(yourlist)
+ } else {
+     1
+ },
   savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize", 7),
   h = w,
@@ -90,6 +94,7 @@ link in the markdown report, set by "path_of_report". The .png version is not cr
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
-wstripchart (yourlist = my.ls)
+try.dev.off()
+my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
+wstripchart(yourlist = my.ls)
 }

@@ -25,5 +25,6 @@ Put error bars on top of your bar plots. This functionality is now integrated in
 MarkdownReporter's wbarplot() function
 }
 \examples{
-plot (1); error_bar (x = 1, y = 1, upper = .1, width.whisker = 0.1)
+plot(1)
+error_bar(x = 1, y = 1, upper = .1, width.whisker = 0.1)
 }

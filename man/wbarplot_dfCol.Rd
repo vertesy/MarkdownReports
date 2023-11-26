@@ -37,6 +37,7 @@ plotting function (most of them should work).}
 wbarplot for a column of a data frame.
 }
 \examples{
-try.dev.off(); df = cbind(a = rnorm(1:10), b = rnorm(10))
-wbarplot_dfCol (df, colName = "a",  col = "gold1", w = 7)
+try.dev.off()
+df <- cbind(a = rnorm(1:10), b = rnorm(10))
+wbarplot_dfCol(df, colName = "a", col = "gold1", w = 7)
 }

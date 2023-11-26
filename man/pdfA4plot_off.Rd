@@ -10,6 +10,9 @@ pdfA4plot_off()
 The pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.
 }
 \examples{
-pdfA4plot_on.layout(plotname = "MyA4_w_layout");  hist(rnorm(100)); hist(-rnorm(100))
-hist(10+rnorm(100)); pdfA4plot_off()
+pdfA4plot_on.layout(plotname = "MyA4_w_layout")
+hist(rnorm(100))
+hist(-rnorm(100))
+hist(10 + rnorm(100))
+pdfA4plot_off()
 }

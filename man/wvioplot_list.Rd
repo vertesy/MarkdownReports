@@ -66,7 +66,8 @@ set by "path_of_report". The .png version is not created, only the link is put i
 not to overwrite previous versions.
 }
 \examples{
-try.dev.off(); my.ls = list(A = rnorm(10), B = rnorm(10), C = rnorm(10));
+try.dev.off()
+my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 # wvioplot_list (yourlist = my.ls, xlab = names(yourlist), ylab = "", incrBottMarginBy = 0,
 # w = 7, tilted_text = FALSE, mdlink = FALSE)
 }

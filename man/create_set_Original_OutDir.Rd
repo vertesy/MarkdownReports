@@ -26,5 +26,5 @@ Set the output directory of the script, and set the "NewOutDir" variable that is
 used by all ~wplot functions.
 }
 \examples{
-create_set_Original_OutDir (getwd(),"/")
+create_set_Original_OutDir(getwd(), "/")
 }

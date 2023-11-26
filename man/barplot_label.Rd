@@ -47,6 +47,6 @@ text function (most of them should work).}
 Add extra labels to your bar plots at the top or the base.
 }
 \examples{
-barplot (1:10);
+barplot(1:10)
 barplot_label(barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
 }

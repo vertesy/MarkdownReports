@@ -19,6 +19,8 @@ Create an expression with subscript for axis labels.
 Parsed when provided to xlab or ylab of a function.
 }
 \examples{
-plot (1, 1, xlab = subscript_in_plots(subscr = 10, quantity = "read count"),
- ylab = subscript_in_plots())
+plot(1, 1,
+  xlab = subscript_in_plots(subscr = 10, quantity = "read count"),
+  ylab = subscript_in_plots()
+)
 }

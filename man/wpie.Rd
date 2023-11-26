@@ -49,6 +49,10 @@ link in the markdown report, set by "path_of_report". The .png version is not cr
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-Cake = 1:3; names(Cake) = letters[1:3]; wpie (Cake, percentage = TRUE,
-w = 7, mdlink = FALSE)
+Cake <- 1:3
+names(Cake) <- letters[1:3]
+wpie(Cake,
+  percentage = TRUE,
+  w = 7, mdlink = FALSE
+)
 }

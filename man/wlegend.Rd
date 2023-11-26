@@ -53,7 +53,10 @@ the last wplot* function made (It is stored in plotnameLastPlot variable).}
 Quickly add a legend to an existing plot, and save the plot immediately.
 }
 \examples{
-try.dev.off(); x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x)
-LegendCols = 2:5; names(LegendCols) = LETTERS[1:4]
+try.dev.off()
+x <- cbind(a = rnorm(1:10), b = rnorm(10))
+wplot(x)
+LegendCols <- 2:5
+names(LegendCols) <- LETTERS[1:4]
 wlegend(NamedColorVec = LegendCols, poz = 1, w = 7, bty = "n", OverwritePrevPDF = TRUE)
 }

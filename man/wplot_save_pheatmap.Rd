@@ -44,9 +44,9 @@ Save pheatmap object. Modified from:
 https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 }
 \examples{
-test = matrix(rnorm(200), 20, 10);
-colnames(test) = paste("Test", 1:10, sep = "");
-rownames(test) = paste("Gene", 1:20, sep = "");
-ph.test <- pheatmap::pheatmap(test);
+test <- matrix(rnorm(200), 20, 10)
+colnames(test) <- paste("Test", 1:10, sep = "")
+rownames(test) <- paste("Gene", 1:20, sep = "")
+ph.test <- pheatmap::pheatmap(test)
 wplot_save_pheatmap(ph.test)
 }

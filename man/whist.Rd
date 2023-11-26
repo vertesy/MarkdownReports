@@ -77,7 +77,10 @@ Cannot be used with dynamically called variables \link{e.g. call vectors within 
 assumes  >= coloring!
 }
 \examples{
-MyGauss = rnorm(1000); whist (variable = MyGauss, col = "gold1", w = 7,
-breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
-lcol = 2, filtercol = 0)
+MyGauss <- rnorm(1000)
+whist(
+  variable = MyGauss, col = "gold1", w = 7,
+  breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
+  lcol = 2, filtercol = 0
+)
 }

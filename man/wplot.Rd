@@ -108,9 +108,12 @@ specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "
 angle, further specified by a = offset, b = slope).
 }
 \examples{
-try.dev.off(); mydf = cbind("A" = rnorm(100), "B" = rpois(100, 8))
-wplot (df2col = mydf, col = 1, pch = 18, w = 7,
-mdlink = FALSE, errorbar = FALSE, upper = 0,
-left = 0, right = left, width.whisker = 0.1, arrow_lwd = 1, abline = FALSE,
-a = FALSE, b = FALSE, lty = 1, lwd = 1, col_abline = 1)
+try.dev.off()
+mydf <- cbind("A" = rnorm(100), "B" = rpois(100, 8))
+wplot(
+  df2col = mydf, col = 1, pch = 18, w = 7,
+  mdlink = FALSE, errorbar = FALSE, upper = 0,
+  left = 0, right = left, width.whisker = 0.1, arrow_lwd = 1, abline = FALSE,
+  a = FALSE, b = FALSE, lty = 1, lwd = 1, col_abline = 1
+)
 }

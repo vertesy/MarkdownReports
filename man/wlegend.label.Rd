@@ -51,6 +51,7 @@ Quickly add a "text only" legend without a filled color box. to an existing plot
 and save the plot immediately. Never inserts an mdlink.
 }
 \examples{
-x = cbind(a = rnorm(1:10), b = rnorm(10)); wplot(x);
-wlegend.label(legend = "Hey", poz = 2,  w = 7, bty = "n", OverwritePrevPDF = TRUE)
+x <- cbind(a = rnorm(1:10), b = rnorm(10))
+wplot(x)
+wlegend.label(legend = "Hey", poz = 2, w = 7, bty = "n", OverwritePrevPDF = TRUE)
 }

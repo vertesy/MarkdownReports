@@ -18,5 +18,5 @@ Create or set the output directory of the script, and set the "OutDir" variable 
 all ~wplot functions.
 }
 \examples{
-create_set_OutDir (setDir = TRUE, getwd(),"/"   )
+create_set_OutDir(setDir = TRUE, getwd(), "/")
 }

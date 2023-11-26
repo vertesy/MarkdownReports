@@ -48,6 +48,6 @@ Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .p
 and it does not use the dev.copy2pdf() function.
 }
 \examples{
-TwoSets = list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9] )
-wvenn (yourlist = TwoSets, imagetype = "png", alpha = 0.5, w = 7, mdlink = FALSE)
+TwoSets <- list("set1" = LETTERS[1:6], "set2" = LETTERS[3:9])
+wvenn(yourlist = TwoSets, imagetype = "png", alpha = 0.5, w = 7, mdlink = FALSE)
 }

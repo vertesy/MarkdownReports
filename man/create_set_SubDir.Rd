@@ -23,5 +23,5 @@ Create or set the output directory of the script, and set the "NewOutDir" variab
 used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 }
 \examples{
-create_set_SubDir (makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
+create_set_SubDir(makeOutDirOrig = TRUE, setDir = TRUE, "MySubFolder")
 }

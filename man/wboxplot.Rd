@@ -56,7 +56,10 @@ link in the markdown report, set by "path_of_report". The .png version is not cr
 link is put in place, not to overwrite previous versions.
 }
 \examples{
-MyList = list(rnorm(100),rnorm(100)); wboxplot (yourlist = MyList,col = "gold1",
-sub = FALSE, incrBottMarginBy = 0,
- tilted_text = FALSE, w = 7, mdlink = FALSE)
+MyList <- list(rnorm(100), rnorm(100))
+wboxplot(
+  yourlist = MyList, col = "gold1",
+  sub = FALSE, incrBottMarginBy = 0,
+  tilted_text = FALSE, w = 7, mdlink = FALSE
+)
 }

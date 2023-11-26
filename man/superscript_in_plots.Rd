@@ -19,5 +19,5 @@ Create an expression with superscript for axis labels.
 Parsed when provided to xlab or ylab of a function.
 }
 \examples{
-plot (1, 1, main = superscript_in_plots())
+plot(1, 1, main = superscript_in_plots())
 }
