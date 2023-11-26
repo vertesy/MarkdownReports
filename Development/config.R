@@ -14,8 +14,11 @@ DESCRIPTION <- list(
   author.given = "Abel",
   author.family = "Vertesy",
   author.email = "av@imba.oeaw.ac.at",
+  github.user = "vertesy",
   license = "GPL-3 + file LICENSE",
   depends =  "Stringendo, CodeAndRoll2, MarkdownHelpers",
-  imports = "colorRamps, gplots, clipr, RColorBrewer, VennDiagram, vioplot, ReadWriter",
-  github.user = "vertesy"
+  imports = "gplots, RColorBrewer, VennDiagram, vioplot, colorRamps, sessioninfo,
+  clipr, pheatmap, grid
+  ReadWriter",
+  suggests = ""
 )
