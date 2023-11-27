@@ -146,7 +146,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     defWidth <- options("width")$width
     options("width" = 200)
     writeLines(
-     capture.output(sessioninfo::session_info()),
+      capture.output(sessioninfo::session_info()),
       con = paste0(".sessionInfo.", format(Sys.time(), format = "%Y.%m.%d"), ".txt")
     )
 
