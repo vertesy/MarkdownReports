@@ -11,14 +11,13 @@ DESCRIPTION <- list(
     4. Describe your figures & findings in the same report in a clear and nicely formatted way, parsed from your variables into english sentences.
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website.",
 
+  depends = "Stringendo, CodeAndRoll2, MarkdownHelpers",
+  imports = "gplots, RColorBrewer, VennDiagram, vioplot, colorRamps, sessioninfo, clipr, pheatmap, grid ReadWriter",
+  suggests = "",
+
   author.given = "Abel",
   author.family = "Vertesy",
   author.email = "av@imba.oeaw.ac.at",
-  github.user = "vertesy",
   license = "GPL-3 + file LICENSE",
-  depends =  "Stringendo, CodeAndRoll2, MarkdownHelpers",
-  imports = "gplots, RColorBrewer, VennDiagram, vioplot, colorRamps, sessioninfo,
-  clipr, pheatmap, grid
-  ReadWriter",
-  suggests = ""
+  github.user = "vertesy"
 )

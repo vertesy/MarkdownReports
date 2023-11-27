@@ -1338,7 +1338,7 @@ wcolorize  <- function(vector=c(1,1,1:6), RColorBrewerSet=F, ReturnCategoriesToo
   COLZ=as.vector(COLZ)
   names(COLZ) = vector
   CATEG = unique.wNames(COLZ)
-  if(show) Color_Check(CATEG)
+  if(show) MarkdownHelpers::color_check(CATEG)
   if (ReturnCategoriesToo) {COLZ = list("vec" = COLZ, "categ" = CATEG)}
   return(COLZ)
 }
