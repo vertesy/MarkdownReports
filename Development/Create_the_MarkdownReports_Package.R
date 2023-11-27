@@ -21,7 +21,7 @@ source("~/GitHub/Packages/MarkdownReports/Development/config.R")
 PackageTools::document_and_create_package(RepositoryDir, config_file = 'config.R')
 'git add commit push to remote'
 
-
+PackageTools::copy_github_badge("active")
 # Install your package ------------------------------------------------
 "disable rprofile by"
 rprofile()
@@ -62,9 +62,27 @@ PackageTools::extract_package_dependencies(RepositoryDir)
 # Try to find and add missing @importFrom statements------------------------------------------------
 if (F) {
   FNP <- list.files(file.path(RepositoryDir, "R"), full.names = T)
-  (excluded.packages <- unlist(strsplit(DESCRIPTION$'depends', split = ", ")))
 
-  devtools::load_all("~/GitHub/Packages/PackageTools/")
+
   PackageTools::add_importFrom_statements(FNP, exclude_packages = excluded.packages)
   # OLD: exclude_packages = c('Stringendo', 'MarkdownHelpers', 'ggplot2', 'ggpubr')
 }
+
+# Try to find and add missing @importFrom statements------------------------------------------------
+if (F) {
+  devtools::load_all("~/GitHub/Packages/PackageTools/")
+  (excluded.packages <- unlist(strsplit(DESCRIPTION$'depends', split = ", ")))
+  (FNP <- list.files(file.path(RepositoryDir, "R"), full.names = T))
+  for (Fx in FNP) {
+    PackageTools::add_importFrom_statements(Fx, exclude_packages = excluded.packages)
+  }
+}
+
+
+
+
+# Generate the list of functions ------------------------------------------------
+PackageTools::parse_roxygen(FNP)
+
+
+
