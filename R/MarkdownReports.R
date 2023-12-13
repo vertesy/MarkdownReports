@@ -100,8 +100,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   if (!exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
   }
-  OutDir <- AddTrailingSlash(OutDir) # add '/' if necessary
-  OutDir <- RemoveDoubleSlash(OutDir)
+  OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
+  OutDir <- ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
   ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
@@ -209,8 +209,8 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
 
   NewOutDir <- kollapse(OutDir, ..., print = FALSE)
 
-  NewOutDir <- AddTrailingSlash(NewOutDir) # add '/' if necessary
-  NewOutDir <- RemoveDoubleSlash(NewOutDir)
+  NewOutDir <- AddTrailingSlashfNonePresent(NewOutDir) # add '/' if necessary
+  NewOutDir <- ReplaceRepeatedSlashes(NewOutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!dir.exists(NewOutDir)) {
     dir.create(NewOutDir, showWarnings = FALSE)
@@ -298,8 +298,8 @@ continue_logging_markdown <- function(b.scriptname) {
 #' @examples create_set_OutDir(setDir = TRUE, getwd(), "/")
 create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
   OutDir <- kollapse(..., print = FALSE)
-  OutDir <- AddTrailingSlash(OutDir) # add '/' if necessary
-  OutDir <- RemoveDoubleSlash(OutDir)
+  OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
+  OutDir <- ReplaceRepeatedSlashes(OutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
     dir.create(OutDir, recursive = T, showWarnings = FALSE)
