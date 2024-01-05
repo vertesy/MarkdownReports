@@ -2397,11 +2397,11 @@ wlegend <- function(NamedColorVec = NA,
   if (ttl.by.varname & is.null(title)) {
     title <- substitute(NamedColorVec)
   }
-  MarkdownHelpers::stopif((LN != LF & missing(legend)),
+  CodeAndRoll2::stopif((LN != LF & missing(legend)),
     message = "The color vector (NamedColorVec) has less names than entries /
            the variable 'legend' is not provided."
   )
-  # MarkdownHelpers::stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
+  # CodeAndRoll2::stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend <- if (LN == LF & missing(legend)) {
     fNames
   } else {
