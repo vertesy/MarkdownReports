@@ -4,7 +4,7 @@
 \alias{create_set_OutDir}
 \title{create_set_OutDir}
 \usage{
-create_set_OutDir(..., setDir = TRUE, verbose = TRUE)
+create_set_OutDir(..., setDir = TRUE, verbose = TRUE, newName = NULL)
 }
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
@@ -12,10 +12,13 @@ create_set_OutDir(..., setDir = TRUE, verbose = TRUE)
 \item{setDir}{Set the working directory to OutDir? Default: TRUE}
 
 \item{verbose}{Print directory to screen? Default: TRUE}
+
+\item{newName}{Create a new variable with same path as the "OutDir" variable. Useful since
+OutDir may be redifined by other scripts}
 }
 \description{
-Create or set the output directory of the script, and set the "OutDir" variable that is used by
-all ~wplot functions.
+Create or set the output directory of the script, and set the "OutDir" variable
+that is used by all ~wplot functions.
 }
 \examples{
 create_set_OutDir(setDir = TRUE, getwd(), "/")

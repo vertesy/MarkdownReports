@@ -51,7 +51,9 @@ proper Table Of Contents by, e.g. Typora.}
 
 \item{saveSessionInfo}{save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'}
 
-\item{saveParameterList}{save the list of parameters stored in the variable name provides ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function. Set to FALSE to disable this option.}
+\item{saveParameterList}{save the list of parameters stored in the variable name provides
+("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function.
+Set to FALSE to disable this option.}
 
 \item{b.defSize}{Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
 c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,

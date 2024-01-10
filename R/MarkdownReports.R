@@ -76,6 +76,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                   scriptname = basename(OutDir),
                                   title = "",
                                   setDir = TRUE,
+
                                   recursive.folder = TRUE,
                                   backupfolder = TRUE,
                                   append = FALSE,
@@ -287,18 +288,20 @@ continue_logging_markdown <- function(b.scriptname) {
 
 #' @title create_set_OutDir
 #'
-#' @description Create or set the output directory of the script, and set the "OutDir" variable that is used by
-#' all ~wplot functions.
+#' @description Create or set the output directory of the script, and set the "OutDir" variable
+#' that is used by all ~wplot functions.
 #'
 #' @param ... Variables (strings, vectors) to be collapsed in consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param verbose Print directory to screen? Default: TRUE
+#' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
+#' OutDir may be redifined by other scripts
 #'
 #' @export
 #' @examples create_set_OutDir(setDir = TRUE, getwd(), "/")
-create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
+create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE, newName = NULL) {
   OutDir <- kollapse(..., print = FALSE)
-  OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
+  OutDir <- AddTrailingSlashfNonePresent(OutDir)
   OutDir <- ReplaceRepeatedSlashes(OutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
@@ -308,6 +311,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE) {
     setwd(OutDir)
   }
   ww.assign_to_global("OutDir", OutDir, 1)
+  if (!is.null(newName)) ww.assign_to_global(newName, OutDir, 1)
 }
 
 

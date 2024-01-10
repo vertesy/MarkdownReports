@@ -15,4 +15,5 @@ hist(rnorm(100))
 hist(-rnorm(100))
 hist(10 + rnorm(100))
 pdfA4plot_off()
+
 }
