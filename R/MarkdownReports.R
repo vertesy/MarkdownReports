@@ -23,59 +23,59 @@ utils::globalVariables(c(
 # _________________________________________________________________________________________________
 
 
-#' @title setup_MarkdownReports
+#' @title Setup Markdown Reports
 #'
-#' @description Setup the markdown report file and the output directory, create a sub directory in "OutDir".
-#' Its name is stamped with the script name and the modification time. Create the "path_of_report"
-#' variable used by all log-writing and ~wplot functions.
+#' @description Initializes the markdown report file and the output directory.
+#' This function creates a subdirectory in "OutDir", named with the script name
+#' and the modification time. It also defines the "path_of_report" variable
+#' used by all log-writing and wplot functions.
 #'
-#' @param OutDir The output directory (absolute / full path).
-#' @param title Manually set the title of the report.
-#' @param append Set append to TRUE if you do not want to overwrite the previous report.
-#' @param backupfolder Create a time-stamped backup folder inside the working directory (OutDir).
-#' @param recursive.folder Create output folder recursively, if parent folders do not exist. Parameter for dir.create().
-#' Use continue_logging_markdown() if you return logging into an existing report.
-#' FALSE by default: rerunning the script overwrites the previous report. Archive reports manually
-#' into the timestamped subfolder within the OutDir.
-#' @param b.defSize Default width of plot EXCEPT in pdfA4plot_on(), assuming h = w by default.
-#' c("def" = 7, "A4" = 8.27, "1col.nature" = 3.50, "2col.nature" = 7.20, "1col.cell" = 3.35,
-#' "1.5col.cell" = 4.49, "2col.cell" = 6.85)
-#' @param b.defSize.fullpage Default width of plot in pdfA4plot_on()A global background variable
-#' used by pdfA4plot_on.
-#' @param b.usepng A global background variable used by the plotting functions. If TRUE, a link to
-#' the .png versions of the saved plot will be created. The .png file itself is not created.
-#' @param b.png4Github A global background variable used by the plotting functions.
-#' If TRUE (default), the link to the .png versions of the saved plot will be created in a
-#' GitHub compatible format.  That means, when you upload your markdown report and the .png
-#' images to your GitHub wiki under "Reports/" the links will correctly display the images online.
-#' @param b.mdlink A global background variable used by the plotting functions. If TRUE (default),
-#' all saved (.pdf) plots will be linked into your report.
-#' @param b.save.wplots A global background variable used by the plotting functions.
-#' If TRUE (default), plots will be saved to a .pdf file.
-#' @param addTableOfContents write 'TOC' below the header of the file, This is compiled to a
-#' proper Table Of Contents by, e.g. Typora.
-#' @param scriptname Name of the script file you are running.
-#' This filename is written in the title field of .pdf files,
-#' so that you know which script generated that file.
-#' Example: "GeneFilt.hist by MyFilteringScript".
-#' @param b.def.color Set the default color for all wplot* functions.
-#' @param setDir Set the working directory to OutDir? Default: TRUE
-#' @param saveSessionInfo save 'sessioninfo::session_info()' results to '.session_info.DATE.txt.gz'
-#' @param saveParameterList save the list of parameters stored in the variable name provides
-#' ("p" by default) as a table in the markdown report. Uses the md.LogSettingsFromList() function.
-#' Set to FALSE to disable this option.
+#' @param OutDir The output directory (absolute/full path).
+#' @param scriptname Name of the script file being run, used in the title field
+#' of .pdf files.
+#' @param title Optional manual title for the report.
+#' @param setDir Logical, whether to set the working directory to OutDir.
+#' Default is TRUE.
+#' @param newName Optional new variable with the same path as the "OutDir"
+#' variable, useful if "OutDir" is redefined by other scripts.
+#' @param recursive.folder Logical, whether to create the output folder
+#' recursively. Default is FALSE.
+#' @param backupfolder Logical, whether to create a timestamped backup folder
+#' inside OutDir.
+#' @param append Logical, set to TRUE to avoid overwriting the previous report.
+#' @param addTableOfContents Logical, whether to add a Table Of Contents in the
+#' report.
+#' @param saveSessionInfo Logical, whether to save session info to a file.
+#' @param saveParameterList Logical or character, whether to save the list of
+#' parameters from the given variable (default "p") as a table in the report.
+#' @param b.defSize Default width of plot, except in pdfA4plot_on(). Default is
+#' 7 inches.
+#' @param b.defSize.fullpage Default width of plot in pdfA4plot_on(). Default is
+#' 8.27 inches.
+#' @param b.usepng Logical, whether to create links to .png versions of plots.
+#' @param b.png4Github Logical, whether to create GitHub compatible links to
+#' .png plots.
+#' @param b.mdlink Logical, whether to link saved (.pdf) plots in the report.
+#' @param b.save.wplots Logical, whether to save plots as .pdf files.
+#' @param b.def.color Default color for all wplot functions. Default is "gold1".
 #'
 #' @importFrom sessioninfo session_info
+#' @importFrom Stringendo iprint
 #' @export
-#' @import sessioninfo vioplot
-#' @examples setup_MarkdownReports(
-#'   scriptname = "MyRscript.R", title = "Awesome Ananlysis",
-#'   append = TRUE, b.png4Github = TRUE
+#'
+#' @examples
+#' setup_MarkdownReports(
+#'   OutDir = "path/to/output",
+#'   scriptname = "MyRscript.R",
+#'   title = "Awesome Analysis",
+#'   append = TRUE,
+#'   b.png4Github = TRUE
 #' )
 setup_MarkdownReports <- function(OutDir = getwd(),
                                   scriptname = basename(OutDir),
                                   title = "",
                                   setDir = TRUE,
+                                  newName = NULL,
 
                                   recursive.folder = TRUE,
                                   backupfolder = TRUE,
@@ -106,6 +106,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 
   print("LOCATIONS ---------------------------")
   ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
+  if (!is.null(newName)) ww.assign_to_global(newName, OutDir, 1, verbose = F)
+
   Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   path_of_report <- paste0(OutDir, scriptname, ".log.md")
   ww.assign_to_global("path_of_report", path_of_report, 1, verbose = FALSE)
