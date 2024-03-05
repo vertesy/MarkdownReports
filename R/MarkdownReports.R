@@ -317,6 +317,39 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE, newName = NULL
 }
 
 
+#' @title Compare Current Working Directory with OutDir
+#'
+#' @description This function checks if the current working directory is the same as a
+#' specified directory (OutDir). If they do not match, it prints both directories to the
+#' screen.
+#'
+#' @param OutDir The target directory to compare with the current working directory.
+#' Default: OutDir (assumes that OutDir should be defined in the global environment).
+#'
+#' @return Prints a message to the console if the current working directory does not
+#' match OutDir. No return value.
+#'
+#' @examples
+#' check_OutDir()
+#'
+#' @importFrom checkmate assertCharacter
+#' @export
+check_OutDir <- function() {
+    # Get the current working directory
+  current_dir <- getwd()
+
+  # Check if OutDir is defined and if current_dir is not equal to OutDir
+  if (!exists("OutDir")) {
+    message("OutDir does not exist; wd is: ", current_dir)
+  } else {
+    if (current_dir != OutDir) {
+      # Print both directories as a message if they do not match
+      print("Directory Mismatch!")
+      message("Current Directory: ", current_dir, "\nOutDir: ", OutDir)
+    }
+  }
+}
+
 
 # ______________________________________________________________________________________________----
 # Plots ----
