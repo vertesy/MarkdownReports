@@ -336,12 +336,13 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE, newName = NULL
 #' @export
 check_OutDir <- function() {
     # Get the current working directory
-  current_dir <- getwd()
+  current_dir <- paste0(getwd(),"/")
 
   # Check if OutDir is defined and if current_dir is not equal to OutDir
   if (!exists("OutDir")) {
     message("OutDir does not exist; wd is: ", current_dir)
   } else {
+    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = T)
     if (current_dir != OutDir) {
       # Print both directories as a message if they do not match
       print("Directory Mismatch!")
