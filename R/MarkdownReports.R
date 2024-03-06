@@ -2052,7 +2052,7 @@ wvenn <- function(yourlist,
 
 
 
-# ______________________________________________________________________________________________
+# ______________________________________________________________________________________________----
 # Plots for cycling over data frame columns or rows ----
 # _________________________________________________________________________________________________
 
@@ -2190,7 +2190,7 @@ whist_dfCol <- function(df,
   }
 }
 
-# ______________________________________________________________________________________________
+# ______________________________________________________________________________________________----
 # A4 pdfs for multi-plots ----
 # _________________________________________________________________________________________________
 
@@ -2660,6 +2660,29 @@ wLinRegression <- function(DF,
 
 
 # ______________________________________________________________________________________________----
+# Helpers ----
+# _________________________________________________________________________________________________
+
+.getScriptName <- function(OutDir) {
+  # Check if rstudioapi is available
+  if (!requireNamespace("rstudioapi", quietly = TRUE)) {
+    stop("rstudioapi package is not available. Please install it using install.packages('rstudioapi').")
+  }
+
+  # Attempt to get the script name
+  scriptName <- basename(rstudioapi::getSourceEditorContext()$path)
+
+  # If scriptName is empty, return basename of OutDir
+  if (scriptName == "") {
+    scriptName <- basename(OutDir)
+  }
+
+  return(scriptName)
+}
+
+
+
+# ______________________________________________________________________________________________----
 # Graphics and Internal functions ----
 # _________________________________________________________________________________________________
 
@@ -2699,8 +2722,6 @@ superscript_in_plots <- function(prefix = "n",
                                  suffix = "") {
   formatted_string <- bquote(.(prefix)^.(sup) * .(suffix))
 }
-
-
 
 
 
