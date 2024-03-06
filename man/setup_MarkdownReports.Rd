@@ -6,7 +6,7 @@
 \usage{
 setup_MarkdownReports(
   OutDir = getwd(),
-  scriptname = basename(OutDir),
+  scriptname = .getScriptName(),
   title = "",
   setDir = TRUE,
   newName = NULL,

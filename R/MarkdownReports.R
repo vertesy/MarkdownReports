@@ -72,7 +72,7 @@ utils::globalVariables(c(
 #'   b.png4Github = TRUE
 #' )
 setup_MarkdownReports <- function(OutDir = getwd(),
-                                  scriptname = basename(OutDir),
+                                  scriptname = .getScriptName(),
                                   title = "",
                                   setDir = TRUE,
                                   newName = NULL,
@@ -2662,20 +2662,26 @@ wLinRegression <- function(DF,
 # ______________________________________________________________________________________________----
 # Helpers ----
 # _________________________________________________________________________________________________
-
-.getScriptName <- function(OutDir) {
+#' @title Get Current Script Name or Basename of Output Directory
+#'
+#' @description This function attempts to retrieve the name of the currently opened script in
+#' the RStudio editor. If the script name cannot be obtained or if the `rstudioapi` package is
+#' not available, it returns the basename of the directory specified by `OutDir`.
+#'
+#' @return A string containing the basename of the current script or the basename of `OutDir`
+#' if the script name is unavailable.
+#' @importFrom rstudioapi getSourceEditorContext
+.getScriptName <- function() {
   # Check if rstudioapi is available
   if (!requireNamespace("rstudioapi", quietly = TRUE)) {
-    stop("rstudioapi package is not available. Please install it using install.packages('rstudioapi').")
+    message("rstudioapi package is not available. Please install it using install.packages('rstudioapi').")
+  } else {
+    scriptName <- basename(rstudioapi::getSourceEditorContext()$path)
   }
-
-  # Attempt to get the script name
-  scriptName <- basename(rstudioapi::getSourceEditorContext()$path)
 
   # If scriptName is empty, return basename of OutDir
-  if (scriptName == "") {
-    scriptName <- basename(OutDir)
-  }
+  # Can happen at an unsaved file, etc.
+  if (scriptName == "") scriptName <- basename(OutDir)
 
   return(scriptName)
 }
