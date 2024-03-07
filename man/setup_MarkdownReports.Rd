@@ -6,7 +6,7 @@
 \usage{
 setup_MarkdownReports(
   OutDir = getwd(),
-  scriptname = .getScriptName(),
+  scriptname = CodeAndRoll2::getScriptName(),
   title = "",
   setDir = TRUE,
   newName = NULL,
