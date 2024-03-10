@@ -301,10 +301,10 @@ continue_logging_markdown <- function(b.scriptname) {
 #'
 #' @export
 #' @examples create_set_OutDir(setDir = TRUE, getwd(), "/")
-create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE, newName = NULL) {
-  OutDir <- kollapse(..., print = FALSE)
-  OutDir <- AddTrailingSlashfNonePresent(OutDir)
-  OutDir <- ReplaceRepeatedSlashes(OutDir)
+create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
+                              newName = NULL) {
+  OutDir <- FixPath(...)
+  # OutDir <- AddTrailingSlashfNonePresent(OutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
     dir.create(OutDir, recursive = T, showWarnings = FALSE)
