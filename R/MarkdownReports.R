@@ -303,7 +303,7 @@ continue_logging_markdown <- function(b.scriptname) {
 #' @examples create_set_OutDir(setDir = TRUE, getwd(), "/")
 create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
                               newName = NULL) {
-  OutDir <- FixPath(...)
+  OutDir <- Stringendo::FixPath(...)
   # OutDir <- AddTrailingSlashfNonePresent(OutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   if (!exists(OutDir)) {
