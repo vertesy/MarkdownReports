@@ -105,12 +105,12 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   OutDir <- ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
-  ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
-  if (!is.null(newName)) ww.assign_to_global(newName, OutDir, 1, verbose = F)
+  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = F)
 
   Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
   path_of_report <- paste0(OutDir, scriptname, ".log.md")
-  ww.assign_to_global("path_of_report", path_of_report, 1, verbose = FALSE)
+  MarkdownHelpers::ww.assign_to_global("path_of_report", path_of_report, 1, verbose = FALSE)
   Stringendo::iprint(
     "MarkdownReport location is stored in 'path_of_report': ",
     path_of_report
@@ -159,7 +159,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   }
   if (!exists(BackupDir) & backupfolder) {
     dir.create(BackupDir, showWarnings = FALSE)
-    ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
+    MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
   }
   saveParameterList
   if (saveParameterList != FALSE) {
@@ -176,15 +176,15 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   }
   print("")
   print("BACKGROUND VARIABLES (Added to global env.) ---------------------------")
-  ww.assign_to_global("b.defSize", b.defSize, 1)
-  ww.assign_to_global("b.defSize.fullpage", b.defSize.fullpage, 1)
-  ww.assign_to_global("b.mdlink", b.mdlink, 1)
-  ww.assign_to_global("b.save.wplots", b.save.wplots, 1)
-  ww.assign_to_global("b.usepng", b.usepng, 1)
-  ww.assign_to_global("b.png4Github", b.png4Github, 1)
-  ww.assign_to_global("b.scriptname", scriptname, 1)
-  ww.assign_to_global("b.def.color", b.def.color, 1)
-  ww.assign_to_global("b.report.not.found",
+  MarkdownHelpers::ww.assign_to_global("b.defSize", b.defSize, 1)
+  MarkdownHelpers::ww.assign_to_global("b.defSize.fullpage", b.defSize.fullpage, 1)
+  MarkdownHelpers::ww.assign_to_global("b.mdlink", b.mdlink, 1)
+  MarkdownHelpers::ww.assign_to_global("b.save.wplots", b.save.wplots, 1)
+  MarkdownHelpers::ww.assign_to_global("b.usepng", b.usepng, 1)
+  MarkdownHelpers::ww.assign_to_global("b.png4Github", b.png4Github, 1)
+  MarkdownHelpers::ww.assign_to_global("b.scriptname", scriptname, 1)
+  MarkdownHelpers::ww.assign_to_global("b.def.color", b.def.color, 1)
+  MarkdownHelpers::ww.assign_to_global("b.report.not.found",
     "Path to the Markdown report file is not defined in path_of_report", 1,
     verbose = FALSE
   )
@@ -226,11 +226,11 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
       if (verbose) Stringendo::iprint("ParentDir was defined as:", ParentDir)
     }
     if (verbose) Stringendo::iprint("ParentDir will be:", OutDir)
-    ww.assign_to_global("ParentDir", OutDir, 1)
+    MarkdownHelpers::ww.assign_to_global("ParentDir", OutDir, 1)
   } # if
   if (verbose) Stringendo::iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
-  ww.assign_to_global("OutDir", NewOutDir, 1)
-  ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
+  MarkdownHelpers::ww.assign_to_global("OutDir", NewOutDir, 1)
+  MarkdownHelpers::ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
   # Flag that md.image.linker uses
 }
 
@@ -257,8 +257,8 @@ create_set_Original_OutDir <- function(NewOutDir = OutDirOrig,
   if (setDir) {
     setwd(NewOutDir)
   }
-  ww.assign_to_global("OutDir", NewOutDir, 1)
-  ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
+  MarkdownHelpers::ww.assign_to_global("OutDir", NewOutDir, 1)
+  MarkdownHelpers::ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
 }
 
 
@@ -274,7 +274,7 @@ continue_logging_markdown <- function(b.scriptname) {
   path_of_report <-
     kollapse(path, b.scriptname, ".log.md", print = FALSE)
   Stringendo::iprint("Writing report in:", path_of_report)
-  ww.assign_to_global("path_of_report", path_of_report, 1)
+  MarkdownHelpers::ww.assign_to_global("path_of_report", path_of_report, 1)
 
   BackupDir <- kollapse(path,
     "/",
@@ -284,7 +284,7 @@ continue_logging_markdown <- function(b.scriptname) {
   )
   if (!exists(BackupDir)) {
     dir.create(BackupDir, showWarnings = FALSE)
-    ww.assign_to_global("BackupDir", BackupDir, 1)
+    MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1)
   }
 }
 
@@ -312,8 +312,8 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
   if (setDir) {
     setwd(OutDir)
   }
-  ww.assign_to_global("OutDir", OutDir, 1)
-  if (!is.null(newName)) ww.assign_to_global(newName, OutDir, 1)
+  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1)
 }
 
 
@@ -628,7 +628,7 @@ wplot <- function(df2col,
       col = col_abline
     )
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (savefile) {
     ww.dev.copy(
       PNG_ = PNG,
@@ -837,7 +837,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1032,7 +1032,7 @@ wbarplot <- function(variable,
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1176,7 +1176,7 @@ whist <- function(variable,
   } else {
     Stringendo::iprint(variable, " IS EMPTY")
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1292,7 +1292,7 @@ wboxplot <- function(yourlist,
       h_ = h
     )
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
@@ -1541,7 +1541,7 @@ wstripchart <- function(yourlist,
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1686,7 +1686,7 @@ wstripchart_list <- function(yourlist,
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1820,7 +1820,7 @@ wvioplot_list <- function(yourlist,
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -1961,7 +1961,7 @@ wviostripchart_list <- function(yourlist,
   if (incrBottMarginBy) {
     par("mar" = .ParMarDefault)
   }
-  ww.assign_to_global("plotnameLastPlot", fname, 1)
+  MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
     md.image.linker(fname_wo_ext = fname)
   }
@@ -2228,9 +2228,9 @@ pdfA4plot_on <- function(plotname = date(),
                          title = ww.ttl_field(plotname)) {
   fname <- ww.FnP_parser(plotname, "pdf")
   try.dev.off()
-  ww.assign_to_global("b.mfrow_def", par("mfrow"), 1)
-  ww.assign_to_global("b.bg_def", par("bg"), 1)
-  ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
+  MarkdownHelpers::ww.assign_to_global("b.mfrow_def", par("mfrow"), 1)
+  MarkdownHelpers::ww.assign_to_global("b.bg_def", par("bg"), 1)
+  MarkdownHelpers::ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
   pdf(
     fname,
     width = w,
@@ -2281,8 +2281,8 @@ pdfA4plot_on.layout <- function(plotname = date(),
                                 title = ww.ttl_field(plotname)) {
   fname <- ww.FnP_parser(plotname, "pdf")
   try.dev.off()
-  ww.assign_to_global("b.bg_def", par("bg"), 1)
-  ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
+  MarkdownHelpers::ww.assign_to_global("b.bg_def", par("bg"), 1)
+  MarkdownHelpers::ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
   pdf(
     fname,
     width = w,
@@ -2326,7 +2326,7 @@ pdfA4plot_off <- function() {
     "white"
   }
   if (exists("b.save.wplots")) {
-    ww.assign_to_global("b.save.wplots", TRUE, 1) # switch back mdlink to its original value
+    MarkdownHelpers::ww.assign_to_global("b.save.wplots", TRUE, 1) # switch back mdlink to its original value
   }
   par(mfrow = x, bg = y)
   try.dev.off() # close pdf

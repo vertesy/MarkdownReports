@@ -1,7 +1,7 @@
 # Configuration for the Package
 DESCRIPTION <- list(
   package.name = "MarkdownReports",
-  version = "4.7.0",
+  version = "4.7.1",
   title = "Generate Scientific Figures and Reports Easily",
   description = "MarkdownReports is a set of R functions that allows you to generate precise figures easily,
     and create clean markdown reports about what you just discovered with your analysis script. It helps you to:
@@ -12,7 +12,7 @@ DESCRIPTION <- list(
     5. Share your report, by exporting your report to .pdf, .html or .docx, or via Github or a personal website.",
 
   depends = "Stringendo, CodeAndRoll2, MarkdownHelpers",
-  imports = "gplots, RColorBrewer, VennDiagram, vioplot, colorRamps, sessioninfo, clipr, pheatmap, grid ReadWriter",
+  imports = "gplots, RColorBrewer, VennDiagram, vioplot, colorRamps, sessioninfo, clipr, pheatmap, grid, ReadWriter",
   suggests = "",
 
   author.given = "Abel",
