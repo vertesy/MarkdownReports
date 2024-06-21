@@ -408,7 +408,9 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 #' @param x The pheatmap object to save.
 #' @param suffix Suffix to File name. Default: 'heatmap'.
-#' @param filename File name (saved as .pdf, inside working directory).
+#' @param plotname Name of the plot. Default: substitute(x). File saved as .pdf, inside working
+#' directory.
+#' @param add Constant to add to width and height. Default: 2.
 #' @param width width of the plot in inches.
 #' @param height height of the plot in inches.
 #' @param pdf Save as pdf. Default: TRUE.
@@ -429,8 +431,9 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 wplot_save_pheatmap <- function(x,
                                 suffix = "heatmap",
                                 plotname = substitute(x),
-                                width = nrow(x)+4,
-                                height = ncols(x)+4,
+                                add = 1,
+                                width = length(x$tree_col$labels)+add,
+                                height = length(x$tree_row$labels)-add,
                                 pdf = TRUE,
                                 png = FALSE,
                                 png_res = 100, # NA
