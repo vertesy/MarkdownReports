@@ -430,16 +430,23 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' wplot_save_pheatmap(ph.test)
 wplot_save_pheatmap <- function(x,
                                 suffix = "heatmap",
-                                plotname = substitute(x),
+                                plotname = as.character(substitute(x)),
                                 add = 1,
-                                width = length(x$tree_col$labels)+add,
-                                height = length(x$tree_row$labels)-add,
+                                width = max(length(x$tree_col$labels)+add, 4),
+                                height = max(length(x$tree_row$labels)-add, 4),
                                 pdf = TRUE,
                                 png = FALSE,
                                 png_res = 100, # NA
                                 png_dim_factor = 100,
                                 mdlink = TRUE) {
-  stopifnot(!missing(x))
+  #
+  stopifnot(inherits(x, "pheatmap"),
+            is.character(suffix), is.character(plotname), is.numeric(add), is.numeric(width), is.numeric(height),
+            is.logical(pdf), is.logical(png), is.numeric(png_res), is.numeric(png_dim_factor), is.logical(mdlink)
+  )
+
+  message("width: ", width, "; height: ", height, "\nplotname: ", plotname, "; suffix: ", suffix)
+
   filename <- ppp(plotname, suffix, "pdf")
   if (pdf) {
     pdf(
