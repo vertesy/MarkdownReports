@@ -407,6 +407,7 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' @description Save pheatmap object. Modified from:
 #' https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 #' @param x The pheatmap object to save.
+#' @param data data matrix used to create the pheatmap object. Only used to define plot height and width.
 #' @param suffix Suffix to File name. Default: 'heatmap'.
 #' @param plotname Name of the plot. Default: substitute(x). File saved as .pdf, inside working
 #' directory.
@@ -429,11 +430,12 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' ph.test <- pheatmap::pheatmap(test)
 #' wplot_save_pheatmap(ph.test)
 wplot_save_pheatmap <- function(x,
+                                data = NULL,
                                 suffix = "heatmap",
                                 plotname = as.character(substitute(x)),
                                 add = 1,
-                                width = max(length(x$tree_col$labels)+add, 4),
-                                height = max(length(x$tree_row$labels)-add, 4),
+                                width = max(if(is.null(data)) 7 else ncol(data) + add, 4),
+                                height = max(if(is.null(data)) 7 else nrow(data) - add, 4),
                                 pdf = TRUE,
                                 png = FALSE,
                                 png_res = 100, # NA
@@ -441,7 +443,8 @@ wplot_save_pheatmap <- function(x,
                                 mdlink = TRUE) {
   #
   stopifnot(inherits(x, "pheatmap"),
-            is.character(suffix), is.character(plotname), is.numeric(add), is.numeric(width), is.numeric(height),
+            is.character(suffix), is.character(plotname), nchar(plotname) < 200,
+            is.numeric(add), is.numeric(width), is.numeric(height),
             is.logical(pdf), is.logical(png), is.numeric(png_res), is.numeric(png_dim_factor), is.logical(mdlink)
   )
 

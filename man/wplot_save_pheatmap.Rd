@@ -6,10 +6,12 @@
 \usage{
 wplot_save_pheatmap(
   x,
+  data = NULL,
   suffix = "heatmap",
-  plotname = substitute(x),
-  width = nrow(x) + 4,
-  height = ncols(x) + 4,
+  plotname = as.character(substitute(x)),
+  add = 1,
+  width = max(if (is.null(data)) 7 else ncol(data) + add, 4),
+  height = max(if (is.null(data)) 7 else nrow(data) - add, 4),
   pdf = TRUE,
   png = FALSE,
   png_res = 100,
@@ -20,7 +22,14 @@ wplot_save_pheatmap(
 \arguments{
 \item{x}{The pheatmap object to save.}
 
+\item{data}{data matrix used to create the pheatmap object. Only used to define plot height and width.}
+
 \item{suffix}{Suffix to File name. Default: 'heatmap'.}
+
+\item{plotname}{Name of the plot. Default: substitute(x). File saved as .pdf, inside working
+directory.}
+
+\item{add}{Constant to add to width and height. Default: 2.}
 
 \item{width}{width of the plot in inches.}
 
@@ -36,8 +45,6 @@ wplot_save_pheatmap(
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report, set by
 "path_of_report".}
-
-\item{filename}{File name (saved as .pdf, inside working directory).}
 }
 \description{
 Save pheatmap object. Modified from:
