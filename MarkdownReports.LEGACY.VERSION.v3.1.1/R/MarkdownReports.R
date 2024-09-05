@@ -1131,7 +1131,7 @@ wlegend <- function(fill_ = NA, poz=4, legend, cex =.75, bty = "n", ..., w=7, h=
   stopif( ( LN != LF & missing(legend) ), message = "The color vector (fill_) has less names than entries / the variable 'legend' is not provided.")
   # stopif( ( LF  != length(legend)), message = "Fill and legend are not equally long.")
   legend = if( LN == LF & missing(legend) ) fNames else legend
-  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+  pozz = translate(poz, old = 1:4, new = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, fill=fill_, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink, )  }
 }
@@ -1161,7 +1161,7 @@ wlegend.label <- function(legend = "...", poz=1, cex =1, bty = "n", ..., w=7, h=
   h_ <- h
   cex_ <- cex
 
-  pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+  pozz = translate(poz, old = 1:4, new = c("topleft", "topright", "bottomright", "bottomleft"))
   legend(x=pozz, legend=legend, title=title, ..., bty=bty, cex = cex_)
   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_, mdlink = mdlink)  }
 }
@@ -2059,13 +2059,13 @@ stopif <- function(condition, message ="") { if(condition) {iprint (message); st
 #' @param oldvalues oldvalues (from)
 #' @param newvalues newvalues (to)
 #' @export
-#' @examples A=1:3; translate(vec = A, oldvalues =2:3 , newvalues = letters[1:2])
+#' @examples A=1:3; translate(vec = A, oldvalues =2:3 , new = letters[1:2])
 
 translate = replace_values <- function(vec, oldvalues, newvalues) {
   Nr = length(oldvalues)
   if (Nr > length(newvalues) ) {
     if (length(newvalues) == 1) {
-      newvalues =  rep(newvalues, length(oldvalues))
+      new =  rep(newvalues, length(oldvalues))
     } else if (length(newvalues) > 1) { iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")}
   }
   tmp = vec
@@ -2130,7 +2130,7 @@ na.omit.strip <- function(vec, silent = F) {
 
 # wlegend <- function(fill_ = NULL, poz=4, legend = names(fill_), bty = "n", ..., w_=7, h_=w_, OverwritePrevPDF =T) { # Add a legend, and save the plot immediately
 #   stopif(is.null(names(fill_) & 1), message = "The color vector (fill_) has no name, and the variable 'legend' is not provided.")
-#   pozz = translate(poz, oldvalues = 1:4, newvalues = c("topleft", "topright", "bottomright", "bottomleft"))
+#   pozz = translate(poz, old = 1:4, new = c("topleft", "topright", "bottomright", "bottomleft"))
 #   legend(x=pozz, legend=legend, fill=fill_, ..., bty=bty)
 #   if (OverwritePrevPDF) {   wplot_save_this(plotname = plotnameLastPlot, w= w_, h = h_)  }
 # }

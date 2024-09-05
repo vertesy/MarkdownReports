@@ -2303,8 +2303,8 @@ wlegend <-
       legend
     pozz = translate(
       poz,
-      oldvalues = 1:4,
-      newvalues = c("topleft", "topright", "bottomright", "bottomleft")
+      old = 1:4,
+      new = c("topleft", "topright", "bottomright", "bottomleft")
     )
     legend(
       x = pozz,
@@ -2368,8 +2368,8 @@ wlegend.label <-
 
     pozz = translate(
       poz,
-      oldvalues = 1:4,
-      newvalues = c("topleft", "topright", "bottomright", "bottomleft")
+      old = 1:4,
+      new = c("topleft", "topright", "bottomright", "bottomleft")
     )
     legend(
       x = pozz,
@@ -3469,13 +3469,13 @@ percentage_formatter <- function (x, digitz = 3) {
 #' @param oldvalues oldvalues (from)
 #' @param newvalues newvalues (to)
 #' @export
-#' @examples A = 1:3; translate(vec = A, oldvalues = 2:3, newvalues = letters[1:2])
+#' @examples A = 1:3; translate(vec = A, old = 2:3, new = letters[1:2])
 
 translate = replace_values <- function(vec, oldvalues, newvalues) {
   Nr = length(oldvalues)
   if (Nr > length(newvalues)) {
     if (length(newvalues) == 1) {
-      newvalues = rep(newvalues, length(oldvalues))
+      new = rep(newvalues, length(oldvalues))
     } else if (length(newvalues) > 1) {
       iprint("PROVIDE ONE NEWVALUE, OR THE SAME NUMEBR OF NEWVALUES AS OLDVALUES.")
     }

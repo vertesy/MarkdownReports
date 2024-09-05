@@ -17,5 +17,5 @@ translate(vec, oldvalues, newvalues)
 Replaces a set of values in a vector with another set of values, it translates your vector. Oldvalues and newvalues have to be 1-to-1 corespoding vectors.
 }
 \examples{
-A=1:3; translate(vec = A, oldvalues =2:3 , newvalues = letters[1:2])
+A=1:3; translate(vec = A, oldvalues =2:3 , new = letters[1:2])
 }

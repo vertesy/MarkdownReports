@@ -2462,8 +2462,8 @@ wlegend <- function(NamedColorVec = NA,
   }
   pozz <- translate(
     poz,
-    oldvalues = 1:4,
-    newvalues = c("topleft", "topright", "bottomright", "bottomleft")
+    old = 1:4,
+    new = c("topleft", "topright", "bottomright", "bottomleft")
   )
   legend(
     x = pozz,
@@ -2526,8 +2526,8 @@ wlegend.label <- function(legend = "...",
 
   pozz <- translate(
     poz,
-    oldvalues = 1:4,
-    newvalues = c("topleft", "topright", "bottomright", "bottomleft")
+    old = 1:4,
+    new = c("topleft", "topright", "bottomright", "bottomleft")
   )
   legend(
     x = pozz,
