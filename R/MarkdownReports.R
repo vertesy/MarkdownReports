@@ -38,6 +38,7 @@ utils::globalVariables(c(
 #' Default is TRUE.
 #' @param newName Optional new variable with the same path as the "OutDir"
 #' variable, useful if "OutDir" is redefined by other scripts.
+#' @param verbose Logical, whether to print the path of the report.
 #' @param recursive.folder Logical, whether to create the output folder
 #' recursively. Default is FALSE.
 #' @param backupfolder Logical, whether to create a timestamped backup folder
@@ -76,7 +77,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                   title = "",
                                   setDir = TRUE,
                                   newName = NULL,
-
+                                  verbose = TRUE,
                                   recursive.folder = TRUE,
                                   backupfolder = TRUE,
                                   append = FALSE,
@@ -108,13 +109,18 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
   if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = F)
 
-  Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
+  if (verbose) {
+    print("All files will be saved under 'OutDir':")
+    message(OutDir)
+  }
+
   path_of_report <- paste0(OutDir, scriptname, ".log.md")
   MarkdownHelpers::ww.assign_to_global("path_of_report", path_of_report, 1, verbose = FALSE)
-  Stringendo::iprint(
-    "MarkdownReport location is stored in 'path_of_report': ",
-    path_of_report
-  )
+
+  if (verbose) {
+    print("MarkdownReport location is stored in 'path_of_report':")
+    message(path_of_report)
+  }
 
   if (nchar(title)) {
     write(paste("# ", title), path_of_report, append = append)
@@ -192,6 +198,38 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 
 
 
+
+#' @title create_set_OutDir
+#'
+#' @description Create or set the output directory of the script, and set the "OutDir" variable
+#' that is used by all ~wplot functions.
+#'
+#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param setDir Set the working directory to OutDir? Default: TRUE
+#' @param verbose Print directory to screen? Default: TRUE
+#' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
+#' OutDir may be redifined by other scripts
+#'
+#' @examples create_set_OutDir(setDir = TRUE, getwd())
+#' @export
+create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
+                              newName = NULL) {
+  OutDir <- Stringendo::FixPath(...)
+  if (verbose) {
+    print("All files will be saved under 'OutDir':")
+    # message(OutDir)
+  }
+  if (!exists(OutDir)) {
+    dir.create(OutDir, recursive = T, showWarnings = FALSE)
+  }
+  if (setDir) {
+    setwd(OutDir)
+  }
+  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1)
+}
+
+
 #' @title Create_set_SubDir
 #'
 #' @description Create or set the output directory of the script, and set the "NewOutDir" variable that is
@@ -223,12 +261,13 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
   }
   if (define.ParentDir) {
     if (exists("ParentDir")) { # If this function has been run already, you have "ParentDir", which will be overwritten.
-      if (verbose) Stringendo::iprint("ParentDir was defined as:", ParentDir)
-    }
-    if (verbose) Stringendo::iprint("ParentDir will be:", OutDir)
+      if (verbose) { print("ParentDir was defined as:"); message(ParentDir) }
+    } # if
+
+    if (verbose) { print("ParentDir will be:"); message(OutDir) }
     MarkdownHelpers::ww.assign_to_global("ParentDir", OutDir, 1)
   } # if
-  if (verbose) Stringendo::iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+  if (verbose) print("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
   MarkdownHelpers::ww.assign_to_global("OutDir", NewOutDir, 1)
   MarkdownHelpers::ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
   # Flag that md.image.linker uses
@@ -286,34 +325,6 @@ continue_logging_markdown <- function(b.scriptname) {
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1)
   }
-}
-
-#' @title create_set_OutDir
-#'
-#' @description Create or set the output directory of the script, and set the "OutDir" variable
-#' that is used by all ~wplot functions.
-#'
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
-#' @param setDir Set the working directory to OutDir? Default: TRUE
-#' @param verbose Print directory to screen? Default: TRUE
-#' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
-#' OutDir may be redifined by other scripts
-#'
-#' @export
-#' @examples create_set_OutDir(setDir = TRUE, getwd(), "/")
-create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
-                              newName = NULL) {
-  OutDir <- Stringendo::FixPath(...)
-  # OutDir <- AddTrailingSlashfNonePresent(OutDir)
-  if (verbose) Stringendo::iprint("All files will be saved under 'OutDir': ", OutDir)
-  if (!exists(OutDir)) {
-    dir.create(OutDir, recursive = T, showWarnings = FALSE)
-  }
-  if (setDir) {
-    setwd(OutDir)
-  }
-  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
-  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1)
 }
 
 
