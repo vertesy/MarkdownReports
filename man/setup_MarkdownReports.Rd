@@ -10,6 +10,7 @@ setup_MarkdownReports(
   title = "",
   setDir = TRUE,
   newName = NULL,
+  verbose = TRUE,
   recursive.folder = TRUE,
   backupfolder = TRUE,
   append = FALSE,
@@ -39,6 +40,8 @@ Default is TRUE.}
 
 \item{newName}{Optional new variable with the same path as the "OutDir"
 variable, useful if "OutDir" is redefined by other scripts.}
+
+\item{verbose}{Logical, whether to print the path of the report.}
 
 \item{recursive.folder}{Logical, whether to create the output folder
 recursively. Default is FALSE.}
