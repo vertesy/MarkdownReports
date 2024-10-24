@@ -40,6 +40,7 @@ pak::pkg_install(remote.path)
 
 
 # CMD CHECK ------------------------------------------------
+devtools::check_man(repository.dir)
 checkres <- devtools::check(repository.dir, cran = FALSE)
 
 
