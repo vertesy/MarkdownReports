@@ -208,129 +208,101 @@ end
 
 -----
 
-## List of Functions (30) 
-
-Updated: 2023/11/27 00:51
+## List of Functions in MarkdownReports (31) 
+Updated: 2024/10/24 15:57
 
 - #### 1 `setup_MarkdownReports()`
+Setup Markdown Reports. Initializes the markdown report file and the output directory.  This function creates a subdirectory in "OutDir", named with the script name  and the modification time. It also defines the "path_of_report" variable  used by all log-writing and wplot functions. 
 
-  setup_MarkdownReports. Setup the markdown report file and the output directory, create a sub directory in "OutDir".  Its name is stamped with the script name and the modification time. Create the "path_of_report"  variable used by all log-writing and ~wplot functions. 
+- #### 2 `create_set_OutDir()`
+create_set_OutDir. Create or set the output directory of the script, and set the "OutDir" variable  that is used by all ~wplot functions. 
 
-- #### 2 `create_set_SubDir()`
+- #### 3 `create_set_SubDir()`
+Create_set_SubDir. Create or set the output directory of the script, and set the "NewOutDir" variable that is  used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
 
-  Create_set_SubDir. Create or set the output directory of the script, and set the "NewOutDir" variable that is  used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
+- #### 4 `create_set_Original_OutDir()`
+create_set_Original_OutDir. Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.  Set the output directory of the script, and set the "NewOutDir" variable that is   used by all ~wplot functions. 
 
-- #### 3 `create_set_Original_OutDir()`
+- #### 5 `continue_logging_markdown()`
+continue_logging_markdown. Continue writing to an existing report file.
 
-  create_set_Original_OutDir. Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.  Set the output directory of the script, and set the "NewOutDir" variable that is   used by all ~wplot functions. 
+- #### 6 `check_OutDir()`
+Compare Current Working Directory with OutDir. This function checks if the current working directory is the same as a  specified directory (OutDir). If they do not match, it prints both directories to the  screen. 
 
-- #### 4 `continue_logging_markdown()`
+- #### 7 `wplot_save_this()`
+wplot_save_this. Save the currently active graphic device (for complicated plots).  Insert links to your markdown  report, set by "path_of_report". Name the file by naming the variable!
 
-  continue_logging_markdown. Continue writing to an existing report file.
+- #### 8 `wplot_save_pheatmap()`
+wplot_save_pheatmap. Save pheatmap object. Modified from:  https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
 
-- #### 5 `create_set_OutDir()`
+- #### 9 `wplot()`
+wplot. Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. The .png version is not created, only  the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to  your plot, by setting "abline" argument to = FALSE (no line, default), "h" (horizontal, further  specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an  angle, further specified by a = offset, b = slope). 
 
-  create_set_OutDir. Create or set the output directory of the script, and set the "OutDir" variable that is used by  all ~wplot functions. 
+- #### 10 `wscatter.fill()`
+wscatter.fill. A scatterplot with color gradient and color legend. Modified from:  http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend 
 
-- #### 6 `wplot_save_this()`
+- #### 11 `wbarplot()`
+wbarplot. Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
 
-  wplot_save_this. Save the currently active graphic device (for complicated plots).  Insert links to your markdown  report, set by "path_of_report". Name the file by naming the variable!
+- #### 12 `whist()`
+whist. Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. Name the file by naming the variable!  Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol"  assumes  >= coloring!
 
-- #### 7 `wplot_save_pheatmap()`
+- #### 13 `wboxplot()`
+wboxplot. Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
 
-  wplot_save_pheatmap. Save pheatmap object. Modified from:  https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file
+- #### 14 `wpie()`
+wpie. Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
 
-- #### 8 `wplot()`
+- #### 15 `wstripchart()`
+wstripchart. Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. 
 
-  wplot. Create and save scatter plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. The .png version is not created, only  the link is put in place. You can add 2D error bars around the dots, or add lines (ablines) to  your plot, by setting "abline" argument to = FALSE (no line, default), "h" (horizontal, further  specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an  angle, further specified by a = offset, b = slope). 
+- #### 16 `wstripchart_list()`
+wstripchart_list. Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual  coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a  .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not  created, only the link is put in place, not to overwrite previous versions.
 
-- #### 9 `wscatter.fill()`
+- #### 17 `wvioplot_list()`
+wvioplot_list. Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.  If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,  set by "path_of_report". The .png version is not created, only the link is put in place,  not to overwrite previous versions. 
 
-  wscatter.fill. A scatterplot with color gradient and color legend. Modified from:  http://stackoverflow.com/questions/20127282/r-color-scatterplot-points-by-col-value-with-legend 
+- #### 18 `wviostripchart_list()`
+wviostripchart_list. Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.  If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,  set by "path_of_report". The .png version is not created, only the link is put in place,  not to overwrite previous versions.
 
-- #### 10 `wbarplot()`
+- #### 19 `wvenn()`
+wvenn. Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,  and it does not use the dev.copy2pdf() function.
 
-  wbarplot. Create and save bar plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
+- #### 20 `wbarplot_dfCol()`
+wbarplot_dfCol. wbarplot for a column of a data frame. 
 
-- #### 11 `whist()`
+- #### 21 `whist_dfCol()`
+whist_dfCol. Use this version of whist() if you iterate over columns  or rows of a data frame.  You can name the file by naming the variable.  Cannot be used with dynamically called variables (e.g. call vectors within a loop). 
 
-  whist. Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. Name the file by naming the variable!  Cannot be used with dynamically called variables [e.g. call vectors within a loop]. "filtercol"  assumes  >= coloring!
+- #### 22 `pdfA4plot_on()`
+pdfA4plot_on. Create A4 PDFs to plot multiple subplots in one file
 
-- #### 12 `wboxplot()`
+- #### 23 `pdfA4plot_on.layout()`
+pdfA4plot_on.layout. Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row.  Fancy layout version of pdfA4plot_on()
 
-  wboxplot. Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
+- #### 24 `pdfA4plot_off()`
+pdfA4plot_off. The pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.  @importFrom clipr write_clip  @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout")  hist(rnorm(100))  hist(-rnorm(100))  hist(10 + rnorm(100))  pdfA4plot_off() 
 
-- #### 13 `wpie()`
+- #### 25 `error_bar()`
+error_bar. Put error bars on top of your bar plots. This functionality is now integrated into  MarkdownReporter's wbarplot() function
 
-  wpie. Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions.
+- #### 26 `wlegend()`
+wlegend. Quickly add a legend to an existing plot, and save the plot immediately.
 
-- #### 14 `wstripchart()`
+- #### 27 `wlegend.label()`
+wlegend.label. Quickly add a "text only" legend without a filled color box. to an existing plot,  and save the plot immediately. Never inserts an mdlink.
 
-  wstripchart. Create and save strip charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png  link in the markdown report, set by "path_of_report". The .png version is not created, only the  link is put in place, not to overwrite previous versions. 
+- #### 28 `barplot_label()`
+barplot_label. Add extra labels to your bar plots at the top or the base.
 
-- #### 15 `wstripchart_list()`
+- #### 29 `wLinRegression()`
+wLinRegression. Add linear regression, and descriptors to line to your scatter plot.  Provide the same dataframe as you provided to wplot() before you called this function
 
-  wstripchart_list. Create and save stripcharts from a list as .pdf, in "OutDir". This version allows individual  coloring of each data point, by a color-list of the same dimension. If mdlink = TRUE, it inserts a  .pdf and a .png link in the markdown report, set by "path_of_report". The .png version is not  created, only the link is put in place, not to overwrite previous versions.
+- #### 30 `subscript_in_plots()`
+subscript_in_plots. Returns a formatted string that you feed to main, xlab or ylab parameters of a plot  Create an expression with subscript for axis labels.  Parsed when provided to xlab or ylab of a function.
 
-- #### 16 `wvioplot_list()`
-
-  wvioplot_list. Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.  If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,  set by "path_of_report". The .png version is not created, only the link is put in place,  not to overwrite previous versions. 
-
-- #### 17 `wviostripchart_list()`
-
-  wviostripchart_list. Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.  If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,  set by "path_of_report". The .png version is not created, only the link is put in place,  not to overwrite previous versions.
-
-- #### 18 `wvenn()`
-
-  wvenn. Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,  and it does not use the dev.copy2pdf() function.
-
-- #### 19 `wbarplot_dfCol()`
-
-  wbarplot_dfCol. wbarplot for a column of a data frame. 
-
-- #### 20 `whist_dfCol()`
-
-  whist_dfCol. Use this version of whist() if you iterate over columns  or rows of a data frame.  You can name the file by naming the variable.  Cannot be used with dynamically called variables (e.g. call vectors within a loop). 
-
-- #### 21 `pdfA4plot_on()`
-
-  pdfA4plot_on. Create A4 PDFs to plot multiple subplots in one file
-
-- #### 22 `pdfA4plot_on.layout()`
-
-  pdfA4plot_on.layout. Create A4 PDFs to plot multiple subplots in one file with custom numbers of columns in each row.  Fancy layout version of pdfA4plot_on()
-
-- #### 23 `pdfA4plot_off()`
-
-  pdfA4plot_off. The pair of the "pdfA4plot_on()" function; to finish plotting in the A4 pdf.  @importFrom clipr write_clip  @examples pdfA4plot_on.layout(plotname = "MyA4_w_layout")  hist(rnorm(100))  hist(-rnorm(100))  hist(10 + rnorm(100))  pdfA4plot_off() 
-
-- #### 24 `error_bar()`
-
-  error_bar. Put error bars on top of your bar plots. This functionality is now integrated into  MarkdownReporter's wbarplot() function
-
-- #### 25 `wlegend()`
-
-  wlegend. Quickly add a legend to an existing plot, and save the plot immediately.
-
-- #### 26 `wlegend.label()`
-
-  wlegend.label. Quickly add a "text only" legend without a filled color box. to an existing plot,  and save the plot immediately. Never inserts an mdlink.
-
-- #### 27 `barplot_label()`
-
-  barplot_label. Add extra labels to your bar plots at the top or the base.
-
-- #### 28 `wLinRegression()`
-
-  wLinRegression. Add linear regression, and descriptors to line to your scatter plot.  Provide the same dataframe as you provided to wplot() before you called this function
-
-- #### 29 `subscript_in_plots()`
-
-  subscript_in_plots. Returns a formatted string that you feed to main, xlab or ylab parameters of a plot  Create an expression with subscript for axis labels.  Parsed when provided to xlab or ylab of a function.
-
-- #### 30 `superscript_in_plots()`
-
-  superscript_in_plots. Returns a formatted string that you feed to main, xlab or ylab parameters of a plot  Create an expression with superscript for axis labels.  Parsed when provided to xlab or ylab of a function.
+- #### 31 `superscript_in_plots()`
+superscript_in_plots. Returns a formatted string that you feed to main, xlab or ylab parameters of a plot  Create an expression with superscript for axis labels.  Parsed when provided to xlab or ylab of a function.
 
 
 

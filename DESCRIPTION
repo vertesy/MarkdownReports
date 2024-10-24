@@ -1,6 +1,6 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.7.1
+Version: 4.8.0
 Authors@R: 
     person("Abel", "Vertesy", , "av@imba.oeaw.ac.at", role = c("aut", "cre"))
 Author: Abel Vertesy <av@imba.oeaw.ac.at> [aut, cre]
@@ -34,6 +34,6 @@ Imports:
     VennDiagram,
     vioplot
 Encoding: UTF-8
-Packaged: 2024-05-03 19:06:48.366226
+Packaged: 2024-10-24 16:00:45.369786
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

@@ -83,4 +83,5 @@ whist(
   breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
   lcol = 2, filtercol = 0
 )
+
 }

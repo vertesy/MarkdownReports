@@ -6,10 +6,6 @@
 \usage{
 check_OutDir()
 }
-\arguments{
-\item{OutDir}{The target directory to compare with the current working directory.
-Default: OutDir (assumes that OutDir should be defined in the global environment).}
-}
 \value{
 Prints a message to the console if the current working directory does not
 match OutDir. No return value.

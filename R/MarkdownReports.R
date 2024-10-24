@@ -261,10 +261,16 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
   }
   if (define.ParentDir) {
     if (exists("ParentDir")) { # If this function has been run already, you have "ParentDir", which will be overwritten.
-      if (verbose) { print("ParentDir was defined as:"); message(ParentDir) }
+      if (verbose) {
+        print("ParentDir was defined as:")
+        message(ParentDir)
+      }
     } # if
 
-    if (verbose) { print("ParentDir will be:"); message(OutDir) }
+    if (verbose) {
+      print("ParentDir will be:")
+      message(OutDir)
+    }
     MarkdownHelpers::ww.assign_to_global("ParentDir", OutDir, 1)
   } # if
   if (verbose) print("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
@@ -334,9 +340,6 @@ continue_logging_markdown <- function(b.scriptname) {
 #' specified directory (OutDir). If they do not match, it prints both directories to the
 #' screen.
 #'
-#' @param OutDir The target directory to compare with the current working directory.
-#' Default: OutDir (assumes that OutDir should be defined in the global environment).
-#'
 #' @return Prints a message to the console if the current working directory does not
 #' match OutDir. No return value.
 #'
@@ -346,8 +349,8 @@ continue_logging_markdown <- function(b.scriptname) {
 #' @importFrom checkmate assertCharacter
 #' @export
 check_OutDir <- function() {
-    # Get the current working directory
-  current_dir <- paste0(getwd(),"/")
+  # Get the current working directory
+  current_dir <- paste0(getwd(), "/")
 
   # Check if OutDir is defined and if current_dir is not equal to OutDir
   if (!exists("OutDir")) {
@@ -445,18 +448,19 @@ wplot_save_pheatmap <- function(x,
                                 suffix = "heatmap",
                                 plotname = as.character(substitute(x)),
                                 add = 1,
-                                width = max(if(is.null(data)) 7 else ncol(data) + add, 4),
-                                height = max(if(is.null(data)) 7 else nrow(data) - add, 4),
+                                width = max(if (is.null(data)) 7 else ncol(data) + add, 4),
+                                height = max(if (is.null(data)) 7 else nrow(data) - add, 4),
                                 pdf = TRUE,
                                 png = FALSE,
                                 png_res = 100, # NA
                                 png_dim_factor = 100,
                                 mdlink = TRUE) {
   #
-  stopifnot(inherits(x, "pheatmap"),
-            is.character(suffix), is.character(plotname), nchar(plotname) < 200,
-            is.numeric(add), is.numeric(width), is.numeric(height),
-            is.logical(pdf), is.logical(png), is.numeric(png_res), is.numeric(png_dim_factor), is.logical(mdlink)
+  stopifnot(
+    inherits(x, "pheatmap"),
+    is.character(suffix), is.character(plotname), nchar(plotname) < 200,
+    is.numeric(add), is.numeric(width), is.numeric(height),
+    is.logical(pdf), is.logical(png), is.numeric(png_res), is.numeric(png_dim_factor), is.logical(mdlink)
   )
 
   message("width: ", width, "; height: ", height, "\nplotname: ", plotname, "; suffix: ", suffix)
@@ -1094,13 +1098,16 @@ wbarplot <- function(variable,
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
-#' @export
-#' @examples MyGauss <- rnorm(1000)
+#'
+#' @examples
+#' MyGauss <- rnorm(1000)
 #' whist(
 #'   variable = MyGauss, col = "gold1", w = 7,
 #'   breaks = 20, mdlink = FALSE, hline = FALSE, vline = FALSE, lty = 2, lwd = 3,
 #'   lcol = 2, filtercol = 0
 #' )
+#'
+#' @export
 whist <- function(variable,
                   ...,
                   breaks = 20,
