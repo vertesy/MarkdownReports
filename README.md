@@ -3,8 +3,16 @@
 [TOC]
 
 # MarkdownReports – Type Less, Plot More.
-MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles an report in markdown from those. MarkdownReports depends on
+`MarkdownReports` allows you, to plot and save as .pdf/.png with *minimal* code. Labels, file-names, etc are auto-guessed from your data.
+All the saved plots are automatically (but optionally) compiled into a markdown report document. 
 
+`MarkdownReports` conceptually differs from `.Rmd` / Rmarkdown notebooks, in that it keeps code and reports separate:
+- Plain code scripts are easier to develop and maintain.
+- Plain reports are focusing on results and data, which makes presentation of the results easier.
+- Yet the two are directly linked, and the report is automatically updated.
+
+
+MarkdownReports depends on:
 - [Stringendo](https://github.com/vertesy/Stringendo)
 - [ReadWriter](https://github.com/vertesy/ReadWriter)
 - [CodeAndRoll2](https://github.com/vertesy/CodeAndRoll2)
@@ -22,7 +30,7 @@ MarkdownReports does quick, annotated, .pdf/.png exported plotting and compiles 
 MarkdownReports is a set of **R** functions that allows you to generate precise figures easily, and create clean reports in markdown language about what you just discovered with your analysis script. It helps you to:
 
 
-1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf), that you can use from presentation to posters anywhere.
+1. Create scientifically accurate figures and save them automatically as vector graphic (.pdf) or raster (.png), that you can use from presentation to posters anywhere.
 2. Note down your findings easily in a clear and nicely formatted way, parsed from your variables into english sentences.
 - Link & display your figures automatically inside your report, right there where they are needed.
 - Version your findings, annotating which parameters were used to reach certain results.
