@@ -37,4 +37,3 @@ Additional CRAN dependencies are listed in `DESCRIPTION`.
 - Browse the `R/` directory to learn how functions are organised and how reports are generated.
 - Consult `man/` pages via `?function_name` in R for detailed documentation.
 
-Happy plotting!
