@@ -14,8 +14,8 @@ utils::globalVariables(c(
 # - Plots
 # - Plots for cycling over data frame columns or rows
 # - A4 pdfs for multi-plots
-# - Add-ons to exisiting plots
-# - Graphics and Internal function
+# - Add-ons to existing plots
+# - Graphics and Internal functions
 
 
 # ______________________________________________________________________________________________----
@@ -204,11 +204,11 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @description Create or set the output directory of the script, and set the "OutDir" variable
 #' that is used by all ~wplot functions.
 #'
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
-#' OutDir may be redifined by other scripts
+#' OutDir may be redefined by other scripts
 #'
 #' @examples create_set_OutDir(setDir = TRUE, getwd())
 #' @export
@@ -234,7 +234,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
 #'
 #' @description Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param ParentDir Change the "OutDirOrig" variable to the
 #' current OutDir (before setting it to a subdir).
 #' @param define.ParentDir Report on what was the parent directory of the new subdir.
@@ -260,7 +260,7 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
     setwd(NewOutDir)
   }
   if (define.ParentDir) {
-    if (exists("ParentDir")) { # If this function has been run already, you have "ParentDir", which will be overwritten.
+    if (exists("ParentDir")) { # If this function has already run, you have "ParentDir", which will be overwritten.
       if (verbose) {
         print("ParentDir was defined as:")
         message(ParentDir)
@@ -273,15 +273,15 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
     }
     MarkdownHelpers::ww.assign_to_global("ParentDir", OutDir, 1)
   } # if
-  if (verbose) print("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+  if (verbose) print("Call *create_set_Original_OutDir()* when changing back to the main dir.")
   MarkdownHelpers::ww.assign_to_global("OutDir", NewOutDir, 1)
   MarkdownHelpers::ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
-  # Flag that md.image.linker uses
+  # Flag used by md.image.linker
 }
 
 #' @title create_set_Original_OutDir
 #'
-#' @description Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
+#' @description Closing pair of the create_set_SubDir function. Call when changing back to the main dir.
 #' Set the output directory of the script, and set the "NewOutDir" variable that is
 #'  used by all ~wplot functions.
 #'
@@ -2369,7 +2369,7 @@ pdfA4plot_off <- function() {
 
 
 # ______________________________________________________________________________________________----
-# Add-ons to exisiting plots ----
+# Add-ons to existing plots ----
 # _________________________________________________________________________________________________
 
 
@@ -2433,10 +2433,10 @@ error_bar <- function(
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
-#' ALSE by default. Does not work if you pass on a list item like this: list$element
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
+#' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report
 #' , set by "path_of_report".
 #' @export
@@ -2505,7 +2505,7 @@ wlegend <- function(NamedColorVec = NA,
 
 #' @title wlegend.label
 #'
-#' @description Quickly add a "text only" legend without a filled color box. to an existing plot,
+#' @description Quickly add a "text only" legend without a filled color box to an existing plot,
 #' and save the plot immediately. Never inserts an mdlink.
 #' @param legend Labels displayed (Text)
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft",
@@ -2517,10 +2517,10 @@ wlegend <- function(NamedColorVec = NA,
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
 #' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #' set by "path_of_report".
 #' @export
@@ -2538,7 +2538,7 @@ wlegend.label <- function(legend = "...",
                           ttl.by.varname = FALSE,
                           OverwritePrevPDF = unless.specified("b.save.wplots"),
                           mdlink = FALSE) {
-  w_ <- w # to avoid circular reference in the inside function argument
+  w_ <- w # to avoid a circular reference inside the function argument
   h_ <- h
   cex_ <- cex
 
@@ -2569,14 +2569,14 @@ wlegend.label <- function(legend = "...",
 #' @title barplot_label
 #'
 #' @description Add extra labels to your bar plots at the top or the base.
-#' @param barplotted_variable The variable that you barplotted previously.
+#' @param barplotted_variable The variable that you previously bar plotted.
 #' @param labels Label text.
 #' @param bottom Put labels at the bottom of the bars.
-#' @param TopOffset Absolute offset from top.
-#' @param relpos_bottom Relative offset from bottom.
+#' @param TopOffset Absolute offset from the top.
+#' @param relpos_bottom Relative offset from the bottom.
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
-#' @param filename Filename to overwrite after errorbars are added to the current barplot.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
+#' @param filename Filename to overwrite after error bars are added to the current bar plot.
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -2623,15 +2623,15 @@ barplot_label <- function(barplotted_variable,
 
 #' @title wLinRegression
 #'
-#' @description Add linear regression, and descriptors to line to your scatter plot.
-#' Provide the same dataframe as you provided to wplot() before you called this function
-#' @param DF  The same dataframe as you provided to wplot() before you called this function
+#' @description Add linear regression and descriptors to a line in your scatter plot.
+#' Provide the same data frame as you provided to wplot() before calling this function
+#' @param DF  The same data frame that you provided to wplot() before calling this function
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman"
 #' correlation values or "r2" for the Coefficient of Determination.
-#' @param textlocation where to put the legend?
+#' @param textlocation Where to put the legend?
 #' @param cex font size; 1 by default
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @import stats
