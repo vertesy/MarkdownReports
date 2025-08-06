@@ -45,7 +45,7 @@ MarkdownReports v4.3.2 Relies on
 
 
 
-### Version 4.1.0 is ready and installed by the default. 
+### Version 4.1.0 is ready and installed by default.
 
 1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
 2. See development version at: https://github.com/vertesy/MarkdownReportsDev
@@ -53,7 +53,7 @@ MarkdownReports v4.3.2 Relies on
 
 ### New features:
 
-- **Formatted session info Sessioninfo**
+- **Formatted session info (sessionInfo)**
 - Updated dependencies
 - Many functions are more stable and versatile
 
@@ -63,7 +63,7 @@ In case you find a bug, please report. Try the [development version](https://git
 
 [3.1.1  is under legacy now]
 
-### Version 3.1.1 is ready and installed by the default. 
+### Version 3.1.1 is ready and installed by default.
 
 1. See legacy/old version at: https://github.com/vertesy/MarkdownReports.v2.9.5
 2. See development version at: https://github.com/vertesy/MarkdownReportsDev
