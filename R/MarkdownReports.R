@@ -1345,7 +1345,7 @@ wboxplot <- function(yourlist,
 #'   work).
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param both_pc_and_value Report both percentage AND number.
-#' @param col Fill color. Defined by rich colours by default
+#' @param col Fill color. Defined by rich colors by default
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -1447,8 +1447,8 @@ wpie <- function(NamedVector,
 #' @param pchcex Define the size of the symbol for each data point.
 #' @param bg Background color.
 #' @param col Color of the plot.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See
-#'   stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid
 #'   overlaps).
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
@@ -1475,7 +1475,7 @@ wstripchart <- function(yourlist,
                         border = 1,
                         incrBottMarginBy = 0,
                         tilted_text = FALSE,
-                        metod = "jitter",
+                        method = "jitter",
                         jitter = 0.3,
                         pch = 18,
                         pchlwd = 1,
@@ -1537,7 +1537,7 @@ wstripchart <- function(yourlist,
     yourlist,
     vertical = TRUE,
     add = TRUE,
-    method = metod,
+    method = method,
     jitter = jitter,
     pch = pch,
     bg = bg_,
@@ -1600,8 +1600,8 @@ wstripchart <- function(yourlist,
 #' @param pch Define the symbol for each data point. A number (0-25) or any string between ""-s.
 #' @param pchlwd Define the outline width of the symbol for each data point.
 #' @param pchcex Define the size of the symbol for each data point.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See
-#'   stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid
 #'   overlaps).
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not
@@ -1619,7 +1619,7 @@ wstripchart <- function(yourlist,
 #' wstripchart_list(
 #'   yourlist = my.ls, sub = NULL, ylab = NULL, xlab = NULL,
 #'   border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = 1,
-#'   metod = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
+#'   method = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
 #' )
 wstripchart_list <- function(yourlist,
                              ...,
@@ -1636,7 +1636,7 @@ wstripchart_list <- function(yourlist,
                              tilted_text = FALSE,
                              bg = "chartreuse2",
                              col = "black",
-                             metod = "jitter",
+                             method = "jitter",
                              jitter = 0.2,
                              savefile = unless.specified("b.save.wplots"),
                              w = unless.specified("b.defSize"),
@@ -1873,12 +1873,12 @@ wvioplot_list <- function(yourlist,
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param pch Define the symbol for each data point. A number (0-25) or any string between ""-s.
-#' @param viocoll Background color of each individual violing plot.
-#' @param vioborder Border color of each individual violing plot.
+#' @param viocoll Background color of each individual violin plot.
+#' @param vioborder Border color of each individual violin plot.
 #' @param bg Background color.
 #' @param col Color of the plot.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack".
-#' See stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual
 #' data points (to avoid overlaps).
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot.
@@ -1896,7 +1896,7 @@ wvioplot_list <- function(yourlist,
 #' @examples try.dev.off()
 #' my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 #' # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
-#' # bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
+#' # bg = 0, col = "black", method = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 wviostripchart_list <- function(yourlist,
                                 ...,
                                 pch = 20,
@@ -1904,7 +1904,7 @@ wviostripchart_list <- function(yourlist,
                                 vioborder = 1,
                                 bg = 1,
                                 col = 1,
-                                metod = "jitter",
+                             method = "jitter",
                                 jitter = 0.25,
                                 main = as.character(substitute(yourlist)),
                                 sub = NULL,
@@ -1973,7 +1973,7 @@ wviostripchart_list <- function(yourlist,
         at = i,
         add = TRUE,
         vertical = TRUE,
-        method = metod,
+        method = method,
         jitter = jitter,
         pch = pch,
         bg = bg[[k]],

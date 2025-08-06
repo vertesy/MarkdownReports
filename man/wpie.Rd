@@ -27,7 +27,7 @@ wpie(
 
 \item{plotname}{Title of the plot (main parameter) and also the name of the file.}
 
-\item{col}{Fill color. Defined by rich colours by default}
+\item{col}{Fill color. Defined by rich colors by default}
 
 \item{savefile}{Save plot as pdf in OutDir, TRUE by default.}
 
