@@ -99,7 +99,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                   b.mdlink = TRUE,
                                   b.save.wplots = TRUE,
                                   b.def.color = "gold1") {
-  if (!exists(OutDir)) {
+  # Create the output directory if it does not yet exist
+  if (!dir.exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
   }
   OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
@@ -163,7 +164,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     rm(defWidth)
     llprint(".sessionInfo* is saved in the working directory (OutDir).")
   }
-  if (!exists(BackupDir) & backupfolder) {
+  if (!dir.exists(BackupDir) & backupfolder) {
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
   }
@@ -219,8 +220,9 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
     print("All files will be saved under 'OutDir':")
     # message(OutDir)
   }
-  if (!exists(OutDir)) {
-    dir.create(OutDir, recursive = T, showWarnings = FALSE)
+  # Create the output directory if needed
+  if (!dir.exists(OutDir)) {
+    dir.create(OutDir, recursive = TRUE, showWarnings = FALSE)
   }
   if (setDir) {
     setwd(OutDir)
@@ -296,7 +298,8 @@ create_set_Original_OutDir <- function(NewOutDir = OutDirOrig,
                                        setDir = TRUE,
                                        verbose = TRUE) {
   if (verbose) Stringendo::iprint("All files will be saved under the original OutDir: ", NewOutDir)
-  if (!exists(NewOutDir)) {
+  # Create the directory if it does not exist
+  if (!dir.exists(NewOutDir)) {
     dir.create(NewOutDir, showWarnings = FALSE)
   }
   if (setDir) {
@@ -327,7 +330,7 @@ continue_logging_markdown <- function(b.scriptname) {
     format(Sys.time(), "%Y_%m_%d-%Hh"),
     print = FALSE
   )
-  if (!exists(BackupDir)) {
+  if (!dir.exists(BackupDir)) {
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1)
   }
