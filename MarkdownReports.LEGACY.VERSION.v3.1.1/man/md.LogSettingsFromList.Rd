@@ -7,7 +7,7 @@
 md.LogSettingsFromList(parameterlist = px, maxlen = 20)
 }
 \arguments{
-\item{parameterlist}{List of Paramters}
+\item{parameterlist}{List of Parameters}
 
 \item{maxlen}{Maximum length of entries in a parameter list element}
 }

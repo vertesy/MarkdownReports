@@ -4,7 +4,7 @@
 # source("~/GitHub/MarkdownReports/MarkdownReports/R/MarkdownReports.R")
 
 
-# Dependecies:  stats, vioplot, colorRamps, gplots, VennDiagram,
+# Dependencies:  stats, vioplot, colorRamps, gplots, VennDiagram,
 
 # Table of Contents ------------------------------------
 # - Setup
@@ -1506,13 +1506,13 @@ md.import <- function(from.file, to.file = path_of_report) {
 #' md.LogSettingsFromList
 #'
 #' Log the parameters & settings used in the script and stored in a list, in a table format in the report.
-#' @param parameterlist List of Paramters
+#' @param parameterlist List of Parameters
 #' @param maxlen Maximum length of entries in a parameter list element
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min"=4, "method"="pearson", "max"=10))
 
 md.LogSettingsFromList <- function (parameterlist=px, maxlen =20) {
-  LZ = unlapply(parameterlist, length) # collapse paramters with multiple entires
+  LZ = unlapply(parameterlist, length) # collapse parameters with multiple entries
   LNG = names(which(LZ>1))
   for (i in LNG ) {
     if (length(parameterlist[[i]]) > maxlen) parameterlist[[i]] = parameterlist[[i]][1:maxlen]
@@ -1820,7 +1820,7 @@ getCategories <- function(named_categ_vec) { named_categ_vec[unique(names(named_
 #' parFlags
 #'
 #' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
-#' @param ... Paramter variables
+#' @param ... Parameter variables
 #' @param prefix Append something before?
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param collapsechar Separating character between each parameters-flag
@@ -1839,7 +1839,7 @@ parFlags <- function(prefix="", ..., pasteflg=T, collapsechar =".") {
 #' parFlags2
 #'
 #' Create a string from the names of the (boolean) parameters (T or F) of true values. Use it for Suffixing plot names with the parameters that were used for that plot.
-#' @param ... Paramter variables
+#' @param ... Parameter variables
 #' @param prefix Append something before?
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param coll.char Separating character between each parameters-flag

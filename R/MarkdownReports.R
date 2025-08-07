@@ -15,7 +15,7 @@ utils::globalVariables(c(
 # - Plots for cycling over data frame columns or rows
 # - A4 pdfs for multi-plots
 # - Add-ons to existing plots
-# - Graphics and Internal functions
+# - Graphics and Internal function
 
 
 # ______________________________________________________________________________________________----
