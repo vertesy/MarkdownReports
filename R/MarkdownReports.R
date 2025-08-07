@@ -1494,6 +1494,7 @@ wstripchart <- function(yourlist,
                         mdlink = ww.set.mdlink(),
                         PNG = unless.specified("b.usepng", F),
                         ...) {
+  force(method)
   col_ <- col # to avoid circular reference in the inside function argument
   bg_ <- bg
 
@@ -1643,6 +1644,7 @@ wstripchart_list <- function(yourlist,
                              h = w,
                              mdlink = ww.set.mdlink(),
                              PNG = unless.specified("b.usepng", F)) {
+  force(method)
   fname <- kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
@@ -1685,7 +1687,7 @@ wstripchart_list <- function(yourlist,
         at = i,
         add = TRUE,
         vertical = TRUE,
-        method = "jitter",
+        method = method,
         jitter = jitter,
         pch = pch,
         bg = bg[[k]],
@@ -1916,6 +1918,7 @@ wviostripchart_list <- function(yourlist,
                                 h = w,
                                 mdlink = ww.set.mdlink(),
                                 PNG = unless.specified("b.usepng", F)) {
+  force(method)
   fname <- kollapse(main, ".VioStripchart")
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
