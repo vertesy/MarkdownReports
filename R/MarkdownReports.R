@@ -93,21 +93,29 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                     "1.5col.cell" = 4.49,
                                     "2col.cell" = 6.85
                                   )[1],
-                                  b.defSize.fullpage = 8.27,
-                                  b.usepng = FALSE,
-                                  b.png4Github = FALSE,
-                                  b.mdlink = TRUE,
-                                  b.save.wplots = TRUE,
-                                  b.def.color = "gold1") {
-  if (!exists(OutDir)) {
+                                    b.defSize.fullpage = 8.27,
+                                    b.usepng = FALSE,
+                                    b.png4Github = FALSE,
+                                    b.mdlink = TRUE,
+                                    b.save.wplots = TRUE,
+                                    b.def.color = "gold1") {
+  stopifnot(
+    is.character(OutDir), length(OutDir) == 1,
+    is.character(scriptname), length(scriptname) == 1,
+    is.logical(setDir), length(setDir) == 1,
+    is.logical(verbose), length(verbose) == 1,
+    is.logical(append), length(append) == 1
+  )
+  # Create the output directory if it does not yet exist
+  if (!dir.exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
   }
   OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
   OutDir <- ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
-  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
-  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = F)
+  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = FALSE)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
 
   if (verbose) {
     print("All files will be saved under 'OutDir':")
@@ -163,7 +171,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     rm(defWidth)
     llprint(".sessionInfo* is saved in the working directory (OutDir).")
   }
-  if (!exists(BackupDir) & backupfolder) {
+  if (!dir.exists(BackupDir) & backupfolder) {
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
   }
@@ -204,11 +212,11 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @description Create or set the output directory of the script, and set the "OutDir" variable
 #' that is used by all ~wplot functions.
 #'
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
-#' OutDir may be redifined by other scripts
+#' OutDir may be redefined by other scripts
 #'
 #' @examples create_set_OutDir(setDir = TRUE, getwd())
 #' @export
@@ -219,8 +227,9 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
     print("All files will be saved under 'OutDir':")
     # message(OutDir)
   }
-  if (!exists(OutDir)) {
-    dir.create(OutDir, recursive = T, showWarnings = FALSE)
+  # Create the output directory if needed
+  if (!dir.exists(OutDir)) {
+    dir.create(OutDir, recursive = TRUE, showWarnings = FALSE)
   }
   if (setDir) {
     setwd(OutDir)
@@ -234,7 +243,7 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
 #'
 #' @description Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param ParentDir Change the "OutDirOrig" variable to the
 #' current OutDir (before setting it to a subdir).
 #' @param define.ParentDir Report on what was the parent directory of the new subdir.
@@ -260,7 +269,7 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
     setwd(NewOutDir)
   }
   if (define.ParentDir) {
-    if (exists("ParentDir")) { # If this function has been run already, you have "ParentDir", which will be overwritten.
+    if (exists("ParentDir")) { # If this function has already run, you have "ParentDir", which will be overwritten.
       if (verbose) {
         print("ParentDir was defined as:")
         message(ParentDir)
@@ -273,15 +282,15 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
     }
     MarkdownHelpers::ww.assign_to_global("ParentDir", OutDir, 1)
   } # if
-  if (verbose) print("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+  if (verbose) print("Call *create_set_Original_OutDir()* when changing back to the main dir.")
   MarkdownHelpers::ww.assign_to_global("OutDir", NewOutDir, 1)
   MarkdownHelpers::ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
-  # Flag that md.image.linker uses
+  # Flag used by md.image.linker
 }
 
 #' @title create_set_Original_OutDir
 #'
-#' @description Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
+#' @description Closing pair of the create_set_SubDir function. Call when changing back to the main dir.
 #' Set the output directory of the script, and set the "NewOutDir" variable that is
 #'  used by all ~wplot functions.
 #'
@@ -296,7 +305,8 @@ create_set_Original_OutDir <- function(NewOutDir = OutDirOrig,
                                        setDir = TRUE,
                                        verbose = TRUE) {
   if (verbose) Stringendo::iprint("All files will be saved under the original OutDir: ", NewOutDir)
-  if (!exists(NewOutDir)) {
+  # Create the directory if it does not exist
+  if (!dir.exists(NewOutDir)) {
     dir.create(NewOutDir, showWarnings = FALSE)
   }
   if (setDir) {
@@ -327,7 +337,7 @@ continue_logging_markdown <- function(b.scriptname) {
     format(Sys.time(), "%Y_%m_%d-%Hh"),
     print = FALSE
   )
-  if (!exists(BackupDir)) {
+  if (!dir.exists(BackupDir)) {
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1)
   }
@@ -356,7 +366,7 @@ check_OutDir <- function() {
   if (!exists("OutDir")) {
     message("OutDir does not exist; wd is: ", current_dir)
   } else {
-    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = T)
+    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = TRUE)
     if (current_dir != OutDir) {
       # Print both directories as a message if they do not match
       print("Directory Mismatch!")
@@ -397,8 +407,16 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
                             w = unless.specified("b.defSize", 7),
                             h = w,
                             mdlink = FALSE,
-                            PNG = unless.specified("b.usepng", F),
+                            PNG = unless.specified("b.usepng", FALSE),
                             ...) {
+  stopifnot(
+    is.character(plotname), length(plotname) == 1,
+    is.logical(OverwritePrevPDF), length(OverwritePrevPDF) == 1,
+    is.numeric(w), length(w) == 1,
+    is.numeric(h), length(h) == 1,
+    is.logical(mdlink), length(mdlink) == 1,
+    is.logical(PNG), length(PNG) == 1
+  )
   if (!OverwritePrevPDF) {
     plotname <- make.names(date())
   }
@@ -429,7 +447,7 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' @param width width of the plot in inches.
 #' @param height height of the plot in inches.
 #' @param pdf Save as pdf. Default: TRUE.
-#' @param png Save as png. Default: F.
+#' @param png Save as png. Default: FALSE.
 #' @param png_res Super unintuitive way to control plot "outcome" (works super unpredictably).
 #' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
@@ -576,7 +594,7 @@ wplot <- function(df2col,
                   mdlink = ww.set.mdlink(),
                   w = unless.specified("b.defSize", 7),
                   h = w,
-                  PNG = unless.specified("b.usepng", F)) {
+                  PNG = unless.specified("b.usepng", FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   fname <- kollapse(plotname, ".plot")
@@ -744,7 +762,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           h = w,
                           incrBottMarginBy = 0,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", F)) {
+                          PNG = unless.specified("b.usepng", FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   CNN <- colnames(df2col)
@@ -941,7 +959,7 @@ wbarplot <- function(variable,
                      h = w,
                      incrBottMarginBy = 0,
                      mdlink = ww.set.mdlink(),
-                     PNG = unless.specified("b.usepng", F)) {
+                     PNG = unless.specified("b.usepng", FALSE)) {
   isVec <- is.vector(variable) | is.table(variable)
   isMat <- is.matrix(variable) | is.data.frame(variable)
 
@@ -1176,7 +1194,7 @@ whist <- function(variable,
     if (!missing(vline) & !length(xtra$xlim)) {
       PozOfvline <- NULL
 
-      for (l_ in 1:length(vline)) {
+      for (l_ in seq_along(vline)) {
         PozOfvline[l_] <- mean(histdata$mids[c(
           max(which(BRK < vline[l_])),
           min(which(BRK >= vline[l_]))
@@ -1306,7 +1324,7 @@ wboxplot <- function(yourlist,
   mtext(ylab, side = 2, line = 2)
   if (tilted_text) {
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = min(unlist(yourlist), na.rm = TRUE) - (max(nchar(
         names(yourlist)
       )) / 2),
@@ -1345,7 +1363,7 @@ wboxplot <- function(yourlist,
 #'   work).
 #' @param percentage Display percentage instead of counts. TRUE by default.
 #' @param both_pc_and_value Report both percentage AND number.
-#' @param col Fill color. Defined by rich colours by default
+#' @param col Fill color. Defined by rich colors by default
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
@@ -1370,7 +1388,7 @@ wpie <- function(NamedVector,
                  w = unless.specified("b.defSize", 7),
                  h = w,
                  mdlink = ww.set.mdlink(),
-                 PNG = unless.specified("b.usepng", F),
+                 PNG = unless.specified("b.usepng", FALSE),
                  ...) {
   # if (!require("gplots")) {
   #   print("Please install gplots: install.packages('gplots')")
@@ -1447,8 +1465,8 @@ wpie <- function(NamedVector,
 #' @param pchcex Define the size of the symbol for each data point.
 #' @param bg Background color.
 #' @param col Color of the plot.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See
-#'   stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid
 #'   overlaps).
 #' @param tilted_text Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.
@@ -1475,7 +1493,7 @@ wstripchart <- function(yourlist,
                         border = 1,
                         incrBottMarginBy = 0,
                         tilted_text = FALSE,
-                        metod = "jitter",
+                        method = "jitter",
                         jitter = 0.3,
                         pch = 18,
                         pchlwd = 1,
@@ -1484,7 +1502,7 @@ wstripchart <- function(yourlist,
                         bg = "seagreen2",
                         colorbyColumn = TRUE,
                         col = if (colorbyColumn) {
-                          1:length(yourlist)
+                          seq_along(yourlist)
                         } else {
                           1
                         },
@@ -1492,8 +1510,9 @@ wstripchart <- function(yourlist,
                         w = unless.specified("b.defSize", 7),
                         h = w,
                         mdlink = ww.set.mdlink(),
-                        PNG = unless.specified("b.usepng", F),
+                        PNG = unless.specified("b.usepng", FALSE),
                         ...) {
+  force(method)
   col_ <- col # to avoid circular reference in the inside function argument
   bg_ <- bg
 
@@ -1537,7 +1556,7 @@ wstripchart <- function(yourlist,
     yourlist,
     vertical = TRUE,
     add = TRUE,
-    method = metod,
+    method = method,
     jitter = jitter,
     pch = pch,
     bg = bg_,
@@ -1553,7 +1572,7 @@ wstripchart <- function(yourlist,
   if (tilted_text) {
     xx <- min(unlist(yourlist), na.rm = TRUE)
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = xx,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1600,8 +1619,8 @@ wstripchart <- function(yourlist,
 #' @param pch Define the symbol for each data point. A number (0-25) or any string between ""-s.
 #' @param pchlwd Define the outline width of the symbol for each data point.
 #' @param pchcex Define the size of the symbol for each data point.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack". See
-#'   stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual data points (to avoid
 #'   overlaps).
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not
@@ -1619,7 +1638,7 @@ wstripchart <- function(yourlist,
 #' wstripchart_list(
 #'   yourlist = my.ls, sub = NULL, ylab = NULL, xlab = NULL,
 #'   border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = 1,
-#'   metod = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
+#'   method = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
 #' )
 wstripchart_list <- function(yourlist,
                              ...,
@@ -1636,13 +1655,14 @@ wstripchart_list <- function(yourlist,
                              tilted_text = FALSE,
                              bg = "chartreuse2",
                              col = "black",
-                             metod = "jitter",
+                             method = "jitter",
                              jitter = 0.2,
                              savefile = unless.specified("b.save.wplots"),
                              w = unless.specified("b.defSize"),
                              h = w,
                              mdlink = ww.set.mdlink(),
-                             PNG = unless.specified("b.usepng", F)) {
+                             PNG = unless.specified("b.usepng", FALSE)) {
+  force(method)
   fname <- kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
@@ -1671,7 +1691,7 @@ wstripchart_list <- function(yourlist,
     cex.axis = cexNsize
   )
   mtext(ylab, side = 2, line = 2)
-  for (i in 1:length(yourlist)) {
+  for (i in seq_along(yourlist)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j <- k <- i
       if (length(1) < length(yourlist)) {
@@ -1685,7 +1705,7 @@ wstripchart_list <- function(yourlist,
         at = i,
         add = TRUE,
         vertical = TRUE,
-        method = "jitter",
+        method = method,
         jitter = jitter,
         pch = pch,
         bg = bg[[k]],
@@ -1698,7 +1718,7 @@ wstripchart_list <- function(yourlist,
   if (tilted_text) {
     xx <- min(unlist(yourlist), na.rm = TRUE)
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = xx,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1775,7 +1795,7 @@ wvioplot_list <- function(yourlist,
                           w = unless.specified("b.defSize", 7),
                           h = w,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", F)) {
+                          PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(is.list(yourlist))
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
@@ -1814,7 +1834,7 @@ wvioplot_list <- function(yourlist,
     main = plotname,
     sub = sub
   )
-  for (i in 1:l_list) {
+  for (i in seq_len(l_list)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       vioplot(
         CodeAndRoll2::na.omit.strip(yourlist[[i]]),
@@ -1827,13 +1847,13 @@ wvioplot_list <- function(yourlist,
   }
   axis(
     side = 1,
-    at = 1:l_list,
+    at = seq_len(l_list),
     labels = xlab,
     las = 2
   )
   if (tilted_text) {
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = min(unlist(yourlist)) + yoffset,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1873,12 +1893,12 @@ wvioplot_list <- function(yourlist,
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param pch Define the symbol for each data point. A number (0-25) or any string between ""-s.
-#' @param viocoll Background color of each individual violing plot.
-#' @param vioborder Border color of each individual violing plot.
+#' @param viocoll Background color of each individual violin plot.
+#' @param vioborder Border color of each individual violin plot.
 #' @param bg Background color.
 #' @param col Color of the plot.
-#' @param metod Method for displaying data points to avoid overlap; either"jitter" or "stack".
-#' See stripchart().
+#' @param method Method for displaying data points to avoid overlap; either "jitter" or "stack".
+#'   See stripchart().
 #' @param jitter The amount of horizontal scatter added to the individual
 #' data points (to avoid overlaps).
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot.
@@ -1896,7 +1916,7 @@ wvioplot_list <- function(yourlist,
 #' @examples try.dev.off()
 #' my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 #' # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
-#' # bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
+#' # bg = 0, col = "black", method = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 wviostripchart_list <- function(yourlist,
                                 ...,
                                 pch = 20,
@@ -1904,7 +1924,7 @@ wviostripchart_list <- function(yourlist,
                                 vioborder = 1,
                                 bg = 1,
                                 col = 1,
-                                metod = "jitter",
+                             method = "jitter",
                                 jitter = 0.25,
                                 main = as.character(substitute(yourlist)),
                                 sub = NULL,
@@ -1915,7 +1935,8 @@ wviostripchart_list <- function(yourlist,
                                 w = unless.specified("b.defSize", 7),
                                 h = w,
                                 mdlink = ww.set.mdlink(),
-                                PNG = unless.specified("b.usepng", F)) {
+                                PNG = unless.specified("b.usepng", FALSE)) {
+  force(method)
   fname <- kollapse(main, ".VioStripchart")
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
@@ -1940,7 +1961,7 @@ wviostripchart_list <- function(yourlist,
     main = plotname,
     sub = sub
   )
-  for (i in 1:l_list) {
+  for (i in seq_len(l_list)) {
     print(i)
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       vioplot(
@@ -1954,12 +1975,12 @@ wviostripchart_list <- function(yourlist,
     } # if
     axis(
       side = 1,
-      at = 1:l_list,
+      at = seq_len(l_list),
       labels = xlab,
       las = 2
     )
   }
-  for (i in 1:length(yourlist)) {
+  for (i in seq_along(yourlist)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j <- k <- i
       if (length(col) < length(yourlist)) {
@@ -1973,7 +1994,7 @@ wviostripchart_list <- function(yourlist,
         at = i,
         add = TRUE,
         vertical = TRUE,
-        method = metod,
+        method = method,
         jitter = jitter,
         pch = pch,
         bg = bg[[k]],
@@ -2018,7 +2039,7 @@ wviostripchart_list <- function(yourlist,
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
-#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T'))
+#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=TRUE'))
 #'
 #' @importFrom VennDiagram venn.diagram
 #' @export
@@ -2027,14 +2048,14 @@ wviostripchart_list <- function(yourlist,
 wvenn <- function(yourlist,
                   imagetype = "png",
                   alpha = .5,
-                  fill = 1:length(yourlist),
+                  fill = seq_along(yourlist),
                   subt,
                   ...,
                   w = unless.specified("b.defSize", 7),
                   h = w,
                   mdlink = ww.set.mdlink(),
                   plotname = substitute(yourlist),
-                  openFolder = T) {
+                  openFolder = TRUE) {
   # if (!require("VennDiagram")) {
   #   print("Please install VennDiagram: install.packages('VennDiagram')")
   # }
@@ -2113,7 +2134,7 @@ wbarplot_dfCol <- function(df,
                            savefile = unless.specified("b.save.wplots"),
                            w = unless.specified("b.defSize", 7),
                            h = w,
-                           PNG = unless.specified("b.usepng", F)) {
+                           PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- unlist(df[, colName])
   stopifnot(length(variable) > 1)
@@ -2172,7 +2193,7 @@ whist_dfCol <- function(df,
                         savefile = unless.specified("b.save.wplots"),
                         w = unless.specified("b.defSize", 7),
                         h = w,
-                        PNG = unless.specified("b.usepng", F)) {
+                        PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
@@ -2433,10 +2454,10 @@ error_bar <- function(
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
-#' ALSE by default. Does not work if you pass on a list item like this: list$element
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
+#' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report
 #' , set by "path_of_report".
 #' @export
@@ -2505,7 +2526,7 @@ wlegend <- function(NamedColorVec = NA,
 
 #' @title wlegend.label
 #'
-#' @description Quickly add a "text only" legend without a filled color box. to an existing plot,
+#' @description Quickly add a "text only" legend without a filled color box to an existing plot,
 #' and save the plot immediately. Never inserts an mdlink.
 #' @param legend Labels displayed (Text)
 #' @param poz Position of the legend (def: 4). Use numbers 1-4 to choose from "topleft",
@@ -2517,10 +2538,10 @@ wlegend <- function(NamedColorVec = NA,
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
 #' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #' set by "path_of_report".
 #' @export
@@ -2538,7 +2559,7 @@ wlegend.label <- function(legend = "...",
                           ttl.by.varname = FALSE,
                           OverwritePrevPDF = unless.specified("b.save.wplots"),
                           mdlink = FALSE) {
-  w_ <- w # to avoid circular reference in the inside function argument
+  w_ <- w # to avoid a circular reference inside the function argument
   h_ <- h
   cex_ <- cex
 
@@ -2569,14 +2590,14 @@ wlegend.label <- function(legend = "...",
 #' @title barplot_label
 #'
 #' @description Add extra labels to your bar plots at the top or the base.
-#' @param barplotted_variable The variable that you barplotted previously.
+#' @param barplotted_variable The variable that you previously bar plotted.
 #' @param labels Label text.
 #' @param bottom Put labels at the bottom of the bars.
-#' @param TopOffset Absolute offset from top.
-#' @param relpos_bottom Relative offset from bottom.
+#' @param TopOffset Absolute offset from the top.
+#' @param relpos_bottom Relative offset from the bottom.
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
-#' @param filename Filename to overwrite after errorbars are added to the current barplot.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
+#' @param filename Filename to overwrite after error bars are added to the current bar plot.
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -2594,7 +2615,7 @@ barplot_label <- function(barplotted_variable,
                           relpos_bottom = 0.1,
                           OverwritePrevPDF = unless.specified("b.save.wplots"),
                           filename = plotnameLastPlot,
-                          PNG_ = unless.specified("b.usepng", F),
+                          PNG_ = unless.specified("b.usepng", FALSE),
                           w = 7,
                           h = w,
                           ...) {
@@ -2623,15 +2644,15 @@ barplot_label <- function(barplotted_variable,
 
 #' @title wLinRegression
 #'
-#' @description Add linear regression, and descriptors to line to your scatter plot.
-#' Provide the same dataframe as you provided to wplot() before you called this function
-#' @param DF  The same dataframe as you provided to wplot() before you called this function
+#' @description Add linear regression and descriptors to a line in your scatter plot.
+#' Provide the same data frame as you provided to wplot() before calling this function
+#' @param DF  The same data frame that you provided to wplot() before calling this function
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman"
 #' correlation values or "r2" for the Coefficient of Determination.
-#' @param textlocation where to put the legend?
+#' @param textlocation Where to put the legend?
 #' @param cex font size; 1 by default
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @import stats
@@ -2756,6 +2777,13 @@ ww.dev.copy <- function(PNG_ = FALSE,
                         w_,
                         h_,
                         fname_) {
+  stopifnot(
+    is.logical(PNG_), length(PNG_) == 1,
+    is.numeric(PNG_res), length(PNG_res) == 1,
+    is.numeric(w_), length(w_) == 1,
+    is.numeric(h_), length(h_) == 1,
+    is.character(fname_), length(fname_) == 1
+  )
   if (PNG_) {
     dev.copy(
       device = png,

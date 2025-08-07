@@ -47,17 +47,17 @@ I often have to...
 
 1. Make figures quickly.
 2. ...write emails summarising the results (text & figures) of the last few days.
-3. ...find results from a couple of month back, with all tiny details (parameters used, etc).
+3. ...find results from a couple of months back, with all tiny details (parameters used, etc).
 4. ...assemble each step I did that day into a logical story line, that others can understand at first glimpse, e.g.: *I observed X; I controlled for Y; Hypothesised explanation A; Falsified it; Came up with explanation B; Tested & proven it...*
 
-For all of the above, my solution is MarkdownReports. I think its better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most of people I interact with are not interested in  the source code, but are very keen on seeing my results from all possible angles and are asking detailed questions about the analysis.
+For all of the above, my solution is MarkdownReports. I think it's better than other solutions I found. Many of those like to combine source code with results, and many are too complex to use. Most people I interact with are not interested in the source code, but are very keen on seeing my results from all possible angles and ask detailed questions about the analysis.
 
 <br>
 
 ## Make figures quickly
 
 - The philosophy of the package is to ***type little*** (but draw and save correctly annotated figures).
-- Instead of specifying everything in lengthy commands (*ala ggplot*), plotting functions make use of sensible defaults (such as meaningful variable name, row names, column names, etc.)
+- Instead of specifying everything in lengthy commands (*ala ggplot*), plotting functions make use of sensible defaults (such as meaningful variable names, row names, column names, etc.)
 - Both display and save each plot as `.pdf` dynamically named (from variable names)
 - Examples: `wboxplot()` takes a list, used the `variable name` to set the *filename* and the *title*,  `list element names` to set the *x-axis labels*, saves the file as `variable name.pdf` (or `.png`).
 - All plot functions start with **w**, followed by the **base plot name**, such as `wplot()`,  `wbarplot()`, `wpie()`, `wboxplot()`,but also `wvenn()`, `wvioplot_list()`,`wviostripchart_list()`.
@@ -274,7 +274,7 @@ wvioplot_list. Create and save violin plots as .pdf, in "OutDir". It requires (a
 wviostripchart_list. Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.  If mdlink = TRUE, it inserts a .pdf and a .png link in the markdown report,  set by "path_of_report". The .png version is not created, only the link is put in place,  not to overwrite previous versions.
 
 - #### 19 `wvenn()`
-wvenn. Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,  and it does not use the dev.copy2pdf() function.
+wvenn. Save Venn diagrams. Unlike other ~vplot functions, this saves directly into a .png and it does not use the dev.copy2pdf() function.
 
 - #### 20 `wbarplot_dfCol()`
 wbarplot_dfCol. wbarplot for a column of a data frame. 

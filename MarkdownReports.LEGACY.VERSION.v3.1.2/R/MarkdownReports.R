@@ -180,7 +180,7 @@ setup_MarkdownReports <-
 #'
 #' Create or set the output directory of the script, and set the "NewOutDir" variable that is
 #' used by all ~wplot functions. Opening pair of the create_set_Original_OutDir function.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param ParentDir Change the "OutDirOrig" variable to the
 #' current OutDir (before setting it to a subdir).
 #' @param define.ParentDir Report on what was the parent directory of the new subdir.
@@ -215,7 +215,7 @@ create_set_SubDir <-
       if (verbose) iprint("ParentDir will be:", OutDir)
       ww.assign_to_global("ParentDir", OutDir, 1)
     } #if
-    if (verbose) iprint("Call *create_set_Original_OutDir()* when chaning back to the main dir.")
+    if (verbose) iprint("Call *create_set_Original_OutDir()* when changing back to the main dir.")
     ww.assign_to_global("OutDir", NewOutDir, 1)
     ww.assign_to_global("b.Subdirname", b.Subdirname, 1)
     # Flag that md.image.linker uses
@@ -223,7 +223,7 @@ create_set_SubDir <-
 
 # create_set_Original_OutDir
 #'
-#' Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
+#' Closing pair of the create_set_SubDir function. Call when changing back to the main dir.
 #' Set the output directory of the script, and set the "NewOutDir" variable that is
 #'  used by all ~wplot functions.
 #'
@@ -282,7 +282,7 @@ continue_logging_markdown <- function (b.scriptname) {
 #' Create or set the output directory of the script, and set the "OutDir" variable that is used by
 #' all ~wplot functions.
 #'
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
 #' @param verbose Print directory to screen? Default: TRUE
 #'
@@ -2260,10 +2260,10 @@ error_bar <-
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
-#' ALSE by default. Does not work if you pass on a list item like this: list$element
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
+#' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report
 #', set by "path_of_report".
 #' @export
@@ -2340,10 +2340,10 @@ wlegend <-
 #' @param bty The type of box to be drawn around the legend.
 #' The allowed values are "o" (the default) and "n".
 #' @param title What should be the title of the legend? NULL by default
-#' @param ttl.by.varname Should the title of the legend substituted from the NamedColorVec variable's name?
+#' @param ttl.by.varname Should the title of the legend be substituted from the NamedColorVec variable's name?
 #' FALSE by default. Does not work if you pass on a list item like this: list$element
 #' @param OverwritePrevPDF Save the plot immediately with the same name
-#' the last wplot* function made (It is stored in plotnameLastPlot variable).
+#' the last wplot* function made (It is stored in the plotnameLastPlot variable).
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #' set by "path_of_report".
 #' @export
@@ -2393,14 +2393,14 @@ wlegend.label <-
 #' barplot_label
 #'
 #' Add extra labels to your bar plots at the top or the base.
-#' @param barplotted_variable The variable that you barplotted previously.
+#' @param barplotted_variable The variable that you previously bar plotted.
 #' @param labels Label text.
 #' @param bottom Put labels at the bottom of the bars.
-#' @param TopOffset Absolute offset from top.
-#' @param relpos_bottom Relative offset from bottom.
+#' @param TopOffset Absolute offset from the top.
+#' @param relpos_bottom Relative offset from the bottom.
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
-#' @param filename Filename to overwrite after errorbars are added to the current barplot.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
+#' @param filename Filename to overwrite after error bars are added to the current bar plot.
 #' @param PNG_ Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param w Width of the saved pdf image, in inches.
 #' @param h Height of the saved pdf image, in inches.
@@ -2449,17 +2449,17 @@ barplot_label <-
     }
   }
 
-#'wLinRegression
+#' @title wLinRegression
 #'
-#' Add linear regression, and descriptors to line to your scatter plot.
-#' Provide the same dataframe as you provided to wplot() before you called this function
-#' @param DF  The same dataframe as you provided to wplot() before you called this function
+#' Add linear regression and descriptors to a line in your scatter plot.
+#' Provide the same data frame as you provided to wplot() before calling this function
+#' @param DF  The same data frame that you provided to wplot() before calling this function
 #' @param coeff What coefficient to display? Either "all", "pearson", "spearman"
 #' correlation values or "r2" for the Coefficient of Determination.
-#' @param textlocation where to put the legend?
+#' @param textlocation Where to put the legend?
 #' @param cex font size; 1 by default
 #' @param OverwritePrevPDF Save the plot immediately with the same name the last
-#' wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.
+#' wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.
 #' @param ...  Additional parameters for the line to display.
 #' @export
 #' @import stats
@@ -2669,7 +2669,7 @@ color_check <- function(..., incrBottMarginBy = 0, savefile = FALSE ) {
 #' iprint
 #'
 #' A more intelligent printing function that collapses any variable passed to it by white spaces.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @export
 #' @examples iprint ("Hello ", "you ", 3, ", ", 11, " year old kids.")
 
@@ -2685,7 +2685,7 @@ any_print = iprint # for compatibility
 #' Collapse by white spaces a sentence from any variable passed on to the function.
 #' Print the sentence to the screen and write it to your markdown report file,
 #' if the "path_of_report" variable is defined.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @export
 #' @examples MyFriends = c("Peter", "Bence"); llprint ("My friends are: ", MyFriends )
 
@@ -2706,7 +2706,7 @@ llprint <- function (...) {
 #' Collapse by white spaces a sentence from any variable passed on to the function.
 #' llogit() writes it to your markdown report file, if the "path_of_report" variable is defined.
 #' It does not print the sentence to the screen.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @export
 #' @examples MyFriends = c("Peter", "Bence"); llogit ("My friends are: ", MyFriends )
 
@@ -3108,12 +3108,12 @@ md.import.table <-
 #' Filter values that fall between above high-pass-threshold (X >).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value above which "numeric_vector" passes.
-#' @param passequal Pass if a value is larger, or equal than the threshold. FALSE by default.
+#' @param passequal Pass if a value is larger than or equal to the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE),
 #'  or a logical index vector of the survivors (FALSE).
 #' @param plot.hist Plot the histogram of the input data
-#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param saveplot Save the histogram as PDF, FALSE by default
 #' @param na.rm Remove NA-s? Default: TRUE
 #' @param ... Additional arguments for the histogram
 #' @export
@@ -3178,12 +3178,12 @@ filter_HP <-
 #' Filter values that fall below the low-pass threshold (X <).
 #' @param numeric_vector Values to be filtered.
 #' @param threshold A numeric value below which "numeric_vector" passes.
-#' @param passequal Pass if a value is smaller, or equal than the threshold. FALSE by default.
+#' @param passequal Pass if a value is smaller than or equal to the threshold. FALSE by default.
 #' @param prepend Text prepended to the results.
 #' @param return_survival_ratio Return a number with the survival ratio (TRUE),
 #' or a logical index vector of the survivors (FALSE).
 #' @param plot.hist Plot the histogram of the input data
-#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param saveplot Save the histogram as PDF, FALSE by default
 #' @param na.rm Remove NA-s? Default: TRUE
 #' @param ... Additional arguments for the histogram
 #' @export
@@ -3247,7 +3247,7 @@ filter_LP <-
 #' @param EdgePass If TRUE, it reverses the filter:
 #' everything passes except between the two thresholds.
 #' @param plot.hist Plot the histogram of the input data
-#' @param saveplot Save the histogram as PDF, FALSE by defeault
+#' @param saveplot Save the histogram as PDF, FALSE by default
 #' @param na.rm Remove NA-s? Default: TRUE
 #' @param ... Additional arguments for the histogram
 #' @export
@@ -3418,7 +3418,7 @@ na.omit.strip <- function(object, silent = FALSE, ...) {
 #'
 #' Collapses values and strings to one string (without a white space).
 #' It also prints the results (good for a quick check)
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param collapseby collapse elements into a string separated by this character
 #' @param print Print the results to the terminal. TRUE by default.
 #' @export
@@ -3753,7 +3753,7 @@ ww.set.mdlink <- function(NameOfaVariable = "b.mdlink",
 #' Format a markdown image reference (link) from the file path to the file.
 #' It can parse the file path, if you pass it in separate variables and strings.
 #' E.g. ww.md.image.link.parser(Directory, "MyImage.png").
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @export
 #' @examples ww.md.image.link.parser ("/MyPlot.jpg"  )
 #' ww.md.image.link.parser (getwd(),"/MyPlot.jpg"  )
@@ -3902,7 +3902,7 @@ setup_logging_markdown <-
 #' log_settings_MarkDown (Legacy)
 #'
 #' Log the parameters & settings used in the script in a table format.
-#' @param ... Variables (strings, vectors) to be collapsed in consecutively.
+#' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @export
 #' @examples a = 1; b = 2; log_settings_MarkDown (a,b)
 

@@ -54,8 +54,8 @@ llprint("The `whist(data)` creates a plot and saves it as pdf.")
 whist(data)
 
 # create a plot, save it, AND put it in the report by the "MDLINK=TRUE" parameter
-whist(data, mdlink = T)
-llprint("The `whist(data, mdlink = T)` creates a plot and saves it as pdf, and displays.")
+whist(data, mdlink = TRUE)
+llprint("The `whist(data, mdlink = TRUE)` creates a plot and saves it as pdf, and displays.")
 
 
 llprint("There might be no 'save&log' plotting functions for every kind of plot you might need,
@@ -63,8 +63,8 @@ llprint("There might be no 'save&log' plotting functions for every kind of plot 
 
 # Lets save figures for that there is
 heatmap(matrix(data, ncol=3,nrow = 5))
-hist(data, add=T)
-wplot_save_this(plotname = "DreamMap", mdlink = T)
+hist(data, add = TRUE)
+wplot_save_this(plotname = "DreamMap", mdlink = TRUE)
 
 llprint("## GitHub Integration")
 

@@ -12,7 +12,7 @@ wviostripchart_list(
   vioborder = 1,
   bg = 1,
   col = 1,
-  metod = "jitter",
+  method = "jitter",
   jitter = 0.25,
   main = as.character(substitute(yourlist)),
   sub = NULL,
@@ -34,15 +34,15 @@ function (most of them should work).}
 
 \item{pch}{Define the symbol for each data point. A number (0-25) or any string between ""-s.}
 
-\item{viocoll}{Background color of each individual violing plot.}
+\item{viocoll}{Background color of each individual violin plot.}
 
-\item{vioborder}{Border color of each individual violing plot.}
+\item{vioborder}{Border color of each individual violin plot.}
 
 \item{bg}{Background color.}
 
 \item{col}{Color of the plot.}
 
-\item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack".
+\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack".
 See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual
@@ -80,5 +80,5 @@ not to overwrite previous versions.
 try.dev.off()
 my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 # wviostripchart_list (yourlist = my.ls, pch = 23, viocoll = 0, vioborder = 1, sub = FALSE,
-# bg = 0, col = "black", metod = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
+# bg = 0, col = "black", method = "jitter", jitter = 0.1, w = 7, mdlink = FALSE)
 }

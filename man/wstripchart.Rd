@@ -13,7 +13,7 @@ wstripchart(
   border = 1,
   incrBottMarginBy = 0,
   tilted_text = FALSE,
-  metod = "jitter",
+  method = "jitter",
   jitter = 0.3,
   pch = 18,
   pchlwd = 1,
@@ -54,7 +54,7 @@ fit on the plot.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
-\item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See
+\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack". See
 stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid

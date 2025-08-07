@@ -20,7 +20,7 @@ wstripchart_list(
   tilted_text = FALSE,
   bg = "chartreuse2",
   col = "black",
-  metod = "jitter",
+  method = "jitter",
   jitter = 0.2,
   savefile = unless.specified("b.save.wplots"),
   w = unless.specified("b.defSize"),
@@ -63,7 +63,7 @@ fit on the plot.}
 
 \item{col}{Color of the plot.}
 
-\item{metod}{Method for displaying data points to avoid overlap; either"jitter" or "stack". See
+\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack". See
 stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid
@@ -92,6 +92,6 @@ my.ls <- list(A = rnorm(10), B = rnorm(10), C = rnorm(10))
 wstripchart_list(
   yourlist = my.ls, sub = NULL, ylab = NULL, xlab = NULL,
   border = 1, bxpcol = 0, pch = 23, pchlwd = 1, pchcex = 1.5, bg = "chartreuse2", col = 1,
-  metod = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
+  method = jitter, jitter = 0.2, w = 7, incrBottMarginBy = 0, tilted_text = FALSE, mdlink = FALSE
 )
 }
