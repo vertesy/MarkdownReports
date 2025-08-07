@@ -107,8 +107,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   OutDir <- ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
-  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = F)
-  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = F)
+  MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = FALSE)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
 
   if (verbose) {
     print("All files will be saved under 'OutDir':")
@@ -359,7 +359,7 @@ check_OutDir <- function() {
   if (!exists("OutDir")) {
     message("OutDir does not exist; wd is: ", current_dir)
   } else {
-    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = T)
+    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = TRUE)
     if (current_dir != OutDir) {
       # Print both directories as a message if they do not match
       print("Directory Mismatch!")
@@ -400,7 +400,7 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
                             w = unless.specified("b.defSize", 7),
                             h = w,
                             mdlink = FALSE,
-                            PNG = unless.specified("b.usepng", F),
+                            PNG = unless.specified("b.usepng", FALSE),
                             ...) {
   if (!OverwritePrevPDF) {
     plotname <- make.names(date())
@@ -432,7 +432,7 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
 #' @param width width of the plot in inches.
 #' @param height height of the plot in inches.
 #' @param pdf Save as pdf. Default: TRUE.
-#' @param png Save as png. Default: F.
+#' @param png Save as png. Default: FALSE.
 #' @param png_res Super unintuitive way to control plot "outcome" (works super unpredictably).
 #' @param png_dim_factor Width is in inches for pdf and pixels for png. This is a multiplier factor. Default: 100.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
@@ -579,7 +579,7 @@ wplot <- function(df2col,
                   mdlink = ww.set.mdlink(),
                   w = unless.specified("b.defSize", 7),
                   h = w,
-                  PNG = unless.specified("b.usepng", F)) {
+                  PNG = unless.specified("b.usepng", FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   fname <- kollapse(plotname, ".plot")
@@ -747,7 +747,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           h = w,
                           incrBottMarginBy = 0,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", F)) {
+                          PNG = unless.specified("b.usepng", FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   CNN <- colnames(df2col)
@@ -944,7 +944,7 @@ wbarplot <- function(variable,
                      h = w,
                      incrBottMarginBy = 0,
                      mdlink = ww.set.mdlink(),
-                     PNG = unless.specified("b.usepng", F)) {
+                     PNG = unless.specified("b.usepng", FALSE)) {
   isVec <- is.vector(variable) | is.table(variable)
   isMat <- is.matrix(variable) | is.data.frame(variable)
 
@@ -1179,7 +1179,7 @@ whist <- function(variable,
     if (!missing(vline) & !length(xtra$xlim)) {
       PozOfvline <- NULL
 
-      for (l_ in 1:length(vline)) {
+      for (l_ in seq_along(vline)) {
         PozOfvline[l_] <- mean(histdata$mids[c(
           max(which(BRK < vline[l_])),
           min(which(BRK >= vline[l_]))
@@ -1309,7 +1309,7 @@ wboxplot <- function(yourlist,
   mtext(ylab, side = 2, line = 2)
   if (tilted_text) {
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = min(unlist(yourlist), na.rm = TRUE) - (max(nchar(
         names(yourlist)
       )) / 2),
@@ -1373,7 +1373,7 @@ wpie <- function(NamedVector,
                  w = unless.specified("b.defSize", 7),
                  h = w,
                  mdlink = ww.set.mdlink(),
-                 PNG = unless.specified("b.usepng", F),
+                 PNG = unless.specified("b.usepng", FALSE),
                  ...) {
   # if (!require("gplots")) {
   #   print("Please install gplots: install.packages('gplots')")
@@ -1487,7 +1487,7 @@ wstripchart <- function(yourlist,
                         bg = "seagreen2",
                         colorbyColumn = TRUE,
                         col = if (colorbyColumn) {
-                          1:length(yourlist)
+                          seq_along(yourlist)
                         } else {
                           1
                         },
@@ -1495,7 +1495,7 @@ wstripchart <- function(yourlist,
                         w = unless.specified("b.defSize", 7),
                         h = w,
                         mdlink = ww.set.mdlink(),
-                        PNG = unless.specified("b.usepng", F),
+                        PNG = unless.specified("b.usepng", FALSE),
                         ...) {
   force(method)
   col_ <- col # to avoid circular reference in the inside function argument
@@ -1557,7 +1557,7 @@ wstripchart <- function(yourlist,
   if (tilted_text) {
     xx <- min(unlist(yourlist), na.rm = TRUE)
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = xx,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1646,7 +1646,7 @@ wstripchart_list <- function(yourlist,
                              w = unless.specified("b.defSize"),
                              h = w,
                              mdlink = ww.set.mdlink(),
-                             PNG = unless.specified("b.usepng", F)) {
+                             PNG = unless.specified("b.usepng", FALSE)) {
   force(method)
   fname <- kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
@@ -1676,7 +1676,7 @@ wstripchart_list <- function(yourlist,
     cex.axis = cexNsize
   )
   mtext(ylab, side = 2, line = 2)
-  for (i in 1:length(yourlist)) {
+  for (i in seq_along(yourlist)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j <- k <- i
       if (length(1) < length(yourlist)) {
@@ -1703,7 +1703,7 @@ wstripchart_list <- function(yourlist,
   if (tilted_text) {
     xx <- min(unlist(yourlist), na.rm = TRUE)
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = xx,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1780,7 +1780,7 @@ wvioplot_list <- function(yourlist,
                           w = unless.specified("b.defSize", 7),
                           h = w,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", F)) {
+                          PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(is.list(yourlist))
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
@@ -1819,7 +1819,7 @@ wvioplot_list <- function(yourlist,
     main = plotname,
     sub = sub
   )
-  for (i in 1:l_list) {
+  for (i in seq_len(l_list)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       vioplot(
         CodeAndRoll2::na.omit.strip(yourlist[[i]]),
@@ -1832,13 +1832,13 @@ wvioplot_list <- function(yourlist,
   }
   axis(
     side = 1,
-    at = 1:l_list,
+    at = seq_len(l_list),
     labels = xlab,
     las = 2
   )
   if (tilted_text) {
     text(
-      x = 1:length(yourlist),
+      x = seq_along(yourlist),
       y = min(unlist(yourlist)) + yoffset,
       labels = names(yourlist),
       xpd = TRUE,
@@ -1920,7 +1920,7 @@ wviostripchart_list <- function(yourlist,
                                 w = unless.specified("b.defSize", 7),
                                 h = w,
                                 mdlink = ww.set.mdlink(),
-                                PNG = unless.specified("b.usepng", F)) {
+                                PNG = unless.specified("b.usepng", FALSE)) {
   force(method)
   fname <- kollapse(main, ".VioStripchart")
   # if (!require("vioplot")) {
@@ -1946,7 +1946,7 @@ wviostripchart_list <- function(yourlist,
     main = plotname,
     sub = sub
   )
-  for (i in 1:l_list) {
+  for (i in seq_len(l_list)) {
     print(i)
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       vioplot(
@@ -1960,12 +1960,12 @@ wviostripchart_list <- function(yourlist,
     } # if
     axis(
       side = 1,
-      at = 1:l_list,
+      at = seq_len(l_list),
       labels = xlab,
       las = 2
     )
   }
-  for (i in 1:length(yourlist)) {
+  for (i in seq_along(yourlist)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j <- k <- i
       if (length(col) < length(yourlist)) {
@@ -2024,7 +2024,7 @@ wviostripchart_list <- function(yourlist,
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report,
 #'  set by "path_of_report".
 #' @param plotname Manual plotname parameter
-#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=T'))
+#' @param openFolder open current directory (=working if setup_MarkdownReports('setDir=TRUE'))
 #'
 #' @importFrom VennDiagram venn.diagram
 #' @export
@@ -2033,14 +2033,14 @@ wviostripchart_list <- function(yourlist,
 wvenn <- function(yourlist,
                   imagetype = "png",
                   alpha = .5,
-                  fill = 1:length(yourlist),
+                  fill = seq_along(yourlist),
                   subt,
                   ...,
                   w = unless.specified("b.defSize", 7),
                   h = w,
                   mdlink = ww.set.mdlink(),
                   plotname = substitute(yourlist),
-                  openFolder = T) {
+                  openFolder = TRUE) {
   # if (!require("VennDiagram")) {
   #   print("Please install VennDiagram: install.packages('VennDiagram')")
   # }
@@ -2119,7 +2119,7 @@ wbarplot_dfCol <- function(df,
                            savefile = unless.specified("b.save.wplots"),
                            w = unless.specified("b.defSize", 7),
                            h = w,
-                           PNG = unless.specified("b.usepng", F)) {
+                           PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- unlist(df[, colName])
   stopifnot(length(variable) > 1)
@@ -2178,7 +2178,7 @@ whist_dfCol <- function(df,
                         savefile = unless.specified("b.save.wplots"),
                         w = unless.specified("b.defSize", 7),
                         h = w,
-                        PNG = unless.specified("b.usepng", F)) {
+                        PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- as.vector(unlist(df[, colName]))
   stopifnot(length(variable) > 1)
@@ -2600,7 +2600,7 @@ barplot_label <- function(barplotted_variable,
                           relpos_bottom = 0.1,
                           OverwritePrevPDF = unless.specified("b.save.wplots"),
                           filename = plotnameLastPlot,
-                          PNG_ = unless.specified("b.usepng", F),
+                          PNG_ = unless.specified("b.usepng", FALSE),
                           w = 7,
                           h = w,
                           ...) {
