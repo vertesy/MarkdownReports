@@ -93,12 +93,19 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                     "1.5col.cell" = 4.49,
                                     "2col.cell" = 6.85
                                   )[1],
-                                  b.defSize.fullpage = 8.27,
-                                  b.usepng = FALSE,
-                                  b.png4Github = FALSE,
-                                  b.mdlink = TRUE,
-                                  b.save.wplots = TRUE,
-                                  b.def.color = "gold1") {
+                                    b.defSize.fullpage = 8.27,
+                                    b.usepng = FALSE,
+                                    b.png4Github = FALSE,
+                                    b.mdlink = TRUE,
+                                    b.save.wplots = TRUE,
+                                    b.def.color = "gold1") {
+  stopifnot(
+    is.character(OutDir), length(OutDir) == 1,
+    is.character(scriptname), length(scriptname) == 1,
+    is.logical(setDir), length(setDir) == 1,
+    is.logical(verbose), length(verbose) == 1,
+    is.logical(append), length(append) == 1
+  )
   # Create the output directory if it does not yet exist
   if (!dir.exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
@@ -402,6 +409,14 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
                             mdlink = FALSE,
                             PNG = unless.specified("b.usepng", F),
                             ...) {
+  stopifnot(
+    is.character(plotname), length(plotname) == 1,
+    is.logical(OverwritePrevPDF), length(OverwritePrevPDF) == 1,
+    is.numeric(w), length(w) == 1,
+    is.numeric(h), length(h) == 1,
+    is.logical(mdlink), length(mdlink) == 1,
+    is.logical(PNG), length(PNG) == 1
+  )
   if (!OverwritePrevPDF) {
     plotname <- make.names(date())
   }
@@ -2762,6 +2777,13 @@ ww.dev.copy <- function(PNG_ = FALSE,
                         w_,
                         h_,
                         fname_) {
+  stopifnot(
+    is.logical(PNG_), length(PNG_) == 1,
+    is.numeric(PNG_res), length(PNG_res) == 1,
+    is.numeric(w_), length(w_) == 1,
+    is.numeric(h_), length(h_) == 1,
+    is.character(fname_), length(fname_) == 1
+  )
   if (PNG_) {
     dev.copy(
       device = png,
