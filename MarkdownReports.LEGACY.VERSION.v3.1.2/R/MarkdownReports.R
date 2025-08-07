@@ -12,7 +12,7 @@ utils::globalVariables(c('OutDirOrig', 'OutDir', 'ParentDir', 'path_of_report', 
 # - Plots
 # - Plots for cycling over data frame columns or rows
 # - A4 pdfs for multi-plots
-# - Add-ons to exisiting plots
+# - Add-ons to existing plots
 # - Graphics
 # - Colors
 # - Printing to the markdown file and to the screen
@@ -2193,7 +2193,7 @@ pdfA4plot_off <- function () {
 
 
 
-# Add-ons to exisiting plots -----------------------------------------------------------------------
+# Add-ons to existing plots -----------------------------------------------------------------------
 
 #' error_bar
 #'
@@ -2885,14 +2885,14 @@ md.import <- function(from.file, to.file = path_of_report) {
 #'
 #' Log the parameters & settings used in the script and stored in a list, in a table format
 #'  in the report.
-#' @param parameterlist List of Paramters
+#' @param parameterlist List of Parameters
 #' @param maxlen Maximum length of entries in a parameter list element
 #' @export
 #' @examples md.LogSettingsFromList(parameterlist = list("min" = 4, "method" = "pearson", "max" = 10))
 
 md.LogSettingsFromList <- function (parameterlist,
                                     maxlen = 20) {
-  LZ = unlist(lapply(parameterlist, length)) # collapse paramters with multiple entires
+  LZ = unlist(lapply(parameterlist, length)) # collapse parameters with multiple entries
   LNG = names(which(LZ > 1))
   for (i in LNG) {
     if (length(parameterlist[[i]]) > maxlen)
@@ -3510,7 +3510,7 @@ getCategories <-
 #'
 #' Create a string from the names of the (boolean) parameters (TRUE or FALSE) of true values.
 #' Use it for Suffixing plot names with the parameters that were used for that plot.
-#' @param ... Paramter variables
+#' @param ... Parameter variables
 #' @param prefix Append something before?
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param collapsechar Separating character between each parameters-flag
@@ -3538,7 +3538,7 @@ parFlags <-
 #'
 #' Create a string from the names of the (boolean) parameters (TRUE or FALSE) of true values.
 #' Use it for Suffixing plot names with the parameters that were used for that plot.
-#' @param ... Paramter variables
+#' @param ... Parameter variables
 #' @param prefix Append something before?
 #' @param pasteflg Boolean: paste the parameters-flags together?
 #' @param coll.char Separating character between each parameters-flag

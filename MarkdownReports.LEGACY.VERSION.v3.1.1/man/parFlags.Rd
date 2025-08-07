@@ -9,7 +9,7 @@ parFlags(prefix = "", ..., pasteflg = T, collapsechar = ".")
 \arguments{
 \item{prefix}{Append something before?}
 
-\item{...}{Paramter variables}
+\item{...}{Parameter variables}
 
 \item{pasteflg}{Boolean: paste the parameters-flags together?}
 

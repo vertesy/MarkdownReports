@@ -14,7 +14,7 @@ utils::globalVariables(c(
 # - Plots
 # - Plots for cycling over data frame columns or rows
 # - A4 pdfs for multi-plots
-# - Add-ons to exisiting plots
+# - Add-ons to existing plots
 # - Graphics and Internal function
 
 
@@ -2293,7 +2293,7 @@ pdfA4plot_off <- function() {
 
 
 # ______________________________________________________________________________________________----
-# Add-ons to exisiting plots ----
+# Add-ons to existing plots ----
 # _________________________________________________________________________________________________
 
 

@@ -108,7 +108,7 @@ and your report will have the summary: ***30.7 % or 614 of 2000 entries in GeneE
   - Native **2-D error bars** in scatterplots`wplot()` .
   - Easy **colour schemes** by `wcolorize()` from  `base`, `gplots` and `Rcolorbrewer`.
   - Add **legends** with the super short command `wlegend(colannot$categ)`, defining colors named after the categories of your data.
-    - It is autmatically created by `colannot = wcolorize(your.annotation, ReturnCategoriesToo = T)`, which you (can) anyways use to colour data points on, say, your scatterplot.
+    - It is automatically created by `colannot = wcolorize(your.annotation, ReturnCategoriesToo = T)`, which you (can) anyways use to colour data points on, say, your scatterplot.
   - **Show filtering results with a one liner**: `whist(rnorm(1000), vline = .5, filtercol = T)`.
 - *Although **currently** plotting is implemented as an enhanced **base graphic**, but the concept could easily be extended to **ggplot**.*
   Yet, you can still use ggplot, because you equally well save and report them by either `wplot_save_this()` or the `pdfA4plot_on()` and `pdfA4plot_off()` functions.
