@@ -1,9 +1,8 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.8.0
+Version: 4.8.5
 Authors@R: 
     person("Abel", "Vertesy", , "av@imba.oeaw.ac.at", role = c("aut", "cre"))
-Author: Abel Vertesy <av@imba.oeaw.ac.at> [aut, cre]
 Description: MarkdownReports is a set of R functions that allows you to
     generate precise figures easily, and create clean markdown reports
     about what you just discovered with your analysis script. It helps you
@@ -23,17 +22,17 @@ Depends:
     MarkdownHelpers,
     Stringendo
 Imports: 
+    RColorBrewer,
+    ReadWriter,
+    VennDiagram,
     clipr,
     colorRamps,
     gplots,
     grid,
     pheatmap,
-    RColorBrewer,
-    ReadWriter,
     sessioninfo,
-    VennDiagram,
     vioplot
 Encoding: UTF-8
-Packaged: 2024-10-24 16:00:45.369786
+Packaged: 2025-08-12 16:56:37.771904
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

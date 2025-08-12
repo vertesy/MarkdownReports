@@ -37,7 +37,7 @@ directory.}
 
 \item{pdf}{Save as pdf. Default: TRUE.}
 
-\item{png}{Save as png. Default: F.}
+\item{png}{Save as png. Default: FALSE.}
 
 \item{png_res}{Super unintuitive way to control plot "outcome" (works super unpredictably).}
 

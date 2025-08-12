@@ -29,7 +29,7 @@ wbarplot(
   h = w,
   incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", F)
+  PNG = unless.specified("b.usepng", FALSE)
 )
 }
 \arguments{

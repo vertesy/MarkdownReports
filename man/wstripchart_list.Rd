@@ -26,7 +26,7 @@ wstripchart_list(
   w = unless.specified("b.defSize"),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", F)
+  PNG = unless.specified("b.usepng", FALSE)
 )
 }
 \arguments{
@@ -63,8 +63,8 @@ fit on the plot.}
 
 \item{col}{Color of the plot.}
 
-\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack". See
-stripchart().}
+\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack".
+See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid
 overlaps).}

@@ -14,23 +14,23 @@ wLinRegression(
 )
 }
 \arguments{
-\item{DF}{The same dataframe as you provided to wplot() before you called this function}
+\item{DF}{The same data frame that you provided to wplot() before calling this function}
 
 \item{coeff}{What coefficient to display? Either "all", "pearson", "spearman"
 correlation values or "r2" for the Coefficient of Determination.}
 
-\item{textlocation}{where to put the legend?}
+\item{textlocation}{Where to put the legend?}
 
 \item{cex}{font size; 1 by default}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last
-wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.}
+wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.}
 
 \item{...}{Additional parameters for the line to display.}
 }
 \description{
-Add linear regression, and descriptors to line to your scatter plot.
-Provide the same dataframe as you provided to wplot() before you called this function
+Add linear regression and descriptors to a line in your scatter plot.
+Provide the same data frame as you provided to wplot() before calling this function
 }
 \examples{
 try.dev.off()
