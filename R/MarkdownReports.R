@@ -773,7 +773,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
     CNN[2]
   }
 
-  fname <- kollapse(plotname, ".barplot")
+  fname <- kollapse(plotname, ".scatter.fill")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
@@ -984,7 +984,7 @@ wbarplot <- function(variable,
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  cexNsize <- 0.8 / abs(log10(length(variable)))
+  cexNsize <- 0.8 / abs(log10(max(NrBars, 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   if (sub == TRUE) {
     subtitle <- paste(
@@ -1152,7 +1152,7 @@ whist <- function(variable,
     fname <- kollapse(plotname, ".hist")
     if (!is.numeric(variable)) {
       variable <- table(variable)
-      cexNsize <- 0.7 / abs(log10(length(variable)))
+      cexNsize <- 0.7 / abs(log10(max(length(variable), 2))) # guard against log10(1)
       cexNsize <- min(cexNsize, 1)
       barplot(
         variable,
@@ -1521,7 +1521,7 @@ wstripchart <- function(yourlist,
       par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  cexNsize <- 1 / abs(log10(length(yourlist)))
+  cexNsize <- 1 / abs(log10(max(length(yourlist), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   fname <- kollapse(main, ".stripchart")
   a <- boxplot(yourlist, plot = FALSE)
@@ -1668,7 +1668,7 @@ wstripchart_list <- function(yourlist,
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  cexNsize <- 1 / abs(log10(length(list)))
+  cexNsize <- 1 / abs(log10(max(length(yourlist), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   if (tilted_text) {
     xlab <- FALSE
@@ -1694,7 +1694,7 @@ wstripchart_list <- function(yourlist,
   for (i in seq_along(yourlist)) {
     if (length(CodeAndRoll2::na.omit.strip(yourlist[[i]]))) {
       j <- k <- i
-      if (length(1) < length(yourlist)) {
+      if (length(col) < length(yourlist)) {
         j <- 1
       }
       if (length(bg) < length(yourlist)) {
@@ -2137,10 +2137,9 @@ wbarplot_dfCol <- function(df,
                            PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- unlist(df[, colName])
-  stopifnot(length(variable) > 1)
   plotname <- paste(substitute(df), "__", colName, sep = "")
   fname <- ww.FnP_parser(plotname, "barplot.pdf")
-  cexNsize <- 0.7 / abs(log10(length(variable)))
+  cexNsize <- 0.7 / abs(log10(max(length(variable), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   barplot(
     variable,
@@ -2196,12 +2195,11 @@ whist_dfCol <- function(df,
                         PNG = unless.specified("b.usepng", FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- as.vector(unlist(df[, colName]))
-  stopifnot(length(variable) > 1)
   plotname <- paste(substitute(df), "__", colName, sep = "")
   fname <- ww.FnP_parser(plotname, "hist.pdf")
   if (!is.numeric(variable)) {
     table_of_var <- table(variable)
-    cexNsize <- 0.7 / abs(log10(length(table_of_var)))
+    cexNsize <- 0.7 / abs(log10(max(length(table_of_var), 2))) # guard against log10(1)
     cexNsize <- min(cexNsize, 1)
     barplot(
       table_of_var,
