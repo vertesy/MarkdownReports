@@ -7,14 +7,14 @@
 create_set_OutDir(..., setDir = TRUE, verbose = TRUE, newName = NULL)
 }
 \arguments{
-\item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
+\item{...}{Variables (strings, vectors) to be collapsed consecutively.}
 
 \item{setDir}{Set the working directory to OutDir? Default: TRUE}
 
 \item{verbose}{Print directory to screen? Default: TRUE}
 
 \item{newName}{Create a new variable with same path as the "OutDir" variable. Useful since
-OutDir may be redifined by other scripts}
+OutDir may be redefined by other scripts}
 }
 \description{
 Create or set the output directory of the script, and set the "OutDir" variable

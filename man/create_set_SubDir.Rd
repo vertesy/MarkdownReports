@@ -7,7 +7,7 @@
 create_set_SubDir(..., define.ParentDir = TRUE, setDir = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{...}{Variables (strings, vectors) to be collapsed in consecutively.}
+\item{...}{Variables (strings, vectors) to be collapsed consecutively.}
 
 \item{define.ParentDir}{Report on what was the parent directory of the new subdir.}
 

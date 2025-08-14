@@ -15,7 +15,7 @@ utils::globalVariables(c(
 # - Plots for cycling over data frame columns or rows
 # - A4 pdfs for multi-plots
 # - Add-ons to existing plots
-# - Graphics and Internal functions
+# - Graphics and Internal function
 
 
 # ______________________________________________________________________________________________----
@@ -110,7 +110,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   if (!dir.exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
   }
-  OutDir <- AddTrailingSlashfNonePresent(OutDir) # add '/' if necessary
+  OutDir <- AddTrailingSlashIfMissing(OutDir) # add '/' if necessary
   OutDir <- ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
@@ -259,7 +259,7 @@ create_set_SubDir <- function(..., define.ParentDir = TRUE,
 
   NewOutDir <- kollapse(OutDir, ..., print = FALSE)
 
-  NewOutDir <- AddTrailingSlashfNonePresent(NewOutDir) # add '/' if necessary
+  NewOutDir <- AddTrailingSlashIfMissing(NewOutDir) # add '/' if necessary
   NewOutDir <- ReplaceRepeatedSlashes(NewOutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!dir.exists(NewOutDir)) {
@@ -366,7 +366,7 @@ check_OutDir <- function() {
   if (!exists("OutDir")) {
     message("OutDir does not exist; wd is: ", current_dir)
   } else {
-    try(OutDir <- Stringendo::AddTrailingSlashfNonePresent(OutDir), silent = TRUE)
+    try(OutDir <- Stringendo::AddTrailingSlashIfMissing(OutDir), silent = TRUE)
     if (current_dir != OutDir) {
       # Print both directories as a message if they do not match
       print("Directory Mismatch!")
@@ -984,8 +984,10 @@ wbarplot <- function(variable,
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  cexNsize <- 0.8 / abs(log10(max(length(variable), 2))) # guard against log10(1)
+  
+  cexNsize <- 0.8 / abs(log10(max(NrBars, 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
+
   if (sub == TRUE) {
     subtitle <- paste(
       "mean:", iround(mean(variable, na.rm = TRUE)),

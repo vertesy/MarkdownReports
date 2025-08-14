@@ -1,9 +1,9 @@
 # Configuration for the Package
-# file.edit("~/GitHub/Packages/XXXXXXXXXX/Development/config.R")
+# file.edit("~/GitHub/Packages/MarkdownReports/Development/config.R")
 
 DESCRIPTION <- list(
   package.name = "MarkdownReports",
-  version = "4.8.0",
+  version = "4.8.5",
   title = "Generate Scientific Figures and Reports Easily",
   description = "MarkdownReports is a set of R functions that allows you to generate precise figures easily,
     and create clean markdown reports about what you just discovered with your analysis script. It helps you to:

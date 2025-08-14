@@ -22,7 +22,7 @@ wstripchart(
   bg = "seagreen2",
   colorbyColumn = TRUE,
   col = if (colorbyColumn) {
-     1:length(yourlist)
+     seq_along(yourlist)
  } else {
      1
  },
@@ -30,7 +30,7 @@ wstripchart(
   w = unless.specified("b.defSize", 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", F),
+  PNG = unless.specified("b.usepng", FALSE),
   ...
 )
 }
@@ -54,8 +54,8 @@ fit on the plot.}
 
 \item{tilted_text}{Use 45 degree x-labels if TRUE. Useful for long, but not too many labels.}
 
-\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack". See
-stripchart().}
+\item{method}{Method for displaying data points to avoid overlap; either "jitter" or "stack".
+See stripchart().}
 
 \item{jitter}{The amount of horizontal scatter added to the individual data points (to avoid
 overlaps).}

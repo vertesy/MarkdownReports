@@ -37,17 +37,17 @@ The allowed values are "o" (the default) and "n".}
 
 \item{title}{What should be the title of the legend? NULL by default}
 
-\item{ttl.by.varname}{Should the title of the legend substituted from the NamedColorVec variable's name?
+\item{ttl.by.varname}{Should the title of the legend be substituted from the NamedColorVec variable's name?
 FALSE by default. Does not work if you pass on a list item like this: list$element}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name
-the last wplot* function made (It is stored in plotnameLastPlot variable).}
+the last wplot* function made (It is stored in the plotnameLastPlot variable).}
 
 \item{mdlink}{Insert a .pdf and a .png image link in the markdown report,
 set by "path_of_report".}
 }
 \description{
-Quickly add a "text only" legend without a filled color box. to an existing plot,
+Quickly add a "text only" legend without a filled color box to an existing plot,
 and save the plot immediately. Never inserts an mdlink.
 }
 \examples{

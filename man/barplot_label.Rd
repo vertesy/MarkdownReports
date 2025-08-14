@@ -12,27 +12,27 @@ barplot_label(
   relpos_bottom = 0.1,
   OverwritePrevPDF = unless.specified("b.save.wplots"),
   filename = plotnameLastPlot,
-  PNG_ = unless.specified("b.usepng", F),
+  PNG_ = unless.specified("b.usepng", FALSE),
   w = 7,
   h = w,
   ...
 )
 }
 \arguments{
-\item{barplotted_variable}{The variable that you barplotted previously.}
+\item{barplotted_variable}{The variable that you previously bar plotted.}
 
 \item{labels}{Label text.}
 
 \item{bottom}{Put labels at the bottom of the bars.}
 
-\item{TopOffset}{Absolute offset from top.}
+\item{TopOffset}{Absolute offset from the top.}
 
-\item{relpos_bottom}{Relative offset from bottom.}
+\item{relpos_bottom}{Relative offset from the bottom.}
 
 \item{OverwritePrevPDF}{Save the plot immediately with the same name the last
-wplot* function made (It is stored in plotnameLastPlot variable). Never inserts an mdlink.}
+wplot* function made (It is stored in the plotnameLastPlot variable). Never inserts an mdlink.}
 
-\item{filename}{Filename to overwrite after errorbars are added to the current barplot.}
+\item{filename}{Filename to overwrite after error bars are added to the current bar plot.}
 
 \item{PNG_}{Set to true if you want to save the plot as PNG instead of the default PDF.}
 

@@ -21,7 +21,7 @@ create_set_Original_OutDir(
 \item{verbose}{Print directory to screen? Default: TRUE}
 }
 \description{
-Closing pair of the create_set_SubDir function. Call when chaning back to the main dir.
+Closing pair of the create_set_SubDir function. Call when changing back to the main dir.
 Set the output directory of the script, and set the "NewOutDir" variable that is
 used by all ~wplot functions.
 }

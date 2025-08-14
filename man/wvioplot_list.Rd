@@ -20,7 +20,7 @@ wvioplot_list(
   w = unless.specified("b.defSize", 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", F)
+  PNG = unless.specified("b.usepng", FALSE)
 )
 }
 \arguments{
