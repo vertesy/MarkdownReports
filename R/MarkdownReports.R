@@ -984,7 +984,7 @@ wbarplot <- function(variable,
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  cexNsize <- 0.8 / abs(log10(max(NrBars, 2))) # guard against log10(1)
+  cexNsize <- 0.8 / abs(log10(max(length(variable), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   if (sub == TRUE) {
     subtitle <- paste(
