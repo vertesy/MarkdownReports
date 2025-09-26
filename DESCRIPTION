@@ -25,6 +25,7 @@ Imports:
     RColorBrewer,
     ReadWriter,
     VennDiagram,
+    checkmate,
     clipr,
     colorRamps,
     gplots,
