@@ -356,7 +356,6 @@ continue_logging_markdown <- function(b.scriptname) {
 #' @examples
 #' check_OutDir()
 #'
-#' @importFrom checkmate assertCharacter
 #' @export
 check_OutDir <- function() {
   # Get the current working directory
@@ -984,7 +983,7 @@ wbarplot <- function(variable,
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
-  
+
   cexNsize <- 0.8 / abs(log10(max(NrBars, 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
 
