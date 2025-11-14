@@ -224,8 +224,9 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
                               newName = NULL) {
   OutDir <- Stringendo::FixPath(...)
   if (verbose) {
-    print("All files will be saved under 'OutDir':")
-    # message(OutDir)
+    txt <-"All files will be saved under 'OutDir'."
+    if (!is.null(newName)) txt <- paste0(txt, " Path also saved in variable '" ,newName, "'.")
+    print(txt)
   }
   # Create the output directory if needed
   if (!dir.exists(OutDir)) {
@@ -235,8 +236,10 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
     setwd(OutDir)
   }
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
-  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1)
+  if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
 }
+
+
 
 
 #' @title Create_set_SubDir
