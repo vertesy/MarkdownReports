@@ -1526,12 +1526,12 @@ wstripchart <- function(yourlist,
   cexNsize <- 1 / abs(log10(max(length(yourlist), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   fname <- kollapse(main, ".stripchart")
-  a <- boxplot(yourlist, plot = FALSE)
+  box_stats <- boxplot(yourlist, plot = FALSE)
   if (colorbyColumn) {
     bg <- NULL
   }
   if (BoxPlotWithMean) {
-    a$stats[3, ] <- unlist(lapply(yourlist, mean))
+    box_stats$stats[3, ] <- unlist(lapply(yourlist, mean))
   }
   if (tilted_text) {
     xlb <- FALSE
@@ -1541,7 +1541,7 @@ wstripchart <- function(yourlist,
   plotname <-
     main # to avoid circular reference in the inside function argument
   bxp(
-    a,
+    box_stats,
     xlab = "",
     show.names = xlb,
     ...,
