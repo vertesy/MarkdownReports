@@ -765,12 +765,12 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           PNG = unless.specified("b.usepng", FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
-  CNN <- colnames(df2col)
-  xlab <- if (length(CNN) & missing(xlab)) {
-    CNN[1]
+  col_names <- colnames(df2col)
+  xlab <- if (length(col_names) & missing(xlab)) {
+    col_names[1]
   }
-  ylab <- if (length(CNN) & missing(ylab)) {
-    CNN[2]
+  ylab <- if (length(col_names) & missing(ylab)) {
+    col_names[2]
   }
 
   fname <- kollapse(plotname, ".scatter.fill")
