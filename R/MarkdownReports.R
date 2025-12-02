@@ -525,7 +525,7 @@ wplot_save_pheatmap <- function(x,
 #' specified by a = y-offset), "v" (vertical, further specified by a = x-offset), "ab" (line with an
 #' angle, further specified by a = offset, b = slope).
 #'
-#' @param df2col Input data frame to be plotted_2columns
+#' @param df2col Input data frame to be plotted (2 columns)
 #' @param col Color of the plot.
 #' @param pch Define the symbol for each data point. A number (0-25) or any string between ""-s.
 #' @param ... Pass any other parameter of the corresponding plotting function (most of them should
@@ -725,7 +725,7 @@ wplot <- function(df2col,
 #' @param savefile Save plot as pdf in OutDir, TRUE by default.
 #' @param mdlink Insert a .pdf and a .png image link in the markdown report, set by
 #'   "path_of_report".
-#' @param df2col Input data, a 2 column dataframe
+#' @param df2col Input data, a 2-column data frame
 #' @param PNG Set to true if you want to save the plot as PNG instead of the default PDF.
 #' @param ylim Defines the Y axis range. Replacement for the standard "ylim" argument.
 #'
@@ -2029,7 +2029,7 @@ wviostripchart_list <- function(yourlist,
 
 #' @title wvenn
 #'
-#' @description Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,
+#' @description Save Venn diagrams. Unlike other ~vplot functions, this saves directly into a .png,
 #' and it does not use the dev.copy2pdf() function.
 #' @param yourlist The variable to plot.
 #' @param imagetype Image format, png by default.
