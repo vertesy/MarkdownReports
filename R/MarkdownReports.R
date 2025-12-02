@@ -175,7 +175,6 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
   }
-  saveParameterList
   if (saveParameterList != FALSE) {
     print("")
     print("PARAMETER LIST ---------------------------")
@@ -2029,7 +2028,7 @@ wviostripchart_list <- function(yourlist,
 
 #' @title wvenn
 #'
-#' @description Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,
+#' @description Save venn diagrams. Unlike other ~vplot functions, this saves directly into a .png,
 #' and it does not use the dev.copy2pdf() function.
 #' @param yourlist The variable to plot.
 #' @param imagetype Image format, png by default.
