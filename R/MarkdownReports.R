@@ -175,7 +175,6 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     dir.create(BackupDir, showWarnings = FALSE)
     MarkdownHelpers::ww.assign_to_global("BackupDir", BackupDir, 1, verbose = FALSE)
   }
-  saveParameterList
   if (saveParameterList != FALSE) {
     print("")
     print("PARAMETER LIST ---------------------------")
