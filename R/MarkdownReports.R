@@ -208,19 +208,23 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 
 #' @title create_set_OutDir
 #'
-#' @description Create or set the output directory of the script, and set the "OutDir" variable
-#' that is used by all ~wplot functions.
+#' @description Create and set (setwd) the output directory of the script, and define the "OutDir" variable
+#' as a global variable. OutDir is used by most @vertesy functions. It also writes the path of
+#' the current R script
 #'
 #' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
+#' @param writeScriptPath Make it easier to trace the origin of the output.
+#' Write the path to the current R script into a file in the output directory? Default: TRUE
+#' @param ScrPath File name in the OutDir. Default: "__corresponding.R.script"
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
 #' OutDir may be redefined by other scripts
 #'
 #' @examples create_set_OutDir(setDir = TRUE, getwd())
 #' @export
-create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
-                              newName = NULL) {
+create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = TRUE, ScrPath = "__corresponding.R.script",
+                              verbose = TRUE, newName = NULL) {
   OutDir <- Stringendo::FixPath(...)
   if (verbose) {
     txt <-"All files will be saved under 'OutDir'."
@@ -234,10 +238,19 @@ create_set_OutDir <- function(..., setDir = TRUE, verbose = TRUE,
   if (setDir) {
     setwd(OutDir)
   }
+
+  if(ifExistsAndTrue("onCBE") & writeScriptPath) {
+    path_R_script <- paste0("file.edit('", gsub("/groups/knoblich/users/abel.vertesy/cbehome", "~",
+                                                rstudioapi::getSourceEditorContext()$path ) , "')")
+    content <- c("", idate(), "The R script corresponding to this analysis output folder:", "", path_R_script)
+    write.simple.vec(content, filename =  ScrPath, extension = "txt")
+  }
+
+
+
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
   if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
 }
-
 
 
 

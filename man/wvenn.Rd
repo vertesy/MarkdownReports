@@ -44,7 +44,7 @@ set by "path_of_report".}
 \item{openFolder}{open current directory (=working if setup_MarkdownReports('setDir=TRUE'))}
 }
 \description{
-Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,
+Save Venn diagrams. Unlike other ~vplot functions, this saves directly into a .png,
 and it does not use the dev.copy2pdf() function.
 }
 \examples{

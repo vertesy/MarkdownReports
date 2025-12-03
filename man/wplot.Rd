@@ -36,7 +36,7 @@ wplot(
 )
 }
 \arguments{
-\item{df2col}{Input data frame to be plotted_2columns}
+\item{df2col}{Input data frame to be plotted (2 columns)}
 
 \item{col}{Color of the plot.}
 

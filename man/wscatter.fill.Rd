@@ -36,7 +36,7 @@ wscatter.fill(
 )
 }
 \arguments{
-\item{df2col}{Input data, a 2 column dataframe}
+\item{df2col}{Input data, a 2-column data frame}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should
 work).}

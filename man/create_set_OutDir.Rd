@@ -4,12 +4,24 @@
 \alias{create_set_OutDir}
 \title{create_set_OutDir}
 \usage{
-create_set_OutDir(..., setDir = TRUE, verbose = TRUE, newName = NULL)
+create_set_OutDir(
+  ...,
+  setDir = TRUE,
+  writeScriptPath = TRUE,
+  ScrPath = "__corresponding.R.script",
+  verbose = TRUE,
+  newName = NULL
+)
 }
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed consecutively.}
 
 \item{setDir}{Set the working directory to OutDir? Default: TRUE}
+
+\item{writeScriptPath}{Make it easier to trace the origin of the output.
+Write the path to the current R script into a file in the output directory? Default: TRUE}
+
+\item{ScrPath}{File name in the OutDir. Default: "__corresponding.R.script"}
 
 \item{verbose}{Print directory to screen? Default: TRUE}
 
@@ -17,8 +29,9 @@ create_set_OutDir(..., setDir = TRUE, verbose = TRUE, newName = NULL)
 OutDir may be redefined by other scripts}
 }
 \description{
-Create or set the output directory of the script, and set the "OutDir" variable
-that is used by all ~wplot functions.
+Create and set (setwd) the output directory of the script, and define the "OutDir" variable
+as a global variable. OutDir is used by most @vertesy functions. It also writes the path of
+the current R script
 }
 \examples{
 create_set_OutDir(setDir = TRUE, getwd())
