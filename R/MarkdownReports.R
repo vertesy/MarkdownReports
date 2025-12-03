@@ -209,7 +209,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @title create_set_OutDir
 #'
 #' @description Create and set (setwd) the output directory of the script, and define the "OutDir" variable
-#' as a global variable. OutDir is used by most @vertesy functions. It also writes the path of
+#' as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also writes the path of
 #' the current R script
 #'
 #' @param ... Variables (strings, vectors) to be collapsed consecutively.
