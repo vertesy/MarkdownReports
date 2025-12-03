@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: vertesy/MarkdownReports v4.3.2 Type Less, Plot More. Create (scientific) plots with very little code and write (markdown) reports easily from your R scripts.
+title: vertesy/MarkdownReports Type Less, Plot More. Create (scientific) plots with very little code and write markdown reports (text & figures, code-free) easily from your R scripts.
 version: v4.8.6
 message: >-
   If you use this software, please cite it using these metadata.
@@ -7,6 +7,6 @@ type: software
 authors:
   - given-names: Abel
     family-names: Vertesy
-    email: abel.vertesy@imba.oeaw.ac.at
+    email: av@imba.oeaw.ac.at
     affiliation: IMBA
     orcid: 'https://orcid.org/0000-0001-6075-5702'
