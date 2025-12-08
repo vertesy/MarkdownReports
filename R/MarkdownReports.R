@@ -208,9 +208,10 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 
 #' @title create_set_OutDir
 #'
-#' @description Create and set (setwd) the output directory of the script, and define the "OutDir" variable
-#' as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also writes the path of
-#' the current R script
+#' @description Create and set (setwd) the output directory of the script, and define the "OutDir"
+#' variable as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also
+#' writes the path of the current R script into a file in the output directory to make it easier to
+#' trace the origin of the output (using `rstudioapi::getSourceEditorContext()`).
 #'
 #' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
@@ -220,17 +221,24 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
 #' OutDir may be redefined by other scripts
+#' @param home_path The home path on your filesystem to be replaced with '~' in the final script path.
 #'
 #' @examples create_set_OutDir(setDir = TRUE, getwd())
+#' @importFrom rstudioapi getSourceEditorContext
+#'
 #' @export
 create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = TRUE, ScrPath = "__corresponding.R.script",
-                              verbose = TRUE, newName = NULL) {
+                              verbose = TRUE, newName = NULL,
+                              home_path = "/groups/knoblich/users/abel.vertesy/cbehome") {
   OutDir <- Stringendo::FixPath(...)
   if (verbose) {
     txt <-"All files will be saved under 'OutDir'."
     if (!is.null(newName)) txt <- paste0(txt, " Path also saved in variable '" ,newName, "'.")
     print(txt)
   }
+
+  # browser()
+
   # Create the output directory if needed
   if (!dir.exists(OutDir)) {
     dir.create(OutDir, recursive = TRUE, showWarnings = FALSE)
@@ -240,10 +248,16 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = TRUE, ScrPat
   }
 
   if(ifExistsAndTrue("onCBE") & writeScriptPath) {
-    path_R_script <- paste0("file.edit('", gsub("/groups/knoblich/users/abel.vertesy/cbehome", "~",
-                                                rstudioapi::getSourceEditorContext()$path ) , "')")
-    content <- c("", idate(), "The R script corresponding to this analysis output folder:", "", path_R_script)
-    write.simple.vec(content, filename =  ScrPath, extension = "txt")
+
+    # Get the path to the current script and warn if it cannot be determined
+    path_to_current_script <- rstudioapi::getSourceEditorContext()$path
+    warnif("Cannot determine the file location of the current script. path_to_current_script == '' " = path_to_current_script == "" )
+
+    # Parse the path to make it shorter
+    path_R_script <- paste0("file.edit('", gsub(home_path, "~", path_to_current_script ) , "')")
+    message(path_R_script)
+    content <- c("", idate(), OutDir, "", "The R script corresponding to this analysis output folder:", "", path_R_script)
+    write.simple.vec(content, filename =  ScrPath, make_names = F, extension = "txt", v = F)
   }
 
 

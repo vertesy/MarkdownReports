@@ -10,7 +10,8 @@ create_set_OutDir(
   writeScriptPath = TRUE,
   ScrPath = "__corresponding.R.script",
   verbose = TRUE,
-  newName = NULL
+  newName = NULL,
+  home_path = "/groups/knoblich/users/abel.vertesy/cbehome"
 )
 }
 \arguments{
@@ -27,11 +28,14 @@ Write the path to the current R script into a file in the output directory? Defa
 
 \item{newName}{Create a new variable with same path as the "OutDir" variable. Useful since
 OutDir may be redefined by other scripts}
+
+\item{home_path}{The home path on your filesystem to be replaced with '~' in the final script path.}
 }
 \description{
-Create and set (setwd) the output directory of the script, and define the "OutDir" variable
-as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also writes the path of
-the current R script
+Create and set (setwd) the output directory of the script, and define the "OutDir"
+variable as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also
+writes the path of the current R script into a file in the output directory to make it easier to
+trace the origin of the output (using \code{rstudioapi::getSourceEditorContext()}).
 }
 \examples{
 create_set_OutDir(setDir = TRUE, getwd())
