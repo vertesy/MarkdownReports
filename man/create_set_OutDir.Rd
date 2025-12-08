@@ -7,7 +7,7 @@
 create_set_OutDir(
   ...,
   setDir = TRUE,
-  writeScriptPath = TRUE,
+  writeScriptPath = FALSE,
   ScrPath = "__corresponding.R.script",
   verbose = TRUE,
   newName = NULL,
@@ -19,8 +19,8 @@ create_set_OutDir(
 
 \item{setDir}{Set the working directory to OutDir? Default: TRUE}
 
-\item{writeScriptPath}{Make it easier to trace the origin of the output.
-Write the path to the current R script into a file in the output directory? Default: TRUE}
+\item{writeScriptPath}{Write the path to the current R script into a file in the output directory?
+Makes it easier to trace the origin of the output. Use at initial set up. Default: FALSE}
 
 \item{ScrPath}{File name in the OutDir. Default: "__corresponding.R.script"}
 

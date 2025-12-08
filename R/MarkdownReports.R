@@ -215,8 +215,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #'
 #' @param ... Variables (strings, vectors) to be collapsed consecutively.
 #' @param setDir Set the working directory to OutDir? Default: TRUE
-#' @param writeScriptPath Make it easier to trace the origin of the output.
-#' Write the path to the current R script into a file in the output directory? Default: TRUE
+#' @param writeScriptPath Write the path to the current R script into a file in the output directory?
+#' Makes it easier to trace the origin of the output. Use at initial set up. Default: FALSE
 #' @param ScrPath File name in the OutDir. Default: "__corresponding.R.script"
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
@@ -227,7 +227,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @importFrom rstudioapi getSourceEditorContext
 #'
 #' @export
-create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = TRUE, ScrPath = "__corresponding.R.script",
+create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPath = "__corresponding.R.script",
                               verbose = TRUE, newName = NULL,
                               home_path = "/groups/knoblich/users/abel.vertesy/cbehome") {
   OutDir <- Stringendo::FixPath(...)
