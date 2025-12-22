@@ -11,6 +11,8 @@ create_set_OutDir(
   ScrPath = "__corresponding.R.script",
   verbose = TRUE,
   newName = NULL,
+  subdirs = NULL,
+  showWarnings = FALSE,
   home_path = "/groups/knoblich/users/abel.vertesy/cbehome"
 )
 }
@@ -28,6 +30,10 @@ Makes it easier to trace the origin of the output. Use at initial set up. Defaul
 
 \item{newName}{Create a new variable with same path as the "OutDir" variable. Useful since
 OutDir may be redefined by other scripts}
+
+\item{subdirs}{Optional subdirectories to be added to OutDir.}
+
+\item{showWarnings}{Show warnings when creating directories? Default: FALSE}
 
 \item{home_path}{The home path on your filesystem to be replaced with '~' in the final script path.}
 }

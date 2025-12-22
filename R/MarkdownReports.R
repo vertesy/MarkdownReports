@@ -221,6 +221,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #' @param verbose Print directory to screen? Default: TRUE
 #' @param newName Create a new variable with same path as the "OutDir" variable. Useful since
 #' OutDir may be redefined by other scripts
+#' @param subdirs Optional subdirectories to be added to OutDir.
+#' @param showWarnings Show warnings when creating directories? Default: FALSE
 #' @param home_path The home path on your filesystem to be replaced with '~' in the final script path.
 #'
 #' @examples create_set_OutDir(setDir = TRUE, getwd())
@@ -228,25 +230,36 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 #'
 #' @export
 create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPath = "__corresponding.R.script",
-                              verbose = TRUE, newName = NULL,
+                              verbose = TRUE, newName = NULL, subdirs = NULL, showWarnings = FALSE,
                               home_path = "/groups/knoblich/users/abel.vertesy/cbehome") {
   OutDir <- Stringendo::FixPath(...)
+
+  stopifnot(
+    "OutDir must be a single character path" = is.character(OutDir) && length(OutDir) == 1,
+    "subdirs must be NULL or a character vector" = is.null(subdirs) || is.character(subdirs)
+  )
+
   if (verbose) {
     txt <-"All files will be saved under 'OutDir'."
     if (!is.null(newName)) txt <- paste0(txt, " Path also saved in variable '" ,newName, "'.")
     print(txt)
   }
 
-  # browser()
 
-  # Create the output directory if needed
-  if (!dir.exists(OutDir)) {
-    dir.create(OutDir, recursive = TRUE, showWarnings = FALSE)
-  }
-  if (setDir) {
-    setwd(OutDir)
+
+  # Create and set the output directory (if) ____________________________________________________
+  dir.create(OutDir, recursive = TRUE, showWarnings = showWarnings)
+  if (setDir) setwd(OutDir)
+
+
+  # Create subdirectories (if) ______________________________________________________
+  if (!is.null(subdirs)) {
+    stopifnot(all(nzchar(subdirs)))
+    subdir_paths <- file.path(OutDir, unique(subdirs))
+    for (d in subdir_paths) dir.create(d, recursive = TRUE, showWarnings = showWarnings)
   }
 
+  # Optionally write current script path _________________________________________________________
   if(ifExistsAndTrue("onCBE") & writeScriptPath) {
 
     # Get the path to the current script and warn if it cannot be determined
@@ -259,8 +272,6 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPa
     content <- c("", idate(), OutDir, "", "The R script corresponding to this analysis output folder:", "", path_R_script)
     write.simple.vec(content, filename =  ScrPath, make_names = F, extension = "txt", v = F)
   }
-
-
 
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
   if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
