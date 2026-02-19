@@ -509,8 +509,8 @@ wplot_save_pheatmap <- function(x,
                                 height = max(if (is.null(data)) 7 else nrow(data) - add, 4),
                                 pdf = TRUE,
                                 png = FALSE,
-                                png_res = 100, # NA
-                                png_dim_factor = 100,
+                                png_res = 300, # NA
+                                png_dim_factor = png_res,
                                 mdlink = TRUE) {
   #
   stopifnot(
@@ -534,6 +534,7 @@ wplot_save_pheatmap <- function(x,
     dev.off()
     print(kpps(getwd(), filename))
   }
+
   if (png) {
     filename <- ppp(plotname, suffix, "png")
     png(

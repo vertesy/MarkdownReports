@@ -14,8 +14,8 @@ wplot_save_pheatmap(
   height = max(if (is.null(data)) 7 else nrow(data) - add, 4),
   pdf = TRUE,
   png = FALSE,
-  png_res = 100,
-  png_dim_factor = 100,
+  png_res = 300,
+  png_dim_factor = png_res,
   mdlink = TRUE
 )
 }
