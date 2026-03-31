@@ -443,10 +443,10 @@ check_OutDir <- function() {
 #' )
 wplot_save_this <- function(plotname = ww.autoPlotName(),
                             OverwritePrevPDF = TRUE,
-                            w = unless.specified("b.defSize", 7),
+                            w = get0("b.defSize", ifnotfound = 7),
                             h = w,
                             mdlink = FALSE,
-                            PNG = unless.specified("b.usepng", FALSE),
+                            PNG = get0("b.usepng", ifnotfound = FALSE),
                             ...) {
   stopifnot(
     is.character(plotname), length(plotname) == 1,
@@ -630,11 +630,11 @@ wplot <- function(df2col,
                   lwd = 1,
                   col_abline = 1,
                   equal.axes = FALSE,
-                  savefile = unless.specified("b.save.wplots"),
+                  savefile = get0("b.save.wplots", ifnotfound = T),
                   mdlink = ww.set.mdlink(),
-                  w = unless.specified("b.defSize", 7),
+                  w = get0("b.defSize", ifnotfound = 7),
                   h = w,
-                  PNG = unless.specified("b.usepng", FALSE)) {
+                  PNG = get0("b.usepng", ifnotfound = FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   fname <- kollapse(plotname, ".plot")
@@ -797,12 +797,12 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           frame.plot = axes,
                           xlab,
                           ylab,
-                          savefile = unless.specified("b.save.wplots"),
-                          w = unless.specified("b.defSize", 7),
+                          savefile = get0("b.save.wplots", ifnotfound = T),
+                          w = get0("b.defSize", ifnotfound = 7),
                           h = w,
                           incrBottMarginBy = 0,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", FALSE)) {
+                          PNG = get0("b.usepng", ifnotfound =  FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   CNN <- colnames(df2col)
@@ -977,7 +977,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
 #' )
 wbarplot <- function(variable,
                      ...,
-                     col = unless.specified("b.def.colors", "gold1"),
+                     col = get0("b.def.colors", ifnotfound =  "gold1"),
                      sub = FALSE,
                      plotname = substitute(variable),
                      main = plotname,
@@ -994,12 +994,12 @@ wbarplot <- function(variable,
                      lower = upper,
                      arrow_width = 0.1,
                      arrow_lwd = 1,
-                     savefile = unless.specified("b.save.wplots"),
-                     w = unless.specified("b.defSize", 7),
+                     savefile = get0("b.save.wplots", ifnotfound = T),
+                     w = get0("b.defSize", ifnotfound = 7),
                      h = w,
                      incrBottMarginBy = 0,
                      mdlink = ww.set.mdlink(),
-                     PNG = unless.specified("b.usepng", FALSE)) {
+                     PNG = get0("b.usepng", ifnotfound = FALSE)) {
   isVec <- is.vector(variable) | is.table(variable)
   isMat <- is.matrix(variable) | is.data.frame(variable)
 
@@ -1171,7 +1171,7 @@ wbarplot <- function(variable,
 whist <- function(variable,
                   ...,
                   breaks = 20,
-                  col = unless.specified("b.def.color", "gold1"),
+                  col = get0("b.def.color", ifnotfound =  "gold1"),
                   plotname = substitute(variable),
                   main = kollapse("Histogram of ", substitute(variable)),
                   xlab = substitute(variable),
@@ -1183,11 +1183,11 @@ whist <- function(variable,
                   vline = FALSE,
                   filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
                   passequal = TRUE,
-                  savefile = unless.specified("b.save.wplots"),
-                  w = unless.specified("b.defSize", 7),
+                  savefile = get0("b.save.wplots", ifnotfound = T),
+                  w = get0("b.defSize", ifnotfound =  7),
                   h = w,
                   mdlink = ww.set.mdlink(),
-                  PNG = unless.specified("b.usepng")) {
+                  PNG = get0("b.usepng", ifnotfound = T)) {
   xtra <- list(...)
   xlb <- xlab # to avoid circular reference in the inside function argument
   if (length(variable) > 0) {
@@ -1334,14 +1334,14 @@ wboxplot <- function(yourlist,
                      main = as.character(substitute(yourlist)),
                      sub = FALSE,
                      ylab = "",
-                     col = unless.specified("b.def.colors", "gold1"),
+                     col = get0("b.def.colors", ifnotfound =  "gold1"),
                      incrBottMarginBy = 0,
                      tilted_text = FALSE,
-                     savefile = unless.specified("b.save.wplots"),
-                     w = unless.specified("b.defSize", 7),
+                     savefile = get0("b.save.wplots", ifnotfound = T),
+                     w = get0("b.defSize", ifnotfound =  7),
                      h = w,
                      mdlink = ww.set.mdlink(),
-                     PNG = unless.specified("b.usepng"),
+                     PNG = get0("b.usepng", ifnotfound = T),
                      ...) {
   fname <- kollapse(main, ".boxplot")
   if (incrBottMarginBy) {
@@ -1426,11 +1426,11 @@ wpie <- function(NamedVector,
                  both_pc_and_value = FALSE,
                  plotname = substitute(NamedVector),
                  col = gplots::rich.colors(length(NamedVector)),
-                 savefile = unless.specified("b.save.wplots"),
-                 w = unless.specified("b.defSize", 7),
+                 savefile = get0("b.save.wplots", ifnotfound = T),
+                 w = get0("b.defSize", ifnotfound =  7),
                  h = w,
                  mdlink = ww.set.mdlink(),
-                 PNG = unless.specified("b.usepng", FALSE),
+                 PNG = get0("b.usepng", ifnotfound =  FALSE),
                  ...) {
   # if (!require("gplots")) {
   #   print("Please install gplots: install.packages('gplots')")
@@ -1548,11 +1548,11 @@ wstripchart <- function(yourlist,
                         } else {
                           1
                         },
-                        savefile = unless.specified("b.save.wplots"),
-                        w = unless.specified("b.defSize", 7),
+                        savefile = get0("b.save.wplots", ifnotfound = T),
+                        w = get0("b.defSize", ifnotfound = 7),
                         h = w,
                         mdlink = ww.set.mdlink(),
-                        PNG = unless.specified("b.usepng", FALSE),
+                        PNG = get0("b.usepng", ifnotfound = FALSE),
                         ...) {
   force(method)
   col_ <- col # to avoid circular reference in the inside function argument
@@ -1699,11 +1699,11 @@ wstripchart_list <- function(yourlist,
                              col = "black",
                              method = "jitter",
                              jitter = 0.2,
-                             savefile = unless.specified("b.save.wplots"),
-                             w = unless.specified("b.defSize"),
+                             savefile = get0("b.save.wplots", ifnotfound = FALSE),
+                             w = get0("b.defSize", ifnotfound = TRUE),
                              h = w,
                              mdlink = ww.set.mdlink(),
-                             PNG = unless.specified("b.usepng", FALSE)) {
+                             PNG = get0("b.usepng", ifnotfound = FALSE)) {
   force(method)
   fname <- kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
@@ -1833,11 +1833,11 @@ wvioplot_list <- function(yourlist,
                           incrBottMarginBy = 0,
                           tilted_text = FALSE,
                           yoffset = 0,
-                          savefile = unless.specified("b.save.wplots"),
-                          w = unless.specified("b.defSize", 7),
+                          savefile = get0("b.save.wplots", ifnotfound = FALSE),
+                          w = get0("b.defSize", ifnotfound = 7),
                           h = w,
                           mdlink = ww.set.mdlink(),
-                          PNG = unless.specified("b.usepng", FALSE)) {
+                          PNG = get0("b.usepng", ifnotfound = FALSE)) {
   stopifnot(is.list(yourlist))
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
@@ -1973,11 +1973,11 @@ wviostripchart_list <- function(yourlist,
                                 xlab = names(yourlist),
                                 ylab = "",
                                 incrBottMarginBy = 0,
-                                savefile = unless.specified("b.save.wplots"),
-                                w = unless.specified("b.defSize", 7),
+                                savefile = get0("b.save.wplots", ifnotfound = FALSE),
+                                w = get0("b.defSize", ifnotfound = 7),
                                 h = w,
                                 mdlink = ww.set.mdlink(),
-                                PNG = unless.specified("b.usepng", FALSE)) {
+                                PNG = get0("b.usepng", ifnotfound = FALSE)) {
   force(method)
   fname <- kollapse(main, ".VioStripchart")
   # if (!require("vioplot")) {
@@ -2093,7 +2093,7 @@ wvenn <- function(yourlist,
                   fill = seq_along(yourlist),
                   subt,
                   ...,
-                  w = unless.specified("b.defSize", 7),
+                  w = get0("b.defSize", ifnotfound = 7),
                   h = w,
                   mdlink = ww.set.mdlink(),
                   plotname = substitute(yourlist),
@@ -2172,11 +2172,11 @@ wvenn <- function(yourlist,
 wbarplot_dfCol <- function(df,
                            ...,
                            colName,
-                           col = unless.specified("b.def.colors", "gold1"),
-                           savefile = unless.specified("b.save.wplots"),
-                           w = unless.specified("b.defSize", 7),
+                           col = get0("b.definitely.colors", ifnotfound ="gold"),
+                           savefile = get0("b.save.wplots", ifnotfound = FALSE),
+                           w = get0("b.defSize", ifnotfound = 7),
                            h = w,
-                           PNG = unless.specified("b.usepng", FALSE)) {
+                           PNG = get0("b.usepng", ifnotfound = FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- unlist(df[, colName])
   plotname <- paste(substitute(df), "__", colName, sep = "")
@@ -2229,12 +2229,12 @@ wbarplot_dfCol <- function(df,
 #' whist_dfCol(df, colName = "a", col = "gold", w = 7)
 whist_dfCol <- function(df,
                         colName,
-                        col = unless.specified("b.def.colors", "gold1"),
+                        col = get0("b.definitely.colors", ifnotfound ="gold"),
                         ...,
-                        savefile = unless.specified("b.save.wplots"),
-                        w = unless.specified("b.defSize", 7),
+                        savefile = get0("b.save.wplots", ifnotfound = FALSE),
+                        w = get0("b.defSize", ifnotfound = 7),
                         h = w,
-                        PNG = unless.specified("b.usepng", FALSE)) {
+                        PNG = get0("b.usepng", ifnotfound = FALSE)) {
   stopifnot(colName %in% colnames(df))
   variable <- as.vector(unlist(df[, colName]))
   plotname <- paste(substitute(df), "__", colName, sep = "")
@@ -2311,7 +2311,7 @@ whist_dfCol <- function(df,
 #' pdfA4plot_off()
 pdfA4plot_on <- function(plotname = date(),
                          ...,
-                         w = unless.specified("b.defSize.fullpage", 8.27),
+                         w = get0("b.defSize.fullpage", ifnotfound = 8.27),
                          h = 11.69,
                          rows = 4,
                          cols = rows - 1,
@@ -2366,7 +2366,7 @@ pdfA4plot_on <- function(plotname = date(),
 pdfA4plot_on.layout <- function(plotname = date(),
                                 ...,
                                 layout_mat = rbind(1, c(2, 3), 4:5),
-                                w = unless.specified("b.defSize.fullpage", 8.27),
+                                w = get0("b.defSize.fullpage", ifnotfound = 8.27),
                                 h = 11.69,
                                 one_file = TRUE,
                                 mdlink = ww.set.mdlink(),
@@ -2517,7 +2517,7 @@ wlegend <- function(NamedColorVec = NA,
                     h = w,
                     title = NULL,
                     ttl.by.varname = FALSE,
-                    OverwritePrevPDF = unless.specified("b.save.wplots"),
+                    OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
                     mdlink = FALSE) {
   w_ <- w # to avoid circular reference in the inside function argument
   h_ <- h
@@ -2597,7 +2597,7 @@ wlegend.label <- function(legend = "...",
                           h = w,
                           title = NULL,
                           ttl.by.varname = FALSE,
-                          OverwritePrevPDF = unless.specified("b.save.wplots"),
+                          OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
                           mdlink = FALSE) {
   w_ <- w # to avoid a circular reference inside the function argument
   h_ <- h
@@ -2653,9 +2653,9 @@ barplot_label <- function(barplotted_variable,
                           bottom = FALSE,
                           TopOffset = .5,
                           relpos_bottom = 0.1,
-                          OverwritePrevPDF = unless.specified("b.save.wplots"),
+                          OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
                           filename = plotnameLastPlot,
-                          PNG_ = unless.specified("b.usepng", FALSE),
+                          PNG_ = get0("b.usepng", ifnotfound = FALSE),
                           w = 7,
                           h = w,
                           ...) {
@@ -2704,7 +2704,7 @@ wLinRegression <- function(DF,
                            coeff = c("pearson", "spearman", "r2")[3],
                            textlocation = "topleft",
                            cex = 1,
-                           OverwritePrevPDF = unless.specified("b.save.wplots"),
+                           OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
                            ...) {
   regression <- lm(DF[, 2] ~ DF[, 1])
   abline(regression, ...)

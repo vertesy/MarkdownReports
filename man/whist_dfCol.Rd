@@ -7,12 +7,12 @@
 whist_dfCol(
   df,
   colName,
-  col = unless.specified("b.def.colors", "gold1"),
+  col = get0("b.definitely.colors", ifnotfound = "gold"),
   ...,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = FALSE),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{

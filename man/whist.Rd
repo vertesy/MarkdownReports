@@ -8,7 +8,7 @@ whist(
   variable,
   ...,
   breaks = 20,
-  col = unless.specified("b.def.color", "gold1"),
+  col = get0("b.def.color", ifnotfound = "gold1"),
   plotname = substitute(variable),
   main = kollapse("Histogram of ", substitute(variable)),
   xlab = substitute(variable),
@@ -19,11 +19,11 @@ whist(
   vline = FALSE,
   filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
   passequal = TRUE,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = T),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng")
+  PNG = get0("b.usepng", ifnotfound = T)
 )
 }
 \arguments{

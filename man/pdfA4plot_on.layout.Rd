@@ -8,7 +8,7 @@ pdfA4plot_on.layout(
   plotname = date(),
   ...,
   layout_mat = rbind(1, c(2, 3), 4:5),
-  w = unless.specified("b.defSize.fullpage", 8.27),
+  w = get0("b.defSize.fullpage", ifnotfound = 8.27),
   h = 11.69,
   one_file = TRUE,
   mdlink = ww.set.mdlink(),

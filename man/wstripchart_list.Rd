@@ -22,11 +22,11 @@ wstripchart_list(
   col = "black",
   method = "jitter",
   jitter = 0.2,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize"),
+  savefile = get0("b.save.wplots", ifnotfound = FALSE),
+  w = get0("b.defSize", ifnotfound = TRUE),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{

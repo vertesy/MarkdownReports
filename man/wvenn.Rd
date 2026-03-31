@@ -11,7 +11,7 @@ wvenn(
   fill = seq_along(yourlist),
   subt,
   ...,
-  w = unless.specified("b.defSize", 7),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
   plotname = substitute(yourlist),

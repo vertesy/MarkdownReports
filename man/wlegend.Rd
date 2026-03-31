@@ -15,7 +15,7 @@ wlegend(
   h = w,
   title = NULL,
   ttl.by.varname = FALSE,
-  OverwritePrevPDF = unless.specified("b.save.wplots"),
+  OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
   mdlink = FALSE
 )
 }

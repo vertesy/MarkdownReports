@@ -27,12 +27,12 @@ wscatter.fill(
   frame.plot = axes,
   xlab,
   ylab,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = T),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{

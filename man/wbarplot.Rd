@@ -7,7 +7,7 @@
 wbarplot(
   variable,
   ...,
-  col = unless.specified("b.def.colors", "gold1"),
+  col = get0("b.def.colors", ifnotfound = "gold1"),
   sub = FALSE,
   plotname = substitute(variable),
   main = plotname,
@@ -24,12 +24,12 @@ wbarplot(
   lower = upper,
   arrow_width = 0.1,
   arrow_lwd = 1,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = T),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{

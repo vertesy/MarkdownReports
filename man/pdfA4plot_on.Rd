@@ -7,7 +7,7 @@
 pdfA4plot_on(
   plotname = date(),
   ...,
-  w = unless.specified("b.defSize.fullpage", 8.27),
+  w = get0("b.defSize.fullpage", ifnotfound = 8.27),
   h = 11.69,
   rows = 4,
   cols = rows - 1,

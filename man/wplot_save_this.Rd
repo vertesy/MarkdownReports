@@ -7,10 +7,10 @@
 wplot_save_this(
   plotname = ww.autoPlotName(),
   OverwritePrevPDF = TRUE,
-  w = unless.specified("b.defSize", 7),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = FALSE,
-  PNG = unless.specified("b.usepng", FALSE),
+  PNG = get0("b.usepng", ifnotfound = FALSE),
   ...
 )
 }

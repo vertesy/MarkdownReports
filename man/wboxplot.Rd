@@ -9,14 +9,14 @@ wboxplot(
   main = as.character(substitute(yourlist)),
   sub = FALSE,
   ylab = "",
-  col = unless.specified("b.def.colors", "gold1"),
+  col = get0("b.def.colors", ifnotfound = "gold1"),
   incrBottMarginBy = 0,
   tilted_text = FALSE,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = T),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng"),
+  PNG = get0("b.usepng", ifnotfound = T),
   ...
 )
 }
