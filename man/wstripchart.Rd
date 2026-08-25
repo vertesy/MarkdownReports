@@ -26,7 +26,7 @@ wstripchart(
  } else {
      1
  },
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),

@@ -24,7 +24,7 @@ wbarplot(
   lower = upper,
   arrow_width = 0.1,
   arrow_lwd = 1,
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,

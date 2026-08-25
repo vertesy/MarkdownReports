@@ -19,11 +19,11 @@ whist(
   vline = FALSE,
   filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
   passequal = TRUE,
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = get0("b.usepng", ifnotfound = T)
+  PNG = get0("b.usepng", ifnotfound = TRUE)
 )
 }
 \arguments{

@@ -12,11 +12,11 @@ wboxplot(
   col = get0("b.def.colors", ifnotfound = "gold1"),
   incrBottMarginBy = 0,
   tilted_text = FALSE,
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
-  PNG = get0("b.usepng", ifnotfound = T),
+  PNG = get0("b.usepng", ifnotfound = TRUE),
   ...
 )
 }

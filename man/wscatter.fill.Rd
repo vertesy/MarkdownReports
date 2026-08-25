@@ -27,7 +27,7 @@ wscatter.fill(
   frame.plot = axes,
   xlab,
   ylab,
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,

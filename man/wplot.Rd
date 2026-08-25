@@ -28,7 +28,7 @@ wplot(
   lwd = 1,
   col_abline = 1,
   equal.axes = FALSE,
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   mdlink = ww.set.mdlink(),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,

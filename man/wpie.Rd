@@ -10,7 +10,7 @@ wpie(
   both_pc_and_value = FALSE,
   plotname = substitute(NamedVector),
   col = gplots::rich.colors(length(NamedVector)),
-  savefile = get0("b.save.wplots", ifnotfound = T),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
