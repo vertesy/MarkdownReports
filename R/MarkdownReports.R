@@ -93,12 +93,12 @@ setup_MarkdownReports <- function(OutDir = getwd(),
                                     "1.5col.cell" = 4.49,
                                     "2col.cell" = 6.85
                                   )[1],
-                                    b.defSize.fullpage = 8.27,
-                                    b.usepng = FALSE,
-                                    b.png4Github = FALSE,
-                                    b.mdlink = TRUE,
-                                    b.save.wplots = TRUE,
-                                    b.def.color = "gold1") {
+                                  b.defSize.fullpage = 8.27,
+                                  b.usepng = FALSE,
+                                  b.png4Github = FALSE,
+                                  b.mdlink = TRUE,
+                                  b.save.wplots = TRUE,
+                                  b.def.color = "gold1") {
   stopifnot(
     is.character(OutDir), length(OutDir) == 1,
     is.character(scriptname), length(scriptname) == 1,
@@ -204,8 +204,6 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 }
 
 
-
-
 #' @title create_set_OutDir
 #'
 #' @description Create and set (setwd) the output directory of the script, and define the "OutDir"
@@ -240,11 +238,10 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPa
   )
 
   if (verbose) {
-    txt <-"All files will be saved under 'OutDir'."
-    if (!is.null(newName)) txt <- paste0(txt, " Path also saved in variable '" ,newName, "'.")
+    txt <- "All files will be saved under 'OutDir'."
+    if (!is.null(newName)) txt <- paste0(txt, " Path also saved in variable '", newName, "'.")
     print(txt)
   }
-
 
 
   # Create and set the output directory (if) ____________________________________________________
@@ -260,23 +257,21 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPa
   }
 
   # Optionally write current script path _________________________________________________________
-  if(ifExistsAndTrue("onCBE") & writeScriptPath) {
-
+  if (ifExistsAndTrue("onCBE") & writeScriptPath) {
     # Get the path to the current script and warn if it cannot be determined
     path_to_current_script <- rstudioapi::getSourceEditorContext()$path
-    warnif("Cannot determine the file location of the current script. path_to_current_script == '' " = path_to_current_script == "" )
+    warnif("Cannot determine the file location of the current script. path_to_current_script == '' " = path_to_current_script == "")
 
     # Parse the path to make it shorter
-    path_R_script <- paste0("file.edit('", gsub(home_path, "~", path_to_current_script ) , "')")
+    path_R_script <- paste0("file.edit('", gsub(home_path, "~", path_to_current_script), "')")
     message(path_R_script)
     content <- c("", idate(), OutDir, "", "The R script corresponding to this analysis output folder:", "", path_R_script)
-    write.simple.vec(content, filename =  ScrPath, make_names = F, extension = "txt", v = F)
+    write.simple.vec(content, filename = ScrPath, make_names = FALSE, extension = "txt", v = FALSE)
   }
 
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
   if (!is.null(newName)) MarkdownHelpers::ww.assign_to_global(newName, OutDir, 1, verbose = FALSE)
 }
-
 
 
 #' @title Create_set_SubDir
@@ -630,7 +625,7 @@ wplot <- function(df2col,
                   lwd = 1,
                   col_abline = 1,
                   equal.axes = FALSE,
-                  savefile = get0("b.save.wplots", ifnotfound = T),
+                  savefile = get0("b.save.wplots", ifnotfound = TRUE),
                   mdlink = ww.set.mdlink(),
                   w = get0("b.defSize", ifnotfound = 7),
                   h = w,
@@ -729,7 +724,6 @@ wplot <- function(df2col,
 }
 
 
-
 #' @title wscatter.fill
 #'
 #' @description A scatterplot with color gradient and color legend. Modified from:
@@ -797,12 +791,12 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           frame.plot = axes,
                           xlab,
                           ylab,
-                          savefile = get0("b.save.wplots", ifnotfound = T),
+                          savefile = get0("b.save.wplots", ifnotfound = TRUE),
                           w = get0("b.defSize", ifnotfound = 7),
                           h = w,
                           incrBottMarginBy = 0,
                           mdlink = ww.set.mdlink(),
-                          PNG = get0("b.usepng", ifnotfound =  FALSE)) {
+                          PNG = get0("b.usepng", ifnotfound = FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
   CNN <- colnames(df2col)
@@ -977,7 +971,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
 #' )
 wbarplot <- function(variable,
                      ...,
-                     col = get0("b.def.colors", ifnotfound =  "gold1"),
+                     col = get0("b.def.colors", ifnotfound = "gold1"),
                      sub = FALSE,
                      plotname = substitute(variable),
                      main = plotname,
@@ -994,7 +988,7 @@ wbarplot <- function(variable,
                      lower = upper,
                      arrow_width = 0.1,
                      arrow_lwd = 1,
-                     savefile = get0("b.save.wplots", ifnotfound = T),
+                     savefile = get0("b.save.wplots", ifnotfound = TRUE),
                      w = get0("b.defSize", ifnotfound = 7),
                      h = w,
                      incrBottMarginBy = 0,
@@ -1127,7 +1121,6 @@ wbarplot <- function(variable,
 }
 
 
-
 #' @title whist
 #'
 #' @description Create and save histograms as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
@@ -1171,7 +1164,7 @@ wbarplot <- function(variable,
 whist <- function(variable,
                   ...,
                   breaks = 20,
-                  col = get0("b.def.color", ifnotfound =  "gold1"),
+                  col = get0("b.def.color", ifnotfound = "gold1"),
                   plotname = substitute(variable),
                   main = kollapse("Histogram of ", substitute(variable)),
                   xlab = substitute(variable),
@@ -1183,11 +1176,11 @@ whist <- function(variable,
                   vline = FALSE,
                   filter = c(FALSE, "HighPass", "LowPass", "MidPass")[1],
                   passequal = TRUE,
-                  savefile = get0("b.save.wplots", ifnotfound = T),
-                  w = get0("b.defSize", ifnotfound =  7),
+                  savefile = get0("b.save.wplots", ifnotfound = TRUE),
+                  w = get0("b.defSize", ifnotfound = 7),
                   h = w,
                   mdlink = ww.set.mdlink(),
-                  PNG = get0("b.usepng", ifnotfound = T)) {
+                  PNG = get0("b.usepng", ifnotfound = TRUE)) {
   xtra <- list(...)
   xlb <- xlab # to avoid circular reference in the inside function argument
   if (length(variable) > 0) {
@@ -1300,8 +1293,6 @@ whist <- function(variable,
 }
 
 
-
-
 #' @title wboxplot
 #'
 #' @description Create and save box plots as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
@@ -1334,14 +1325,14 @@ wboxplot <- function(yourlist,
                      main = as.character(substitute(yourlist)),
                      sub = FALSE,
                      ylab = "",
-                     col = get0("b.def.colors", ifnotfound =  "gold1"),
+                     col = get0("b.def.colors", ifnotfound = "gold1"),
                      incrBottMarginBy = 0,
                      tilted_text = FALSE,
-                     savefile = get0("b.save.wplots", ifnotfound = T),
-                     w = get0("b.defSize", ifnotfound =  7),
+                     savefile = get0("b.save.wplots", ifnotfound = TRUE),
+                     w = get0("b.defSize", ifnotfound = 7),
                      h = w,
                      mdlink = ww.set.mdlink(),
-                     PNG = get0("b.usepng", ifnotfound = T),
+                     PNG = get0("b.usepng", ifnotfound = TRUE),
                      ...) {
   fname <- kollapse(main, ".boxplot")
   if (incrBottMarginBy) {
@@ -1393,7 +1384,6 @@ wboxplot <- function(yourlist,
 }
 
 
-
 #' @title wpie
 #'
 #' @description Create and save pie charts as .pdf, in "OutDir". If mdlink = TRUE, it inserts a .pdf and a .png
@@ -1426,11 +1416,11 @@ wpie <- function(NamedVector,
                  both_pc_and_value = FALSE,
                  plotname = substitute(NamedVector),
                  col = gplots::rich.colors(length(NamedVector)),
-                 savefile = get0("b.save.wplots", ifnotfound = T),
-                 w = get0("b.defSize", ifnotfound =  7),
+                 savefile = get0("b.save.wplots", ifnotfound = TRUE),
+                 w = get0("b.defSize", ifnotfound = 7),
                  h = w,
                  mdlink = ww.set.mdlink(),
-                 PNG = get0("b.usepng", ifnotfound =  FALSE),
+                 PNG = get0("b.usepng", ifnotfound = FALSE),
                  ...) {
   # if (!require("gplots")) {
   #   print("Please install gplots: install.packages('gplots')")
@@ -1483,7 +1473,6 @@ wpie <- function(NamedVector,
     md.image.linker(fname_wo_ext = fname)
   }
 }
-
 
 
 #' @title wstripchart
@@ -1548,7 +1537,7 @@ wstripchart <- function(yourlist,
                         } else {
                           1
                         },
-                        savefile = get0("b.save.wplots", ifnotfound = T),
+                        savefile = get0("b.save.wplots", ifnotfound = TRUE),
                         w = get0("b.defSize", ifnotfound = 7),
                         h = w,
                         mdlink = ww.set.mdlink(),
@@ -1786,8 +1775,6 @@ wstripchart_list <- function(yourlist,
 }
 
 
-
-
 #' @title wvioplot_list
 #'
 #' @description Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
@@ -1920,7 +1907,6 @@ wvioplot_list <- function(yourlist,
 }
 
 
-
 #' @title wviostripchart_list
 #'
 #' @description Create and save violin plots as .pdf, in "OutDir". It requires (and calls) "vioplot" package.
@@ -1966,7 +1952,7 @@ wviostripchart_list <- function(yourlist,
                                 vioborder = 1,
                                 bg = 1,
                                 col = 1,
-                             method = "jitter",
+                                method = "jitter",
                                 jitter = 0.25,
                                 main = as.character(substitute(yourlist)),
                                 sub = NULL,
@@ -2062,9 +2048,6 @@ wviostripchart_list <- function(yourlist,
 }
 
 
-
-
-
 #' @title wvenn
 #'
 #' @description Save Venn diagrams. Unlike other ~vplot functions, this saves directly into a .png,
@@ -2145,7 +2128,6 @@ wvenn <- function(yourlist,
 }
 
 
-
 # ______________________________________________________________________________________________----
 # Plots for cycling over data frame columns or rows ----
 # _________________________________________________________________________________________________
@@ -2172,7 +2154,7 @@ wvenn <- function(yourlist,
 wbarplot_dfCol <- function(df,
                            ...,
                            colName,
-                           col = get0("b.definitely.colors", ifnotfound ="gold"),
+                           col = get0("b.definitely.colors", ifnotfound = "gold"),
                            savefile = get0("b.save.wplots", ifnotfound = FALSE),
                            w = get0("b.defSize", ifnotfound = 7),
                            h = w,
@@ -2229,7 +2211,7 @@ wbarplot_dfCol <- function(df,
 #' whist_dfCol(df, colName = "a", col = "gold", w = 7)
 whist_dfCol <- function(df,
                         colName,
-                        col = get0("b.definitely.colors", ifnotfound ="gold"),
+                        col = get0("b.definitely.colors", ifnotfound = "gold"),
                         ...,
                         savefile = get0("b.save.wplots", ifnotfound = FALSE),
                         w = get0("b.defSize", ifnotfound = 7),
@@ -2449,8 +2431,9 @@ pdfA4plot_off <- function() {
 #' @examples plot(1)
 #' error_bar(x = 1, y = 1, upper = .1, width.whisker = 0.1)
 error_bar <- function(
-    x, y, upper, lower = upper, width.whisker = 0.1,
-    ...) {
+  x, y, upper, lower = upper, width.whisker = 0.1,
+  ...
+) {
   stopifnot(length(x) == length(y) & length(y) == length(lower) & length(lower) == length(upper))
   if (length(dim(y)) > 1) {
     arrows(
@@ -2476,8 +2459,6 @@ error_bar <- function(
     )
   }
 }
-
-
 
 
 #' @title wlegend
@@ -2750,7 +2731,6 @@ wLinRegression <- function(DF,
 }
 
 
-
 # ______________________________________________________________________________________________----
 # Helpers ----
 # _________________________________________________________________________________________________
@@ -2796,8 +2776,6 @@ superscript_in_plots <- function(prefix = "n",
                                  suffix = "") {
   formatted_string <- bquote(.(prefix)^.(sup) * .(suffix))
 }
-
-
 
 
 #' @title ww.dev.copy

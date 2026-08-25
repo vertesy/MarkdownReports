@@ -58,3 +58,4 @@ core
 core.*
 core-*
 *.core
+.Rproj.user
