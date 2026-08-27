@@ -2,3 +2,12 @@
 ^\.Rproj\.user$
 ^MarkdownReports\.Rproj$
 ^\.github$
+^Development$
+^AGENTS\.md$
+^CITATION\.cff$
+^CODE_OF_CONDUCT\.md$
+^CONTRIBUTING\.md$
+^Examples$
+^Release\.notes\.md$
+^SNP filter and code\.png$
+^_config\.yml$
