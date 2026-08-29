@@ -110,8 +110,8 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   if (!dir.exists(OutDir)) {
     dir.create(OutDir, showWarnings = FALSE, recursive = recursive.folder)
   }
-  OutDir <- AddTrailingSlashIfMissing(OutDir) # add '/' if necessary
-  OutDir <- ReplaceRepeatedSlashes(OutDir)
+  OutDir <- Stringendo::AddTrailingSlashIfMissing(OutDir) # add '/' if necessary
+  OutDir <- Stringendo::ReplaceRepeatedSlashes(OutDir)
 
   print("LOCATIONS ---------------------------")
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1, verbose = FALSE)
@@ -148,7 +148,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
   if (addTableOfContents) {
     write("[TOC]", path_of_report, append = TRUE)
   }
-  BackupDir <- kollapse(
+  BackupDir <- Stringendo::kollapse(
     OutDir,
     "/",
     substr(scriptname, 1, nchar(scriptname)),
@@ -169,7 +169,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
 
     options("width" = defWidth)
     rm(defWidth)
-    llprint(".sessionInfo* is saved in the working directory (OutDir).")
+    MarkdownHelpers::llprint(".sessionInfo* is saved in the working directory (OutDir).")
   }
   if (!dir.exists(BackupDir) & backupfolder) {
     dir.create(BackupDir, showWarnings = FALSE)
@@ -179,7 +179,7 @@ setup_MarkdownReports <- function(OutDir = getwd(),
     print("")
     print("PARAMETER LIST ---------------------------")
     if (exists(saveParameterList) & is.list(saveParameterList)) {
-      md.LogSettingsFromList(saveParameterList)
+      MarkdownHelpers::md.LogSettingsFromList(saveParameterList)
     } else {
       Stringendo::iprint(
         "No parameter list is defined in variable: ", saveParameterList,
@@ -257,16 +257,16 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPa
   }
 
   # Optionally write current script path _________________________________________________________
-  if (ifExistsAndTrue("onCBE") & writeScriptPath) {
+  if (Stringendo::ifExistsAndTrue("onCBE") & writeScriptPath) {
     # Get the path to the current script and warn if it cannot be determined
     path_to_current_script <- rstudioapi::getSourceEditorContext()$path
-    warnif("Cannot determine the file location of the current script. path_to_current_script == '' " = path_to_current_script == "")
+    Stringendo::warnif("Cannot determine the file location of the current script. path_to_current_script == '' " = path_to_current_script == "")
 
     # Parse the path to make it shorter
     path_R_script <- paste0("file.edit('", gsub(home_path, "~", path_to_current_script), "')")
     message(path_R_script)
-    content <- c("", idate(), OutDir, "", "The R script corresponding to this analysis output folder:", "", path_R_script)
-    write.simple.vec(content, filename = ScrPath, make_names = FALSE, extension = "txt", v = FALSE)
+    content <- c("", Stringendo::idate(), OutDir, "", "The R script corresponding to this analysis output folder:", "", path_R_script)
+    ReadWriter::write.simple.vec(content, filename = ScrPath, make_names = FALSE, extension = "txt", v = FALSE)
   }
 
   MarkdownHelpers::ww.assign_to_global("OutDir", OutDir, 1)
@@ -289,13 +289,13 @@ create_set_OutDir <- function(..., setDir = TRUE, writeScriptPath = FALSE, ScrPa
 create_set_SubDir <- function(..., define.ParentDir = TRUE,
                               setDir = TRUE,
                               verbose = TRUE) {
-  b.Subdirname <- kollapse(...)
-  OutDir <- ww.set.OutDir()
+  b.Subdirname <- Stringendo::kollapse(...)
+  OutDir <- MarkdownHelpers::ww.set.OutDir()
 
-  NewOutDir <- kollapse(OutDir, ..., print = FALSE)
+  NewOutDir <- Stringendo::kollapse(OutDir, ..., print = FALSE)
 
-  NewOutDir <- AddTrailingSlashIfMissing(NewOutDir) # add '/' if necessary
-  NewOutDir <- ReplaceRepeatedSlashes(NewOutDir)
+  NewOutDir <- Stringendo::AddTrailingSlashIfMissing(NewOutDir) # add '/' if necessary
+  NewOutDir <- Stringendo::ReplaceRepeatedSlashes(NewOutDir)
   if (verbose) Stringendo::iprint("All files will be saved under 'NewOutDir': ", NewOutDir)
   if (!dir.exists(NewOutDir)) {
     dir.create(NewOutDir, showWarnings = FALSE)
@@ -360,13 +360,13 @@ create_set_Original_OutDir <- function(NewOutDir = OutDirOrig,
 #' @examples OutDir <- paste0(getwd(), "/", collapse = "")
 #' continue_logging_markdown(b.scriptname = "Analysis")
 continue_logging_markdown <- function(b.scriptname) {
-  path <- ww.set.OutDir()
+  path <- MarkdownHelpers::ww.set.OutDir()
   path_of_report <-
-    kollapse(path, b.scriptname, ".log.md", print = FALSE)
+    Stringendo::kollapse(path, b.scriptname, ".log.md", print = FALSE)
   Stringendo::iprint("Writing report in:", path_of_report)
   MarkdownHelpers::ww.assign_to_global("path_of_report", path_of_report, 1)
 
-  BackupDir <- kollapse(path,
+  BackupDir <- Stringendo::kollapse(path,
     "/",
     substr(b.scriptname, 1, (nchar(b.scriptname) - 2)),
     format(Sys.time(), "%Y_%m_%d-%Hh"),
@@ -436,7 +436,7 @@ check_OutDir <- function() {
 #'   plotname = date(), col = "gold1", w = 7,
 #'   mdlink = FALSE, ManualName = FALSE
 #' )
-wplot_save_this <- function(plotname = ww.autoPlotName(),
+wplot_save_this <- function(plotname = MarkdownHelpers::ww.autoPlotName(),
                             OverwritePrevPDF = TRUE,
                             w = get0("b.defSize", ifnotfound = 7),
                             h = w,
@@ -463,7 +463,7 @@ wplot_save_this <- function(plotname = ww.autoPlotName(),
   )
 
   if (mdlink) {
-    md.image.linker(fname_wo_ext = plotname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = plotname)
   }
 }
 
@@ -517,7 +517,7 @@ wplot_save_pheatmap <- function(x,
 
   message("width: ", width, "; height: ", height, "\nplotname: ", plotname, "; suffix: ", suffix)
 
-  filename <- ppp(plotname, suffix, "pdf")
+  filename <- Stringendo::ppp(plotname, suffix, "pdf")
   if (pdf) {
     pdf(
       file = filename,
@@ -527,11 +527,11 @@ wplot_save_pheatmap <- function(x,
     grid::grid.newpage()
     grid::grid.draw(x$gtable)
     dev.off()
-    print(kpps(getwd(), filename))
+    print(Stringendo::kpps(getwd(), filename))
   }
 
   if (png) {
-    filename <- ppp(plotname, suffix, "png")
+    filename <- Stringendo::ppp(plotname, suffix, "png")
     png(
       file = filename, res = png_res,
       width = width * png_dim_factor,
@@ -540,9 +540,9 @@ wplot_save_pheatmap <- function(x,
     grid::grid.newpage()
     grid::grid.draw(x$gtable)
     dev.off()
-    print(kpps(getwd(), filename))
+    print(Stringendo::kpps(getwd(), filename))
     if (mdlink) {
-      md.image.linker(fname_wo_ext = plotname)
+      MarkdownHelpers::md.image.linker(fname_wo_ext = plotname)
     }
   }
 }
@@ -626,13 +626,13 @@ wplot <- function(df2col,
                   col_abline = 1,
                   equal.axes = FALSE,
                   savefile = get0("b.save.wplots", ifnotfound = TRUE),
-                  mdlink = ww.set.mdlink(),
+                  mdlink = MarkdownHelpers::ww.set.mdlink(),
                   w = get0("b.defSize", ifnotfound = 7),
                   h = w,
                   PNG = get0("b.usepng", ifnotfound = FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
-  fname <- kollapse(plotname, ".plot")
+  fname <- Stringendo::kollapse(plotname, ".plot")
   if (errorbar) {
     ylim_ <- range(c((y + upper + abs(0.1 * y)), (y - lower - abs(0.1 * y))), na.rm = TRUE)
     xlim_ <- range(c((x + right + abs(0.1 * x)), (1.1 * x - left - abs(0.1 * x))), na.rm = TRUE)
@@ -719,7 +719,7 @@ wplot <- function(df2col,
     )
   }
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -795,7 +795,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           w = get0("b.defSize", ifnotfound = 7),
                           h = w,
                           incrBottMarginBy = 0,
-                          mdlink = ww.set.mdlink(),
+                          mdlink = MarkdownHelpers::ww.set.mdlink(),
                           PNG = get0("b.usepng", ifnotfound = FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
@@ -807,7 +807,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
     CNN[2]
   }
 
-  fname <- kollapse(plotname, ".scatter.fill")
+  fname <- Stringendo::kollapse(plotname, ".scatter.fill")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
@@ -919,7 +919,7 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -992,7 +992,7 @@ wbarplot <- function(variable,
                      w = get0("b.defSize", ifnotfound = 7),
                      h = w,
                      incrBottMarginBy = 0,
-                     mdlink = ww.set.mdlink(),
+                     mdlink = MarkdownHelpers::ww.set.mdlink(),
                      PNG = get0("b.usepng", ifnotfound = FALSE)) {
   isVec <- is.vector(variable) | is.table(variable)
   isMat <- is.matrix(variable) | is.data.frame(variable)
@@ -1013,7 +1013,7 @@ wbarplot <- function(variable,
     names(variable)
   }
 
-  fname <- kollapse(plotname, ".barplot")
+  fname <- Stringendo::kollapse(plotname, ".barplot")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
@@ -1024,8 +1024,8 @@ wbarplot <- function(variable,
 
   if (sub == TRUE) {
     subtitle <- paste(
-      "mean:", iround(mean(variable, na.rm = TRUE)),
-      "CV:", percentage_formatter(cv(variable))
+      "mean:", CodeAndRoll2::iround(mean(variable, na.rm = TRUE)),
+      "CV:", Stringendo::percentage_formatter(CodeAndRoll2::cv(variable))
     )
   } else if (sub == FALSE) {
     subtitle <- ""
@@ -1116,7 +1116,7 @@ wbarplot <- function(variable,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1166,7 +1166,7 @@ whist <- function(variable,
                   breaks = 20,
                   col = get0("b.def.color", ifnotfound = "gold1"),
                   plotname = substitute(variable),
-                  main = kollapse("Histogram of ", substitute(variable)),
+                  main = Stringendo::kollapse("Histogram of ", substitute(variable)),
                   xlab = substitute(variable),
                   lty = 2,
                   lwd = 3,
@@ -1179,12 +1179,12 @@ whist <- function(variable,
                   savefile = get0("b.save.wplots", ifnotfound = TRUE),
                   w = get0("b.defSize", ifnotfound = 7),
                   h = w,
-                  mdlink = ww.set.mdlink(),
+                  mdlink = MarkdownHelpers::ww.set.mdlink(),
                   PNG = get0("b.usepng", ifnotfound = TRUE)) {
   xtra <- list(...)
   xlb <- xlab # to avoid circular reference in the inside function argument
   if (length(variable) > 0) {
-    fname <- kollapse(plotname, ".hist")
+    fname <- Stringendo::kollapse(plotname, ".hist")
     if (!is.numeric(variable)) {
       variable <- table(variable)
       cexNsize <- 0.7 / abs(log10(max(length(variable), 2))) # guard against log10(1)
@@ -1198,8 +1198,8 @@ whist <- function(variable,
         las = 2,
         cex.names = cexNsize,
         sub = paste(
-          "mean:", iround(mean(variable, na.rm = TRUE)),
-          "CV:", percentage_formatter(cv(variable))
+          "mean:", CodeAndRoll2::iround(mean(variable, na.rm = TRUE)),
+          "CV:", Stringendo::percentage_formatter(CodeAndRoll2::cv(variable))
         )
       )
     } else {
@@ -1262,27 +1262,27 @@ whist <- function(variable,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 
   if (!is.null(filter)) {
     passequal_ <- passequal
     if (filter == "HighPass" & any(vline)) {
-      filter_HP(
+      MarkdownHelpers::filter_HP(
         numeric_vector = variable,
         threshold = vline,
         passequal = passequal_,
         plot.hist = FALSE
       )
     } else if (filter == "LowPass" & any(vline)) {
-      filter_LP(
+      MarkdownHelpers::filter_LP(
         numeric_vector = variable,
         threshold = vline,
         passequal = passequal_,
         plot.hist = FALSE
       )
     } else if (filter == "MidPass" & any(vline) & (length(vline) == 2)) {
-      filter_MidPass(
+      MarkdownHelpers::filter_MidPass(
         numeric_vector = variable,
         HP_threshold = vline[1],
         LP_threshold = vline[2],
@@ -1331,10 +1331,10 @@ wboxplot <- function(yourlist,
                      savefile = get0("b.save.wplots", ifnotfound = TRUE),
                      w = get0("b.defSize", ifnotfound = 7),
                      h = w,
-                     mdlink = ww.set.mdlink(),
+                     mdlink = MarkdownHelpers::ww.set.mdlink(),
                      PNG = get0("b.usepng", ifnotfound = TRUE),
                      ...) {
-  fname <- kollapse(main, ".boxplot")
+  fname <- Stringendo::kollapse(main, ".boxplot")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
@@ -1379,7 +1379,7 @@ wboxplot <- function(yourlist,
     par("mar" = .ParMarDefault)
   }
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1419,21 +1419,21 @@ wpie <- function(NamedVector,
                  savefile = get0("b.save.wplots", ifnotfound = TRUE),
                  w = get0("b.defSize", ifnotfound = 7),
                  h = w,
-                 mdlink = ww.set.mdlink(),
+                 mdlink = MarkdownHelpers::ww.set.mdlink(),
                  PNG = get0("b.usepng", ifnotfound = FALSE),
                  ...) {
   # if (!require("gplots")) {
   #   print("Please install gplots: install.packages('gplots')")
   # }
-  fname <- kollapse(plotname, ".pie")
-  subt <- kollapse("Total = ", sum(NamedVector), print = FALSE)
+  fname <- Stringendo::kollapse(plotname, ".pie")
+  subt <- Stringendo::kollapse("Total = ", sum(NamedVector), print = FALSE)
   if (percentage) {
     labs <-
       paste("(",
         names(NamedVector),
         ")",
         "\n",
-        percentage_formatter(NamedVector / sum(NamedVector)),
+        Stringendo::percentage_formatter(NamedVector / sum(NamedVector)),
         sep = ""
       )
     if (both_pc_and_value) {
@@ -1443,7 +1443,7 @@ wpie <- function(NamedVector,
           names(NamedVector),
           ")",
           "\n",
-          percentage_formatter(NamedVector / sum(NamedVector)),
+          Stringendo::percentage_formatter(NamedVector / sum(NamedVector)),
           "\n",
           NamedVector,
           sep = ""
@@ -1470,7 +1470,7 @@ wpie <- function(NamedVector,
     )
   }
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1540,7 +1540,7 @@ wstripchart <- function(yourlist,
                         savefile = get0("b.save.wplots", ifnotfound = TRUE),
                         w = get0("b.defSize", ifnotfound = 7),
                         h = w,
-                        mdlink = ww.set.mdlink(),
+                        mdlink = MarkdownHelpers::ww.set.mdlink(),
                         PNG = get0("b.usepng", ifnotfound = FALSE),
                         ...) {
   force(method)
@@ -1554,7 +1554,7 @@ wstripchart <- function(yourlist,
   } # Tune the margin
   cexNsize <- 1 / abs(log10(max(length(yourlist), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
-  fname <- kollapse(main, ".stripchart")
+  fname <- Stringendo::kollapse(main, ".stripchart")
   a <- boxplot(yourlist, plot = FALSE)
   if (colorbyColumn) {
     bg <- NULL
@@ -1624,7 +1624,7 @@ wstripchart <- function(yourlist,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1691,10 +1691,10 @@ wstripchart_list <- function(yourlist,
                              savefile = get0("b.save.wplots", ifnotfound = FALSE),
                              w = get0("b.defSize", ifnotfound = TRUE),
                              h = w,
-                             mdlink = ww.set.mdlink(),
+                             mdlink = MarkdownHelpers::ww.set.mdlink(),
                              PNG = get0("b.usepng", ifnotfound = FALSE)) {
   force(method)
-  fname <- kollapse(main, ".stripchart")
+  fname <- Stringendo::kollapse(main, ".stripchart")
   if (incrBottMarginBy) {
     .ParMarDefault <- par("mar")
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
@@ -1770,7 +1770,7 @@ wstripchart_list <- function(yourlist,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1823,7 +1823,7 @@ wvioplot_list <- function(yourlist,
                           savefile = get0("b.save.wplots", ifnotfound = FALSE),
                           w = get0("b.defSize", ifnotfound = 7),
                           h = w,
-                          mdlink = ww.set.mdlink(),
+                          mdlink = MarkdownHelpers::ww.set.mdlink(),
                           PNG = get0("b.usepng", ifnotfound = FALSE)) {
   stopifnot(is.list(yourlist))
   # if (!require("vioplot")) {
@@ -1834,7 +1834,7 @@ wvioplot_list <- function(yourlist,
     par(mar = c(par("mar")[1] + incrBottMarginBy, par("mar")[2:4]))
   } # Tune the margin
   l_list <- length(yourlist)
-  fname <- kollapse(main, ".vioplot")
+  fname <- Stringendo::kollapse(main, ".vioplot")
   if (length(col) < l_list) {
     col <- rep(col, l_list)
   }
@@ -1902,7 +1902,7 @@ wvioplot_list <- function(yourlist,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -1962,10 +1962,10 @@ wviostripchart_list <- function(yourlist,
                                 savefile = get0("b.save.wplots", ifnotfound = FALSE),
                                 w = get0("b.defSize", ifnotfound = 7),
                                 h = w,
-                                mdlink = ww.set.mdlink(),
+                                mdlink = MarkdownHelpers::ww.set.mdlink(),
                                 PNG = get0("b.usepng", ifnotfound = FALSE)) {
   force(method)
-  fname <- kollapse(main, ".VioStripchart")
+  fname <- Stringendo::kollapse(main, ".VioStripchart")
   # if (!require("vioplot")) {
   #   print("Please install vioplot: install.packages('vioplot')")
   # }
@@ -2043,7 +2043,7 @@ wviostripchart_list <- function(yourlist,
   }
   MarkdownHelpers::ww.assign_to_global("plotnameLastPlot", fname, 1)
   if (mdlink & savefile) {
-    md.image.linker(fname_wo_ext = fname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = fname)
   }
 }
 
@@ -2078,7 +2078,7 @@ wvenn <- function(yourlist,
                   ...,
                   w = get0("b.defSize", ifnotfound = 7),
                   h = w,
-                  mdlink = ww.set.mdlink(),
+                  mdlink = MarkdownHelpers::ww.set.mdlink(),
                   plotname = substitute(yourlist),
                   openFolder = TRUE) {
   # if (!require("VennDiagram")) {
@@ -2086,7 +2086,7 @@ wvenn <- function(yourlist,
   # }
 
   print(plotname)
-  fname <- kollapse(plotname, ".", imagetype, print = FALSE)
+  fname <- Stringendo::kollapse(plotname, ".", imagetype, print = FALSE)
 
   LsLen <- length(yourlist)
   if (length(names(yourlist)) < LsLen) {
@@ -2094,10 +2094,10 @@ wvenn <- function(yourlist,
     print("List elements had no names.")
   }
 
-  filename <- kollapse(ww.set.OutDir(), fname, print = FALSE)
+  filename <- Stringendo::kollapse(MarkdownHelpers::ww.set.OutDir(), fname, print = FALSE)
 
   if (missing(subt)) {
-    subt <- kollapse("Total = ", length(unique(unlist(yourlist))),
+    subt <- Stringendo::kollapse("Total = ", length(unique(unlist(yourlist))),
       " elements in total.",
       print = FALSE
     )
@@ -2119,9 +2119,9 @@ wvenn <- function(yourlist,
   # print(names(yourlist))
 
   if (mdlink) {
-    llogit(ww.md.image.link.parser(fname))
+    MarkdownHelpers::llogit(MarkdownHelpers::ww.md.image.link.parser(fname))
     if (b.usepng == TRUE && b.png4Github == TRUE) {
-      llogit(ww.md.image.link.parser(paste0("Reports/", fname)))
+      MarkdownHelpers::llogit(MarkdownHelpers::ww.md.image.link.parser(paste0("Reports/", fname)))
     }
   }
   if (openFolder) system("open .")
@@ -2162,7 +2162,7 @@ wbarplot_dfCol <- function(df,
   stopifnot(colName %in% colnames(df))
   variable <- unlist(df[, colName])
   plotname <- paste(substitute(df), "__", colName, sep = "")
-  fname <- ww.FnP_parser(plotname, "barplot.pdf")
+  fname <- MarkdownHelpers::ww.FnP_parser(plotname, "barplot.pdf")
   cexNsize <- 0.7 / abs(log10(max(length(variable), 2))) # guard against log10(1)
   cexNsize <- min(cexNsize, 1)
   barplot(
@@ -2173,8 +2173,8 @@ wbarplot_dfCol <- function(df,
     las = 2,
     cex.names = cexNsize,
     sub = paste(
-      "mean:", iround(mean(variable, na.rm = TRUE)),
-      "CV:", percentage_formatter(cv(variable))
+      "mean:", CodeAndRoll2::iround(mean(variable, na.rm = TRUE)),
+      "CV:", Stringendo::percentage_formatter(CodeAndRoll2::cv(variable))
     )
   )
   if (savefile) {
@@ -2220,7 +2220,7 @@ whist_dfCol <- function(df,
   stopifnot(colName %in% colnames(df))
   variable <- as.vector(unlist(df[, colName]))
   plotname <- paste(substitute(df), "__", colName, sep = "")
-  fname <- ww.FnP_parser(plotname, "hist.pdf")
+  fname <- MarkdownHelpers::ww.FnP_parser(plotname, "hist.pdf")
   if (!is.numeric(variable)) {
     table_of_var <- table(variable)
     cexNsize <- 0.7 / abs(log10(max(length(table_of_var), 2))) # guard against log10(1)
@@ -2233,10 +2233,10 @@ whist_dfCol <- function(df,
       las = 2,
       cex.names = cexNsize,
       sub = paste(
-        "mean:", iround(mean(table_of_var, na.rm = TRUE)),
-        "| median:", iround(median(table_of_var, na.rm = TRUE)),
-        "| mode:", iround(modus(table_of_var)),
-        "| CV:", percentage_formatter(cv(table_of_var))
+        "mean:", CodeAndRoll2::iround(mean(table_of_var, na.rm = TRUE)),
+        "| median:", CodeAndRoll2::iround(median(table_of_var, na.rm = TRUE)),
+        "| mode:", CodeAndRoll2::iround(CodeAndRoll2::modus(table_of_var)),
+        "| CV:", Stringendo::percentage_formatter(CodeAndRoll2::cv(table_of_var))
       )
     )
   } else {
@@ -2248,9 +2248,9 @@ whist_dfCol <- function(df,
       col = col,
       las = 2,
       sub = paste(
-        "mean:", iround(mean(variable)),
-        "| median:", iround(median(variable)),
-        "| modus:", iround(modus(variable))
+        "mean:", CodeAndRoll2::iround(mean(variable)),
+        "| median:", CodeAndRoll2::iround(median(variable)),
+        "| modus:", CodeAndRoll2::iround(CodeAndRoll2::modus(variable))
       )
     )
   }
@@ -2298,10 +2298,10 @@ pdfA4plot_on <- function(plotname = date(),
                          rows = 4,
                          cols = rows - 1,
                          one_file = TRUE,
-                         mdlink = ww.set.mdlink(),
-                         title = ww.ttl_field(plotname)) {
-  fname <- ww.FnP_parser(plotname, "pdf")
-  try.dev.off()
+                         mdlink = MarkdownHelpers::ww.set.mdlink(),
+                         title = MarkdownHelpers::ww.ttl_field(plotname)) {
+  fname <- MarkdownHelpers::ww.FnP_parser(plotname, "pdf")
+  MarkdownHelpers::try.dev.off()
   MarkdownHelpers::ww.assign_to_global("b.mfrow_def", par("mfrow"), 1)
   MarkdownHelpers::ww.assign_to_global("b.bg_def", par("bg"), 1)
   MarkdownHelpers::ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
@@ -2318,7 +2318,7 @@ pdfA4plot_on <- function(plotname = date(),
       plotting in the A4 pdf.: pdfA4plot_off ()"
   )
   if (mdlink) {
-    md.image.linker(fname_wo_ext = plotname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = plotname)
   }
 }
 
@@ -2351,10 +2351,10 @@ pdfA4plot_on.layout <- function(plotname = date(),
                                 w = get0("b.defSize.fullpage", ifnotfound = 8.27),
                                 h = 11.69,
                                 one_file = TRUE,
-                                mdlink = ww.set.mdlink(),
-                                title = ww.ttl_field(plotname)) {
-  fname <- ww.FnP_parser(plotname, "pdf")
-  try.dev.off()
+                                mdlink = MarkdownHelpers::ww.set.mdlink(),
+                                title = MarkdownHelpers::ww.ttl_field(plotname)) {
+  fname <- MarkdownHelpers::ww.FnP_parser(plotname, "pdf")
+  MarkdownHelpers::try.dev.off()
   MarkdownHelpers::ww.assign_to_global("b.bg_def", par("bg"), 1)
   MarkdownHelpers::ww.assign_to_global("b.save.wplots", FALSE, 1) # switch of "savefile" option
   pdf(
@@ -2372,7 +2372,7 @@ pdfA4plot_on.layout <- function(plotname = date(),
       plotting in the A4 pdf.: pdfA4plot_off ()"
   )
   if (mdlink) {
-    md.image.linker(fname_wo_ext = plotname)
+    MarkdownHelpers::md.image.linker(fname_wo_ext = plotname)
   }
 }
 
@@ -2403,7 +2403,7 @@ pdfA4plot_off <- function() {
     MarkdownHelpers::ww.assign_to_global("b.save.wplots", TRUE, 1) # switch back mdlink to its original value
   }
   par(mfrow = x, bg = y)
-  try.dev.off() # close pdf
+  MarkdownHelpers::try.dev.off() # close pdf
 
   if (exists("OutDir")) {
     try(clipr::write_clip(OutDir), silent = TRUE)
@@ -2510,7 +2510,7 @@ wlegend <- function(NamedColorVec = NA,
   if (ttl.by.varname & is.null(title)) {
     title <- substitute(NamedColorVec)
   }
-  stopif((LN != LF & missing(legend)),
+  Stringendo::stopif((LN != LF & missing(legend)),
     message = "The color vector (NamedColorVec) has less names than entries /
            the variable 'legend' is not provided."
   )
@@ -2520,7 +2520,7 @@ wlegend <- function(NamedColorVec = NA,
   } else {
     legend
   }
-  pozz <- translate(
+  pozz <- CodeAndRoll2::translate(
     poz,
     old = 1:4,
     new = c("topleft", "topright", "bottomright", "bottomleft")
@@ -2536,7 +2536,7 @@ wlegend <- function(NamedColorVec = NA,
   )
   if (OverwritePrevPDF) {
     wplot_save_this(
-      plotname = ww.set.PlotName(),
+      plotname = MarkdownHelpers::ww.set.PlotName(),
       w = w_,
       h = h_,
       mdlink = mdlink
@@ -2584,7 +2584,7 @@ wlegend.label <- function(legend = "...",
   h_ <- h
   cex_ <- cex
 
-  pozz <- translate(
+  pozz <- CodeAndRoll2::translate(
     poz,
     old = 1:4,
     new = c("topleft", "topright", "bottomright", "bottomleft")
@@ -2630,7 +2630,7 @@ wlegend.label <- function(legend = "...",
 #' @examples barplot(1:10)
 #' barplot_label(barplotted_variable = 1:10, labels = 11:2, filename = "myBarplot.pdf")
 barplot_label <- function(barplotted_variable,
-                          labels = iround(barplotted_variable),
+                          labels = CodeAndRoll2::iround(barplotted_variable),
                           bottom = FALSE,
                           TopOffset = .5,
                           relpos_bottom = 0.1,
@@ -2694,15 +2694,15 @@ wLinRegression <- function(DF,
     coeff <- c("pearson", "spearman", "r2")
   }
   if ("pearson" %in% coeff) {
-    dispCoeff <- iround(cor(DF[, 2], DF[, 1], method = "pearson"))
+    dispCoeff <- CodeAndRoll2::iround(cor(DF[, 2], DF[, 1], method = "pearson"))
     legendText <- c(legendText, paste0("Pears.: ", dispCoeff))
   }
   if ("spearman" %in% coeff) {
-    dispCoeff <- iround(cor(DF[, 2], DF[, 1], method = "spearman"))
+    dispCoeff <- CodeAndRoll2::iround(cor(DF[, 2], DF[, 1], method = "spearman"))
     legendText <- c(legendText, paste0("Spear.: ", dispCoeff))
   }
   if ("r2" %in% coeff) {
-    r2 <- iround(summary(regression)$r.squared)
+    r2 <- CodeAndRoll2::iround(summary(regression)$r.squared)
     legendText <- c(legendText, paste0("R^2: ", r2))
   }
   cexx <- cex
@@ -2805,18 +2805,18 @@ ww.dev.copy <- function(PNG_ = FALSE,
   if (PNG_) {
     dev.copy(
       device = png,
-      filename = ww.FnP_parser(fname_, "png"),
+      filename = MarkdownHelpers::ww.FnP_parser(fname_, "png"),
       res = PNG_res,
       width = w_ * 100,
       height = h_ * 100
     )
-    try.dev.off()
+    MarkdownHelpers::try.dev.off()
   } else {
     dev.copy2pdf(
-      file = ww.FnP_parser(fname_, "pdf"),
+      file = MarkdownHelpers::ww.FnP_parser(fname_, "pdf"),
       width = w_,
       height = h_,
-      title = ww.ttl_field(fname_)
+      title = MarkdownHelpers::ww.ttl_field(fname_)
     )
   }
 }
