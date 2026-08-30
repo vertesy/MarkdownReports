@@ -971,6 +971,9 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
 #' )
 wbarplot <- function(variable,
                      ...,
+                     # NOTE: BUG -- looks up "b.def.colors" (plural), but setup_MarkdownReports()
+                     # sets the global as "b.def.color" (singular, see whist() below for the
+                     # correct spelling) -- this get0() never finds it and always falls back to "gold1".
                      col = get0("b.def.colors", ifnotfound = "gold1"),
                      sub = FALSE,
                      plotname = substitute(variable),
@@ -1325,6 +1328,7 @@ wboxplot <- function(yourlist,
                      main = as.character(substitute(yourlist)),
                      sub = FALSE,
                      ylab = "",
+                     # NOTE: BUG -- same "b.def.colors" vs "b.def.color" typo as wbarplot() above.
                      col = get0("b.def.colors", ifnotfound = "gold1"),
                      incrBottMarginBy = 0,
                      tilted_text = FALSE,
@@ -2154,6 +2158,8 @@ wvenn <- function(yourlist,
 wbarplot_dfCol <- function(df,
                            ...,
                            colName,
+                           # NOTE: BUG -- another "b.def.color" typo (here "b.definitely.colors"),
+                           # same issue as wbarplot()/wboxplot() above -- never matches the real global.
                            col = get0("b.definitely.colors", ifnotfound = "gold"),
                            savefile = get0("b.save.wplots", ifnotfound = FALSE),
                            w = get0("b.defSize", ifnotfound = 7),
@@ -2211,6 +2217,7 @@ wbarplot_dfCol <- function(df,
 #' whist_dfCol(df, colName = "a", col = "gold", w = 7)
 whist_dfCol <- function(df,
                         colName,
+                        # NOTE: BUG -- same "b.def.color" typo as wbarplot_dfCol() above.
                         col = get0("b.definitely.colors", ifnotfound = "gold"),
                         ...,
                         savefile = get0("b.save.wplots", ifnotfound = FALSE),
