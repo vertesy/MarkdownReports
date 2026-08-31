@@ -9,7 +9,7 @@ wboxplot(
   main = as.character(substitute(yourlist)),
   sub = FALSE,
   ylab = "",
-  col = get0("b.def.colors", ifnotfound = "gold1"),
+  col = get0("b.def.color", ifnotfound = "gold1"),
   incrBottMarginBy = 0,
   tilted_text = FALSE,
   savefile = get0("b.save.wplots", ifnotfound = TRUE),
