@@ -8,7 +8,7 @@ wbarplot_dfCol(
   df,
   ...,
   colName,
-  col = get0("b.definitely.colors", ifnotfound = "gold"),
+  col = get0("b.def.color", ifnotfound = "gold"),
   savefile = get0("b.save.wplots", ifnotfound = FALSE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
