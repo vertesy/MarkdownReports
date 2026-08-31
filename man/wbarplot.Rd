@@ -7,7 +7,7 @@
 wbarplot(
   variable,
   ...,
-  col = get0("b.def.colors", ifnotfound = "gold1"),
+  col = get0("b.def.color", ifnotfound = "gold1"),
   sub = FALSE,
   plotname = substitute(variable),
   main = plotname,
