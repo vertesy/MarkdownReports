@@ -7,7 +7,7 @@
 whist_dfCol(
   df,
   colName,
-  col = get0("b.def.color", ifnotfound = "gold"),
+  col = get0("b.def.color", ifnotfound = "gold1"),
   ...,
   savefile = get0("b.save.wplots", ifnotfound = FALSE),
   w = get0("b.defSize", ifnotfound = 7),

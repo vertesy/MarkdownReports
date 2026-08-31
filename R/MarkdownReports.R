@@ -799,12 +799,12 @@ wscatter.fill <- function(df2col = cbind("A" = rnorm(100), "B" = rnorm(100)),
                           PNG = get0("b.usepng", ifnotfound = FALSE)) {
   x <- df2col[, 1]
   y <- df2col[, 2]
-  CNN <- colnames(df2col)
-  xlab <- if (length(CNN) & missing(xlab)) {
-    CNN[1]
+  col_names <- colnames(df2col)
+  xlab <- if (length(col_names) & missing(xlab)) {
+    col_names[1]
   }
-  ylab <- if (length(CNN) & missing(ylab)) {
-    CNN[2]
+  ylab <- if (length(col_names) & missing(ylab)) {
+    col_names[2]
   }
 
   fname <- Stringendo::kollapse(plotname, ".scatter.fill")
@@ -1560,7 +1560,7 @@ wstripchart <- function(yourlist,
     bg <- NULL
   }
   if (BoxPlotWithMean) {
-    a$stats[3, ] <- unlist(lapply(yourlist, mean))
+    box_stats$stats[3, ] <- unlist(lapply(yourlist, mean))
   }
   if (tilted_text) {
     xlb <- FALSE
@@ -1570,7 +1570,7 @@ wstripchart <- function(yourlist,
   plotname <-
     main # to avoid circular reference in the inside function argument
   bxp(
-    a,
+    box_stats,
     xlab = "",
     show.names = xlb,
     ...,
