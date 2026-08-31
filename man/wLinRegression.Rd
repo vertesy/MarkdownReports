@@ -9,7 +9,7 @@ wLinRegression(
   coeff = c("pearson", "spearman", "r2")[3],
   textlocation = "topleft",
   cex = 1,
-  OverwritePrevPDF = unless.specified("b.save.wplots"),
+  OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
   ...
 )
 }

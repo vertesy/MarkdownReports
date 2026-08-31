@@ -27,16 +27,16 @@ wscatter.fill(
   frame.plot = axes,
   xlab,
   ylab,
-  savefile = unless.specified("b.save.wplots"),
-  w = unless.specified("b.defSize", 7),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,
   mdlink = ww.set.mdlink(),
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{
-\item{df2col}{Input data, a 2 column dataframe}
+\item{df2col}{Input data, a 2-column data frame}
 
 \item{...}{Pass any other parameter of the corresponding plotting function (most of them should
 work).}

@@ -28,15 +28,15 @@ wplot(
   lwd = 1,
   col_abline = 1,
   equal.axes = FALSE,
-  savefile = unless.specified("b.save.wplots"),
+  savefile = get0("b.save.wplots", ifnotfound = TRUE),
   mdlink = ww.set.mdlink(),
-  w = unless.specified("b.defSize", 7),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
-  PNG = unless.specified("b.usepng", FALSE)
+  PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
 \arguments{
-\item{df2col}{Input data frame to be plotted_2columns}
+\item{df2col}{Input data frame to be plotted (2 columns)}
 
 \item{col}{Color of the plot.}
 

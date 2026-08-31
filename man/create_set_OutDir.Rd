@@ -4,21 +4,44 @@
 \alias{create_set_OutDir}
 \title{create_set_OutDir}
 \usage{
-create_set_OutDir(..., setDir = TRUE, verbose = TRUE, newName = NULL)
+create_set_OutDir(
+  ...,
+  setDir = TRUE,
+  writeScriptPath = FALSE,
+  ScrPath = "__corresponding.R.script",
+  verbose = TRUE,
+  newName = NULL,
+  subdirs = NULL,
+  showWarnings = FALSE,
+  home_path = "/groups/knoblich/users/abel.vertesy/cbehome"
+)
 }
 \arguments{
 \item{...}{Variables (strings, vectors) to be collapsed consecutively.}
 
 \item{setDir}{Set the working directory to OutDir? Default: TRUE}
 
+\item{writeScriptPath}{Write the path to the current R script into a file in the output directory?
+Makes it easier to trace the origin of the output. Use at initial set up. Default: FALSE}
+
+\item{ScrPath}{File name in the OutDir. Default: "__corresponding.R.script"}
+
 \item{verbose}{Print directory to screen? Default: TRUE}
 
 \item{newName}{Create a new variable with same path as the "OutDir" variable. Useful since
 OutDir may be redefined by other scripts}
+
+\item{subdirs}{Optional subdirectories to be added to OutDir.}
+
+\item{showWarnings}{Show warnings when creating directories? Default: FALSE}
+
+\item{home_path}{The home path on your filesystem to be replaced with '~' in the final script path.}
 }
 \description{
-Create or set the output directory of the script, and set the "OutDir" variable
-that is used by all ~wplot functions.
+Create and set (setwd) the output directory of the script, and define the "OutDir"
+variable as a global variable. OutDir is used by most @vertesy and all ~wplot functions. It also
+writes the path of the current R script into a file in the output directory to make it easier to
+trace the origin of the output (using \code{rstudioapi::getSourceEditorContext()}).
 }
 \examples{
 create_set_OutDir(setDir = TRUE, getwd())

@@ -11,7 +11,7 @@ wvenn(
   fill = seq_along(yourlist),
   subt,
   ...,
-  w = unless.specified("b.defSize", 7),
+  w = get0("b.defSize", ifnotfound = 7),
   h = w,
   mdlink = ww.set.mdlink(),
   plotname = substitute(yourlist),
@@ -44,7 +44,7 @@ set by "path_of_report".}
 \item{openFolder}{open current directory (=working if setup_MarkdownReports('setDir=TRUE'))}
 }
 \description{
-Save venn diagrams. Unlike other ~vplot funcitons, this saves directly into a .png,
+Save Venn diagrams. Unlike other ~vplot functions, this saves directly into a .png,
 and it does not use the dev.copy2pdf() function.
 }
 \examples{

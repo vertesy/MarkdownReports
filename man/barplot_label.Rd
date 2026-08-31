@@ -10,9 +10,9 @@ barplot_label(
   bottom = FALSE,
   TopOffset = 0.5,
   relpos_bottom = 0.1,
-  OverwritePrevPDF = unless.specified("b.save.wplots"),
+  OverwritePrevPDF = get0("b.save.wplots", ifnotfound = FALSE),
   filename = plotnameLastPlot,
-  PNG_ = unless.specified("b.usepng", FALSE),
+  PNG_ = get0("b.usepng", ifnotfound = FALSE),
   w = 7,
   h = w,
   ...
