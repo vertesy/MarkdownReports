@@ -31,7 +31,7 @@ wscatter.fill(
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   incrBottMarginBy = 0,
-  mdlink = ww.set.mdlink(),
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
   PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
@@ -71,7 +71,7 @@ work).}
 
 \item{yaxs}{The style of axis interval calculation to be used for the X-axis. See help('par').}
 
-\item{las}{numeric in {0, 1, 2, 3}; the style of axis labels. See help('par').}
+\item{las}{numeric in 0-3; the style of axis labels. See help('par').}
 
 \item{axes}{Draw axes and box}
 

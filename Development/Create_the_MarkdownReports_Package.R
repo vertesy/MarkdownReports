@@ -20,15 +20,26 @@ file.edit(config.path)
 source(config.path)
 
 
-# Install your package ------------------------------------------------
+# Check and Document your package ------------------------------------------------
+devtools::check_man(repository.dir)
 PackageTools::document_and_create_package(repository.dir, config_file = 'config.R')
-'git add commit push to remote'
+
+
+# Automated Codebase linting to tidyverse style & custom corrections ------------------------------------------------
+styler::style_pkg(repository.dir)
+
+
+# Replace shorthands, and short function aliases (e.g.: T with TRUE, dfilter with dplyr::filter) ------------------------------------------------
+(ls.scripts.full.path <- list.files(file.path(repository.dir, "R"), full.names = T, pattern = '.R$'))
+for (scriptX in ls.scripts.full.path) {
+  PackageTools::replace_tf_with_true_false(scriptX)
+  PackageTools::replace_short_calls(scriptX)
+}
 
 
 # Install your package ------------------------------------------------
 "disable rprofile by"
 rprofile()
-# devtools::install_local(repository.dir, upgrade = F)
 remotes::install_local(repository.dir, upgrade = FALSE, build = FALSE)
 
 
@@ -70,7 +81,6 @@ PackageTools::extract_package_dependencies(repository.dir)
 
 
 
-
 # Try to find and add missing @importFrom statements------------------------------------------------
 devtools::load_all("~/GitHub/Packages/PackageTools/")
 (ls.scripts.full.path <- list.files(file.path(repository.dir, "R"), full.names = T, pattern = '.R$'))
@@ -94,16 +104,6 @@ file.remove(paste0(repository.dir, "/R/list.of.functions.in.", package.name, ".d
 r$PackageTools()
 PackageTools::copy_github_badge("active") # Add badge to readme via clipboard
 file.edit(paste0(repository.dir, "README.md"))
-
-
-# Replaces T with TRUE and F with FALSE ------------------------------------------------
-(ls.scripts.full.path <- list.files(file.path(repository.dir, "R"), full.names = T, pattern = '.R$'))
-for (scriptX in ls.scripts.full.path) {
-  PackageTools::replace_tf_with_true_false(scriptX)
-  PackageTools::replace_short_calls(scriptX)
-}
-
-
 
 
 

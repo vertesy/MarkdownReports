@@ -5,7 +5,7 @@
 \title{wplot_save_this}
 \usage{
 wplot_save_this(
-  plotname = ww.autoPlotName(),
+  plotname = MarkdownHelpers::ww.autoPlotName(),
   OverwritePrevPDF = TRUE,
   w = get0("b.defSize", ifnotfound = 7),
   h = w,

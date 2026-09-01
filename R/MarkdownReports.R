@@ -748,7 +748,7 @@ wplot <- function(df2col,
 #' @param asp numeric, giving the aspect ratio y/x. See help('plot.window').
 #' @param xaxs The style of axis interval calculation to be used for the X-axis. See help('par').
 #' @param yaxs The style of axis interval calculation to be used for the X-axis. See help('par').
-#' @param las numeric in {0, 1, 2, 3}; the style of axis labels. See help('par').
+#' @param las numeric in 0-3; the style of axis labels. See help('par').
 #' @param frame.plot No description.
 #' @param incrBottMarginBy Increase the blank space at the bottom of the plot. Use if labels do not
 #'   fit on the plot.

@@ -10,7 +10,7 @@ whist(
   breaks = 20,
   col = get0("b.def.color", ifnotfound = "gold1"),
   plotname = substitute(variable),
-  main = kollapse("Histogram of ", substitute(variable)),
+  main = Stringendo::kollapse("Histogram of ", substitute(variable)),
   xlab = substitute(variable),
   lty = 2,
   lwd = 3,
@@ -22,7 +22,7 @@ whist(
   savefile = get0("b.save.wplots", ifnotfound = TRUE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
-  mdlink = ww.set.mdlink(),
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
   PNG = get0("b.usepng", ifnotfound = TRUE)
 )
 }

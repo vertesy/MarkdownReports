@@ -19,7 +19,7 @@ wvioplot_list(
   savefile = get0("b.save.wplots", ifnotfound = FALSE),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
-  mdlink = ww.set.mdlink(),
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
   PNG = get0("b.usepng", ifnotfound = FALSE)
 )
 }
