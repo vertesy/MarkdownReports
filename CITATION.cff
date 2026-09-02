@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: vertesy/MarkdownReports Type Less, Plot More. Create (scientific) plots with very little code and write markdown reports (text & figures, code-free) easily from your R scripts.
-version: v4.8.9
+version: v4.9.1
 message: >-
   If you use this software, please cite it using these metadata.
 type: software

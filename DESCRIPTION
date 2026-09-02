@@ -1,6 +1,6 @@
 Package: MarkdownReports
 Title: Generate Scientific Figures and Reports Easily
-Version: 4.8.9
+Version: 4.9.1
 Authors@R: 
     person("Abel", "Vertesy", , "av@imba.oeaw.ac.at", role = c("aut", "cre"))
 Description: MarkdownReports is a set of R functions that allows you to
@@ -33,6 +33,6 @@ Imports:
     VennDiagram,
     vioplot
 Encoding: UTF-8
-Packaged: 2026-09-01 13:46:29.690914
+Packaged: 2026-09-02 17:40:43.426515
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

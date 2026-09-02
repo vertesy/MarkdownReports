@@ -57,10 +57,6 @@ checkres <- devtools::check(repository.dir, cran = FALSE)
 
 
 
-# Automated Codebase linting to tidyverse style ------------------------------------------------
-styler::style_pkg(repository.dir)
-
-
 # Extract package dependencies ------------------------------------------------
 PackageTools::extract_package_dependencies(repository.dir)
 # I have a list of functions where some are not properly separated at the bottom. Answer in text, not code.
