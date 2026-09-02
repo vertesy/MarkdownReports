@@ -37,3 +37,8 @@ Additional CRAN dependencies are listed in `DESCRIPTION`.
 - Browse the `R/` directory to learn how functions are organised and how reports are generated.
 - Consult `man/` pages via `?function_name` in R for detailed documentation.
 
+
+
+### Update the Source, Not Just the Documentation
+
+Documentations rebuilt and overwritten from upstream sources: `.Rd` files from roxygen annotations and DESCRIPTION and NAMESPACE from  `config.R` by `PackageTools::document_and_create_package()` relying on  `devtools::document()`  when I manually, regularly run `/Development/MYPACKAGE/Development/Create_the_MYPACKAGE_Package.R")`. Thus  always update the upstream sources first, then fix the downstream documentations correspondingly.

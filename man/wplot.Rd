@@ -29,7 +29,7 @@ wplot(
   col_abline = 1,
   equal.axes = FALSE,
   savefile = get0("b.save.wplots", ifnotfound = TRUE),
-  mdlink = ww.set.mdlink(),
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
   PNG = get0("b.usepng", ifnotfound = FALSE)

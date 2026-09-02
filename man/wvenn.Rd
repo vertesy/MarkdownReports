@@ -13,7 +13,7 @@ wvenn(
   ...,
   w = get0("b.defSize", ifnotfound = 7),
   h = w,
-  mdlink = ww.set.mdlink(),
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
   plotname = substitute(yourlist),
   openFolder = TRUE
 )

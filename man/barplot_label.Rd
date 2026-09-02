@@ -6,7 +6,7 @@
 \usage{
 barplot_label(
   barplotted_variable,
-  labels = iround(barplotted_variable),
+  labels = CodeAndRoll2::iround(barplotted_variable),
   bottom = FALSE,
   TopOffset = 0.5,
   relpos_bottom = 0.1,

@@ -12,8 +12,8 @@ pdfA4plot_on(
   rows = 4,
   cols = rows - 1,
   one_file = TRUE,
-  mdlink = ww.set.mdlink(),
-  title = ww.ttl_field(plotname)
+  mdlink = MarkdownHelpers::ww.set.mdlink(),
+  title = MarkdownHelpers::ww.ttl_field(plotname)
 )
 }
 \arguments{
